@@ -1,6 +1,4 @@
-package it.unical.asde.uam.test;
-
-
+package test.java.it.unical.asde.uam.persistence;
 
 import static org.junit.Assert.assertEquals;
 
