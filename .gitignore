@@ -1,0 +1,6 @@
+/target/
+/nb-configuration.xml
+/MyDB.lck
+/MyDB.log
+/MyDB.script
+/MyDB.properties
