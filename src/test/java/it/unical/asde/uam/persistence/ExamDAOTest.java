@@ -1,5 +1,6 @@
 package test.java.it.unical.asde.uam.persistence;
 
+import it.unical.asde.uam.model.CareerExam;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import it.unical.asde.uam.model.Exam;
+import it.unical.asde.uam.persistence.CareerExamDAO;
 import it.unical.asde.uam.persistence.ExamDAO;
 import it.unical.asde.uam.persistence.ExamDAOImpl;
 
@@ -17,7 +19,9 @@ public class ExamDAOTest {
 	
 	
 	private static ExamDAO dao;
+	private static CareerExamDAO careerExamDAO;
 	private static ArrayList<Exam> dbExams = new ArrayList<>();
+	private static ArrayList<CareerExam> careerExamlist = new ArrayList<>();
 	
 	private final static int generateRandomExamCode()
 	{
@@ -48,6 +52,9 @@ public class ExamDAOTest {
 	@Test
 	public void testList() {
 		assertEquals(dao.getExamsOfTotCredits(12).size(), 10);
+                
+		assertEquals(careerExamDAO.getCareerExamList(12).size(), 10);
+                
 	}
 	
 	@Test 

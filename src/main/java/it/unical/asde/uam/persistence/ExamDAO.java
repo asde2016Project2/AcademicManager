@@ -2,13 +2,13 @@ package it.unical.asde.uam.persistence;
 
 
 
+import it.unical.asde.uam.dao.DAO;
 import java.util.List;
 
 import it.unical.asde.uam.model.Exam;
 
 
-
-public interface ExamDAO {
+public interface ExamDAO extends DAO<Exam> {
 	
 	public void create(Exam exam);
 	

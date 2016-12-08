@@ -1,84 +1,89 @@
 package it.unical.asde.uam.model;
 
-
-
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="exam")
+@Table(name = "exam")
 public class Exam implements Serializable {
 
-	
+    private static final long serialVersionUID = 1L;
 
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column
-	private int id;
-	
-	@Column(nullable=false, length=50)
-	private String name; //, unique=true no
-	
-	@Column(nullable=false)
-	private int cfu;
-	
-	@Column(nullable=false)
-	private int code;
-	
-	public Exam() {
-	}
-	
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column
+    private int id;
 
-	public Exam(String name, int cfu, int code) {
-		super(); //id is not needed here
-		this.name = name;
-		this.cfu = cfu;
-		this.code = code;
-	}
+    @Column(nullable = false, length = 50)
+    private String name; //, unique=true no
 
-	public int getId() {
-		return id;
-	}
+    @Column(nullable = false)
+    private int cfu;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    @Column(nullable = false)
+    private int code;
 
-	public String getName() {
-		return name;
-	}
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "exam")
+    private Set<CareerExam> careerExams = new HashSet<>(0);
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Exam() {
+    }
 
-	public int getCfu() {
-		return cfu;
-	}
+    public Exam(String name, int cfu, int code) {
+        super(); //id is not needed here
+        this.name = name;
+        this.cfu = cfu;
+        this.code = code;
+    }
 
-	public void setCfu(int cfu) {
-		this.cfu = cfu;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public int getCode() {
-		return code;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setCode(int code) {
-		this.code = code;
-	}
-	
-	
-	
-	
-	
-	
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getCfu() {
+        return cfu;
+    }
+
+    public void setCfu(int cfu) {
+        this.cfu = cfu;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public Set<CareerExam> getCareerExams() {
+        return this.careerExams;
+    }
+
+    public void setCareerExams(Set<CareerExam> careerExams) {
+        this.careerExams = careerExams;
+    }
+
 }
