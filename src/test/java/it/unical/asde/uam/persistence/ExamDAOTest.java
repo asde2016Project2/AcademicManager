@@ -1,4 +1,4 @@
-package test.java.it.unical.asde.uam.persistence;
+package it.unical.asde.uam.persistence;
 
 import it.unical.asde.uam.model.CareerExam;
 import static org.junit.Assert.assertEquals;
