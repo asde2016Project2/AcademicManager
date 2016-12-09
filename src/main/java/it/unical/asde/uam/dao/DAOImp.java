@@ -6,10 +6,8 @@
 package it.unical.asde.uam.dao;
 
 import java.io.Serializable;
-import static java.lang.Math.log;
 import java.lang.reflect.Field;
 import java.util.List;
-import java.util.logging.Level;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.LockMode;
@@ -18,6 +16,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Criterion;
 
 /**
  *
@@ -293,6 +292,34 @@ public abstract class DAOImp<T extends Serializable> implements DAO<T> {
     @Override
     public List<T> findByCriteria() {
         Criteria crit = getSession().createCriteria(getPersistentClass());
+        return crit.list();
+    }
+
+    public T findOne(Criterion... criterion) {
+
+        Criteria crit = getSession().createCriteria(getPersistentClass());
+        for (Criterion c : criterion) {
+            crit.add(c);
+        }
+        crit.setMaxResults(1);
+
+        List result = crit.list();
+
+        close();
+
+        if (result.size() <= 0) {
+            return null;
+        }
+
+        return (T) result.get(0);
+    }
+
+    public List<T> findByCriteria(Criterion... criterion) {
+
+        Criteria crit = getSession().createCriteria(getPersistentClass());
+        for (Criterion c : criterion) {
+            crit.add(c);
+        }
         return crit.list();
     }
 
