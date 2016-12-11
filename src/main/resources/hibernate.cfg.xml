@@ -14,5 +14,11 @@
         <property name="hbm2ddl.auto">create</property>    	
   	<mapping class="it.unical.asde.uam.model.Exam"/>
   	<mapping class="it.unical.asde.uam.model.CareerExam"/>
+  	<mapping class="it.unical.asde.uam.model.User"/>
+  	<mapping class="it.unical.asde.uam.model.Student"/>
+  	<mapping class="it.unical.asde.uam.model.Professor"/>
+  	<mapping class="it.unical.asde.uam.model.Administrator"/>
+  	<mapping class="it.unical.asde.uam.model.StudyPlan"/>
+  	<mapping class="it.unical.asde.uam.model.DegreeCourse"/>
     </session-factory>
 </hibernate-configuration>

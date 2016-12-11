@@ -16,7 +16,7 @@ public abstract class AbstractDAO<T extends Serializable> {
     private Class<T> currentObjectClass;
     private SessionFactory sessionFactory;
 
-    public void AbstractDAO() {
+    public  AbstractDAO() {
         Configuration config = new Configuration().configure();
 
         StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()

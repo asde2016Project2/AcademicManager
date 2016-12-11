@@ -16,7 +16,7 @@ public class StudyPlanExamDAO extends AbstractDAO {
 
     public ArrayList<Exam> getExamsByStudyPlan(StudyPlan sp) {
 
-        Criterion c = Restrictions.eq("study_plan", sp.getId());
+        Criterion c = Restrictions.eq("study_plan", sp.getStudyPlanId());
         return (ArrayList<Exam>) findByCriteria(c);
 
     }
@@ -31,7 +31,7 @@ public class StudyPlanExamDAO extends AbstractDAO {
 
         ArrayList<Criterion> criteriaList = new ArrayList<>();
         criteriaList.add(Restrictions.eq("exam", e.getId()));
-        criteriaList.add(Restrictions.eq("study_plan", studyPlan.getId()));
+        criteriaList.add(Restrictions.eq("study_plan", studyPlan.getStudyPlanId()));
 
         StudyPlanExam spe = (StudyPlanExam) findOne(criteriaList.toArray(new Criterion[criteriaList.size()]));
 
