@@ -23,7 +23,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "career_exam")
-public class CareerExam implements Serializable {
+public class CareerExam implements Serializable{
 
     
     
@@ -48,6 +48,13 @@ public class CareerExam implements Serializable {
     @JoinColumn(name = "exam", nullable = false)
     private Exam exam;
 
+    
+    
+    public CareerExam() {
+    }
+
+    
+    
     public CareerExam(boolean done, int grade, Date examDate, boolean mandatory, Exam exam) {
         this.done = done;
         this.grade = grade;
