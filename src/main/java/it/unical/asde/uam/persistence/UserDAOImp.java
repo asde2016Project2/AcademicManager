@@ -19,11 +19,9 @@ import it.unical.asde.uam.dao.DAOImp;
 import it.unical.asde.uam.model.User;
 
 
-public class UserDAO  extends DAOImp<User> {
+public class UserDAOImp  extends DAOImp<User> {
 	
-	private SessionFactory sessionFactory;
-
-    
+	    
     public void create(User user) {
 
         begin();

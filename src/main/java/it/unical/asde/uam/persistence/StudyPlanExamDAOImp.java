@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
-public class StudyPlanExamDAO extends AbstractDAO {
+public class StudyPlanExamDAOImp extends AbstractDAO {
 
-    public StudyPlanExamDAO() {
+    public StudyPlanExamDAOImp() {
         super();
     }
 

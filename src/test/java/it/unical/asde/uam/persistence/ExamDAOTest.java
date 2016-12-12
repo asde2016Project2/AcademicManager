@@ -10,16 +10,16 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import it.unical.asde.uam.model.Exam;
-import it.unical.asde.uam.persistence.CareerExamDAO;
-import it.unical.asde.uam.persistence.ExamDAO;
-import it.unical.asde.uam.persistence.ExamDAOImpl;
+import it.unical.asde.uam.persistence.CareerExamDAOImp;
+
+import it.unical.asde.uam.persistence.ExamDAOImp;
 
 
 public class ExamDAOTest {
 	
 	
-	private static ExamDAO dao;
-	private static CareerExamDAO careerExamDAO;
+	private static ExamDAOImp dao;
+	private static CareerExamDAOImp careerExamDAO;
 	private static ArrayList<Exam> dbExams = new ArrayList<>();
 	private static ArrayList<CareerExam> careerExamlist = new ArrayList<>();
 	
@@ -33,7 +33,7 @@ public class ExamDAOTest {
 	
 	@BeforeClass
 	public static void initialize() {
-		dao = new ExamDAOImpl();
+		dao = new ExamDAOImp();
 		for(int i=0;i<10;i++) {
 			Exam exam = new Exam("name"+i, 12, generateRandomExamCode());
 			dao.create(exam);

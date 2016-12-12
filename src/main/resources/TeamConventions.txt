@@ -1,0 +1,19 @@
+Hi guys. Please follow these conventions:
+
+- perform a pull before pushing;
+- push only WORKING code. Dao implementations, junit tests are appreciated;
+- package it.unical.asde.uam.dao contains "DAO" interface and "DAOImp" class.
+ These represent the REFERENCE for implementing our custom DAOs.
+ So for example, if I want to create a DAO for the "Exam" entity, I have to do the following:
+create a class named "ExamDAOImp" that extends DAOImp<Exam>
+(public class ExamDAOImp extends DAOImp<Exam> {....}) and implement my custom methods (create(), delete(), getExamB)
+
+
+
+
+- write your name at the top of classes you create. For example:
+
+/**
+*
+* @author Fabrizio
+*/
