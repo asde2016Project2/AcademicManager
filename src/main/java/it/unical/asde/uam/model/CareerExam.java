@@ -47,20 +47,22 @@ public class CareerExam implements Serializable{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exam", nullable = false)
     private Exam exam;
-
     
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId")
+    private Student student;
     
-    public CareerExam() {
+    public CareerExam()
+    {
     }
 
-    
-    
-    public CareerExam(boolean done, int grade, Date examDate, boolean mandatory, Exam exam) {
+    public CareerExam(boolean done, int grade, Date examDate, boolean mandatory, Exam exam, Student student) {
         this.done = done;
         this.grade = grade;
         this.examDate = examDate;
         this.mandatory = mandatory;
         this.exam = exam;
+        this.student = student;
     }
 
     
@@ -115,5 +117,13 @@ public class CareerExam implements Serializable{
     public void setExam(Exam exam) {
         this.exam = exam;
     }
+
+	public Student getStudent() {
+		return student;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
+	}
 
 }

@@ -5,22 +5,13 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Restrictions;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import it.unical.asde.uam.model.Administrator;
 import it.unical.asde.uam.model.Professor;
 import it.unical.asde.uam.model.Student;
-import it.unical.asde.uam.model.StudyPlan;
-import it.unical.asde.uam.model.StudyPlanExam;
 import it.unical.asde.uam.model.User;
 
 
@@ -32,13 +23,13 @@ import it.unical.asde.uam.model.User;
 public class UserDAOTest {
 	
 	
-		static UserDAO userDao;
+		static UserDAOImp userDao;
 		static List<User> users;
 		
 		@BeforeClass
 		static public void init()
 		{
-			userDao = new UserDAO();
+			userDao = new UserDAOImp();
 			users = new ArrayList<User>();
 			initDB();
 		}

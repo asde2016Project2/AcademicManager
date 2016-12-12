@@ -5,56 +5,17 @@
  */
 package it.unical.asde.uam.persistence;
 
-import java.util.List;
+
 import it.unical.asde.uam.dao.DAOImp;
 import it.unical.asde.uam.model.CareerExam;
-import it.unical.asde.uam.model.Exam;
 
 /**
  *
  * @author Gezahegn
  */
-public class CareerExamDAOImp extends DAOImp<CareerExam> implements CareerExamDAO {
+public class CareerExamDAOImp extends DAOImp<CareerExam> {
 
     public CareerExamDAOImp() {
-    }
-
-    Exam examInformation = new Exam();
-
-    @Override
-    public void create(CareerExam careerExam) {
-
-        begin();
-
-        getSession().saveOrUpdate(careerExam);
-
-        commit();
-
-    }
-
-    @Override
-    public CareerExam getCareerExamById(int id) {
-        CareerExam careerExam = new CareerExam();
-        String hql = "from CareerExam where id=:id";
-        begin();
-        
-        commit();
-        return careerExam;
-    }
-
-    @Override
-    public List<CareerExam> getCareerExamList(int examDate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void saveUpdates(CareerExam careerExam) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void deleteExam(CareerExam careerExam) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
