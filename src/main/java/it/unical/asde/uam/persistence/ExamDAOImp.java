@@ -12,11 +12,9 @@ public class ExamDAOImp extends DAOImp<Exam>  {
 
         
     public void create(Exam exam) {
-
         begin();
         getSession().save(exam);
         commit();
-
     }
 
 

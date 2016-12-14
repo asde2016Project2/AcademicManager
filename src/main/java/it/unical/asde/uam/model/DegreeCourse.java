@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 /** 
  * @author Fabrizio 
- */
+**/
 
 @Entity
 @Table(name="degree_course")
