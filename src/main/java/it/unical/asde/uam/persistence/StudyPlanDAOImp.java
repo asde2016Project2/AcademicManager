@@ -16,12 +16,12 @@ public class StudyPlanDAOImp extends DAOImp<StudyPlan> {
 		commit();
 	}
 	
-	public StudyPlan getStudyPlanyId(int id) {
+	public StudyPlan getStudyPlanById(int id) {
 		StudyPlan studyPlan = (StudyPlan) getSession().createSQLQuery("SELECT * FROM study_plan WHERE studyPlanId=" + id).addEntity(StudyPlan.class).uniqueResult();
         return studyPlan;
     }
 	
-    public StudyPlan getStudyPlanyName(String name) {
+    public StudyPlan getStudyPlanByName(String name) {
     	StudyPlan studyPlan = (StudyPlan) getSession().createSQLQuery("SELECT * FROM study_plan WHERE name='" + name + "'").addEntity(StudyPlan.class).uniqueResult();
         return studyPlan;
     }

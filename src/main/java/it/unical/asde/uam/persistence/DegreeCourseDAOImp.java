@@ -19,11 +19,11 @@ public class DegreeCourseDAOImp extends DAOImp<DegreeCourse> {
 	}
 	
 	public DegreeCourse getDegreeCourseById(int id) {
-        DegreeCourse degreeCourse = (DegreeCourse) getSession().createSQLQuery("SELECT * FROM degree_course WHERE id=" + id).addEntity(DegreeCourse.class).uniqueResult();
+        DegreeCourse degreeCourse = (DegreeCourse) getSession().createSQLQuery("SELECT * FROM degree_course WHERE degree_course_id=" + id).addEntity(DegreeCourse.class).uniqueResult();
         return degreeCourse;
     }
 	
-    public DegreeCourse getExamByName(String name) {
+    public DegreeCourse getDegreeCourseByName(String name) {
     	DegreeCourse degreeCourse = (DegreeCourse) getSession().createSQLQuery("SELECT * FROM degree_course WHERE name='" + name + "'").addEntity(DegreeCourse.class).uniqueResult();
         return degreeCourse;
     }
