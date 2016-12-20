@@ -35,6 +35,7 @@ public class Exam implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "exam")
     private List<CareerExam> careerExams = new ArrayList<CareerExam>();
+  
 
     public Exam() {
     }
@@ -85,6 +86,8 @@ public class Exam implements Serializable {
     public void setCareerExams(List<CareerExam> careerExams) {
         this.careerExams = careerExams;
     }
+
+   
 
    
 

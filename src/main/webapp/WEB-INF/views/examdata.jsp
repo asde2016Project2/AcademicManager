@@ -16,6 +16,7 @@
                 <th width="120">CFU</th>
                 <th width="120">CODE</th>
             </tr>
+            
             <tr>
                 <td>${exam.id}</td>
                 <td>${exam.name}</td>

@@ -26,15 +26,6 @@ public class Attempt implements Serializable {
     @Column(name = "attempt_id")
     private int attemptId;
 
-    @Column(name = "exam") //foreign key with exam??
-    @ManyToOne
-    @JoinColumn(name = "examSession", nullable = false) //a examSession has a list of attempts? or maybe an exam has a list of attmept
-    private Exam exam;
-
-    @ManyToOne
-    @JoinColumn(name = "examSession", nullable = false)
-    private ExamSession examSession;
-
     @Column(name = "exam_date")
     private Date examDate;
 
@@ -53,9 +44,7 @@ public class Attempt implements Serializable {
     private Professor professor;
 
     public Attempt() {
-        this.attemptId = 0;
-        this.exam = new Exam();
-        this.examSession = new ExamSession();
+
         this.examDate = new Date();
         this.classroom = "";
         this.startRegistrationDate = new Date();
@@ -63,12 +52,10 @@ public class Attempt implements Serializable {
         this.professor = professor;
     }
 
-    public Attempt(int attemptId, Exam exam, ExamSession examSession, Date examDate, String classroom,
+    public Attempt(int attemptId, Date examDate, String classroom,
             Date startRegistrationDate, Date endRegistrationDate, Professor professor) {
         super();
-        this.attemptId = attemptId;
-        this.exam = exam;
-        this.examSession = examSession;
+
         this.examDate = examDate;
         this.classroom = classroom;
         this.startRegistrationDate = startRegistrationDate;
@@ -82,22 +69,6 @@ public class Attempt implements Serializable {
 
     public void setAttemptId(int attemptId) {
         this.attemptId = attemptId;
-    }
-
-    public Exam getExam() {
-        return exam;
-    }
-
-    public void setExam(Exam exam) {
-        this.exam = exam;
-    }
-
-    public ExamSession getExamSession() {
-        return examSession;
-    }
-
-    public void setExamSession(ExamSession examSession) {
-        this.examSession = examSession;
     }
 
     public Date getExamDate() {

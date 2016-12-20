@@ -18,6 +18,6 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="it.unical.asde.uam" />
+	<context:component-scan base-package="it.unical.asde.uam.controllers" />
 		
 </beans:beans>

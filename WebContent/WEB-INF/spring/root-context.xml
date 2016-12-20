@@ -44,8 +44,8 @@
     <tx:annotation-driven transaction-manager="transactionManager"/>
 	
     <!-- Root Context: defines shared resources visible to all other web components -->
-    <bean id="car" class="it.unical.asde.uam.model.Exam"></bean>
-    <bean id="model" class="it.unical.asde.uam.model.CareerExam"></bean>
+    <bean id="exam" class="it.unical.asde.uam.model.Exam"></bean>
+    <bean id="careerExam" class="it.unical.asde.uam.model.CareerExam"></bean>
     
     
 </beans>
