@@ -1,61 +1,82 @@
 package it.unical.asde.uam.persistence;
 
-import it.unical.asde.uam.dao.DAOImp;
-import static it.unical.asde.uam.dao.DAOImp.getSession;
-import java.util.List;
-
-import org.hibernate.SessionFactory;
-
+import it.unical.asde.uam.dao.DBHandler;
 import it.unical.asde.uam.model.Exam;
+import java.util.List;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class ExamDAOImp extends DAOImp<Exam>  {
+public class ExamDAOImp implements ExamDAO {
 
-        
+    private static final Logger LOG = LoggerFactory.getLogger(ExamDAOImp.class);
+    private DBHandler dbHandler;
+
+    public DBHandler getDbHandler() {
+        return dbHandler;
+    }
+
+    public void setDbHandler(DBHandler dbHandler) {
+        this.dbHandler = dbHandler;
+    }
+
+    public ExamDAOImp() {
+    }
+
+    @Override
     public void create(Exam exam) {
-
-        begin();
-        getSession().save(exam);
-        commit();
-
+        dbHandler.create(exam);
     }
 
+    @Override
+    public void delete(Exam exam) {
+        dbHandler.delete(exam);
+    }
 
+    @Override
+    public void update(Exam exam) {
+        dbHandler.update(exam);
+    }
+
+    @Override
+    public Exam retrieve(String examName) {
+        Session session = dbHandler.getSessionFactory().openSession();
+        String queryString = "from Exam where name = :ex";
+        Query query = session.createQuery(queryString);
+        query.setParameter("ex", examName);
+        Exam e = (Exam) query.uniqueResult();
+        dbHandler.close();
+        return e;
+    }
+
+    @Override
+    public boolean exists(String username) {
+        return retrieve(username) != null;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Exam> getAllExams() {
+
+        String queryString = "from Exam c order by c.name";
+        Query query = dbHandler.getSession().createQuery(queryString);
+        List<Exam> exams = (List<Exam>) query.list();
+        dbHandler.close();
+        return exams;
+    }
+
+    @Override
     public Exam getExamById(int id) {
+//        String hql = "from Exam where id =:id";
+//        Query query = dbHandler.getSession().createQuery(hql);
+//        query.setParameter("id", id);
+//        Exam e = (Exam) query.uniqueResult();
 
-        Exam exam = (Exam) getSession().createSQLQuery("SELECT * FROM exam WHERE id=" + id).addEntity(Exam.class).uniqueResult();
-
+        Session session = dbHandler.getSessionFactory().getCurrentSession();
+        Exam exam = (Exam) session.load(Exam.class, id);
+        LOG.info("exam successfully loaded, exam info: " + exam);
         return exam;
-
-    }
-
-    
-    public Exam getExamByName(String name) {
-
-        Exam exam = (Exam) getSession().createSQLQuery("SELECT * FROM exam WHERE name='" + name + "'").addEntity(Exam.class).uniqueResult();
-        return exam;
-    }
-
-    
-    @SuppressWarnings(value = "unchecked")
-    public List<Exam> getExamsOfTotCredits(int cfu) {
-        List<Exam> result = (List<Exam>) getSession().createSQLQuery("SELECT * FROM exam WHERE cfu='" + cfu + "'").addEntity(Exam.class).list();
-        return result;
-    }
-
-    
-    public void saveUpdates(Exam exam) {
-        begin();
-        getSession().update(exam);
-        commit();
-
-    }
-
-    
-    public void deleteExam(Exam exam) {
-        begin();
-        getSession().delete(exam);
-        commit();
-
     }
 
 }

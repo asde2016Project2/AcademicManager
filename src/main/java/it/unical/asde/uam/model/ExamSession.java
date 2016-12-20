@@ -11,8 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "session")
-public class Session implements Serializable{
+@Table(name = "exam_session")
+public class ExamSession implements Serializable{
 
 	/**
 	 * 
@@ -33,17 +33,15 @@ public class Session implements Serializable{
 	@Column(name = "academicYear")
 	private int academicYear;
 	
-	public Session() {
-		this.sessionId = 0;
+	public ExamSession() {
 		this.startingDate = new Date();
 		this.endingDate = new Date();
 		this.academicYear = 0;
 	}
 	
 	
-	public Session(int sessionId, Date startingDate, Date endingDate, int academicYear) {
+	public ExamSession( Date startingDate, Date endingDate, int academicYear) {
 		super();
-		this.sessionId = sessionId;
 		this.startingDate = startingDate;
 		this.endingDate = endingDate;
 		this.academicYear = academicYear;

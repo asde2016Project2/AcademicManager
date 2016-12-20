@@ -1,8 +1,8 @@
 package it.unical.asde.uam.model;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,7 +34,7 @@ public class Exam implements Serializable {
     private int code;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "exam")
-    private Set<CareerExam> careerExams = new HashSet<>(0);
+    private List<CareerExam> careerExams = new ArrayList<CareerExam>();
 
     public Exam() {
     }
@@ -78,12 +78,14 @@ public class Exam implements Serializable {
         this.code = code;
     }
 
-    public Set<CareerExam> getCareerExams() {
-        return this.careerExams;
+    public List<CareerExam> getCareerExams() {
+        return careerExams;
     }
 
-    public void setCareerExams(Set<CareerExam> careerExams) {
+    public void setCareerExams(List<CareerExam> careerExams) {
         this.careerExams = careerExams;
     }
+
+   
 
 }
