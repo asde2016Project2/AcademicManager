@@ -65,10 +65,14 @@ public class CareerExam implements Serializable{
         this.student = student;
     }
 
-    
-    
-    
-    
+    public CareerExam(boolean done, int grade, Date examDate, boolean mandatory) {
+        this.done = done;
+        this.grade = grade;
+        this.examDate = examDate;
+        this.mandatory = mandatory;
+    }
+
+   
     
     public int getCareerExamId() {
         return careerExamId;

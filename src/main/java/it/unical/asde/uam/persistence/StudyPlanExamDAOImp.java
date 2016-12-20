@@ -1,41 +1,45 @@
 package it.unical.asde.uam.persistence;
 
-import it.unical.asde.uam.model.Exam;
-import it.unical.asde.uam.model.StudyPlan;
-import it.unical.asde.uam.model.StudyPlanExam;
-import it.unical.asde.uam.persistence.core.AbstractDAO;
-import java.util.ArrayList;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Restrictions;
+import it.unical.asde.uam.dao.DBHandler;
 
-public class StudyPlanExamDAOImp extends AbstractDAO {
+public class StudyPlanExamDAOImp {
+
+    private DBHandler dBHandler;
+
+    public DBHandler getdBHandler() {
+        return dBHandler;
+    }
+
+    public void setdBHandler(DBHandler dBHandler) {
+        this.dBHandler = dBHandler;
+    }
 
     public StudyPlanExamDAOImp() {
         super();
     }
 
-    public ArrayList<Exam> getExamsByStudyPlan(StudyPlan sp) {
-
-        Criterion c = Restrictions.eq("study_plan", sp.getStudyPlanId());
-        return (ArrayList<Exam>) findByCriteria(c);
-
-    }
-
-    public ArrayList<StudyPlan> getStudyPlansForExam(Exam e) {
-
-        Criterion c = Restrictions.eq("exam", e.getId());
-        return (ArrayList<StudyPlan>) findByCriteria(c);
-    }
-
-    public String getPeriodForExam(StudyPlan studyPlan, Exam e) {
-
-        ArrayList<Criterion> criteriaList = new ArrayList<>();
-        criteriaList.add(Restrictions.eq("exam", e.getId()));
-        criteriaList.add(Restrictions.eq("study_plan", studyPlan.getStudyPlanId()));
-
-        StudyPlanExam spe = (StudyPlanExam) findOne(criteriaList.toArray(new Criterion[criteriaList.size()]));
-
-        return spe.getPeriod();
-    }
+//    public List<Exam> getExamsByStudyPlan(StudyPlan sp) {
+//
+//        Criterion c = Restrictions.eq("study_plan", sp.getStudyPlanId());
+//        return (List<Exam>) dBHandler.findByCriteria(c);
+//
+//    }
+//
+//    public ArrayList<StudyPlan> getStudyPlansForExam(Exam e) {
+//
+//        Criterion c = Restrictions.eq("exam", e.getId());
+//        return (ArrayList<StudyPlan>) dBHandler.findByCriteria(c);
+//    }
+//
+//    public String getPeriodForExam(StudyPlan studyPlan, Exam e) {
+//
+//        ArrayList<Criterion> criteriaList = new ArrayList<Criterion>();
+//        criteriaList.add(Restrictions.eq("exam", e.getId()));
+//        criteriaList.add(Restrictions.eq("study_plan", studyPlan.getStudyPlanId()));
+//
+//        StudyPlanExam spe = (StudyPlanExam) dBHandler.findOne(criteriaList.toArray(new Criterion[criteriaList.size()]));
+//
+//        return spe.getPeriod();
+//    }
 
 }

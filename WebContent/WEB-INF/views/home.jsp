@@ -1,15 +1,46 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Home Page</title>
-</head>
-<body>
-<h1>Home Page of Academia Manager</h1>
-<h2>${welcomeMessage}</h2>
+    <head>
+        <title>Academic Manager</title>
+        <link rel="stylesheet" type="text/css" href="../resources/script/jquery-ui-1.11.4/jquery-ui.css">
+        <link rel="stylesheet" type="text/css" href="../resources/style/style.css">
+        <script src="../resources/script/jquery-ui-1.11.4/external/jquery/jquery.js"></script>
+        <script src="../resources/script/jquery-ui-1.11.4/jquery-ui.js"></script>
 
+        <script>
+            $(document).ready(function () {
+                $("#button").button();
+            });
 
-</body>
+            $(document).ready(function () {
+                $("#content").buttonset();
+            });
+            $(document).ready(function () {
+                $('#form input').on('change', function () {
+                    var v = $("input[type=radio]:checked", "#form").attr("urlPage");
+                    $("#result *").remove();
+                    $("#result").load("../resources/" + v);
+                });
+            });
+
+            $(document).ready(function () {
+                $("#footer").load("../resources/footer.html");
+            });
+        </script>
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="header"></div>
+
+            <h3>Exam manager</h3>
+            <br/>
+            <a href="<c:url value="exams"/>" target="_blank">Exams list</a>
+            <br/>
+
+        </div>
+
+        <div id="footer"></div>
+    </body>
 </html>
