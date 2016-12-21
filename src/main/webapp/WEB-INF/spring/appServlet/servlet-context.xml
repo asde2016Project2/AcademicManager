@@ -20,7 +20,7 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-
+		
 	<context:component-scan base-package="it.unical.asde.uam.controllers" />
 	<!-- Register the messages.properties -->
 	<beans:bean id="messageSource"
