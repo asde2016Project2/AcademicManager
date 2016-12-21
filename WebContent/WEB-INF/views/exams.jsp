@@ -100,6 +100,7 @@
                                 <td><a href="<c:url value='/edit/${exam.id}'/>">Edit</a></td>
                                 <td><a href="<c:url value='/remove/${exam.id}'/>">Delete</a></td>
                             </tr>
+                            
                         </c:forEach>
                     </table>
                 </c:if>
