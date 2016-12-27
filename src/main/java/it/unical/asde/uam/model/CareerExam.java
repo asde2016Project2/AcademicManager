@@ -7,6 +7,8 @@ package it.unical.asde.uam.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -23,10 +26,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "career_exam")
-public class CareerExam implements Serializable{
+public class CareerExam implements Serializable {
 
-    
-    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,24 +45,22 @@ public class CareerExam implements Serializable{
     @Column(name = "mandatory")
     private boolean mandatory;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "careerExam")
+    private Set<Attempt> attempts = new HashSet<Attempt>(0);
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "exam", nullable = false)
-    private Exam exam;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     private Student student;
-    
-    public CareerExam()
-    {
+
+    public CareerExam() {
     }
 
-    public CareerExam(boolean done, int grade, Date examDate, boolean mandatory, Exam exam, Student student) {
+    public CareerExam(boolean done, int grade, Date examDate, boolean mandatory, Set<Attempt> attempts, Student student) {
         this.done = done;
         this.grade = grade;
         this.examDate = examDate;
         this.mandatory = mandatory;
-        this.exam = exam;
+        this.attempts = attempts;
         this.student = student;
     }
 
@@ -72,8 +71,6 @@ public class CareerExam implements Serializable{
         this.mandatory = mandatory;
     }
 
-   
-    
     public int getCareerExamId() {
         return careerExamId;
     }
@@ -114,20 +111,20 @@ public class CareerExam implements Serializable{
         this.mandatory = mandatory;
     }
 
-    public Exam getExam() {
-        return exam;
+    public Set<Attempt> getAttempts() {
+        return attempts;
     }
 
-    public void setExam(Exam exam) {
-        this.exam = exam;
+    public void setAttempts(Set<Attempt> attempts) {
+        this.attempts = attempts;
     }
 
-	public Student getStudent() {
-		return student;
-	}
+    public Student getStudent() {
+        return student;
+    }
 
-	public void setStudent(Student student) {
-		this.student = student;
-	}
+    public void setStudent(Student student) {
+        this.student = student;
+    }
 
 }

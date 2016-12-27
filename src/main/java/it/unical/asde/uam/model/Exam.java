@@ -1,8 +1,8 @@
 package it.unical.asde.uam.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,8 +34,10 @@ public class Exam implements Serializable {
     private int code;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "exam")
-    private List<CareerExam> careerExams = new ArrayList<CareerExam>();
-  
+    private Set<Attempt> attempts = new HashSet<Attempt>(0);
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "exam")
+    private Set<StudyPlanExam> studyPlanExams = new HashSet<>();
 
     public Exam() {
     }
@@ -45,6 +47,15 @@ public class Exam implements Serializable {
         this.name = name;
         this.cfu = cfu;
         this.code = code;
+    }
+
+    public Exam(int id, int cfu, int code, String name, Set<Attempt> attempts, Set<StudyPlanExam> studyPlanExams) {
+        this.id = id;
+        this.cfu = cfu;
+        this.code = code;
+        this.name = name;
+        this.attempts = attempts;
+        this.studyPlanExams = studyPlanExams;
     }
 
     public int getId() {
@@ -79,16 +90,20 @@ public class Exam implements Serializable {
         this.code = code;
     }
 
-    public List<CareerExam> getCareerExams() {
-        return careerExams;
+    public Set<Attempt> getAttempts() {
+        return attempts;
     }
 
-    public void setCareerExams(List<CareerExam> careerExams) {
-        this.careerExams = careerExams;
+    public void setAttempts(Set<Attempt> attempts) {
+        this.attempts = attempts;
     }
 
-   
+    public Set<StudyPlanExam> getStudyPlanExams() {
+        return studyPlanExams;
+    }
 
-   
+    public void setStudyPlanExams(Set<StudyPlanExam> studyPlanExams) {
+        this.studyPlanExams = studyPlanExams;
+    }
 
 }

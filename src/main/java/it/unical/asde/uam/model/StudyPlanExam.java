@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,8 +22,8 @@ public class StudyPlanExam implements Serializable {
     private StudyPlan studyPlan;
     
     @Id
-    @ManyToOne
-    @JoinColumn(name = "exam")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "exam_id", nullable = false)
     private Exam exam; //, unique=true no
 
     @Column(nullable = false, length = 50, name="period")

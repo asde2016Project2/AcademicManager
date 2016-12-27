@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,21 +40,28 @@ public class Attempt implements Serializable {
     private Date endRegistrationDate;
 
 //	@Column(name = "professor") //foreign key with professor??
-    @ManyToOne
-    @JoinColumn(name = "examSession", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
     private Professor professor;
 
-    public Attempt() {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "career_exam_id", nullable = false)
+    private CareerExam careerExam;
 
-        this.examDate = new Date();
-        this.classroom = "";
-        this.startRegistrationDate = new Date();
-        this.endRegistrationDate = new Date();
-        this.professor = professor;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "exam_id", nullable = false)
+    private Exam exam;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "exam_session_id", nullable = false)
+    private ExamSession examSession;
+
+    public Attempt() {
     }
 
     public Attempt(int attemptId, Date examDate, String classroom,
-            Date startRegistrationDate, Date endRegistrationDate, Professor professor) {
+            Date startRegistrationDate, Date endRegistrationDate, Professor professor,
+            CareerExam careerExam, Exam exam, ExamSession examSession) {
         super();
 
         this.examDate = examDate;
@@ -61,6 +69,9 @@ public class Attempt implements Serializable {
         this.startRegistrationDate = startRegistrationDate;
         this.endRegistrationDate = endRegistrationDate;
         this.professor = professor;
+        this.careerExam = careerExam;
+        this.exam = exam;
+        this.examSession = examSession;
     }
 
     public int getAttemptId() {
@@ -109,6 +120,30 @@ public class Attempt implements Serializable {
 
     public void setProfessor(Professor professor) {
         this.professor = professor;
+    }
+
+    public CareerExam getCareerExam() {
+        return careerExam;
+    }
+
+    public void setCareerExam(CareerExam careerExam) {
+        this.careerExam = careerExam;
+    }
+
+    public Exam getExam() {
+        return exam;
+    }
+
+    public void setExam(Exam exam) {
+        this.exam = exam;
+    }
+
+    public ExamSession getExamSession() {
+        return examSession;
+    }
+
+    public void setExamSession(ExamSession examSession) {
+        this.examSession = examSession;
     }
 
 }

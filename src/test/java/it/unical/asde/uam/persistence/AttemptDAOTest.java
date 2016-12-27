@@ -22,10 +22,10 @@ public class AttemptDAOTest {
 	public void tearDown() throws Exception {
 	}
 
-	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
+//	@Test
+//	public void test() {
+//		fail("Not yet implemented");
+//	}
 	
 	
 }

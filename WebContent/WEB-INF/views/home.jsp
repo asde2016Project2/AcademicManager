@@ -4,10 +4,10 @@
 <html>
     <head>
         <title>Academic Manager</title>
-        <link rel="stylesheet" type="text/css" href="../resources/script/jquery-ui-1.11.4/jquery-ui.css">
-        <link rel="stylesheet" type="text/css" href="../resources/style/style.css">
-        <script src="../resources/script/jquery-ui-1.11.4/external/jquery/jquery.js"></script>
-        <script src="../resources/script/jquery-ui-1.11.4/jquery-ui.js"></script>
+        <link rel="stylesheet" type="text/css" href="/resources/script/jquery-ui-1.11.4/jquery-ui.css">
+        <link rel="stylesheet" type="text/css" href="/resources/style/style.css">
+        <script src="/resources/script/jquery-ui-1.11.4/external/jquery/jquery.js"></script>
+        <script src="/resources/script/jquery-ui-1.11.4/jquery-ui.js"></script>
 
         <script>
             $(document).ready(function () {
@@ -37,6 +37,8 @@
             <h3>Exam manager</h3>
             <br/>
             <a href="<c:url value="exams"/>" target="_blank">Exams list</a>
+            <a href="<c:url value="studentlist"/>" target="_blank"> Student List</a>
+            <a href="<c:url value="student"/>" target="_blank">Student Registration</a>
             <br/>
 
         </div>

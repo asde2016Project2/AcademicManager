@@ -26,6 +26,13 @@ public class HomeController {
 
     }
 
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    public String login(Model model) {
+        model.addAttribute("login", "Login page succefully loaded");
+        return "login";
+
+    }
+
     @RequestMapping(value = "exams", method = RequestMethod.GET)
     public String listBooks(Model model) {
         ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");

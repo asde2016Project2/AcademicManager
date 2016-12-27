@@ -55,11 +55,11 @@ public class ExamDAOTest {
 //        assertEquals(new Long(10), examDAO.());
 //    }
 
-//    @Test
-//    public void testGetUserByUsername() {
-//        ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
-//        assertEquals("password1", examDAO.retrieve("Enterprise").getName());
-//    }
+    @Test
+    public void testGetUserByUsername() {
+        ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
+        assertNull(examDAO.getAllExams().size());
+    }
 
     @Test
     public void testGetExamByName() {

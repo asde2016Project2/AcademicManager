@@ -78,7 +78,7 @@
             <div>
 
 
-                <a href="../../WEB-INF/views/createExam.jsp">Create Examinations</a>
+                <a href="../../WEB-INF/views/examdata.jsp">Create Examinations</a>
                 <h1>Exam List</h1>
 
                 <c:if test="${!empty listExams}">
