@@ -11,6 +11,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -40,6 +42,9 @@ public class ExamSession implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "examSession")
     private Set<Attempt> attempts= new HashSet<Attempt>();
 
+    @ManyToOne( fetch=FetchType.LAZY)
+    @JoinColumn(name="degree_course_id")
+    private DegreeCourse degreeCourse;
     
     
     public ExamSession() {
@@ -48,11 +53,12 @@ public class ExamSession implements Serializable {
         this.academicYear = 0;
     }
 
-    public ExamSession(Date startingDate, Date endingDate, int academicYear) {
+    public ExamSession(Date startingDate, Date endingDate, int academicYear, DegreeCourse degreeCourse) {
         super();
         this.startingDate = startingDate;
         this.endingDate = endingDate;
         this.academicYear = academicYear;
+        this.degreeCourse = degreeCourse;
     }
 
     public int getSessionId() {
@@ -97,6 +103,16 @@ public class ExamSession implements Serializable {
         this.attempts = attempts;
     }
 
+	public DegreeCourse getDegreeCourse() {
+		return degreeCourse;
+	}
+
+	public void setDegreeCourse(DegreeCourse degreeCourse) {
+		this.degreeCourse = degreeCourse;
+	}
+
+    
+    
     
 
 }

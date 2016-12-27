@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -14,50 +16,53 @@ import javax.persistence.Table;
 @Table(name = "study_plan_exam")
 public class StudyPlanExam implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "study_plan")
-    private StudyPlan studyPlan;
-    
-    @Id
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "exam_id", nullable = false)
-    private Exam exam; //, unique=true no
+	private static final long serialVersionUID = 1L;
 
-    @Column(nullable = false, length = 50, name="period")
-    private String period; //, unique=true no
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "study_plan_exam_id")
+	private int id;
 
-    public StudyPlanExam(StudyPlan studyPlan, Exam exam, String period) {
-        super(); //id is not needed here
-        this.studyPlan = studyPlan;
-        this.exam = exam;
-        this.period = period;
-    }
+	@ManyToOne
+	@JoinColumn(name = "study_plan_id", nullable=false)
+	private StudyPlan studyPlan;
 
-    public StudyPlan getStudyPlan() {
-        return studyPlan;
-    }
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "exam_id", nullable = false)
+	private Exam exam; // , unique=true no
 
-    public void setStudyPlan(StudyPlan studyPlan) {
-        this.studyPlan = studyPlan;
-    }
+	@Column(nullable = false, length = 50, name = "period")
+	private String period; // , unique=true no
 
-    public Exam getExam() {
-        return exam;
-    }
+	public StudyPlanExam(StudyPlan studyPlan, Exam exam, String period) {
+		super(); // id is not needed here
+		this.studyPlan = studyPlan;
+		this.exam = exam;
+		this.period = period;
+	}
 
-    public void setExam(Exam exam) {
-        this.exam = exam;
-    }
+	public StudyPlan getStudyPlan() {
+		return studyPlan;
+	}
 
-    public String getPeriod() {
-        return period;
-    }
+	public void setStudyPlan(StudyPlan studyPlan) {
+		this.studyPlan = studyPlan;
+	}
 
-    public void setPeriod(String period) {
-        this.period = period;
-    }
+	public Exam getExam() {
+		return exam;
+	}
+
+	public void setExam(Exam exam) {
+		this.exam = exam;
+	}
+
+	public String getPeriod() {
+		return period;
+	}
+
+	public void setPeriod(String period) {
+		this.period = period;
+	}
 
 }
