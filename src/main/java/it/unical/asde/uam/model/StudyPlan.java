@@ -1,6 +1,9 @@
 package it.unical.asde.uam.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -32,6 +36,11 @@ public class StudyPlan implements Serializable{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="degree_course_id", nullable=false)
 	private DegreeCourse degreeCourse;
+	
+	
+	@OneToMany(fetch= FetchType.LAZY,mappedBy="studyPlan")
+	private List<StudyPlanExam> studyPlanExams= new ArrayList<>();
+	
 	
 	public StudyPlan() {}
 
@@ -64,4 +73,15 @@ public class StudyPlan implements Serializable{
 	public void setDegreeCourse(DegreeCourse degreeCourse) {
 		this.degreeCourse = degreeCourse;
 	}
+
+	public List<StudyPlanExam> getStudyPlanExams() {
+		return studyPlanExams;
+	}
+
+	public void setStudyPlanExams(List<StudyPlanExam> studyPlanExams) {
+		this.studyPlanExams = studyPlanExams;
+	}
+	
+	
+	
 }

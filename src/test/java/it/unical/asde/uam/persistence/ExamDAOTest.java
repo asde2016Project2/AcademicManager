@@ -9,6 +9,8 @@ import it.unical.asde.uam.model.Exam;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+
+import org.junit.After;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -39,27 +41,23 @@ public class ExamDAOTest {
         }
     }
 
-//    @After
-//    public void delete() {
-//        ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
-//        for (int i = 0; i < 10; i++) {
-//            Exam e = new Exam();
-//            e.setName("Enterprise" + i);
-//            examDAO.delete(e);
-//        }
-//    }
-
-//    @Test
-//    public void testNumberOfExams() {
-//        ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
-//        assertEquals(new Long(10), examDAO.());
-//    }
-
-    @Test
-    public void testGetUserByUsername() {
+    @After
+    public void delete() {
         ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
-        assertNull(examDAO.getAllExams().size());
+        for (int i = 0; i < 10; i++) {
+            Exam e = new Exam();
+            e.setName("Enterprise" + i);
+            examDAO.delete(e);
+        }
     }
+
+  
+//
+//    @Test
+//    public void testGetUserByUsername() {
+//        ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
+//        assertNull(examDAO.getAllExams().size());
+//    }
 
     @Test
     public void testGetExamByName() {

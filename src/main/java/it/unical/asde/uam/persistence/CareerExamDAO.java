@@ -17,7 +17,7 @@ public interface CareerExamDAO {
 
     void deleteCareerExam(CareerExam careerExam);
 
-    CareerExam fetchCareerExamInfo(int careerExam);
+    CareerExam retrieve(int careerExam);
 
     void update(CareerExam careerExam);
     

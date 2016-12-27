@@ -34,6 +34,9 @@ public class DegreeCourse implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy="degreeCourse")	
 	private List<StudyPlan> studyPlans = new ArrayList<StudyPlan>();
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="degreeCourse")
+	private List<ExamSession> examSessions = new ArrayList<>();
+	
 	public DegreeCourse(){}
 	
 	public DegreeCourse(String name){ 
@@ -55,4 +58,23 @@ public class DegreeCourse implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public List<StudyPlan> getStudyPlans() {
+		return studyPlans;
+	}
+
+	public void setStudyPlans(List<StudyPlan> studyPlans) {
+		this.studyPlans = studyPlans;
+	}
+
+	public List<ExamSession> getExamSessions() {
+		return examSessions;
+	}
+
+	public void setExamSessions(List<ExamSession> examSessions) {
+		this.examSessions = examSessions;
+	}
+	
+	
+	
 }

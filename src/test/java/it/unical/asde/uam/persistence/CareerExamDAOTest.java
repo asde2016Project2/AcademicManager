@@ -8,11 +8,16 @@ package it.unical.asde.uam.persistence;
 import it.unical.asde.uam.model.CareerExam;
 import it.unical.asde.uam.model.Exam;
 import it.unical.asde.uam.model.Student;
+
+import static org.junit.Assert.*;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import javax.validation.constraints.AssertTrue;
+
 import org.junit.After;
-import static org.junit.Assert.assertNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,64 +32,47 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
  *
  * @author Gezahegn
  */
-@TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
+@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class })
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"file:**/WEB-INF/spring/root-context.xml"})
+@ContextConfiguration(locations = { "file:**/WEB-INF/spring/root-context.xml" })
 public class CareerExamDAOTest {
 
-    public CareerExamDAOTest() {
-    }
+	public CareerExamDAOTest() {
+	}
 
-    @Autowired
-    private ApplicationContext context;
+	@Autowired
+	private ApplicationContext context;
 
-    @Before
-    public void setUp() {
-        CareerExamDAO careerExamDAO = (CareerExamDAO) context.getBean("careerExamDAO");
-        for (int i = 0; i < 10; i++) {
-            Exam exam = new Exam();
-            exam.setName("exam name");
-            Student student = new Student();
-            student.setUsername("test");
-            Calendar c = new GregorianCalendar();
-            c.set(Calendar.YEAR, 1982);
-            c.set(Calendar.MONTH, Calendar.DECEMBER);
-            c.set(Calendar.DAY_OF_MONTH, 25);
-            Date d = c.getTime();
-            boolean done = true;
-            boolean mandatory = true;
-            int grade = 30;
-            CareerExam careerExam = new CareerExam(done, grade, d, mandatory);
-//            careerExam.setDone(done);
-//            careerExam.setGrade(30);
-//            careerExam.setExamDate(d);
-//            careerExam.setMandatory(mandatory);
+	@Before
+	public void setUp() {
+		CareerExamDAO careerExamDAO = (CareerExamDAO) context.getBean("careerExamDAO");
 
-            careerExamDAO.create(careerExam);
-        }
+		for (int i = 0; i < 10; i++) {
 
-    }
+			// CareerExam e = new CareerExam("Enterprise" + i, 12 + i, 2 + i);
+			CareerExam e = new CareerExam(true, 30 + i, true);
+			careerExamDAO.create(e);
+		}
 
-    @After
-    public void tearDown() {
+	}
 
-        CareerExamDAO careerExamDAO = (CareerExamDAO) context.getBean("careerExamDAO");
-        for (int i = 0; i < 10; i++) {
-            CareerExam e = new CareerExam();
-            e.setGrade(30 + i);
-            careerExamDAO.deleteCareerExam(e);
-        }
-    }
+	@After
+	public void tearDown() {
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    @Test
-    public void fetchCareerExam() {
-        CareerExamDAO careerExamDAO = (CareerExamDAO) context.getBean("careerExamDAO");
-        CareerExam e = new CareerExam();
-        e.setGrade(30);
-        int grades = e.getGrade();
-        assertNull(careerExamDAO.fetchCareerExamInfo(grades));
-    }
+		CareerExamDAO careerExamDAO = (CareerExamDAO) context.getBean("careerExamDAO");
+		for (int i = 0; i < 10; i++) {
+			CareerExam e = new CareerExam();
+			e.setGrade(30 + i);
+			careerExamDAO.deleteCareerExam(e);
+		}
+	}
+
+	// TODO add test methods here.
+	// The methods must be annotated with annotation @Test. For example:
+	//
+	@Test
+	public void fetchCareerExam() {
+		CareerExamDAO careerExamDAO = (CareerExamDAO) context.getBean("careerExamDAO");
+		careerExamDAO.retrieve(30);
+	}
 }
