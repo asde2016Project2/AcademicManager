@@ -39,8 +39,7 @@ public class CareerExam implements Serializable {
 
     @Column(name = "grade")
     private int grade;
-    @Column(name = "exam_date")
-    private Date examDate;
+    
 
     @Column(name = "mandatory")
     private boolean mandatory;
@@ -55,19 +54,17 @@ public class CareerExam implements Serializable {
     public CareerExam() {
     }
 
-    public CareerExam(boolean done, int grade, Date examDate, boolean mandatory, Set<Attempt> attempts, Student student) {
+    public CareerExam(boolean done, int grade,  boolean mandatory, Set<Attempt> attempts, Student student) {
         this.done = done;
         this.grade = grade;
-        this.examDate = examDate;
         this.mandatory = mandatory;
         this.attempts = attempts;
         this.student = student;
     }
 
-    public CareerExam(boolean done, int grade, Date examDate, boolean mandatory) {
+    public CareerExam(boolean done, int grade,  boolean mandatory) {
         this.done = done;
         this.grade = grade;
-        this.examDate = examDate;
         this.mandatory = mandatory;
     }
 
@@ -95,13 +92,7 @@ public class CareerExam implements Serializable {
         this.grade = grade;
     }
 
-    public Date getExamDate() {
-        return examDate;
-    }
-
-    public void setExamDate(Date examDate) {
-        this.examDate = examDate;
-    }
+   
 
     public boolean isMandatory() {
         return mandatory;

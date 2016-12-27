@@ -7,7 +7,10 @@ package it.unical.asde.uam.persistence;
 
 import it.unical.asde.uam.dao.DBHandler;
 import it.unical.asde.uam.model.CareerExam;
+import it.unical.asde.uam.model.Exam;
+
 import org.hibernate.Query;
+import org.hibernate.Session;
 
 /**
  *
@@ -45,13 +48,17 @@ public class CareerExamDAOImp implements CareerExamDAO {
         dbHandler.delete(careerExam);
     }
 
+  
+    
     @Override
-    public CareerExam fetchCareerExamInfo(int careerExam) {
-        String hql = "from CareerExam where grade =:na";
-        Query query = dbHandler.getSession().createQuery(hql);
-        query.setParameter("na", careerExam);
-        CareerExam ce = (CareerExam) query.uniqueResult();
-
-        return ce;
+    public CareerExam retrieve(int grades) {
+        Session session = dbHandler.getSessionFactory().openSession();
+        String queryString = "from CareerExam where grade = :ex";
+        Query query = session.createQuery(queryString);
+        query.setParameter("ex", grades);
+        CareerExam e = (CareerExam) query.uniqueResult();
+        dbHandler.close();
+        return e;
     }
+
 }
