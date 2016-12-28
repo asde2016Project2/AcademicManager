@@ -60,23 +60,6 @@ public class StudentController {
 		return "examdata";
 	}
 
-	// Order of BindingResult matters (it must be just after ModelAttribute)
-	@RequestMapping(value = "/exams", method = RequestMethod.POST)
-	public String executeOperation(@Valid @ModelAttribute("examForm") Exam exam, 
-			BindingResult result, Model model,
-			HttpServletRequest request) {
-		if (result.hasErrors()) {
-			return "exams";
-		}
-
-		ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
-		if (examDAO.exists(exam.getName())) {
-			model.addAttribute("error", "exam name is already used");
-			return "exams";
-		} else {
-			examDAO.create(exam);
-			return "redirect:/";
-		}
-	}
+	
 
 }

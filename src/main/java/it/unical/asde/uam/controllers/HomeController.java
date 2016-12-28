@@ -20,8 +20,8 @@ public class HomeController {
     private WebApplicationContext context;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String home(Model model, HttpServletRequest request) {
-        model.addAttribute("examForm", new Exam());
+    public String home() {
+//        model.addAttribute("examForm", new Exam());
         return "home";
 
     }
