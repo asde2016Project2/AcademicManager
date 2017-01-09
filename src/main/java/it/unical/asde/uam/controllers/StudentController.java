@@ -3,12 +3,10 @@ package it.unical.asde.uam.controllers;
 import it.unical.asde.uam.model.Exam;
 import it.unical.asde.uam.persistence.ExamDAO;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.WebApplicationContext;
 
 @Controller
+@RequestMapping("/student")
 public class StudentController {
 
 	@Autowired
@@ -33,11 +32,11 @@ public class StudentController {
 		ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
 		model.addAttribute("examForm", new Exam());
 		model.addAttribute("listExams", examDAO.getAllExams());
-		return "exams";
+		return "student/exams";
 
 	}
 
-	@RequestMapping(value = "/exams/add", method = RequestMethod.POST)
+	@RequestMapping(value = "exams/add", method = RequestMethod.POST)
 	public String addExam(@ModelAttribute("examForm") Exam exam) {
 		ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
 		if (exam.getId() == 0) {
@@ -47,7 +46,7 @@ public class StudentController {
 			examDAO.create(exam);
 		}
 
-		return "redirect:/exams";
+		return "redirect:student/exams";
 
 	}
 	
@@ -57,7 +56,7 @@ public class StudentController {
 		ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
 		model.addAttribute("exam", examDAO.getExamById(id));
 
-		return "examdata";
+		return "student/examdata";
 	}
 
 	

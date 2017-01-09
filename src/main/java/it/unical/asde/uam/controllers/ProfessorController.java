@@ -14,34 +14,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.WebApplicationContext;
 
 @Controller
-@RequestMapping("/")
-public class HomeController {
+@RequestMapping("/professor")
+public class ProfessorController {
 
     @Autowired
     private WebApplicationContext context;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String home() {
+    @RequestMapping(value="dashboard",method = RequestMethod.GET)
+    public String dashboardGet() {
 //        model.addAttribute("examForm", new Exam());
-        return "home";
+        return "professor/dashboard";
 
-    }
-
-    @RequestMapping(value = "loginStudent", method = RequestMethod.GET)
-    public String loginStudentGet(Model model,HttpServletRequest request){
-        
-        model.addAttribute("entity", new Student());
-        return "loginStudent";
     }
     
-    @RequestMapping(value = "loginStudent", method = RequestMethod.POST)
-    public String loginStudentPost(Model model, HttpServletRequest request){
-        
-        model.addAttribute("entity", new Student());
-        return "loginStudent";
-    }
-    
-
     
 
 }

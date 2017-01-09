@@ -36,9 +36,10 @@
 
             <h3>Exam manager</h3>
             <br/>
-            <a href="<c:url value="exams"/>" target="_blank">Exams list</a>
-            <a href="<c:url value="studentlist"/>" target="_blank"> Student List</a>
-            <a href="<c:url value="student"/>" target="_blank">Student Registration</a>
+            <a href="<c:url value="login"/>" target="_blank">Login</a>
+            <a href="<c:url value="student/exams"/>" target="_blank">Exams list</a>
+            <a href="<c:url value="student/studentlist"/>" target="_blank"> Student List</a>
+            <a href="<c:url value="student/student"/>" target="_blank">Student Registration</a>
             <br/>
 
         </div>
