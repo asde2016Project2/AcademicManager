@@ -26,7 +26,7 @@
             });
 
             $(document).ready(function () {
-                $("#footer").load("../resources/footer.html");
+                $("#footer").load("resources/footer.html");
             });
         </script>
     </head>

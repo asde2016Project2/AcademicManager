@@ -39,6 +39,10 @@
     <bean id="examDAO" class="it.unical.asde.uam.persistence.ExamDAOImp" >
         <property name="dbHandler" ref="dbHandler" />
     </bean>
+    
+    <bean id="professorDAO" class="it.unical.asde.uam.persistence.ProfessorDAOImp" >
+        <property name="dbHandler" ref="dbHandler" />
+    </bean>
 	
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory" />
@@ -49,6 +53,7 @@
     <bean id="user" class="it.unical.asde.uam.model.User"></bean>
     <bean id="careerExam" class="it.unical.asde.uam.model.CareerExam"></bean>
     <bean id="exam" class="it.unical.asde.uam.model.Exam"></bean>
+    <bean id="professor" class="it.unical.asde.uam.model.Professor"></bean>
 	
 
 </beans>
