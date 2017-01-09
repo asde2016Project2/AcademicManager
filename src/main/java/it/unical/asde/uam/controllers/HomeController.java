@@ -27,21 +27,4 @@ public class HomeController {
 
     }
 
-    @RequestMapping(value = "loginStudent", method = RequestMethod.GET)
-    public String loginStudentGet(Model model,HttpServletRequest request){
-        
-        model.addAttribute("entity", new Student());
-        return "loginStudent";
-    }
-    
-    @RequestMapping(value = "loginStudent", method = RequestMethod.POST)
-    public String loginStudentPost(Model model, HttpServletRequest request){
-        
-        model.addAttribute("entity", new Student());
-        return "loginStudent";
-    }
-    
-
-    
-
 }
