@@ -4,10 +4,10 @@
 <html>
     <head>
         <title>Academic Manager</title>
-        <link rel="stylesheet" type="text/css" href="/resources/script/jquery-ui-1.11.4/jquery-ui.css">
-        <link rel="stylesheet" type="text/css" href="/resources/style/style.css">
-        <script src="/resources/script/jquery-ui-1.11.4/external/jquery/jquery.js"></script>
-        <script src="/resources/script/jquery-ui-1.11.4/jquery-ui.js"></script>
+        <link rel="stylesheet" type="text/css" href="<c:url value="/resources/script/jquery-ui-1.11.4/jquery-ui.css"/>">
+        <link rel="stylesheet" type="text/css" href="<c:url value="/resources/style/style.css"/>">
+        <script src="<c:url value="/resources/script/jquery-ui-1.11.4/external/jquery/jquery.js"/>"></script>
+        <script src="<c:url value="/resources/script/jquery-ui-1.11.4/jquery-ui.js"/>"></script>
 
         <script>
             $(document).ready(function () {
@@ -36,10 +36,12 @@
 
             <h3>Exam manager</h3>
             <br/>
-            <a href="<c:url value="login"/>" target="_blank">Login</a>
-            <a href="<c:url value="student/exams"/>" target="_blank">Exams list</a>
-            <a href="<c:url value="student/studentlist"/>" target="_blank"> Student List</a>
-            <a href="<c:url value="student/student"/>" target="_blank">Student Registration</a>
+            <a href="login" >Login</a>
+            <a href="<c:url value="/student/exams"/>">Exams list</a>
+            <a href="<c:url value="/student/exams/add"/>">Add Exam</a>
+            <a href="<c:url value="/student/studentList"/>"> Student List</a>
+            <a href="<c:url value="/professor/dashboard"/>"> Professor dashboard</a>
+            <a href="<c:url value="/admin/dashboard"/>" >Admin Dashboard</a>
             <br/>
 
         </div>

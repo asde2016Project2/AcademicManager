@@ -14,16 +14,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.WebApplicationContext;
 
 @Controller
-@RequestMapping("/student")
+@RequestMapping("student")
 public class StudentController {
 
 	@Autowired
 	private WebApplicationContext context;
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value="dashboard",method = RequestMethod.GET)
 	public String home(Model model, HttpServletRequest request) {
 		model.addAttribute("examForm", new Exam());
-		return "home";
+		return "dashaboard";
 
 	}
 
