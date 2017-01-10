@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.WebApplicationContext;
 
 @Controller
-@RequestMapping("student")
+@RequestMapping("/student")
 public class StudentController {
 
 	@Autowired

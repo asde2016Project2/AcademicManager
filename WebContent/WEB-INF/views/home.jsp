@@ -36,7 +36,7 @@
 
             <h3>Exam manager</h3>
             <br/>
-            <a href="login" >Login</a>
+            <a href="<c:url value="/login"/>" >Login</a>
             <a href="<c:url value="/student/exams"/>">Exams list</a>
             <a href="<c:url value="/student/exams/add"/>">Add Exam</a>
             <a href="<c:url value="/student/studentList"/>"> Student List</a>
