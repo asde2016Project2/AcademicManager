@@ -39,17 +39,7 @@ public class HomeController extends BaseController{
     
     
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String doLogin(@Valid @ModelAttribute("loginForm") LoginFormDTO loginForm, BindingResult result, HttpServletRequest request, Model model) {                
-                        
-        /*                
-        if(result.hasErrors()){  
-           model.addAttribute("loginForm",loginForm);
-           return "login";
-        }
-        */
-        
-        System.out.println("Username: "+loginForm.getUsername());
-        System.out.println("Password: "+loginForm.getPassword());
+    public String doLogin(@Valid @ModelAttribute("loginForm") LoginFormDTO loginForm, BindingResult result, HttpServletRequest request, Model model) {                            
         
         String viewToRender = "login";
         
