@@ -20,4 +20,9 @@ public class AdministratorController extends BaseController{
                                 
         return "admin/dashboard";
     }
+    
+    @RequestMapping(value="createExam",method = RequestMethod.GET)
+    public String createExam(){
+    	return "admin/createExam";
+    }
 }
