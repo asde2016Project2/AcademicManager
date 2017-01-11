@@ -1,45 +1,72 @@
 package it.unical.asde.uam.persistence;
 
+import java.util.List;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+
 import it.unical.asde.uam.dao.DBHandler;
+import it.unical.asde.uam.model.CareerExam;
+import it.unical.asde.uam.model.DegreeCourse;
+import it.unical.asde.uam.model.StudyPlan;
+import it.unical.asde.uam.model.StudyPlanExam;
 
-public class StudyPlanExamDAOImp {
 
-    private DBHandler dBHandler;
 
-    public DBHandler getdBHandler() {
-        return dBHandler;
-    }
+	/**
+	 * @author Nello  
+	*
+	 */
+public class StudyPlanExamDAOImp implements StudyPlanExamDAO{
 
-    public void setdBHandler(DBHandler dBHandler) {
-        this.dBHandler = dBHandler;
-    }
+		public StudyPlanExamDAOImp() {
+	    }
 
-    public StudyPlanExamDAOImp() {
-        super();
-    }
+	    private DBHandler dbHandler;
 
-//    public List<Exam> getExamsByStudyPlan(StudyPlan sp) {
-//
-//        Criterion c = Restrictions.eq("study_plan", sp.getStudyPlanId());
-//        return (List<Exam>) dBHandler.findByCriteria(c);
-//
-//    }
-//
-//    public ArrayList<StudyPlan> getStudyPlansForExam(Exam e) {
-//
-//        Criterion c = Restrictions.eq("exam", e.getId());
-//        return (ArrayList<StudyPlan>) dBHandler.findByCriteria(c);
-//    }
-//
-//    public String getPeriodForExam(StudyPlan studyPlan, Exam e) {
-//
-//        ArrayList<Criterion> criteriaList = new ArrayList<Criterion>();
-//        criteriaList.add(Restrictions.eq("exam", e.getId()));
-//        criteriaList.add(Restrictions.eq("study_plan", studyPlan.getStudyPlanId()));
-//
-//        StudyPlanExam spe = (StudyPlanExam) dBHandler.findOne(criteriaList.toArray(new Criterion[criteriaList.size()]));
-//
-//        return spe.getPeriod();
-//    }
+	    public DBHandler getDbHandler() {
+	        return dbHandler;
+	    }
+
+	    public void setDbHandler(DBHandler dbHandler) {
+	        this.dbHandler = dbHandler;
+	    }
+
+	   
+
+	    @Override
+	    public void create(StudyPlanExam studyPlanExam) {
+	        dbHandler.create(studyPlanExam);
+	    }
+
+	    @Override
+	    public void update(StudyPlanExam studyPlanExam) {
+	        dbHandler.update(studyPlanExam);
+	    }
+
+	    @Override
+	    public void deleteStudyPlanExam(StudyPlanExam studyPlanExam) {
+	        dbHandler.delete(studyPlanExam);
+	    }
+
+	    @SuppressWarnings("unchecked")
+	    @Override
+	    public List<StudyPlanExam> getAllExamsOfAstudyPlan(StudyPlan sp) {
+
+	    	int studyPlanId = sp.getStudyPlanId();
+	        String queryString = "from StudyPlanExam s where s.studyPlan.studyPlanId =:sp";
+	        Query query = dbHandler.getSession().createQuery(queryString);
+	        query.setParameter("sp", studyPlanId);
+	        List<StudyPlanExam> dgs = (List<StudyPlanExam>) query.list();
+	        dbHandler.close();
+	        return dgs;
+	        
+	    }
+	    
+	    @Override
+	    public StudyPlanExam retrieve(int grades) {
+	      return null;
+	      //TODO
+	    }
 
 }

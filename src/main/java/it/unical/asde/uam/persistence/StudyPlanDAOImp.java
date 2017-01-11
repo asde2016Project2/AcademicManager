@@ -1,22 +1,58 @@
 package it.unical.asde.uam.persistence;
 
+import java.util.List;
+import org.hibernate.Query;
 import it.unical.asde.uam.dao.DBHandler;
+import it.unical.asde.uam.model.StudyPlan;
+
 
 /**
- * @author Fabrizio
-*
+ * @author Fabrizio  
+ *
  */
-public class StudyPlanDAOImp {
 
-    private DBHandler dBHandler;
+public class StudyPlanDAOImp implements StudyPlanDAO {
 
-    public DBHandler getdBHandler() {
-        return dBHandler;
-    }
+		public StudyPlanDAOImp() {}
 
-    public void setdBHandler(DBHandler dBHandler) {
-        this.dBHandler = dBHandler;
-    }
-    
+	    private DBHandler dbHandler;
 
+	    public DBHandler getDbHandler() {
+	        return dbHandler;
+	    }
+
+	    public void setDbHandler(DBHandler dbHandler) {
+	        this.dbHandler = dbHandler;
+	    }
+
+	    @Override
+	    public void create(StudyPlan studyPlan) {
+	        dbHandler.create(studyPlan);
+	    }
+
+	    @Override
+	    public void update(StudyPlan studyPlan) {
+	        dbHandler.update(studyPlan);
+	    }
+
+	    @Override
+	    public void deleteStudyPlan(StudyPlan studyPlan) {
+	        dbHandler.delete(studyPlan);
+	    }
+
+	    @SuppressWarnings("unchecked")
+	    @Override
+	    public List<StudyPlan> getAllPlans() {
+
+	        String queryString = "from StudyPlan c order by c.name";
+	        Query query = dbHandler.getSession().createQuery(queryString);
+	        List<StudyPlan> dgs = (List<StudyPlan>) query.list();
+	        dbHandler.close();
+	        return dgs;
+	    }
+	    
+	    @Override
+	    public StudyPlan retrieve(int grades) {
+	      return null;
+	    }
 }
