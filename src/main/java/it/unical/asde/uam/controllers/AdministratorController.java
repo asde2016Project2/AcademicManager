@@ -17,4 +17,9 @@ public class AdministratorController {
     public String homeAdmin() {
     	return "admin/dashboard";
     }
+    
+    @RequestMapping(value="createExam",method = RequestMethod.GET)
+    public String createExam(){
+    	return "admin/createExam";
+    }
 }
