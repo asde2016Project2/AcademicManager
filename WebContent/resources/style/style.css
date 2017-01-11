@@ -1,92 +1,100 @@
-body{	
-	font: 62.5% "Trebuchet MS", sans-serif;
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+html,body {
+    height: 100%;
+    width: 100%;
+    margin: auto;
+    font-family: 'Roboto', sans-serif;
 }
 
-#wrapper{	
-	background: #FFFFFF;
-	margin: 60px auto;
-	width: 900px;
-	height: 984px;
+.boxed{
+    width: 900px !important;
+    margin: 0px auto;
 }
 
-#header{	
-	background: #F0F0F0;
-	height: 200px;
-	width: 900px;
-	background-image: url("../images/unical.png");
+#header {        
+    width: 100%;
+    height: 100px;
+    border:5px solid red; 
+    padding: 15px;
 }
 
-#content{
-	background: #d2d0d2;	
-	width: 900px;
-	height: 400px;
+#footer{    
+    width: 100%;
+    height: 100px;
+    border:5px solid blue; 
+    padding: 15px;  
 }
 
-#footer{ 
-	background: #838283;
-	height: 20px;
-	width: 900px;
-	text-indent: 10px;
+#content {    
+    width: 100%;
+    border: 5px solid green;
+    display: block;
+    padding: 15px
 }
 
-.button{	
-    margin-left:10px;
-    margin-bottom: 5px;
-    margin-top: 5px;
-    min-width: 100px;
-    max-width: 100px;
-    width: 100px;
-    font: 70% "Trebuchet MS", sans-serif;
+#content > #leftColumn{
+    border:5px solid black;  
+    padding: 15px; 
+    display: inline-block;
+    width: 15%;
+    min-height: 200px;
+    float: left;
 }
 
-#result{
-	width: 900px;
-	height: 200px;
+#content > #rightColumn{
+    border:5px solid maroon;  
+    padding: 15px; 
+    display: inline-block;
+    width: 76%;
+    min-height: 200px;
 }
 
-.images{
-	height: 200px;
-	width: 250px;
+#menu { 
+    background-color: lightblue;
+    position: relative;    
 }
 
-#summaryTable {
-	margin-left: 50px;
-	border-collapse: collapse;
+#menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: lightblue;
 }
 
-#summaryTable tr {		
-	border: 1px solid white;
+#menu li a {
+    display: block;
+    color: #000000;
+    padding: 8px 16px;
+    text-decoration: none;
 }
 
-#summaryTable th {
-	text-align: center; 
-	padding-top: 5px; 
-	padding-bottom: 4px; 
-	background-color: #0099FF; 
-	color: #ffffff;
-}
-	
-#summaryTable tr:last-child td {
-	color: #000000;
-	background-color: #0099FF;	
+#menu li a:hover {
+    background-color: #000000;
+    color: #ffffff;
 }
 
-#summaryTable tr td:first-child {
-	text-align: right;
-	min-width: 100px;
+.login-form{
+    width: 350px;
+    margin: 0px auto;
+    border: 1px solid #cccccc;
+    padding: 5px;
 }
 
-#summaryTable td.myTd {
-	text-align: left;
-	padding-left: 10px;
+.form-error, 
+.error{
+    color: red;    
+    font-size: 12px;
+}
+.form-error{
+    text-align: center;
+    margin-top: 15px;
+    padding-top: 5px;
+    border-top: 1px solid #cccccc;
 }
 
-#inner {
-    width: 50%;
-    margin: 0 auto;
-}
-
-.error {
-	font: 62.5% "Trebuchet MS", sans-serif;
-	color: red;
+.btn-submit{
+    display: block;
+    margin: 0px auto;
 }

@@ -6,11 +6,6 @@ import it.unical.asde.uam.controllers.core.BaseController;
 import it.unical.asde.uam.model.LoginFormDTO;
 import it.unical.asde.uam.model.Professor;
 import it.unical.asde.uam.persistence.ProfessorDAO;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -35,6 +30,7 @@ public class HomeController extends BaseController{
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String showLogin(@ModelAttribute("loginForm") LoginFormDTO loginForm, Model model, HttpServletRequest request) {
         model.addAttribute("loginForm",new LoginFormDTO()); 
+        model.addAttribute("pageTitle","Login");
         return "home/login";
     }
     

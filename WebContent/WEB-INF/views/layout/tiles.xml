@@ -4,7 +4,7 @@
 	"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
         
-    <definition name="base.definition"  template="/WEB-INF/views/layout/layout.jsp">  
+    <definition name="base.definition"  template="/WEB-INF/views/layout/guestLayout.jsp">  
         <put-attribute name="title" value="Welcome" />  
         <put-attribute name="header" value="" />  
         <put-attribute name="menu" value="" /> 
@@ -13,20 +13,22 @@
     </definition>  
     
     
-    <definition name="home/login" extends="base.definition">                           
-        <put-attribute name="body" value="/WEB-INF/views/home/login.jsp" />          
+    <definition name="home/login" extends="base.definition" >   
+        <put-attribute name="header" value="/WEB-INF/views/commons/header/emptyHeader.jsp" />              
+        <put-attribute name="body" value="/WEB-INF/views/home/login.jsp" />      
+        <put-attribute name="footer" value="/WEB-INF/views/commons/footer/emptyFooter.jsp" />     
     </definition>
     
             
-    <definition name="professor/*" extends="base.definition">  
-        <put-attribute name="header" value="/WEB-INF/views/commons/footer/professorHeader.jsp" /> 
+    <definition name="professor/*" extends="base.definition" template="/WEB-INF/views/layout/logged_LeftColumnLayout.jsp">  
+        <put-attribute name="header" value="/WEB-INF/views/commons/header/professorHeader.jsp" /> 
         <put-attribute name="menu" value="/WEB-INF/views/commons/menu/professorMenu.jsp" /> 
         <put-attribute name="body" value="/WEB-INF/views/professor/{1}.jsp" />  
-        <put-attribute name="footer" value="/WEB-INF/views/commons/footer/professorFooter.jsp" /> 
+        <put-attribute name="footer" value="/WEB-INF/views/commons/footer/professorFooter.jsp" />        
     </definition> 
     
     
-    <definition name="student/*" extends="base.definition">  
+    <definition name="student/*" extends="base.definition" template="/WEB-INF/views/layout/logged_LeftColumnLayout.jsp">  
         <put-attribute name="header" value="/WEB-INF/views/commons/footer/studentHeader.jsp" /> 
         <put-attribute name="menu" value="/WEB-INF/views/commons/menu/studentMenu.jsp" /> 
         <put-attribute name="body" value="/WEB-INF/views/student/{1}.jsp" />  
@@ -34,7 +36,7 @@
     </definition> 
     
     
-    <definition name="administrator/*" extends="base.definition">  
+    <definition name="administrator/*" extends="base.definition" template="/WEB-INF/views/layout/logged_LeftColumnLayout.jsp">  
         <put-attribute name="header" value="/WEB-INF/views/commons/footer/administratorHeader.jsp" />  
         <put-attribute name="menu" value="/WEB-INF/views/commons/menu/administratorMenu.jsp" /> 
         <put-attribute name="body" value="/WEB-INF/views/administrator/{1}.jsp" />  

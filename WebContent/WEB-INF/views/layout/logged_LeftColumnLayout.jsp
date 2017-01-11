@@ -12,9 +12,24 @@
         </title>     
     </head>  
     <body>  
-        <div class="container">               
-            <tiles:insertAttribute  name="body" />        
-            <tiles:insertAttribute  name="footer" />
+        <div class="main-container boxed">
+            <div id="header">
+                <tiles:insertAttribute  name="header" />  
+            </div>
+            <div id="content">
+                <div id="leftColumn">
+                    <tiles:insertAttribute  name="menu" />        
+                </div>
+
+                <div id="rightColumn">
+                    <tiles:insertAttribute  name="body" />        
+                </div>
+
+            </div>
+            <div id="footer">
+                <tiles:insertAttribute  name="footer" />
+            </div>        
         </div>
-    </body>  
+    </div>
+</body>  
 </html> 

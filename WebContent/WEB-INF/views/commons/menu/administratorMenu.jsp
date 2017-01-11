@@ -1,4 +1,3 @@
-<div>
     <h3><tiles:insertAttribute name="title" /> Menu</h3>
     <ul>
         <li>
@@ -14,4 +13,3 @@
             <a href="#">Menu Item 4</a>
         </li>
     </ul>
-</div>
