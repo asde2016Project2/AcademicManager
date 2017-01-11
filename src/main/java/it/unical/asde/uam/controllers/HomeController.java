@@ -23,25 +23,34 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/")
 public class HomeController extends BaseController{  
-
-    @RequestMapping(method = RequestMethod.GET)
-    public String home() {
-//        model.addAttribute("examForm", new Exam());
-        return "home";
-
-    }
-     
-    @RequestMapping(value = "login", method = RequestMethod.GET)
+  
+    
+    /**
+     * 
+     * This is the main route like  http://localhost:8080/WEBSITE_URL
+     * The view login.jsp contains the home page in witch there is login form
+     * 
+     * 
+     */
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public String showLogin(@ModelAttribute("loginForm") LoginFormDTO loginForm, Model model, HttpServletRequest request) {
         model.addAttribute("loginForm",new LoginFormDTO()); 
-        return "login";
+        return "home/login";
     }
     
     
+    /**
+     * 
+     * This is the route WEBSITE_URL/login
+     * It's invoked only in post and handle the login phase
+     * If something goes wrong it return back to home page for login again
+     * or for showing errors
+     * 
+     */
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public String doLogin(@Valid @ModelAttribute("loginForm") LoginFormDTO loginForm, BindingResult result, HttpServletRequest request, Model model) {                            
         
-        String viewToRender = "login";
+        String viewToRender = "home/login";
         
         switch(loginForm.getProfileType()){
             case UserProfileHelper._ADMINISTRATOR:
@@ -55,21 +64,54 @@ public class HomeController extends BaseController{
                 break;                
             default:
                 model.addAttribute("loginForm",loginForm);
-                viewToRender = "login";
+                viewToRender = "home/login";
                 break;
         }
        
         return viewToRender;       
     }
 
+    
+    /**
+     *  
+     * This is the route  WEBSITE_URL/logout
+     * 
+     */
     @RequestMapping(value = "logout", method = RequestMethod.GET)
     public String doLogout(HttpServletRequest request){
         SessionHelper.cleanSession(request.getSession());
-        return "redirect:login";
+        return "redirect:/";
     }
     
     
+    
+    
+    /********** PRIVATE METHODS ********/
+    
+    
     private String loginProfessor(LoginFormDTO loginForm, Model model, HttpServletRequest request){
+        ProfessorDAO professorDao = (ProfessorDAO) context.getBean("professorDAO");
+        
+        Professor professor = professorDao.retrieveForLogin(loginForm.getUsername(), loginForm.getPassword());        
+        if (professor  == null) {
+            model.addAttribute("error", messageSource.getMessage("message.invalid", null, localeResolver.resolveLocale(request)));
+            SessionHelper.cleanSession(request.getSession());
+            return "home/login";
+        }
+        
+       SessionHelper.setUserProfessorLogged(professor, request.getSession()); 
+       return "redirect:/professor/dashboard";
+    }
+    
+    private String loginAdministrator(LoginFormDTO loginForm, Model model, HttpServletRequest request){
+        /*
+        
+        TODO:
+            1) remove -> return "redirect:/";
+            2) add AdministratorDao the method retrieveForLogin copying it from Professor
+            3) decomment this code and replace Professor with Administrator
+            
+        
         ProfessorDAO professorDao = (ProfessorDAO) context.getBean("professorDAO");
         
         Professor professor = professorDao.retrieveForLogin(loginForm.getUsername(), loginForm.getPassword());        
@@ -81,14 +123,32 @@ public class HomeController extends BaseController{
         
        SessionHelper.setUserProfessorLogged(professor, request.getSession()); 
        return "redirect:/professor/dashboard";
-    }
-    
-    private String loginAdministrator(LoginFormDTO loginForm, Model model, HttpServletRequest request){
-        return "login";
+       */
+       return "redirect:/";
     }
     
     private String loginStudent(LoginFormDTO loginForm, Model model, HttpServletRequest request){
-        return "login";
+        /*
+        
+        TODO:
+            1) remove -> return "redirect:/";
+            2) add in StudentDao the method retrieveForLogin copying it from Professor
+            3) decomment this code and replace Professor with Student
+            
+        
+        ProfessorDAO professorDao = (ProfessorDAO) context.getBean("professorDAO");
+        
+        Professor professor = professorDao.retrieveForLogin(loginForm.getUsername(), loginForm.getPassword());        
+        if (professor  == null) {
+            model.addAttribute("error", messageSource.getMessage("message.invalid", null, localeResolver.resolveLocale(request)));
+            SessionHelper.cleanSession(request.getSession());
+            return "login";
+        }
+        
+       SessionHelper.setUserProfessorLogged(professor, request.getSession()); 
+       return "redirect:/professor/dashboard";
+       */
+       return "redirect:/";
     }
     
 }

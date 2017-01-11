@@ -20,7 +20,7 @@ public class ProfessorController extends BaseController{
     public String showDashboad( HttpServletRequest request) {
         
         if(!SessionHelper.isProfessor(request.getSession())){
-            return "redirect:/login";
+            return "redirect:/";
         }
                                 
         return "professor/dashboard";

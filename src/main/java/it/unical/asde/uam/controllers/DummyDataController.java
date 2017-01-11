@@ -42,7 +42,7 @@ public class DummyDataController extends BaseController {
 
             professorDAO.create(p);
         }
-        return "redirect:login";
+        return "redirect:/";
     }
 
 }
