@@ -1,30 +1,150 @@
 package it.unical.asde.uam.controllers;
 
-import it.unical.asde.uam.model.Exam;
-import it.unical.asde.uam.model.Student;
-import it.unical.asde.uam.persistence.ExamDAO;
+import it.unical.asde.uam.Helper.SessionHelper;
+import it.unical.asde.uam.Helper.UserProfileHelper;
+import it.unical.asde.uam.controllers.core.BaseController;
+import it.unical.asde.uam.model.LoginFormDTO;
+import it.unical.asde.uam.model.Professor;
+import it.unical.asde.uam.persistence.ProfessorDAO;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.context.WebApplicationContext;
 
 @Controller
 @RequestMapping("/")
-public class HomeController {
-
-    @Autowired
-    private WebApplicationContext context;
-
-    @RequestMapping(method = RequestMethod.GET)
-    public String home() {
-//        model.addAttribute("examForm", new Exam());
-        return "home";
-
+public class HomeController extends BaseController{  
+  
+    
+    /**
+     * 
+     * This is the main route like  http://localhost:8080/WEBSITE_URL
+     * The view login.jsp contains the home page in witch there is login form
+     * 
+     * 
+     */
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public String showLogin(@ModelAttribute("loginForm") LoginFormDTO loginForm, Model model, HttpServletRequest request) {
+        model.addAttribute("loginForm",new LoginFormDTO()); 
+        model.addAttribute("pageTitle","Login");
+        return "home/login";
+    }
+    
+    
+    /**
+     * 
+     * This is the route WEBSITE_URL/login
+     * It's invoked only in post and handle the login phase
+     * If something goes wrong it return back to home page for login again
+     * or for showing errors
+     * 
+     */
+    @RequestMapping(value = "login", method = RequestMethod.POST)
+    public String doLogin(@Valid @ModelAttribute("loginForm") LoginFormDTO loginForm, BindingResult result, HttpServletRequest request, Model model) {                            
+        
+        String viewToRender = "home/login";
+        
+        switch(loginForm.getProfileType()){
+            case UserProfileHelper._ADMINISTRATOR:
+                viewToRender = loginAdministrator(loginForm,model,request); 
+                break;
+            case UserProfileHelper._PROFESSOR:     
+                viewToRender = loginProfessor(loginForm,model,request);                
+                break;
+            case UserProfileHelper._STUDENT:     
+                viewToRender = loginStudent(loginForm,model,request); 
+                break;                
+            default:
+                model.addAttribute("loginForm",loginForm);
+                viewToRender = "home/login";
+                break;
+        }
+       
+        return viewToRender;       
     }
 
+    
+    /**
+     *  
+     * This is the route  WEBSITE_URL/logout
+     * 
+     */
+    @RequestMapping(value = "logout", method = RequestMethod.GET)
+    public String doLogout(HttpServletRequest request){
+        SessionHelper.cleanSession(request.getSession());
+        return "redirect:/";
+    }
+    
+    
+    
+    
+    /********** PRIVATE METHODS ********/
+    
+    
+    private String loginProfessor(LoginFormDTO loginForm, Model model, HttpServletRequest request){
+        ProfessorDAO professorDao = (ProfessorDAO) context.getBean("professorDAO");
+        
+        Professor professor = professorDao.retrieveForLogin(loginForm.getUsername(), loginForm.getPassword());        
+        if (professor  == null) {
+            model.addAttribute("error", messageSource.getMessage("message.invalid", null, localeResolver.resolveLocale(request)));
+            SessionHelper.cleanSession(request.getSession());
+            return "home/login";
+        }
+        
+       SessionHelper.setUserProfessorLogged(professor, request.getSession()); 
+       return "redirect:/professor/dashboard";
+    }
+    
+    private String loginAdministrator(LoginFormDTO loginForm, Model model, HttpServletRequest request){
+        /*
+        
+        TODO:
+            1) remove -> return "redirect:/";
+            2) add AdministratorDao the method retrieveForLogin copying it from Professor
+            3) decomment this code and replace Professor with Administrator
+            
+        
+        ProfessorDAO professorDao = (ProfessorDAO) context.getBean("professorDAO");
+        
+        Professor professor = professorDao.retrieveForLogin(loginForm.getUsername(), loginForm.getPassword());        
+        if (professor  == null) {
+            model.addAttribute("error", messageSource.getMessage("message.invalid", null, localeResolver.resolveLocale(request)));
+            SessionHelper.cleanSession(request.getSession());
+            return "login";
+        }
+        
+       SessionHelper.setUserProfessorLogged(professor, request.getSession()); 
+       return "redirect:/professor/dashboard";
+       */
+       return "redirect:/";
+    }
+    
+    private String loginStudent(LoginFormDTO loginForm, Model model, HttpServletRequest request){
+        /*
+        
+        TODO:
+            1) remove -> return "redirect:/";
+            2) add in StudentDao the method retrieveForLogin copying it from Professor
+            3) decomment this code and replace Professor with Student
+            
+        
+        ProfessorDAO professorDao = (ProfessorDAO) context.getBean("professorDAO");
+        
+        Professor professor = professorDao.retrieveForLogin(loginForm.getUsername(), loginForm.getPassword());        
+        if (professor  == null) {
+            model.addAttribute("error", messageSource.getMessage("message.invalid", null, localeResolver.resolveLocale(request)));
+            SessionHelper.cleanSession(request.getSession());
+            return "login";
+        }
+        
+       SessionHelper.setUserProfessorLogged(professor, request.getSession()); 
+       return "redirect:/professor/dashboard";
+       */
+       return "redirect:/";
+    }
+    
 }

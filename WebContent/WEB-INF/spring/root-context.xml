@@ -19,7 +19,7 @@
         <property name="packagesToScan" value="it.unical.asde.uam.model" />
         <property name="hibernateProperties">
             <props>
-               <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
                 <prop key="hibernate.hbm2ddl.auto">create</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hbernate.format_sql">true</prop>
@@ -55,5 +55,5 @@
     <bean id="exam" class="it.unical.asde.uam.model.Exam"></bean>
     <bean id="professor" class="it.unical.asde.uam.model.Professor"></bean>
 	
-
+  
 </beans>
