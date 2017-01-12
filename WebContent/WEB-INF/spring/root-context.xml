@@ -36,14 +36,6 @@
         <property name="dbHandler" ref="dbHandler" />
     </bean>
     
-    <bean id="degreeCourseDAO" class="it.unical.asde.uam.persistence.DegreeCourseDAOImp" >
-        <property name="dbHandler" ref="dbHandler" />
-    </bean>
-    
-     <bean id="studyPlanDAO" class="it.unical.asde.uam.persistence.StudyPlanDAOImp" >
-        <property name="dbHandler" ref="dbHandler" />
-    </bean>
-    
     <bean id="examDAO" class="it.unical.asde.uam.persistence.ExamDAOImp" >
         <property name="dbHandler" ref="dbHandler" />
     </bean>
@@ -52,7 +44,6 @@
         <property name="dbHandler" ref="dbHandler" />
     </bean>
     
-       
     <bean id="degreeCourseDAO" class="it.unical.asde.uam.persistence.DegreeCourseDAOImp" >
         <property name="dbHandler" ref="dbHandler" />
     </bean>
@@ -60,17 +51,11 @@
 	 <bean id="studyPlanDAO" class="it.unical.asde.uam.persistence.StudyPlanDAOImp" >
         <property name="dbHandler" ref="dbHandler" />
     </bean>
-	
-	 <bean id="studyPlanExamDAO" class="it.unical.asde.uam.persistence.StudyPlanExamDAOImp" >
-        <property name="dbHandler" ref="dbHandler" />
-    </bean>
     
     <bean id="studentDAO" class="it.unical.asde.uam.persistence.StudentDAOImp" >
         <property name="dbHandler" ref="dbHandler" />
     </bean>
     
-    
-	
 	<bean id="studyPlanExamDAO" class="it.unical.asde.uam.persistence.StudyPlanExamDAOImp" >
         <property name="dbHandler" ref="dbHandler" />
     </bean>
