@@ -140,7 +140,7 @@ public class HomeController extends BaseController{
         
   
        SessionHelper.setUserStudenLogged(stud, request.getSession());
-       return "redirect:/professor/dashboard";
+       return "redirect:/student/dashboard";
          
        
       
