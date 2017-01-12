@@ -2,7 +2,10 @@ package it.unical.asde.uam.persistence;
 
 import java.util.List;
 import org.hibernate.Query;
+import org.hibernate.Session;
+
 import it.unical.asde.uam.dao.DBHandler;
+import it.unical.asde.uam.model.Exam;
 import it.unical.asde.uam.model.StudyPlan;
 
 
@@ -43,7 +46,7 @@ public class StudyPlanDAOImp implements StudyPlanDAO {
 	    @SuppressWarnings("unchecked")
 	    @Override
 	    public List<StudyPlan> getAllPlans() {
-
+	    	
 	        String queryString = "from StudyPlan c order by c.name";
 	        Query query = dbHandler.getSession().createQuery(queryString);
 	        List<StudyPlan> dgs = (List<StudyPlan>) query.list();
@@ -52,7 +55,13 @@ public class StudyPlanDAOImp implements StudyPlanDAO {
 	    }
 	    
 	    @Override
-	    public StudyPlan retrieve(int grades) {
-	      return null;
+	    public StudyPlan retrieve(int id) {
+	    	Session session = dbHandler.getSessionFactory().openSession();
+	        String queryString = "from StudyPlan where id = :id";
+	        Query query = session.createQuery(queryString);
+	        query.setParameter("id",id);
+	        StudyPlan studyPlan = (StudyPlan) query.uniqueResult();
+	        dbHandler.close();
+	        return studyPlan;
 	    }
 }

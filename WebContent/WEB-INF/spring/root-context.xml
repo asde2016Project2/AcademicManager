@@ -36,6 +36,14 @@
         <property name="dbHandler" ref="dbHandler" />
     </bean>
     
+    <bean id="degreeCourseDAO" class="it.unical.asde.uam.persistence.DegreeCourseDAOImp" >
+        <property name="dbHandler" ref="dbHandler" />
+    </bean>
+    
+     <bean id="studyPlanDAO" class="it.unical.asde.uam.persistence.StudyPlanDAOImp" >
+        <property name="dbHandler" ref="dbHandler" />
+    </bean>
+    
     <bean id="examDAO" class="it.unical.asde.uam.persistence.ExamDAOImp" >
         <property name="dbHandler" ref="dbHandler" />
     </bean>
@@ -44,6 +52,10 @@
         <property name="dbHandler" ref="dbHandler" />
     </bean>
 	
+	<bean id="studyPlanExamDAO" class="it.unical.asde.uam.persistence.StudyPlanExamDAOImp" >
+        <property name="dbHandler" ref="dbHandler" />
+    </bean>
+    
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
@@ -53,6 +65,9 @@
     <bean id="user" class="it.unical.asde.uam.model.User"></bean>
     <bean id="careerExam" class="it.unical.asde.uam.model.CareerExam"></bean>
     <bean id="exam" class="it.unical.asde.uam.model.Exam"></bean>
+    <bean id="degreeCourse" class="it.unical.asde.uam.model.DegreeCourse"></bean>
+    <bean id="studyPlan" class="it.unical.asde.uam.model.StudyPlan"></bean>
+	<bean id="studyPlanExam" class="it.unical.asde.uam.model.StudyPlanExam"></bean>
     <bean id="professor" class="it.unical.asde.uam.model.Professor"></bean>
 	
   

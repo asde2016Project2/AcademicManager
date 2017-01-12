@@ -19,5 +19,5 @@ public interface StudyPlanExamDAO {
 
     void update(StudyPlanExam studyPlanExam);
     
-    List<StudyPlanExam> getAllExamsOfAstudyPlan(StudyPlan sp);   
+    List<StudyPlanExam> getAllExamsOfAstudyPlan(StudyPlan sp);
 }
