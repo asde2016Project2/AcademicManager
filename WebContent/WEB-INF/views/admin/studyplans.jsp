@@ -18,17 +18,17 @@
 			<div class="divTable">
 				<div class="divTableBody">
 					<div class="divTableRow">
-						<div class="divTableCell">Study plan</div>
-						<div class="divTableCell">Degree Course</div>
-						<div class="divTableCell">Operations</div>
+						<div class="divTableCell"><strong>Study plan</strong></div>
+						<div class="divTableCell"><strong>Degree Course</strong></div>
+						<div class="divTableCell"><strong>Operations</strong></div>
 					</div>
 					<c:forEach var="studyPlan" items="${studyPlans}">
 						<div class="divTableRow">
 							<div class="divTableCell">${studyPlan.name}</div>
 							<div class="divTableCell">${studyPlan.degreeCourse.name}</div>
 							<div class="divTableCell">
-								<form><button type="submit" class="update">update</button></form>
-								<form><button type="submit" name="${studyPlan.name}" class="details">details</button></form>
+								<form method="post"><button type="submit" class="update">update</button></form>
+								<form method="post"><button type="submit" name="id" value="${studyPlan.studyPlanId}" class="details">details</button></form>
 								<button type="submit" class="delete">delete</button>
 							</div>
 						</div>

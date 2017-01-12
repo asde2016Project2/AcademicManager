@@ -1,15 +1,13 @@
 package it.unical.asde.uam.controllers;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
-
 import it.unical.asde.uam.model.DegreeCourse;
 import it.unical.asde.uam.model.Exam;
 import it.unical.asde.uam.model.StudyPlan;
@@ -72,18 +70,30 @@ public class AdministratorController {
 		for(Exam e: exams) {
 			studyPlanExamDAO.create(new StudyPlanExam(studyPlans.get(0),e,"period"));
 		}
-		
 	}
 
     @RequestMapping(value="dashboard",method = RequestMethod.GET)
     public String homeAdmin(Model model) {
     	initDB();
+    	System.out.println("studyPlans");
     	model.addAttribute("studyPlans",((StudyPlanDAO) context.getBean("studyPlanDAO")).getAllPlans());
     	return "admin/dashboard";
     }
     
-    @RequestMapping(value="details",method = RequestMethod.GET,params="buy")
-    public String details(Model model) {
+    @RequestMapping(value="dashboard",method = RequestMethod.POST)
+    public String details(@RequestParam Integer id,Model model) {
+    	StudyPlanDAO studyPlanDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
+    	StudyPlan studyPlan;
+    	ArrayList<StudyPlanExam> listStudyPlanExams = new ArrayList<>();
+    	ArrayList<Exam> exams = new ArrayList<>();
+    	if((studyPlan = studyPlanDAO.retrieve(id)) != null){
+    		StudyPlanExamDAO studyPlanExamDAO = (StudyPlanExamDAO) context.getBean("studyPlanExamDAO");
+    		listStudyPlanExams = (ArrayList<StudyPlanExam>) studyPlanExamDAO.getAllExamsOfAstudyPlan(studyPlan);
+    		for(StudyPlanExam sp: listStudyPlanExams)
+    			exams.add(sp.getExam());
+    	}
+    	if(!listStudyPlanExams.isEmpty() && !exams.isEmpty())
+    		model.addAttribute("exams",exams);
     	return "admin/details";
     }
 }
