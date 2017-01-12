@@ -1,5 +1,6 @@
 package it.unical.asde.uam.controllers;
 
+import it.unical.asde.uam.controllers.core.BaseController;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
