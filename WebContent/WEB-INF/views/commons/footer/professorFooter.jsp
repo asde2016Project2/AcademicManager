@@ -1,1 +1,1 @@
-<h3><tiles:insertAttribute name="title" /> Footer</h3>
+<h3>Footer</h3>
