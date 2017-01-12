@@ -43,6 +43,25 @@
     <bean id="professorDAO" class="it.unical.asde.uam.persistence.ProfessorDAOImp" >
         <property name="dbHandler" ref="dbHandler" />
     </bean>
+    
+       
+    <bean id="degreeCourseDAO" class="it.unical.asde.uam.persistence.DegreeCourseDAOImp" >
+        <property name="dbHandler" ref="dbHandler" />
+    </bean>
+	
+	 <bean id="studyPlanDAO" class="it.unical.asde.uam.persistence.StudyPlanDAOImp" >
+        <property name="dbHandler" ref="dbHandler" />
+    </bean>
+	
+	 <bean id="studyPlanExamDAO" class="it.unical.asde.uam.persistence.StudyPlanExamDAOImp" >
+        <property name="dbHandler" ref="dbHandler" />
+    </bean>
+    
+    <bean id="studentDAO" class="it.unical.asde.uam.persistence.StudentDAOImp" >
+        <property name="dbHandler" ref="dbHandler" />
+    </bean>
+    
+    
 	
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory" />
