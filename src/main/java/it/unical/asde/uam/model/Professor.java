@@ -23,5 +23,10 @@ public class Professor extends User{
 		super( username,  password,  firstName,  lastName,  status);
 		
 	}
+        
+        @Override
+        public String toString(){
+            return this.getUsername()+" "+this.getFirstName()+" "+this.getLastName();
+        }
 
 }

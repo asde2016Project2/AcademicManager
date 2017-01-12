@@ -19,7 +19,7 @@
         <property name="packagesToScan" value="it.unical.asde.uam.model" />
         <property name="hibernateProperties">
             <props>
-               <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
                 <prop key="hibernate.hbm2ddl.auto">create</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hbernate.format_sql">true</prop>
@@ -47,6 +47,10 @@
     <bean id="examDAO" class="it.unical.asde.uam.persistence.ExamDAOImp" >
         <property name="dbHandler" ref="dbHandler" />
     </bean>
+    
+    <bean id="professorDAO" class="it.unical.asde.uam.persistence.ProfessorDAOImp" >
+        <property name="dbHandler" ref="dbHandler" />
+    </bean>
 	
 	<bean id="studyPlanExamDAO" class="it.unical.asde.uam.persistence.StudyPlanExamDAOImp" >
         <property name="dbHandler" ref="dbHandler" />
@@ -64,4 +68,7 @@
     <bean id="degreeCourse" class="it.unical.asde.uam.model.DegreeCourse"></bean>
     <bean id="studyPlan" class="it.unical.asde.uam.model.StudyPlan"></bean>
 	<bean id="studyPlanExam" class="it.unical.asde.uam.model.StudyPlanExam"></bean>
+    <bean id="professor" class="it.unical.asde.uam.model.Professor"></bean>
+	
+  
 </beans>

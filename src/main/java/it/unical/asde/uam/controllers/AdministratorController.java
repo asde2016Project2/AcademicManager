@@ -19,7 +19,7 @@ import it.unical.asde.uam.persistence.StudyPlanExamDAO;
 
 @Controller
 @RequestMapping("/admin")
-public class AdministratorController {
+public class AdministratorController extends BaseController{  
 
     @Autowired
     private WebApplicationContext context;
