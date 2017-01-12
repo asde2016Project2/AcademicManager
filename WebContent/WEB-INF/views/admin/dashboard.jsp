@@ -15,18 +15,29 @@
 	</head>
 	<body>
 		<div id="everything">
-		
 			<div id="header">
 				<div id="button-menu">
 					<img src="<c:url value="/resources/images/menu.png"/>" />
 				</div>
 			</div>
 			<div id="content">
+				<div id="operation">
+					<%@include file="/WEB-INF/views/admin/studyplans.jsp" %>
+				</div>
 				<div id="menu">
 					<ul>
-						<li><a href="studyPlans">Study Plans</a></li>
-						<li><a href="registrations">Registrations</a></li>
-						<li><a href="logout">Logout</a></li>
+						<li>
+							<img src="<c:url value="/resources/images/admin/studyplans.png"/>" />
+							<a href="studyPlans">Study Plans</a>
+						</li>
+						<li>
+							<img src="<c:url value="/resources/images/admin/registrations.png"/>" />
+							<a href="registrations">Registrations</a>
+						</li>
+						<li>
+							<img src="<c:url value="/resources/images/admin/logout.png"/>" />
+							<a href="logout">Logout</a>
+						</li>
 					</ul>
 				</div>
 			</div>

@@ -36,6 +36,8 @@ public class StudyPlanExam implements Serializable {
 	@Column(nullable = false, length = 50, name = "period")
 	private String period; // , unique=true no
 
+	public StudyPlanExam() {}
+	
 	public StudyPlanExam(StudyPlan studyPlan, Exam exam, String period) {
 		super(); // id is not needed here
 		this.studyPlan = studyPlan;
