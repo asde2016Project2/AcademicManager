@@ -117,7 +117,7 @@ public class HomeController extends BaseController{
         if (professor  == null) {
             model.addAttribute("error", messageSource.getMessage("message.invalid", null, localeResolver.resolveLocale(request)));
             SessionHelper.cleanSession(request.getSession());
-            return "login";
+            return "home/login";
         }
         
        SessionHelper.setUserProfessorLogged(professor, request.getSession()); 
@@ -135,11 +135,11 @@ public class HomeController extends BaseController{
         if (stud  == null) {
             model.addAttribute("error", messageSource.getMessage("message.invalid", null, localeResolver.resolveLocale(request)));
             SessionHelper.cleanSession(request.getSession());
-            return "login";
+            return "home/login";
         }
         
   
-       SessionHelper.setUserStudenLogged(stud, request.getSession());
+       SessionHelper.setUserStudentLogged(stud, request.getSession());
        return "redirect:/student/dashboard";
          
        
