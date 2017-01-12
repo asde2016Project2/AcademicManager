@@ -40,9 +40,7 @@ public class StudyPlanExam implements Serializable {
 	{
 		
 	}
-
-	public StudyPlanExam() {}
-	
+        
 	public StudyPlanExam(StudyPlan studyPlan, Exam exam, String period) {
 		super(); // id is not needed here
 		this.studyPlan = studyPlan;
