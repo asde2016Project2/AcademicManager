@@ -5,7 +5,10 @@ import it.unical.asde.uam.Helper.UserProfileHelper;
 import it.unical.asde.uam.controllers.core.BaseController;
 import it.unical.asde.uam.model.LoginFormDTO;
 import it.unical.asde.uam.model.Professor;
+import it.unical.asde.uam.model.Student;
 import it.unical.asde.uam.persistence.ProfessorDAO;
+import it.unical.asde.uam.persistence.StudentDAO;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -124,27 +127,23 @@ public class HomeController extends BaseController{
     }
     
     private String loginStudent(LoginFormDTO loginForm, Model model, HttpServletRequest request){
-        /*
+                   
         
-        TODO:
-            1) remove -> return "redirect:/";
-            2) add in StudentDao the method retrieveForLogin copying it from Professor
-            3) decomment this code and replace Professor with Student
-            
+        StudentDAO studentDao = (StudentDAO) context.getBean("studentDAO");
         
-        ProfessorDAO professorDao = (ProfessorDAO) context.getBean("professorDAO");
-        
-        Professor professor = professorDao.retrieveForLogin(loginForm.getUsername(), loginForm.getPassword());        
-        if (professor  == null) {
+        Student stud = studentDao.retrieveForLogin(loginForm.getUsername(), loginForm.getPassword());        
+        if (stud  == null) {
             model.addAttribute("error", messageSource.getMessage("message.invalid", null, localeResolver.resolveLocale(request)));
             SessionHelper.cleanSession(request.getSession());
             return "login";
         }
         
-       SessionHelper.setUserProfessorLogged(professor, request.getSession()); 
+  
+       SessionHelper.setUserStudenLogged(stud, request.getSession());
        return "redirect:/professor/dashboard";
-       */
-       return "redirect:/";
+         
+       
+      
     }
     
 }

@@ -35,6 +35,11 @@ public class StudyPlanExam implements Serializable {
 
 	@Column(nullable = false, length = 50, name = "period")
 	private String period; // , unique=true no
+	
+	public StudyPlanExam()
+	{
+		
+	}
 
 	public StudyPlanExam() {}
 	
@@ -45,6 +50,7 @@ public class StudyPlanExam implements Serializable {
 		this.period = period;
 	}
 
+	
 	public StudyPlan getStudyPlan() {
 		return studyPlan;
 	}
