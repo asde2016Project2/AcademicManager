@@ -10,7 +10,7 @@
         <li>
             <a href="#">Menu Item 3</a>
         </li>
-        <li>
-            <a href="#">Menu Item 4</a>
+        <li>        
+            <a href="<c:url value="/logout" />">Logout</a>
         </li>
     </ul>

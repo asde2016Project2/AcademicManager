@@ -23,7 +23,7 @@
             <option value="">Select Type</option>
             <option value="administrator">Administrator</option>
             <option value="professor">Professor</option>
-            <option value="Student">Student</option>
+            <option value="student">Student</option>
         </form:select>
             <br/>
         <form:errors path="profileType" class="error"></form:errors> 

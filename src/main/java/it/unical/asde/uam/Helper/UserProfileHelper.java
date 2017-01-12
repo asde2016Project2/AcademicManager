@@ -14,7 +14,7 @@ public class UserProfileHelper {
     
     public static final String _ADMINISTRATOR = "administrator";
     public static final String _PROFESSOR = "professor";
-    public static final String _STUDENT = "studend";
+    public static final String _STUDENT = "student";
     public static final String _GUEST = "guest";
     
 }

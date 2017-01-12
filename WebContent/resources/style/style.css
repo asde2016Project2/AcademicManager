@@ -13,10 +13,11 @@ html,body {
 }
 
 #header {        
-    width: 100%;
-    height: 100px;
+    width: 100% !important;
+    height: 100px !important;
     border:5px solid red; 
     padding: 15px;
+    background: none !important;
 }
 
 #footer{    
@@ -30,7 +31,8 @@ html,body {
     width: 100%;
     border: 5px solid green;
     display: block;
-    padding: 15px
+    padding: 15px;
+    float: none !important;
 }
 
 #content > #leftColumn{
@@ -38,8 +40,10 @@ html,body {
     padding: 15px; 
     display: inline-block;
     width: 15%;
+    height: auto !important;
     min-height: 200px;
     float: left;
+    
 }
 
 #content > #rightColumn{
