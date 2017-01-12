@@ -1,5 +1,5 @@
-<div>
-    <h3><tiles:insertAttribute name="title" /> Menu</h3>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <h3>Student Menu</h3>
     <ul>
         <li>
             <a href="#">Menu Item 1</a>
@@ -14,4 +14,3 @@
             <a href="#">Menu Item 4</a>
         </li>
     </ul>
-</div>
