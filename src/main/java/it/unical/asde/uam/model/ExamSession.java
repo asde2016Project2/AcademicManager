@@ -20,88 +20,88 @@ import javax.persistence.Table;
 @Table(name = "exam_session")
 public class ExamSession implements Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @Column(name = "session_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int sessionId;
+	@Id
+	@Column(name = "session_id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int sessionId;
 
-    @Column(name = "startingDate")
-    private Date startingDate;
+	@Column(name = "startingDate")
+	private Date startingDate;
 
-    @Column(name = "endingDate")
-    private Date endingDate;
+	@Column(name = "endingDate")
+	private Date endingDate;
 
-    @Column(name = "academicYear")
-    private int academicYear;
+	@Column(name = "academicYear")
+	private int academicYear;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "examSession")
-    private Set<Attempt> attempts= new HashSet<Attempt>();
+	@Column(name = "status")
+	private String status;
 
-    @ManyToOne( fetch=FetchType.LAZY)
-    @JoinColumn(name="degree_course_id")
-    private DegreeCourse degreeCourse;
-    
-    
-    public ExamSession() {
-        this.startingDate = new Date();
-        this.endingDate = new Date();
-        this.academicYear = 0;
-    }
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "examSession")
+	private Set<Attempt> attempts = new HashSet<Attempt>();
 
-    public ExamSession(Date startingDate, Date endingDate, int academicYear, DegreeCourse degreeCourse) {
-        super();
-        this.startingDate = startingDate;
-        this.endingDate = endingDate;
-        this.academicYear = academicYear;
-        this.degreeCourse = degreeCourse;
-    }
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "degree_course_id")
+	private DegreeCourse degreeCourse;
 
-    public int getSessionId() {
-        return sessionId;
-    }
+	public ExamSession() {
+		this.startingDate = new Date();
+		this.endingDate = new Date();
+		this.academicYear = 0;
+	}
 
-    public void setSessionId(int sessionId) {
-        this.sessionId = sessionId;
-    }
+	public ExamSession(Date startingDate, Date endingDate, int academicYear, DegreeCourse degreeCourse) {
+		super();
+		this.startingDate = startingDate;
+		this.endingDate = endingDate;
+		this.academicYear = academicYear;
+		this.degreeCourse = degreeCourse;
+	}
 
-    
+	public int getSessionId() {
+		return sessionId;
+	}
 
-    public Date getStartingDate() {
-        return startingDate;
-    }
+	public void setSessionId(int sessionId) {
+		this.sessionId = sessionId;
+	}
 
-    public void setStartingDate(Date startingDate) {
-        this.startingDate = startingDate;
-    }
+	public Date getStartingDate() {
+		return startingDate;
+	}
 
-    public Date getEndingDate() {
-        return endingDate;
-    }
+	public void setStartingDate(Date startingDate) {
+		this.startingDate = startingDate;
+	}
 
-    public void setEndingDate(Date endingDate) {
-        this.endingDate = endingDate;
-    }
+	public Date getEndingDate() {
+		return endingDate;
+	}
 
-    public int getAcademicYear() {
-        return academicYear;
-    }
+	public void setEndingDate(Date endingDate) {
+		this.endingDate = endingDate;
+	}
 
-    public void setAcademicYear(int academicYear) {
-        this.academicYear = academicYear;
-    }
+	public int getAcademicYear() {
+		return academicYear;
+	}
 
-    public Set<Attempt> getAttempts() {
-        return attempts;
-    }
+	public void setAcademicYear(int academicYear) {
+		this.academicYear = academicYear;
+	}
 
-    public void setAttempts(Set<Attempt> attempts) {
-        this.attempts = attempts;
-    }
+	public Set<Attempt> getAttempts() {
+		return attempts;
+	}
+
+	public void setAttempts(Set<Attempt> attempts) {
+		this.attempts = attempts;
+	}
 
 	public DegreeCourse getDegreeCourse() {
 		return degreeCourse;
@@ -111,8 +111,12 @@ public class ExamSession implements Serializable {
 		this.degreeCourse = degreeCourse;
 	}
 
-    
-    
-    
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 }
