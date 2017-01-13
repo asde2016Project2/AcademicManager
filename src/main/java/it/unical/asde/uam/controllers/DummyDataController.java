@@ -67,7 +67,7 @@ public class DummyDataController extends BaseController {
     	studyPlanDAO.create(businessStudyPlan);
     	
         for (int i = 0; i < 5; i++) {
-        	Student p = new Student("stud"+i, "666666", "pierino", "stecchino", true, businessStudyPlan);
+        	Student p = new Student("stud"+i, "123456", "pro", "asde", true, businessStudyPlan);
         	p.setEmail("stud" + i + "@mat.unical.it");
             p.setAge(19);
 

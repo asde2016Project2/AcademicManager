@@ -18,7 +18,7 @@
 <body>
 	<jsp:include page="adminDashboard.jsp" />
 
-	<div class="container">
+<div class="panel panel-default">
 		<div class="bs-docs-section">
 			<div class="row">
 				<div class="col-lg-12">
