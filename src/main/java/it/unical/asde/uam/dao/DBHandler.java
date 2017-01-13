@@ -6,77 +6,97 @@ import org.hibernate.Transaction;
 
 public class DBHandler {
 
-    private SessionFactory sessionFactory;
+	private SessionFactory sessionFactory;
+	private Transaction tx;
+	private static Session session;
 
-    private static enum Operation {
-        CREATE, UPDATE, DELETE
-    };
+	private static enum Operation {
+		CREATE, UPDATE, DELETE
+	};
 
-    public DBHandler() {
-        sessionFactory = null;
-    }
+	public DBHandler() {
+		sessionFactory = null;
+	}
 
-    private void performOperation(Object obj, Operation op) {
-        Session session = sessionFactory.openSession();
-        Transaction tx = null;
-        try {
-            tx = session.beginTransaction();
-            switch (op) {
-                case CREATE:
-                    session.save(obj);
-                    break;
-                case UPDATE:
-                    session.update(obj);
-                    break;
-                case DELETE:
-                    session.delete(obj);
-                    break;
-            }
-            tx.commit();
-        } catch (Exception e) {
-            if (tx != null) {
-                tx.rollback();
-            }
-        } finally {
-            session.close();
-        }
-    }
+	private void performOperation(Object obj, Operation op) {
 
-    public void create(Object obj) {
-        performOperation(obj, Operation.CREATE);
-    }
+		try {
+			begin();
+			switch (op) {
+			case CREATE:
+				getSession().saveOrUpdate(obj);
+				break;
+			case UPDATE:
+				getSession().update(obj);
+				break;
+			case DELETE:
+				getSession().delete(obj);
+				break;
+			}
+			commit();
+		} catch (Exception e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+	}
 
-    public void delete(Object obj) {
-        performOperation(obj, Operation.DELETE);
-    }
+	public void create(Object obj) {
+		performOperation(obj, Operation.CREATE);
+	}
 
-    public void update(Object obj) {
-        performOperation(obj, Operation.UPDATE);
-    }
+	public void delete(Object obj) {
+		performOperation(obj, Operation.DELETE);
+	}
 
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+	public void update(Object obj) {
+		performOperation(obj, Operation.UPDATE);
+	}
 
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 
-    /**
-     * opening sessions
-     *
-     * @return opening the sessions
-     */
-    public Session getSession() {
-        return sessionFactory.openSession();
-    }
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
 
-    /**
-     * Closing the current sessions
-     */
-    public void close() {
-        getSession().close();
-    }
+	/**
+	 * opening sessions
+	 *
+	 * @return opening the sessions
+	 */
+	public Session getSession() {
+		if ((session == null) || (!session.isOpen())) {
+			session = sessionFactory.openSession();
+		}
+		return session;
+	}
 
+	/**
+	 * Closing the current sessions
+	 */
+	public void close() {
+		getSession().close();
+	}
+
+	/**
+	 * begin the transactions
+	 */
+	public void begin() {
+
+		this.tx = getSession().beginTransaction();
+
+	}
+
+	/**
+	 * commit to the database
+	 */
+	public void commit() {
+		this.tx.commit();
+	}
 
 }
