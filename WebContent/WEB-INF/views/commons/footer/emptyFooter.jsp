@@ -14,7 +14,7 @@
             </li>
             <li>        
                 <a href="<c:url value="/dummyData/registerStudent" />">Register Student</a>
-                <p>From 1 to 6:  username <b>stud1</b>...  -  <b>password</b>: 123456</p>
+                <p>From 1 to 6:  username <b>stud1</b>...  -  <b>password</b>: 666666</p>
             </li>            
         </ul>
     </div>
@@ -23,6 +23,14 @@
         <ul>
             <li>        
                 <a href="<c:url value="/professor/register" />">Register Professor</a>
+            </li>            
+        </ul>
+    </div>
+            <div class="footer-box">
+        <h3>Link</h3>
+        <ul>
+            <li>        
+                <a href="<c:url value="/" />">Home</a>
             </li>            
         </ul>
     </div>
