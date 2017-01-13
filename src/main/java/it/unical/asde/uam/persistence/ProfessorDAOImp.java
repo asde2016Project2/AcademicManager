@@ -39,14 +39,14 @@ public class ProfessorDAOImp implements ProfessorDAO {
         Professor professor = (Professor) query.uniqueResult();
         return professor;
     }
-    
-    @Override    
-    public Professor retrieveForLogin(String username,String password) {
+
+    @Override
+    public Professor retrieveForLogin(String username, String password) {
         String hql = "from Professor where username=:username AND password=:password";
 
         Query query = dbHandler.getSession().createQuery(hql);
         query.setParameter("username", username);
-        query.setParameter("password",password);
+        query.setParameter("password", password);
         Professor professor = (Professor) query.uniqueResult();
         return professor;
     }
@@ -69,6 +69,35 @@ public class ProfessorDAOImp implements ProfessorDAO {
     @Override
     public void delete(Professor u) {
         dbHandler.delete(u);
+    }
+
+    @Override
+    public boolean register(Professor u) {
+        
+        //if already exist email or username
+        if (retrieve(u.getUsername()) != null || retrieveByEmail(u.getEmail()) != null) {
+            return false;
+        }
+        
+        //create
+        create(u);
+        
+        //check created
+        if(retrieve(u.getUsername()) == null){
+            return false;
+        }
+        
+        return true;
+    }
+
+    @Override
+    public Professor retrieveByEmail(String email) {
+        String hql = "from Professor where email =:email";
+
+        Query query = dbHandler.getSession().createQuery(hql);
+        query.setParameter("email", email);
+        Professor professor = (Professor) query.uniqueResult();
+        return professor;
     }
 
 }

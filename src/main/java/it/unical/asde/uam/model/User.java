@@ -13,6 +13,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -39,19 +40,23 @@ public class User implements Serializable {
     @Column(name = "user_id")
     private Integer userId;
 
-    @Column(name = "username", length = 255, nullable = false)
+    @NotEmpty()    
+    @Column(name = "username", length = 255, nullable = false,unique=true)
     private String username;
 
+    @NotEmpty()
     @Column(name = "password", length = 255, nullable = false)
     private String password;
 
+    @NotEmpty()
     @Column(name = "first_name", length = 255, nullable = false)
     private String firstName;
 
+    @NotEmpty()
     @Column(name = "last_name", length = 255, nullable = false)
     private String lastName;
-
-    @Column(name = "email", nullable = false, length = 200)
+    
+    @Column(name = "email", nullable = false, length = 200, unique=true)
     @Size(max = 200)
     @Email()
     @NotEmpty()
