@@ -1,6 +1,5 @@
 package it.unical.asde.uam.controllers;
 
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
