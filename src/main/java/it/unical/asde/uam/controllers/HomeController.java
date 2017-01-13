@@ -32,8 +32,8 @@ public class HomeController extends BaseController{
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String showLogin(@ModelAttribute("loginForm") LoginFormDTO loginForm, Model model, HttpServletRequest request) {
-        model.addAttribute("loginForm",new LoginFormDTO()); 
-        model.addAttribute("pageTitle","Login");
+        model.addAttribute("pageTitle","Login");     
+        model.addAttribute("loginForm",new LoginFormDTO());          
         return "home/login";
     }
     
@@ -46,8 +46,10 @@ public class HomeController extends BaseController{
      * or for showing errors
      * 
      */
-    @RequestMapping(value = "login", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public String doLogin(@Valid @ModelAttribute("loginForm") LoginFormDTO loginForm, BindingResult result, HttpServletRequest request, Model model) {                            
+        
+        model.addAttribute("pageTitle","Login"); 
         
         String viewToRender = "home/login";
         
