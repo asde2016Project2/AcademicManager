@@ -1,9 +1,6 @@
 package it.unical.asde.uam.controllers;
 
-import it.unical.asde.uam.controllers.core.BaseController;
 import java.util.ArrayList;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
 
+import it.unical.asde.uam.controllers.core.BaseController;
 import it.unical.asde.uam.model.CareerExam;
 import it.unical.asde.uam.model.DegreeCourse;
 import it.unical.asde.uam.model.Exam;
@@ -33,8 +31,8 @@ import it.unical.asde.uam.persistence.StudyPlanExamDAO;
 @RequestMapping("/admin")
 public class AdministratorController extends BaseController{  
 
-//    @Autowired
-//    private WebApplicationContext context;
+    @Autowired
+    private WebApplicationContext context;
     
     public void initDB() {
     	
@@ -108,6 +106,7 @@ public class AdministratorController extends BaseController{
     		model.addAttribute("exams",exams);
     	return "admin/details";
     }
+
     
     
     
@@ -225,5 +224,6 @@ public class AdministratorController extends BaseController{
 		model.addAttribute("careerExamList", careerExamDAO.listCareerExams());
 		return "admin/careerExams";
 	}
+
 
 }

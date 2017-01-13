@@ -20,9 +20,6 @@ public class UserAttemptRegistration implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_at_reg_id")
     private int userAtRegId;
-    
-    @Column(name="status")
-    private String status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "attempt_id", nullable = false)
@@ -77,15 +74,5 @@ public class UserAttemptRegistration implements Serializable {
     public void setUserAtRegId(int userAtRegId) {
         this.userAtRegId = userAtRegId;
     }
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-    
-    
 
 }
