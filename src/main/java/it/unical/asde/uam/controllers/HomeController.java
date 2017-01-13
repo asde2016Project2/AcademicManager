@@ -1,22 +1,23 @@
 package it.unical.asde.uam.controllers;
 
-import it.unical.asde.uam.helper.SessionHelper;
-import it.unical.asde.uam.helper.UserProfileHelper;
-import it.unical.asde.uam.controllers.core.BaseController;
-import it.unical.asde.uam.model.LoginFormDTO;
-import it.unical.asde.uam.model.Professor;
-import it.unical.asde.uam.model.Student;
-import it.unical.asde.uam.persistence.ProfessorDAO;
-import it.unical.asde.uam.persistence.StudentDAO;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import it.unical.asde.uam.Helper.SessionHelper;
+import it.unical.asde.uam.Helper.UserProfileHelper;
+import it.unical.asde.uam.controllers.core.BaseController;
+import it.unical.asde.uam.model.LoginFormDTO;
+import it.unical.asde.uam.model.Professor;
+import it.unical.asde.uam.model.Student;
+import it.unical.asde.uam.persistence.ProfessorDAO;
+import it.unical.asde.uam.persistence.StudentDAO;
 
 @Controller
 @RequestMapping("/")
@@ -141,7 +142,7 @@ public class HomeController extends BaseController{
         }
         
   
-       SessionHelper.setUserStudentLogged(stud, request.getSession());
+       SessionHelper.setUserStudenLogged(stud, request.getSession());
        return "redirect:/student/dashboard";
          
        
