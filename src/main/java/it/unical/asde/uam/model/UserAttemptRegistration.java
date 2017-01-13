@@ -20,6 +20,9 @@ public class UserAttemptRegistration implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_at_reg_id")
     private int userAtRegId;
+    
+    @Column(name="status")
+    private String status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "attempt_id", nullable = false)
@@ -29,18 +32,16 @@ public class UserAttemptRegistration implements Serializable {
     @JoinColumn(name = "user_id", nullable = false)
     private Student student;
 
-    private int grade;
 
     public UserAttemptRegistration() {
         this.attempt = new Attempt();
         this.student = new Student();
-        this.grade = 0;
+        this.status = "";
     }
 
-    public UserAttemptRegistration(Attempt attempt, Student student, int grade) {
+    public UserAttemptRegistration(Attempt attempt, Student student) {
         this.attempt = attempt;
         this.student = student;
-        this.grade = grade;
     }
 
     public Attempt getAttempt() {
@@ -59,15 +60,17 @@ public class UserAttemptRegistration implements Serializable {
         this.student = student;
     }
 
-    public int getGrade() {
-        return grade;
-    }
+    
 
-    public void setGrade(int grade) {
-        this.grade = grade;
-    }
+    public String getStatus() {
+		return status;
+	}
 
-    public int getUserAtRegId() {
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public int getUserAtRegId() {
         return userAtRegId;
     }
 

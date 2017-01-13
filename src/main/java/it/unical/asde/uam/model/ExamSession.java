@@ -38,6 +38,9 @@ public class ExamSession implements Serializable {
 
     @Column(name = "academicYear")
     private int academicYear;
+    
+    @Column(name="status")
+    private String status;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "examSession")
     private Set<Attempt> attempts= new HashSet<Attempt>();
@@ -51,6 +54,7 @@ public class ExamSession implements Serializable {
         this.startingDate = new Date();
         this.endingDate = new Date();
         this.academicYear = 0;
+        this.status="";
     }
 
     public ExamSession(Date startingDate, Date endingDate, int academicYear, DegreeCourse degreeCourse) {
@@ -94,8 +98,18 @@ public class ExamSession implements Serializable {
     public void setAcademicYear(int academicYear) {
         this.academicYear = academicYear;
     }
+    
+    
 
-    public Set<Attempt> getAttempts() {
+    public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Set<Attempt> getAttempts() {
         return attempts;
     }
 
