@@ -18,6 +18,8 @@ public interface ProfessorDAO {
 
     Professor retrieve(String username);
     
+    Professor retrieveByEmail(String email);
+    
     Professor retrieveForLogin(String username,String password);
 
     boolean exists(String username);
@@ -27,4 +29,6 @@ public interface ProfessorDAO {
     void update(Professor u);
 
     void delete(Professor u);
+    
+    boolean register(Professor u);
 }

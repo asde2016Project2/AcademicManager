@@ -14,13 +14,22 @@
     
     
     <definition name="home/login" extends="base.definition" >   
+        <put-attribute name="title" value="${pageTitle}" />  
         <put-attribute name="header" value="/WEB-INF/views/commons/header/emptyHeader.jsp" />              
         <put-attribute name="body" value="/WEB-INF/views/home/login.jsp" />      
         <put-attribute name="footer" value="/WEB-INF/views/commons/footer/emptyFooter.jsp" />     
     </definition>
     
+    <definition name="*/register" extends="base.definition" >   
+        <put-attribute name="title" value="${pageTitle}" />  
+        <put-attribute name="header" value="/WEB-INF/views/commons/header/emptyHeader.jsp" />              
+        <put-attribute name="body" value="/WEB-INF/views/{1}/register.jsp" />      
+        <put-attribute name="footer" value="/WEB-INF/views/commons/footer/emptyFooter.jsp" />     
+    </definition>
+    
             
     <definition name="professor/*" extends="base.definition" template="/WEB-INF/views/layout/logged_LeftColumnLayout.jsp">  
+        <put-attribute name="title" value="${pageTitle}" />  
         <put-attribute name="header" value="/WEB-INF/views/commons/header/professorHeader.jsp" /> 
         <put-attribute name="menu" value="/WEB-INF/views/commons/menu/professorMenu.jsp" /> 
         <put-attribute name="body" value="/WEB-INF/views/professor/{1}.jsp" />  
@@ -29,6 +38,7 @@
     
     
     <definition name="student/*" extends="base.definition" template="/WEB-INF/views/layout/logged_LeftColumnLayout.jsp">  
+        <put-attribute name="title" value="${pageTitle}" />  
         <put-attribute name="header" value="/WEB-INF/views/commons/header/studentHeader.jsp" /> 
         <put-attribute name="menu" value="/WEB-INF/views/commons/menu/studentMenu.jsp" /> 
         <put-attribute name="body" value="/WEB-INF/views/student/{1}.jsp" />  
@@ -37,6 +47,7 @@
     
     
     <definition name="admin/*" extends="base.definition" template="/WEB-INF/views/layout/logged_LeftColumnLayout.jsp">  
+        <put-attribute name="title" value="${pageTitle}" />  
         <put-attribute name="header" value="/WEB-INF/views/commons/header/administratorHeader.jsp" />  
         <put-attribute name="menu" value="/WEB-INF/views/commons/menu/administratorMenu.jsp" /> 
         <put-attribute name="body" value="/WEB-INF/views/admin/{1}.jsp" />  
