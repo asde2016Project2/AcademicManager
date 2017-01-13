@@ -1,7 +1,7 @@
 package it.unical.asde.uam.controllers;
 
-import it.unical.asde.uam.Helper.SessionHelper;
-import it.unical.asde.uam.Helper.UserProfileHelper;
+import it.unical.asde.uam.helper.SessionHelper;
+import it.unical.asde.uam.helper.UserProfileHelper;
 import it.unical.asde.uam.controllers.core.BaseController;
 import it.unical.asde.uam.model.LoginFormDTO;
 import it.unical.asde.uam.model.Professor;
