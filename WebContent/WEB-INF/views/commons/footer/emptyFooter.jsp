@@ -13,7 +13,7 @@
                 <p>From 1 to 6:  username <b>prof1</b>...  -  <b>password:</b> 123456</p>
             </li>
             <li>        
-                <a href="<c:url value="/dummyData/registerStudent" />">Register Student</a>
+                <a href="<c:url value="/dummyData/registerStudent" />">Create dummy Student</a>
                 <p>From 1 to 6:  username <b>stud1</b>...  -  <b>password</b>: 666666</p>
             </li>            
         </ul>
@@ -23,9 +23,11 @@
         <ul>
             <li>        
                 <a href="<c:url value="/professor/register" />">Register Professor</a>
+                <br/>
             </li>         
             <li>        
                 <a href="<c:url value="/student/register" />">Register Student</a>
+                <br/>
             </li>     
         </ul>
     </div>
