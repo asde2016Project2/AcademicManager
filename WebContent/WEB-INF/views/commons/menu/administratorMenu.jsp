@@ -2,7 +2,7 @@
     <h3>Admin Menu</h3>
     <ul>
         <li>
-            <a href="#">Menu Item 1</a>
+            <a href="<c:url value="/admin/dashboard"/>"> Dashboard</a>
         </li>
         <li>
             <a href="#">Menu Item 2</a>
@@ -11,6 +11,6 @@
             <a href="#">Menu Item 3</a>
         </li>
         <li>
-            <a href="#">Menu Item 4</a>
+             <a href="<c:url value="/logout" />">Logout</a>
         </li>
     </ul>
