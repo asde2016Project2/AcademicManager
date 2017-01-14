@@ -1,5 +1,6 @@
 package it.unical.asde.uam.persistence;
 
+
 import java.util.List;
 
 import org.hibernate.Query;
@@ -106,4 +107,24 @@ public class ExamSessionDAOImp implements ExamSessionDAO {
 		}
 	}
 
+
+  @Override
+	public void create(ExamSession examSession) {
+		dbHandler.create(examSession);
+	}
+
+	@Override
+	public void saveUpdates(ExamSession examSession) {
+		
+		dbHandler.update(examSession);
+	}
+
+	@Override
+	public void deleteAttempt(ExamSession examSession) {
+		
+		dbHandler.delete(examSession);
+	}
+
+
 }
+
