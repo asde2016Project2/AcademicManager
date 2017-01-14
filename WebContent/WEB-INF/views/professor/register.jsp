@@ -3,7 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<h1>Register Professor</h1>
+<h1>${pageTitle}</h1>
 
 <div class="form-message">
     <% //show additional message set in the controller %>

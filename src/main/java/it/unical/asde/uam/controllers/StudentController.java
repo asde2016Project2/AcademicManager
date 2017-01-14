@@ -7,26 +7,16 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.servlet.ModelAndView;
 
 import it.unical.asde.uam.Helper.SessionHelper;
 import it.unical.asde.uam.controllers.core.BaseController;
-import it.unical.asde.uam.model.CareerExam;
-import it.unical.asde.uam.model.Exam;
 import it.unical.asde.uam.model.ExamSession;
 import it.unical.asde.uam.persistence.AttemptDAO;
-import it.unical.asde.uam.persistence.CareerExamDAO;
-import it.unical.asde.uam.persistence.ExamDAO;
 import it.unical.asde.uam.persistence.ExamSessionDAO;
 import it.unical.asde.uam.persistence.UserAttemptRegistrationDAO;
 
