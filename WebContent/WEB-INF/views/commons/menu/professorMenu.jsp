@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <h3>Professor Menu</h3>
 <ul>
-     <li>
+    <li>
         <a href="<c:url value="/professor/dashboard"/>"> Dashboard</a>
     </li>
     <li>
