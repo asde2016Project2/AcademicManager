@@ -1,4 +1,4 @@
-package it.unical.asde.uam.Helper;
+package it.unical.asde.uam.helper;
 
 import it.unical.asde.uam.model.Administrator;
 import it.unical.asde.uam.model.Professor;

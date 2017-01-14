@@ -14,7 +14,7 @@
     <div class="form-error">${error}</div> 
 
 <div class="register-form">
-    <form:form method="post" action="register" modelAttribute="professor">
+    <form:form method="post" action="register" modelAttribute="student">
 
 
         <spring:bind path="username">
@@ -81,7 +81,7 @@
     <%
     /*
         // an alternative way of display errors
-        <spring:hasBindErrors name="professor">
+        <spring:hasBindErrors name="student">
             <c:forEach var="error" items="${errors.allErrors}">
                 <div class="form-error">${error}</div> 
                 <br />

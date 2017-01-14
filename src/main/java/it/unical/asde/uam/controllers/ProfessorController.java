@@ -1,6 +1,6 @@
 package it.unical.asde.uam.controllers;
 
-import it.unical.asde.uam.Helper.SessionHelper;
+import it.unical.asde.uam.helper.SessionHelper;
 import it.unical.asde.uam.controllers.core.BaseController;
 import it.unical.asde.uam.model.DegreeCourse;
 import it.unical.asde.uam.model.Exam;
@@ -36,7 +36,7 @@ public class ProfessorController extends BaseController {
   
     
     @RequestMapping(value = "dashboard", method = RequestMethod.GET)
-    public String showDashboad(HttpServletRequest request,Model model) {
+    public String showDashboad(HttpServletRequest request, Model model) {
         
         model.addAttribute("pageTitle","Professor Area");     
         
@@ -48,7 +48,7 @@ public class ProfessorController extends BaseController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.GET)
-    public String showRegisterForm(Model model, HttpServletRequest request) {
+    public String showRegisterForm(HttpServletRequest request, Model model) {
 
         model.addAttribute("pageTitle","Professor Register");     
         

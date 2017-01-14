@@ -1,7 +1,7 @@
 package it.unical.asde.uam.controllers;
 
-import it.unical.asde.uam.Helper.SessionHelper;
-import it.unical.asde.uam.Helper.UserProfileHelper;
+import it.unical.asde.uam.helper.SessionHelper;
+import it.unical.asde.uam.helper.UserProfileHelper;
 import it.unical.asde.uam.controllers.core.BaseController;
 import it.unical.asde.uam.model.LoginFormDTO;
 import it.unical.asde.uam.model.Professor;
@@ -49,8 +49,7 @@ public class HomeController extends BaseController{
     @RequestMapping(value = "", method = RequestMethod.POST)
     public String doLogin(@Valid @ModelAttribute("loginForm") LoginFormDTO loginForm, BindingResult result, HttpServletRequest request, Model model) {                            
         
-        model.addAttribute("pageTitle","Login"); 
-        
+                
         String viewToRender = "home/login";
         
         switch(loginForm.getProfileType()){
@@ -64,6 +63,7 @@ public class HomeController extends BaseController{
                 viewToRender = loginStudent(loginForm,model,request); 
                 break;                
             default:
+                model.addAttribute("pageTitle","Login"); 
                 model.addAttribute("loginForm",loginForm);
                 viewToRender = "home/login";
                 break;
@@ -142,7 +142,7 @@ public class HomeController extends BaseController{
         
   
        SessionHelper.setUserStudentLogged(stud, request.getSession());
-       return "redirect:/student/dashboard";
+       return "redirect:/student/studentDashboard";
          
        
       

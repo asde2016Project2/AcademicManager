@@ -40,7 +40,7 @@ public class DummyDataController extends BaseController {
             p.setEmail("prof" + i + "@mat.unical.it");
             p.setAge(21);
 
-            String dateOfBirth = "11-11-2011";
+            String dateOfBirth = "01-01-1971";
             String dateOfBirthFormat = "dd-mm-yyyy";
             DateFormat format = new SimpleDateFormat(dateOfBirthFormat, Locale.ENGLISH);
             Date dateOfBirthObject = format.parse(dateOfBirth);

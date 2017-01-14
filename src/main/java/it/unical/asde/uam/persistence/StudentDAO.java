@@ -26,5 +26,9 @@ package it.unical.asde.uam.persistence;
 	   StudyPlan getStudyPlan(Student student);
 	   
 	   Student retrieveForLogin(String username,String password);
+	   
+	   boolean register(Student u);
+	   
+	   Student retrieveByEmail(String email);
 			   
 	}

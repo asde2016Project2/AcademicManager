@@ -22,6 +22,7 @@ import javax.persistence.Table;
 @Table(name = "exam_session")
 public class ExamSession implements Serializable {
 
+
     /**
      *
      */
@@ -111,6 +112,7 @@ public class ExamSession implements Serializable {
         this.attempts = attempts;
     }
 
+
 	public DegreeCourse getDegreeCourse() {
 		return degreeCourse;
 	}
@@ -118,6 +120,7 @@ public class ExamSession implements Serializable {
 	public void setDegreeCourse(DegreeCourse degreeCourse) {
 		this.degreeCourse = degreeCourse;
 	}
+
 
 	public String getStartingDataString() {
 		return startingDataString;
@@ -134,8 +137,6 @@ public class ExamSession implements Serializable {
 	public void setEndingDataString(String endingDataString) {
 		this.endingDataString = endingDataString;
 	}
-    
-    
     
 
 }

@@ -17,133 +17,143 @@ import javax.persistence.Table;
 @Table(name = "attempt")
 public class Attempt implements Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    @Column(name = "attempt_id")
-    private int attemptId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.TABLE)
+	@Column(name = "attempt_id")
+	private int attemptId;
 
-    @Column(name = "exam_date")
-    private Date examDate;
+	@Column(name = "exam_date")
+	private Date examDate;
 
-    @Column(name = "classroom")
-    private String classroom;
+	@Column(name = "classroom")
+	private String classroom;
 
-    @Column(name = "startRegistrationDate")
-    private Date startRegistrationDate;
+	@Column(name = "startRegistrationDate")
+	private Date startRegistrationDate;
 
-    @Column(name = "endRegistrationDate")
-    private Date endRegistrationDate;
+	@Column(name = "endRegistrationDate")
+	private Date endRegistrationDate;
+	
+	@Column(name = "status")
+	private String status;
 
-//	@Column(name = "professor") //foreign key with professor??
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private Professor professor;
+	// @Column(name = "professor") //foreign key with professor??
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id", nullable = false)
+	private Professor professor;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "career_exam_id", nullable = false)
-    private CareerExam careerExam;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "career_exam_id", nullable = false)
+	private CareerExam careerExam;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "exam_id", nullable = false)
-    private Exam exam;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "exam_id", nullable = false)
+	private Exam exam;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "exam_session_id", nullable = false)
-    private ExamSession examSession;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "exam_session_id", nullable = false)
+	private ExamSession examSession;
 
-    public Attempt() {
-    }
+	public Attempt() {
+	}
 
-    public Attempt(int attemptId, Date examDate, String classroom,
-            Date startRegistrationDate, Date endRegistrationDate, Professor professor,
-            CareerExam careerExam, Exam exam, ExamSession examSession) {
-        super();
+	public Attempt(int attemptId, Date examDate, String classroom, Date startRegistrationDate, Date endRegistrationDate,
+			Professor professor, CareerExam careerExam, Exam exam, ExamSession examSession) {
+		super();
 
-        this.examDate = examDate;
-        this.classroom = classroom;
-        this.startRegistrationDate = startRegistrationDate;
-        this.endRegistrationDate = endRegistrationDate;
-        this.professor = professor;
-        this.careerExam = careerExam;
-        this.exam = exam;
-        this.examSession = examSession;
-    }
+		this.examDate = examDate;
+		this.classroom = classroom;
+		this.startRegistrationDate = startRegistrationDate;
+		this.endRegistrationDate = endRegistrationDate;
+		this.professor = professor;
+		this.careerExam = careerExam;
+		this.exam = exam;
+		this.examSession = examSession;
+	}
 
-    public int getAttemptId() {
-        return attemptId;
-    }
+	public int getAttemptId() {
+		return attemptId;
+	}
 
-    public void setAttemptId(int attemptId) {
-        this.attemptId = attemptId;
-    }
+	public void setAttemptId(int attemptId) {
+		this.attemptId = attemptId;
+	}
 
-    public Date getExamDate() {
-        return examDate;
-    }
+	public Date getExamDate() {
+		return examDate;
+	}
 
-    public void setExamDate(Date examDate) {
-        this.examDate = examDate;
-    }
+	public void setExamDate(Date examDate) {
+		this.examDate = examDate;
+	}
 
-    public String getClassroom() {
-        return classroom;
-    }
+	public String getClassroom() {
+		return classroom;
+	}
 
-    public void setClassroom(String classroom) {
-        this.classroom = classroom;
-    }
+	public void setClassroom(String classroom) {
+		this.classroom = classroom;
+	}
 
-    public Date getStartRegistrationDate() {
-        return startRegistrationDate;
-    }
+	public Date getStartRegistrationDate() {
+		return startRegistrationDate;
+	}
 
-    public void setStartRegistrationDate(Date startRegistrationDate) {
-        this.startRegistrationDate = startRegistrationDate;
-    }
+	public void setStartRegistrationDate(Date startRegistrationDate) {
+		this.startRegistrationDate = startRegistrationDate;
+	}
 
-    public Date getEndRegistrationDate() {
-        return endRegistrationDate;
-    }
+	public Date getEndRegistrationDate() {
+		return endRegistrationDate;
+	}
 
-    public void setEndRegistrationDate(Date endRegistrationDate) {
-        this.endRegistrationDate = endRegistrationDate;
-    }
+	public void setEndRegistrationDate(Date endRegistrationDate) {
+		this.endRegistrationDate = endRegistrationDate;
+	}
 
-    public Professor getProfessor() {
-        return professor;
-    }
+	public Professor getProfessor() {
+		return professor;
+	}
 
-    public void setProfessor(Professor professor) {
-        this.professor = professor;
-    }
+	public void setProfessor(Professor professor) {
+		this.professor = professor;
+	}
 
-    public CareerExam getCareerExam() {
-        return careerExam;
-    }
+	public CareerExam getCareerExam() {
+		return careerExam;
+	}
 
-    public void setCareerExam(CareerExam careerExam) {
-        this.careerExam = careerExam;
-    }
+	public void setCareerExam(CareerExam careerExam) {
+		this.careerExam = careerExam;
+	}
 
-    public Exam getExam() {
-        return exam;
-    }
+	public Exam getExam() {
+		return exam;
+	}
 
-    public void setExam(Exam exam) {
-        this.exam = exam;
-    }
+	public void setExam(Exam exam) {
+		this.exam = exam;
+	}
 
-    public ExamSession getExamSession() {
-        return examSession;
-    }
+	public ExamSession getExamSession() {
+		return examSession;
+	}
 
-    public void setExamSession(ExamSession examSession) {
-        this.examSession = examSession;
-    }
+	public void setExamSession(ExamSession examSession) {
+		this.examSession = examSession;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 }

@@ -5,6 +5,8 @@
  */
 package it.unical.asde.uam.persistence;
 
+import java.util.List;
+
 import it.unical.asde.uam.model.CareerExam;
 
 /**
@@ -13,12 +15,18 @@ import it.unical.asde.uam.model.CareerExam;
  */
 public interface CareerExamDAO {
 
-    void create(CareerExam careerExam);
+	void create(CareerExam careerExam);
 
-    void deleteCareerExam(CareerExam careerExam);
+	CareerExam retrieveCareerExam(CareerExam careerExam);
 
-    CareerExam retrieve(int careerExam);
+	void updateCareerExam(CareerExam careerExam);
 
-    void update(CareerExam careerExam);
-    
+	CareerExam getCareerExamById(int id);
+
+	boolean exists(CareerExam careerExam);
+
+	List<CareerExam> listCareerExams();
+	
+	void removeCareerExam(Integer careerId);
+
 }
