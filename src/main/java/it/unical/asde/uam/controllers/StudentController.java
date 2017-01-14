@@ -45,7 +45,7 @@ public class StudentController extends BaseController {
     }
 
 
-	// -------------------Student Registration-------//
+	// -------------------Exam Reservation process-------//
 
 	
 	@RequestMapping(value = "registrationAppeals", method = RequestMethod.GET)
