@@ -134,7 +134,7 @@ public class HomeController extends BaseController{
         
         StudentDAO studentDao = (StudentDAO) context.getBean("studentDAO");
         
-        Student stud = studentDao.retrieveStudentForLogin(loginForm.getUsername(), loginForm.getPassword());        
+        Student stud = studentDao.retrieveForLogin(loginForm.getUsername(), loginForm.getPassword());        
         if (stud  == null) {
             model.addAttribute("error", messageSource.getMessage("message.invalid", null, localeResolver.resolveLocale(request)));
             SessionHelper.cleanSession(request.getSession());

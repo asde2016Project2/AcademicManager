@@ -23,7 +23,10 @@
         <ul>
             <li>        
                 <a href="<c:url value="/professor/register" />">Register Professor</a>
-            </li>            
+            </li>         
+            <li>        
+                <a href="<c:url value="/student/register" />">Register Student</a>
+            </li>     
         </ul>
     </div>
             <div class="footer-box">

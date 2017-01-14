@@ -1,33 +1,35 @@
+
 package it.unical.asde.uam.persistence;
 
-import java.util.List;
 
-import it.unical.asde.uam.model.Student;
 
-/**
- *
- * @author Gezahegn
- */
-public interface StudentDAO {
+	import java.util.List;
 
-    void create(Student student);
+	import it.unical.asde.uam.model.Student;
+	import it.unical.asde.uam.model.StudyPlan;
 
-    void removeStudent(Integer studentId);
+	/**
+	*
+	* @author Nello
+	*/
+	public interface StudentDAO {
 
-    void updateStudent(Student student);
+	   void create(Student student);
 
-    Student retrieveStudent(Student student);
+	   void deleteStudent(Student student);
 
-    boolean exists(Student student);
+	   Student retrieve(String username);
 
-    List<Student> listStudent();
-
-    Student getStudentById(int studentId);
-
-    Integer getTotalNumberOfStudent();
-
-    List<Student> listStudents(Integer pageNumber, Integer StudentPerPage);
-
-    Student retrieveStudentForLogin(String username, String password);
-
-}
+	   void update(Student student);
+	   
+	   List<Student> getAllStudents();
+	   
+	   StudyPlan getStudyPlan(Student student);
+	   
+	   Student retrieveForLogin(String username,String password);
+	   
+	   boolean register(Student u);
+	   
+	   Student retrieveByEmail(String email);
+			   
+	}
