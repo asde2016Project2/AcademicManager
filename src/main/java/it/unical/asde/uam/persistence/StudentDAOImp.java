@@ -96,6 +96,33 @@ import it.unical.asde.uam.model.StudyPlanExam;
 	        return stud;
 	    }
 
-
+	    @Override
+	    public boolean register(Student u) {
+	        
+	        //if already exist email or username
+	        if (retrieve(u.getUsername()) != null || retrieveByEmail(u.getEmail()) != null) {
+	            return false;
+	        }
+	        
+	        //create
+	        create(u);
+	        
+	        //check created
+	        if(retrieve(u.getUsername()) == null){
+	            return false;
+	        }
+	        
+	        return true;
+	    }
 	   
+	    @Override
+	    public Student retrieveByEmail(String email) {
+	        String hql = "from Student where email =:email";
+
+	        Query query = dbHandler.getSession().createQuery(hql);
+	        query.setParameter("email", email);
+	        Student student = (Student) query.uniqueResult();
+	        return student;
+	    }
+	    
 	}
