@@ -50,8 +50,7 @@ public class HomeController extends BaseController{
     @RequestMapping(value = "", method = RequestMethod.POST)
     public String doLogin(@Valid @ModelAttribute("loginForm") LoginFormDTO loginForm, BindingResult result, HttpServletRequest request, Model model) {                            
         
-        model.addAttribute("pageTitle","Login"); 
-        
+                
         String viewToRender = "home/login";
         
         switch(loginForm.getProfileType()){
@@ -65,6 +64,7 @@ public class HomeController extends BaseController{
                 viewToRender = loginStudent(loginForm,model,request); 
                 break;                
             default:
+                model.addAttribute("pageTitle","Login"); 
                 model.addAttribute("loginForm",loginForm);
                 viewToRender = "home/login";
                 break;
@@ -142,8 +142,9 @@ public class HomeController extends BaseController{
         }
         
   
-       SessionHelper.setUserStudenLogged(stud, request.getSession());
-       return "redirect:/student/dashboard";
+
+       SessionHelper.setUserStudentLogged(stud, request.getSession());
+       return "redirect:/student/studentDashboard";
          
        
       
