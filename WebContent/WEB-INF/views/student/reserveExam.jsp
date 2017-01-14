@@ -13,7 +13,6 @@
 
     </head>
     <body>
-        <jsp:include page="studentDashboard.jsp" />
         <h1>Reservation for Examinations</h1>
 
         <form action=""></form>

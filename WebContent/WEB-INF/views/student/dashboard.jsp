@@ -6,12 +6,12 @@
 			<div id="header">
 				<div id="button-menu">
 					<img src="<c:url value="/resources/images/menu.png"/>" />
-					<%@include file="/WEB-INF/views/student/studentDashboard.jsp" %>
+					<%@include file="/WEB-INF/views/commons/menu/studentMenu.jsp" %>
 				</div>
 			</div>
 			<div id="content">
 				<div id="operation">
-					<%@include file="/WEB-INF/views/student/studentDashboard.jsp" %>
+					<%@include file="/WEB-INF/views/commons/menu/studentMenu.jsp" %>
 				</div>
 				<div id="menu">
 					<ul>

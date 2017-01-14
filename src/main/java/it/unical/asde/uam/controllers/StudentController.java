@@ -58,7 +58,7 @@ public class StudentController extends BaseController {
 	}
 	
 
-	@RequestMapping(value = { "/examSession/id={sessionId:.+}",
+	@RequestMapping(value = { "examSession/id={sessionId:.+}",
 			"registrationAppeals/examSession/{sessionId:.+}" }, method = RequestMethod.GET)
 	public String examReservationView(@PathVariable("sessionId") Integer sessionId, Model model) throws Exception {
 		ExamSessionDAO examSessionDAO = (ExamSessionDAO) context.getBean("examSessionDAO");
@@ -72,7 +72,7 @@ public class StudentController extends BaseController {
 
 	
 	
-	@RequestMapping(value = { "/attempt/id={attemptId:.+}",
+	@RequestMapping(value = { "attempt/id={attemptId:.+}",
 			"examReservationBoard/attempt/{attemptId:.+}" }, method = RequestMethod.GET)
 	public String cancelExamReservationView(@PathVariable("attemptId") Integer attemptId, Model model)
 			throws Exception {

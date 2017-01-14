@@ -11,7 +11,6 @@
 </head>
 <body>
 
-    <jsp:include page="studentDashboard.jsp" />
 
 <div class="container">
 		<div class="bs-docs-section">
