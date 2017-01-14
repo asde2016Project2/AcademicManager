@@ -1,6 +1,7 @@
 package it.unical.asde.uam.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -37,7 +38,7 @@ public class ExamSession implements Serializable {
     private Date endingDate;
 
     @Column(name = "academicYear")
-    private int academicYear;
+    private String academicYear;
     
     @Column(name="status")
     private String status;
@@ -49,20 +50,26 @@ public class ExamSession implements Serializable {
     @JoinColumn(name="degree_course_id")
     private DegreeCourse degreeCourse;
     
-    
+     private String startingDataString;
+    private String endingDataString;
+	
     public ExamSession() {
         this.startingDate = new Date();
         this.endingDate = new Date();
-        this.academicYear = 0;
+        this.academicYear = "";
         this.status="";
     }
 
-    public ExamSession(Date startingDate, Date endingDate, int academicYear, DegreeCourse degreeCourse) {
-        super();
+    public ExamSession(Date startingDate, Date endingDate, String academicYear, DegreeCourse degreeCourse) {
+         super();
         this.startingDate = startingDate;
         this.endingDate = endingDate;
         this.academicYear = academicYear;
         this.degreeCourse = degreeCourse;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    	this.setStartingDataString(sdf.format(this.startingDate));
+    	this.setEndingDataString(sdf.format(this.endingDate));
+		
     }
 
     public int getSessionId() {
@@ -91,17 +98,19 @@ public class ExamSession implements Serializable {
         this.endingDate = endingDate;
     }
 
-    public int getAcademicYear() {
-        return academicYear;
-    }
-
-    public void setAcademicYear(int academicYear) {
-        this.academicYear = academicYear;
-    }
+   
     
     
 
-    public String getStatus() {
+    public String getAcademicYear() {
+		return academicYear;
+	}
+
+	public void setAcademicYear(String academicYear) {
+		this.academicYear = academicYear;
+	}
+
+	public String getStatus() {
 		return status;
 	}
 
@@ -123,6 +132,22 @@ public class ExamSession implements Serializable {
 
 	public void setDegreeCourse(DegreeCourse degreeCourse) {
 		this.degreeCourse = degreeCourse;
+	}
+
+	public String getStartingDataString() {
+		return startingDataString;
+	}
+
+	public void setStartingDataString(String startingDataString) {
+		this.startingDataString = startingDataString;
+	}
+
+	public String getEndingDataString() {
+		return endingDataString;
+	}
+
+	public void setEndingDataString(String endingDataString) {
+		this.endingDataString = endingDataString;
 	}
 
     

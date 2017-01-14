@@ -3,7 +3,5 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<h1>${pageTitle}</h1>
+<h1>Year of the session and academic year not compatible</h1>
 
-<br/>
-<br/>

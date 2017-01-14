@@ -31,10 +31,10 @@ public class DegreeCourse implements Serializable {
 	@Column(name="name", unique=true, nullable=false, length=255)
 	private String name;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy="degreeCourse")	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="degreeCourse")	
 	private List<StudyPlan> studyPlans = new ArrayList<StudyPlan>();
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy="degreeCourse")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="degreeCourse")
 	private List<ExamSession> examSessions = new ArrayList<>();
 	
 	public DegreeCourse(){}
