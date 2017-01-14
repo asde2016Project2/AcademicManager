@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -43,7 +44,7 @@ public class ExamSession implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "examSession")
     private Set<Attempt> attempts= new HashSet<Attempt>();
 
-    @ManyToOne( fetch=FetchType.LAZY)
+    @ManyToOne( fetch=FetchType.LAZY)//, cascade = CascadeType.ALL)
     @JoinColumn(name="degree_course_id")
     private DegreeCourse degreeCourse;
     

@@ -3,6 +3,7 @@ package it.unical.asde.uam.controllers;
 import it.unical.asde.uam.Helper.SessionHelper;
 import it.unical.asde.uam.controllers.core.BaseController;
 import it.unical.asde.uam.model.DegreeCourse;
+import it.unical.asde.uam.model.Exam;
 import it.unical.asde.uam.model.ExamSession;
 import it.unical.asde.uam.model.Professor;
 import it.unical.asde.uam.persistence.DegreeCourseDAO;
@@ -89,9 +90,12 @@ public class ProfessorController extends BaseController {
     
     
     @RequestMapping(value = "createSession", method = RequestMethod.GET)
-    public String openCreateNewSession() {
-    	System.out.println("sono in professor create session");
-         return "professor/createSession";
+    public String openCreateNewSession(Model model) {
+    	DegreeCourseDAO degreeCourseDao = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
+    	ArrayList<DegreeCourse> allDegrees = (ArrayList<DegreeCourse>) degreeCourseDao.getAllDegrees();
+    	model.addAttribute("degreeCourses", allDegrees);
+    	
+        return "professor/createSession";
     }
     
     @RequestMapping(value = "createSession", method = RequestMethod.POST)
@@ -100,19 +104,22 @@ public class ProfessorController extends BaseController {
     		HttpServletRequest request) throws ParseException{
     	
     	ProfessorDAO professorDao = (ProfessorDAO) context.getBean("professorDAO");
-    	if(professorDao.checkExamSession(request.getParameter("startingDate"),request.getParameter("endingDate")))
+    	if(professorDao.checkExamSession(request.getParameter("startingDate"),request.getParameter("endingDate"), request.getParameter("academicYear")))
     	{
-    		DegreeCourse degreeCourse = new DegreeCourse(degreeCourseName);
     		DegreeCourseDAO degreeCourseDAO = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
-    		degreeCourseDAO.create(degreeCourse);
-    		SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");
+    		DegreeCourse degreeCourse = degreeCourseDAO.getDegreeCourseByName(degreeCourseName);
+    		
+    		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     		Date startingDate = null;
    			startingDate = sdf.parse(startingDateString);
    			Date endingDate = null;
    			endingDate = sdf.parse(endingDateString);
-    		ExamSessionDAO examSessionDao = (ExamSessionDAO) context.getBean("examSessionDAO");
+    		
+   			ExamSessionDAO examSessionDao = (ExamSessionDAO) context.getBean("examSessionDAO");
     		ExamSession examSession = new ExamSession(startingDate, endingDate, academicYear, degreeCourse);
+
     		examSessionDao.create(examSession);
+    		ArrayList<ExamSession> allExamSessions = professorDao.listAllSession();
     		return "professor/dashboard";
     	}
     	else return "professor/errorExamSession";

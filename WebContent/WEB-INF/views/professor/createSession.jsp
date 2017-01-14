@@ -11,15 +11,17 @@
 <br>
 <label for="dates">Exam Session's ending: </label>
 <input id="endingDate" name="endingDate" type="date" value="01-01-2017"/>
-<input type="submit" value="Submit">
+
 <br>
 <label>DegreeCOURSE: </label>
 <select name="degreeCourse">
-    <option value="Choose">Choose</option>
-    <option value="Maths">Maths</option>
-    <option value="Physics">Physics</option>
-    <option value="Computer">Computer</option>
-  </select>
+	<option>Choose</option>
+	<c:forEach items="${degreeCourses}" var="degree">
+    	
+    	<option> <c:out value="${degree.name}"/></option>
+  	</c:forEach>
+  	</select>
+  	
 <br>
 <label>Academic Year: </label>
 <select name="academicYear">
@@ -27,6 +29,8 @@
     <option value="2016/2017">2016/2017</option>
     <option value="2017/2018">2017/2018</option>
   </select>
+  
+  <input type="submit" value="Submit">
 </form>
 <!-- <form method="post" action="createSession" commandName="dateForm">
   Starting data(dd-mm-yy):<br> 

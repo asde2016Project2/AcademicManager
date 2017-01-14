@@ -35,7 +35,7 @@ public interface ProfessorDAO {
     
     boolean register(Professor u);
 
-    boolean checkExamSession(String startingDate, String endingDate);
+    boolean checkExamSession(String startingDate, String endingDate, String academicYear);
     
     ArrayList<ExamSession> listAllSession();
 }
