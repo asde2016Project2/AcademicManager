@@ -82,5 +82,20 @@ public class DummyDataController extends BaseController {
         }
         return "redirect:/";
     }
+    
+    @RequestMapping(value = "addDegreeCourse", method = RequestMethod.GET)
+    public String addDegreeCourse() {
+    	DegreeCourseDAO degreeCourseDAO = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
+    	DegreeCourse d1 = new DegreeCourse("Computer Science");
+    	DegreeCourse d2 = new DegreeCourse("Mathematics");
+    	DegreeCourse d3 = new DegreeCourse("Physics");
+    	DegreeCourse d4 = new DegreeCourse("Biology");
+    	degreeCourseDAO.create(d1);
+    	degreeCourseDAO.create(d2);
+    	degreeCourseDAO.create(d3);
+    	degreeCourseDAO.create(d4);
+    	
+    	return "redirect:/";
+    }
 
 }

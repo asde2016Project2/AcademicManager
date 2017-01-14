@@ -5,6 +5,9 @@
  */
 package it.unical.asde.uam.persistence;
 
+import java.util.ArrayList;
+
+import it.unical.asde.uam.model.ExamSession;
 import it.unical.asde.uam.model.Professor;
 
 
@@ -31,4 +34,8 @@ public interface ProfessorDAO {
     void delete(Professor u);
     
     boolean register(Professor u);
+
+    boolean checkExamSession(String startingDate, String endingDate, String academicYear);
+    
+    ArrayList<ExamSession> listAllSession();
 }

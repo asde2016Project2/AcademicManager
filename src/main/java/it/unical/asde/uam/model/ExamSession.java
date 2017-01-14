@@ -1,10 +1,12 @@
 package it.unical.asde.uam.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,88 +22,96 @@ import javax.persistence.Table;
 @Table(name = "exam_session")
 public class ExamSession implements Serializable {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name = "session_id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int sessionId;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-	@Column(name = "startingDate")
-	private Date startingDate;
+    @Id
+    @Column(name = "session_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int sessionId;
 
-	@Column(name = "endingDate")
-	private Date endingDate;
+    @Column(name = "startingDate")
+    private Date startingDate;
 
-	@Column(name = "academicYear")
-	private int academicYear;
+    @Column(name = "endingDate")
+    private Date endingDate;
 
-	@Column(name = "status")
-	private String status;
+    @Column(name = "academicYear")
+    private String academicYear;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "examSession")
-	private Set<Attempt> attempts = new HashSet<Attempt>();
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "examSession")
+    private Set<Attempt> attempts= new HashSet<Attempt>();
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "degree_course_id")
-	private DegreeCourse degreeCourse;
+    @ManyToOne( fetch=FetchType.LAZY)//, cascade = CascadeType.ALL)
+    @JoinColumn(name="degree_course_id")
+    private DegreeCourse degreeCourse;
+    
+    private String startingDataString;
+    private String endingDataString;
+    
+    public ExamSession() {
+        this.startingDate = new Date();
+        this.endingDate = new Date();
+        this.academicYear = "";
+    }
+    
 
-	public ExamSession() {
-		this.startingDate = new Date();
-		this.endingDate = new Date();
-		this.academicYear = 0;
-	}
+    public ExamSession(Date startingDate, Date endingDate, String academicYear, DegreeCourse degreeCourse) {
+        super();
+        this.startingDate = startingDate;
+        this.endingDate = endingDate;
+        this.academicYear = academicYear;
+        this.degreeCourse = degreeCourse;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    	this.setStartingDataString(sdf.format(this.startingDate));
+    	this.setEndingDataString(sdf.format(this.endingDate));
+    }
 
-	public ExamSession(Date startingDate, Date endingDate, int academicYear, DegreeCourse degreeCourse) {
-		super();
-		this.startingDate = startingDate;
-		this.endingDate = endingDate;
-		this.academicYear = academicYear;
-		this.degreeCourse = degreeCourse;
-	}
+    public int getSessionId() {
+        return sessionId;
+    }
 
-	public int getSessionId() {
-		return sessionId;
-	}
+    public void setSessionId(int sessionId) {
+        this.sessionId = sessionId;
+    }
 
-	public void setSessionId(int sessionId) {
-		this.sessionId = sessionId;
-	}
+    
 
-	public Date getStartingDate() {
-		return startingDate;
-	}
+    public Date getStartingDate() {
+        return startingDate;
+    }
 
-	public void setStartingDate(Date startingDate) {
-		this.startingDate = startingDate;
-	}
+    public void setStartingDate(Date startingDate) {
+        this.startingDate = startingDate;
+    }
 
-	public Date getEndingDate() {
-		return endingDate;
-	}
+    public Date getEndingDate() {
+        return endingDate;
+    }
 
-	public void setEndingDate(Date endingDate) {
-		this.endingDate = endingDate;
-	}
+    public void setEndingDate(Date endingDate) {
+        this.endingDate = endingDate;
+    }
 
-	public int getAcademicYear() {
-		return academicYear;
-	}
+    public String getAcademicYear() {
+        return academicYear;
+    }
 
-	public void setAcademicYear(int academicYear) {
-		this.academicYear = academicYear;
-	}
+    public void setAcademicYear(String academicYear) {
+        this.academicYear = academicYear;
+    }
 
-	public Set<Attempt> getAttempts() {
-		return attempts;
-	}
+    public Set<Attempt> getAttempts() {
+        return attempts;
+    }
 
-	public void setAttempts(Set<Attempt> attempts) {
-		this.attempts = attempts;
-	}
+    public void setAttempts(Set<Attempt> attempts) {
+        this.attempts = attempts;
+    }
+
 
 	public DegreeCourse getDegreeCourse() {
 		return degreeCourse;
@@ -111,12 +121,22 @@ public class ExamSession implements Serializable {
 		this.degreeCourse = degreeCourse;
 	}
 
-	public String getStatus() {
-		return status;
+
+	public String getStartingDataString() {
+		return startingDataString;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setStartingDataString(String startingDataString) {
+		this.startingDataString = startingDataString;
 	}
+
+	public String getEndingDataString() {
+		return endingDataString;
+	}
+
+	public void setEndingDataString(String endingDataString) {
+		this.endingDataString = endingDataString;
+	}
+    
 
 }

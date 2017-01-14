@@ -1,5 +1,6 @@
 package it.unical.asde.uam.persistence;
 
+
 import java.util.List;
 
 import it.unical.asde.uam.model.DegreeCourse;
@@ -18,5 +19,11 @@ public interface ExamSessionDAO {
 	List<DegreeCourse> getDegreeCourseToExamSession(Integer examSessionId);
 	
 	
+	 void create(ExamSession examSession);
+
+	 void saveUpdates(ExamSession examSession);
+	   
+	 void deleteAttempt(ExamSession examSession);
 
 }
+
