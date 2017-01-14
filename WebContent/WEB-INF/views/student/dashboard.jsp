@@ -16,12 +16,13 @@
 				<div id="menu">
 					<ul>
 						<li>
-							<img src="<c:url value="/resources/images/admin/studyplans.png"/>" />
-							<a href="studyPlans">Study Plans</a>
+							<a href="registrationAppeals">Registration Appeals</a>
 						</li>
 						<li>
-							<img src="<c:url value="/resources/images/admin/registrations.png"/>" />
-							<a href="registrations">Registrations</a>
+							<a href="examReservationBoard">Exam Reservation Board</a>
+						</li>
+						<li>
+							<a href="reserveExam">Book Exam</a>
 						</li>
 						<li>
 							<img src="<c:url value="/resources/images/admin/logout.png"/>" />

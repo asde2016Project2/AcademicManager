@@ -46,7 +46,7 @@
 												<td>${attempt.startRegistrationDate}</td>
 												<td>${attempt.endRegistrationDate}</td>
 												<td>${attempt.professor.firstName}</td>
-												<td><a href="${pageContext.request.contextPath}/student/examReservationBoard/attempt/${attempt.attemptId}">View</a></td>
+												<td><a href="${pageContext.request.contextPath}/examReservationBoard/attempt/${attempt.attemptId}">View</a></td>
 											</tr>
 
 										</c:forEach>
