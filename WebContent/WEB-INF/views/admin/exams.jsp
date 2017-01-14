@@ -32,8 +32,6 @@
 							<td>${exam.name}</td>
 							<td>${exam.cfu}</td>
 							<td>${exam.code}</td>
-							<td><a href="${pageContext.request.contextPath}exams/edit/${exam.id}">Edit
-									</a></td>
 							<td><a href="<c:url value='exams/delete/${exam.id}'/>">Delete</a></td>
 						</tr>
 					</tbody>

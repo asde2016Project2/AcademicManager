@@ -43,9 +43,7 @@
 											<td>${careerExam.grade}</td>
 											<td>${careerExam.mandatory}</td>
 											<td><a
-												href="<c:url value='/careerExams/edit/${careerExam.careerExamId}'/>">Edit</a></td>
-											<td><a
-												href="<c:url value='/careerExams/delete/${careerExam.careerExamId}'/>">Delete</a></td>
+												href="<c:url value='careerExams/delete/${careerExam.careerExamId}'/>">Delete</a></td>
 										</tr>
 
 									</c:forEach>

@@ -67,20 +67,7 @@ public class AdministratorController extends BaseController {
 		return "admin/exams";
 	}
 
-//	@RequestMapping(value = { "examForm/edit/id={examId:.+}",
-//			"examForm/edit/{examId:.+}" }, method = RequestMethod.POST)
-//	public String updateExamInfo(@Validated @ModelAttribute("exam") Exam exam, BindingResult bindingResult) {
-//		ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
-//		if (bindingResult.hasErrors()) {
-//			ModelAndView modelAndView = new ModelAndView("/examForm");
-//			modelAndView.addObject("exam", examDAO.getExamById(exam.getId()));
-//			return modelAndView.getViewName();
-//		}
-//
-//		examDAO.updateExam(exam);
-//		logger.info("Update exam information");
-//		return "redirect:/admin/examForm/id=" + exam.getId();
-//	}
+	
 
 	@RequestMapping("exams/delete/{examId}")
 	public String removeExam(@PathVariable("examId") Integer examId) {
@@ -133,7 +120,6 @@ public class AdministratorController extends BaseController {
 	@RequestMapping("careerExams/delete/{careerExamId}")
 	public String removeCareerExam(@PathVariable("careerExamId") Integer careerExamId) {
 		CareerExamDAO careerExamDAO = (CareerExamDAO) context.getBean("careerExamDAO");
-
 		careerExamDAO.removeCareerExam(careerExamId);
 		return "redirect:/admin/careerExams";
 	}
