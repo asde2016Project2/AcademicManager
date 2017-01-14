@@ -6,7 +6,14 @@
 package it.unical.asde.uam.persistence;
 
 import it.unical.asde.uam.dao.DBHandler;
+import it.unical.asde.uam.model.ExamSession;
 import it.unical.asde.uam.model.Professor;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
 import org.hibernate.Query;
 
 /**
@@ -99,5 +106,28 @@ public class ProfessorDAOImp implements ProfessorDAO {
         Professor professor = (Professor) query.uniqueResult();
         return professor;
     }
+    
+	@Override
+	public boolean checkExamSession(String startingDate, String endingDate) {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		try {
+			Date endDate = sdf.parse(endingDate);
+			Date startDate = sdf.parse(startingDate);
+		} catch (ParseException e) {
+			System.out.println("ERRORE inserimento data");
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public ArrayList<ExamSession> listAllSession() {
+
+		String hql = "from ExamSession";
+        Query query = dbHandler.getSession().createQuery(hql);
+        ArrayList<ExamSession> examSessions = (ArrayList<ExamSession>) query.list();
+		return examSessions;
+	}
 
 }

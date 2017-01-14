@@ -2,8 +2,18 @@ package it.unical.asde.uam.controllers;
 
 import it.unical.asde.uam.Helper.SessionHelper;
 import it.unical.asde.uam.controllers.core.BaseController;
+import it.unical.asde.uam.model.DegreeCourse;
+import it.unical.asde.uam.model.ExamSession;
 import it.unical.asde.uam.model.Professor;
+import it.unical.asde.uam.persistence.DegreeCourseDAO;
+import it.unical.asde.uam.persistence.ExamSessionDAO;
 import it.unical.asde.uam.persistence.ProfessorDAO;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -12,6 +22,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -73,5 +84,47 @@ public class ProfessorController extends BaseController {
         
         return "professor/register";
     }
+    
+    
+    
+    
+    @RequestMapping(value = "createSession", method = RequestMethod.GET)
+    public String openCreateNewSession() {
+    	System.out.println("sono in professor create session");
+         return "professor/createSession";
+    }
+    
+    @RequestMapping(value = "createSession", method = RequestMethod.POST)
+    public String createNewSession(@RequestParam("startingDate") String startingDateString, @RequestParam("endingDate") String endingDateString,
+    		@RequestParam("degreeCourse") String degreeCourseName, @RequestParam("academicYear") String academicYear,
+    		HttpServletRequest request) throws ParseException{
+    	
+    	ProfessorDAO professorDao = (ProfessorDAO) context.getBean("professorDAO");
+    	if(professorDao.checkExamSession(request.getParameter("startingDate"),request.getParameter("endingDate")))
+    	{
+    		DegreeCourse degreeCourse = new DegreeCourse(degreeCourseName);
+    		DegreeCourseDAO degreeCourseDAO = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
+    		degreeCourseDAO.create(degreeCourse);
+    		SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");
+    		Date startingDate = null;
+   			startingDate = sdf.parse(startingDateString);
+   			Date endingDate = null;
+   			endingDate = sdf.parse(endingDateString);
+    		ExamSessionDAO examSessionDao = (ExamSessionDAO) context.getBean("examSessionDAO");
+    		ExamSession examSession = new ExamSession(startingDate, endingDate, academicYear, degreeCourse);
+    		examSessionDao.create(examSession);
+    		return "professor/dashboard";
+    	}
+    	else return "professor/errorExamSession";
+    }
+    
+    @RequestMapping(value ="viewAllSession", method = RequestMethod.GET)
+    public String viewAllSession(Model model){
+    	ProfessorDAO professorDao = (ProfessorDAO) context.getBean("professorDAO");
+    	ArrayList<ExamSession> allExamSessions = professorDao.listAllSession();
+    	model.addAttribute("lista", allExamSessions);
+    	return "professor/listSession";
+    }
+
 
 }
