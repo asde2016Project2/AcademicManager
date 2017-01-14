@@ -6,6 +6,4 @@
 <h1>${pageTitle}</h1>
 
 <br/>
-	<a href="<c:url value="/professor/createSession"/>"> Create Session</a>
-    <a href="<c:url value="/professor/viewAllSession"/>"> List Session</a>
 <br/>
