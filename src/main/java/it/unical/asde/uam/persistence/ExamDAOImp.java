@@ -117,7 +117,36 @@ public class ExamDAOImp implements ExamDAO {
 	
 	
 	
-	
+	/*
+	 * retrieving the total number of Exams from the db
+	 */
 
+	@Override
+	public Integer getTotalNumberOfExams() {
+		String hql = "SELECT COUNT(*) FROM Exam";
+		Query query = dbHandler.getSession().createQuery(hql);
+		Long singleResult = (Long) query.uniqueResult();
+		Integer numOfExams = singleResult.intValue();
+		logger.info("nr of exams is {} ", numOfExams);
+		return numOfExams;
+
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+    @Override
+    public List<Exam> listExams(Integer pageNumber, Integer examPerPage) {
+        int start = examPerPage * (pageNumber - 1);
+        Query query = dbHandler.getSession().createQuery("from Exam");
+        query.setFirstResult(start);
+        query.setMaxResults(examPerPage);
+
+        List<Exam> exams = query.list();
+
+        for (Exam exam : exams) {
+            logger.info("Exam list:"+exams);
+        }
+        return exams;
+    }
 
 }

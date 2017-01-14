@@ -58,7 +58,9 @@ public class CareerExamDAOImp implements CareerExamDAO {
 
 	@Override
 	public void updateCareerExam(CareerExam careerExam) {
-		
+		// Retrieve session from Hibernate using dbHandler.getSession()
+
+		// Create hql String
 		String hql = "UPDATE CareerExam set user.username = :name Where id = :examId";
 		// Create a Query instance for the given HQL query string.
 		Query query = dbHandler.getSession().createQuery(hql);
@@ -76,6 +78,10 @@ public class CareerExamDAOImp implements CareerExamDAO {
 	// it doesn't keep the object but the object detached automatically and
 	// instantiate a new
 	// transient object
+	// @Override
+	// public void updateExam(CareerExam careerExam) {
+	// dbHandler.update(careerExam);
+	// }
 
 	@Override
 	public CareerExam retrieveCareerExam(CareerExam careerExam) {

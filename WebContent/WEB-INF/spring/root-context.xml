@@ -41,22 +41,10 @@
 		<property name="dbHandler" ref="dbHandler" />
 	</bean>
 
-	<bean id="examSessionDAO" class="it.unical.asde.uam.persistence.ExamSessionDAOImp">
-		<property name="dbHandler" ref="dbHandler" />
-	</bean>
-
-	<bean id="userAttemptRegistrationDAO"
-		class="it.unical.asde.uam.persistence.UserAttemptRegistrationDAOImp">
-		<property name="dbHandler" ref="dbHandler" />
-	</bean>
-
-	<bean id="attemptDAO" class="it.unical.asde.uam.persistence.AttemptDAOImp">
-		<property name="dbHandler" ref="dbHandler" />
-	</bean>
-
 	<bean id="professorDAO" class="it.unical.asde.uam.persistence.ProfessorDAOImp">
 		<property name="dbHandler" ref="dbHandler" />
 	</bean>
+
 	<bean id="degreeCourseDAO" class="it.unical.asde.uam.persistence.DegreeCourseDAOImp">
 		<property name="dbHandler" ref="dbHandler" />
 	</bean>
@@ -73,6 +61,20 @@
 		<property name="dbHandler" ref="dbHandler" />
 	</bean>
 
+
+	<bean id="attemptDAO" class="it.unical.asde.uam.persistence.AttemptDAOImp">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="examSessionDAO" class="it.unical.asde.uam.persistence.ExamSessionDAOImp">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+	<bean id="userAttemptRegistrationDAO"
+		class="it.unical.asde.uam.persistence.UserAttemptRegistrationDAOImp">
+		<property name="dbHandler" ref="dbHandler" />
+	</bean>
+
+	
+
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
@@ -87,8 +89,10 @@
 	<bean id="studyPlan" class="it.unical.asde.uam.model.StudyPlan"></bean>
 	<bean id="studyPlanExam" class="it.unical.asde.uam.model.StudyPlanExam"></bean>
 	<bean id="professor" class="it.unical.asde.uam.model.Professor"></bean>
-	<bean id="examSession" class="it.unical.asde.uam.model.ExamSession"></bean>
-	<bean id="student" class="it.unical.asde.uam.model.Student"></bean>
+	<bean id="administrator" class="it.unical.asde.uam.model.Administrator"></bean>
 	<bean id="userAttemptRegistration" class="it.unical.asde.uam.model.UserAttemptRegistration"></bean>
+	<bean id="attempt" class="it.unical.asde.uam.model.Attempt"></bean>
+	<bean id="examSession" class="it.unical.asde.uam.model.ExamSession"></bean>
+
 
 </beans>

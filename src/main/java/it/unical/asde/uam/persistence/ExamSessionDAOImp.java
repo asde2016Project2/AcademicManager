@@ -32,17 +32,10 @@ public class ExamSessionDAOImp implements ExamSessionDAO {
 
 		String queryString = "from ExamSession as examSession where examSession.status = 'active'";
 		Query query = dbHandler.getSession().createQuery(queryString);
-
-		try {
-			dbHandler.begin();
-			List<ExamSession> examSessions = (List<ExamSession>) query.list();
-			dbHandler.commit();
-			return examSessions;
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			return null;
-		}
-
+		dbHandler.begin();
+		List<ExamSession> examSessions = (List<ExamSession>) query.list();
+		dbHandler.commit();
+		return examSessions;
 	}
 
 	@Override
@@ -95,15 +88,9 @@ public class ExamSessionDAOImp implements ExamSessionDAO {
 				.createQuery("SELECT degreeCourse FROM ExamSession s WHERE s.sessionId = :sessionId");
 		query.setParameter("sessionId", examSessionId);
 
-		try {
-			dbHandler.begin();
-			List<DegreeCourse> getDegreeCourseToExamSession = query.list();
-			dbHandler.commit();
-			return getDegreeCourseToExamSession;
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			return null;
-		}
+		List<DegreeCourse> getDegreeCourseToExamSession = query.list();
+
+		return getDegreeCourseToExamSession;
 	}
 
 }

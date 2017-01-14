@@ -15,7 +15,7 @@
 	<div class="container">
 		<div class="navbar-header">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="<%=request.getContextPath()%>/">Home</a></li>
+				<li><a href="<%=request.getContextPath()%>/home/home">Home</a></li>
 				<li><a href="<%=request.getContextPath()%>/student/examReservationBoard/0">Exam Reservation Board</a></li>
 				<li><a href="<%=request.getContextPath()%>/student/registrationAppeals/0">Exam Registration Appeals</a></li>
 				<li><a href="<%=request.getContextPath()%>/student/reserveExam/0">Book Exam</a></li>

@@ -28,4 +28,8 @@ public interface ExamDAO {
 
 	List<Exam> getAllExams();
 
+	List<Exam> listExams(Integer pageNumber, Integer examPerPage);
+
+	Integer getTotalNumberOfExams();
+
 }

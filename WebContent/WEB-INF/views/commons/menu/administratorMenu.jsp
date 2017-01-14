@@ -1,16 +1,10 @@
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-    <h3>Admin Menu</h3>
-    <ul>
-        <li>
-            <a href="#">Menu Item 1</a>
-        </li>
-        <li>
-            <a href="#">Menu Item 2</a>
-        </li>
-        <li>
-            <a href="#">Menu Item 3</a>
-        </li>
-        <li>
-            <a href="#">Menu Item 4</a>
-        </li>
-    </ul>
+
+
+	<ul>
+		<li><a href="<%=request.getContextPath()%>/admin/examForm">Exam Form</a></li>
+		<li><a href="<%=request.getContextPath()%>/admin/careerExamForm">CareerExam Form</a></li>
+		<li><a href="<%=request.getContextPath()%>/admin/exams/">Exam</a></li>
+		<li><a href="<%=request.getContextPath()%>/admin/careerexams/">CareerExam</a></li>
+	</ul>
+
+
