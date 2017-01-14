@@ -49,6 +49,16 @@ public class DegreeCourseDAOImp implements DegreeCourseDAO {
     }
     
     @Override
+    public DegreeCourse getDegreeCourseByName(String nameDegree) {
+        String queryString = "from DegreeCourse where name=:nameDeg";
+        Query query = dbHandler.getSession().createQuery(queryString);
+        query.setParameter("nameDeg", nameDegree);
+        DegreeCourse dC = (DegreeCourse) query.uniqueResult();
+        dbHandler.close();
+        return dC;
+    }
+    
+    @Override
     public DegreeCourse retrieve(int grades) {
       return null;
     }
