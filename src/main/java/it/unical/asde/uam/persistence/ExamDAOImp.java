@@ -41,7 +41,7 @@ public class ExamDAOImp implements ExamDAO {
     @Override
     public Exam retrieve(String examName) {
         Session session = dbHandler.getSessionFactory().openSession();
-        String queryString = "from Exam where name = :ex";
+        String queryString = "from Exam where name =:ex";
         Query query = session.createQuery(queryString);
         query.setParameter("ex", examName);
         Exam e = (Exam) query.uniqueResult();

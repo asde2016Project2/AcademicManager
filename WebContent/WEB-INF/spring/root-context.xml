@@ -67,6 +67,7 @@
 	
     <!-- Root Context: defines shared resources visible to all other web components -->
     <bean id="user" class="it.unical.asde.uam.model.User"></bean>
+    <bean id="student" class="it.unical.asde.uam.model.Student"></bean>
     <bean id="careerExam" class="it.unical.asde.uam.model.CareerExam"></bean>
     <bean id="exam" class="it.unical.asde.uam.model.Exam"></bean>
     <bean id="degreeCourse" class="it.unical.asde.uam.model.DegreeCourse"></bean>

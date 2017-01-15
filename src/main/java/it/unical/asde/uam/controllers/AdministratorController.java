@@ -1,8 +1,14 @@
 package it.unical.asde.uam.controllers;
 
 import it.unical.asde.uam.controllers.core.BaseController;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.validation.Valid;
 
@@ -17,12 +23,14 @@ import org.springframework.web.context.WebApplicationContext;
 import it.unical.asde.uam.model.DegreeCourse;
 import it.unical.asde.uam.model.Exam;
 import it.unical.asde.uam.model.LoginFormDTO;
+import it.unical.asde.uam.model.Student;
 import it.unical.asde.uam.model.StudyPlan;
 import it.unical.asde.uam.model.StudyPlanExam;
 import it.unical.asde.uam.model.StudyPlanFormDTO;
 import it.unical.asde.uam.persistence.DegreeCourseDAO;
 import it.unical.asde.uam.persistence.DegreeCourseDAOImp;
 import it.unical.asde.uam.persistence.ExamDAO;
+import it.unical.asde.uam.persistence.StudentDAO;
 import it.unical.asde.uam.persistence.StudyPlanDAO;
 import it.unical.asde.uam.persistence.StudyPlanExamDAO;
 
@@ -32,6 +40,8 @@ public class AdministratorController extends BaseController{
 
     @Autowired
     private WebApplicationContext context;
+    
+    ArrayList<StudyPlan> studyPlans = new ArrayList<>();
     
     public void initDB() {
     	
@@ -50,7 +60,7 @@ public class AdministratorController extends BaseController{
 		StudyPlanDAO studyPlanDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
 		if(!studyPlanDAO.getAllPlans().isEmpty())
 			return;
-		ArrayList<StudyPlan> studyPlans = new ArrayList<>();
+		
 		studyPlans.add(new StudyPlan("Scientific Computing", degreeCourses.get(0)));
 		studyPlans.add(new StudyPlan("Civil", degreeCourses.get(1)));
 		studyPlans.add(new StudyPlan("Management", degreeCourses.get(1)));
@@ -80,6 +90,32 @@ public class AdministratorController extends BaseController{
 			studyPlanExamDAO.create(new StudyPlanExam(studyPlans.get(0),e,"period"));
 		}
 	}
+    
+    private ArrayList<Student> students = new ArrayList<>();
+    
+    private void initStudents(){
+    	StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
+    	for(int i=0;i<10;i++){
+    		
+    		Student p = new Student("student"+i,"psw"+i,"name"+i,"lastname"+i,false,studyPlans.get(0));
+    		p.setEmail("stud" + i + "@mat.unical.it");
+            p.setAge(19);
+            String dateOfBirth = "11-11-1999";
+            String dateOfBirthFormat = "dd-mm-yyyy";
+            DateFormat format = new SimpleDateFormat(dateOfBirthFormat, Locale.ENGLISH);
+            Date dateOfBirthObject = null;
+			try {
+				dateOfBirthObject = format.parse(dateOfBirth);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            p.setDateOfBirth(dateOfBirthObject);
+            
+    		students.add(p);
+    		studentDAO.create(students.get(i));
+    	}
+    }
 
     @RequestMapping(value="studyplans",method = RequestMethod.GET)
     public String homeAdmin(Model model) {
@@ -115,24 +151,53 @@ public class AdministratorController extends BaseController{
     
     @RequestMapping(value="newstudyplan",method = RequestMethod.POST)
     public String create(@Valid @ModelAttribute("studyPlanForm") StudyPlanFormDTO studyPlanFormDTO,Model model) {
-    	System.out.println("0-----------------------");
     	StudyPlanDAO studyPlanDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
     	DegreeCourseDAO degreeCourseDAO = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
     	StudyPlanExamDAO studyPlanExamDAO = (StudyPlanExamDAO) context.getBean("studyPlanExamDAO");
     	ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
-    	System.out.println("1------------------------");
+    	
     	DegreeCourse degreeCourse = degreeCourseDAO.retrieveByName(studyPlanFormDTO.getNameDegreeCourse());
     	StudyPlan studyPlan = new StudyPlan(studyPlanFormDTO.getNameStudyPlan(),degreeCourse);
     	studyPlanDAO.create(studyPlan);
     	
-    	System.out.println("2---------------------");
     	List<String> l = studyPlanFormDTO.getNameExams();
+    	
     	for(String nameExam: l){
     		studyPlanExamDAO.create(new StudyPlanExam(studyPlan,examDAO.retrieve(nameExam),"period"));
-    		System.out.println("LOOOOOOOOOOOOOP");
     	}
-    	System.out.println("FINISH");
+    	
     	return "admin/dashboard";
+    }
+    
+    @RequestMapping(value="registrations",method = RequestMethod.GET)
+    public String registations(Model model) {
+    	initDB();
+    	initStudents();
+    	StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
+    	List<Student> listStudents = studentDAO.getAllStudentsToAcceptRefuse();
+    	model.addAttribute("listStudents",listStudents);
+    	return "admin/registrations";
+    }
+    
+    @RequestMapping(value="registrations",method = RequestMethod.POST,params="accept")
+    public String acceptStudent(@RequestParam(value="accept") String username,Model model) {
+    	StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO"); 
+    	Student student = studentDAO.retrieve(username);
+    	student.setStatus(true);
+    	studentDAO.update(student);
+    	List<Student> listStudents = studentDAO.getAllStudentsToAcceptRefuse();
+    	model.addAttribute("listStudents",listStudents);
+    	return "admin/registrations";
+    }
+    
+    @RequestMapping(value="registrations",method = RequestMethod.POST,params="refuse")
+    public String refuseStudent(@RequestParam(value="refuse") String username,Model model) {
+    	StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO"); 
+    	Student student = studentDAO.retrieve(username);
+    	studentDAO.deleteStudent(student);
+    	List<Student> listStudents = studentDAO.getAllStudentsToAcceptRefuse();
+    	model.addAttribute("listStudents",listStudents);
+    	return "admin/registrations";
     }
     
 }
