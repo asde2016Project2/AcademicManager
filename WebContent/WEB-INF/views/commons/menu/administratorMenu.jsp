@@ -2,15 +2,12 @@
     <h3>Admin Menu</h3>
     <ul>
         <li>
-            <a href="#">Menu Item 1</a>
+            <a href="<c:url value="registrations"/>">Registrations</a>
         </li>
         <li>
-            <a href="#">Menu Item 2</a>
+            <a href="<c:url value="studyplans"/>">StudyPlans</a>
         </li>
         <li>
-            <a href="#">Menu Item 3</a>
-        </li>
-        <li>
-            <a href="#">Menu Item 4</a>
+            <a href="#">Logout</a>
         </li>
     </ul>

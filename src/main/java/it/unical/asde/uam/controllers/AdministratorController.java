@@ -2,18 +2,26 @@ package it.unical.asde.uam.controllers;
 
 import it.unical.asde.uam.controllers.core.BaseController;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
 import it.unical.asde.uam.model.DegreeCourse;
 import it.unical.asde.uam.model.Exam;
+import it.unical.asde.uam.model.LoginFormDTO;
 import it.unical.asde.uam.model.StudyPlan;
 import it.unical.asde.uam.model.StudyPlanExam;
+import it.unical.asde.uam.model.StudyPlanFormDTO;
 import it.unical.asde.uam.persistence.DegreeCourseDAO;
+import it.unical.asde.uam.persistence.DegreeCourseDAOImp;
 import it.unical.asde.uam.persistence.ExamDAO;
 import it.unical.asde.uam.persistence.StudyPlanDAO;
 import it.unical.asde.uam.persistence.StudyPlanExamDAO;
@@ -73,16 +81,15 @@ public class AdministratorController extends BaseController{
 		}
 	}
 
-    @RequestMapping(value="dashboard",method = RequestMethod.GET)
+    @RequestMapping(value="studyplans",method = RequestMethod.GET)
     public String homeAdmin(Model model) {
     	initDB();
-    	System.out.println("studyPlans");
     	model.addAttribute("studyPlans",((StudyPlanDAO) context.getBean("studyPlanDAO")).getAllPlans());
-    	return "admin/dashboard";
+    	return "admin/studyplans";
     }
     
-    @RequestMapping(value="dashboard",method = RequestMethod.POST)
-    public String details(@RequestParam Integer id,Model model) {
+    @RequestMapping(value="studyplans",method = RequestMethod.POST)
+    public String detailsStudyPlan(@RequestParam Integer id,Model model) {
     	StudyPlanDAO studyPlanDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
     	StudyPlan studyPlan;
     	ArrayList<StudyPlanExam> listStudyPlanExams = new ArrayList<>();
@@ -95,6 +102,37 @@ public class AdministratorController extends BaseController{
     	}
     	if(!listStudyPlanExams.isEmpty() && !exams.isEmpty())
     		model.addAttribute("exams",exams);
-    	return "admin/details";
+    	return "admin/detailsstudyplan";
     }
+    
+    @RequestMapping(value="newstudyplan",method = RequestMethod.GET)
+    public String newStudyPlan(Model model) {
+    	model.addAttribute("studyPlanForm",new StudyPlanFormDTO());
+    	model.addAttribute("degreeCourseList",((DegreeCourseDAO)context.getBean("degreeCourseDAO")).getAllNameDegrees());
+    	model.addAttribute("examList",((ExamDAO)context.getBean("examDAO")).getAllNameExams());
+    	return "admin/newstudyplan";
+    }
+    
+    @RequestMapping(value="newstudyplan",method = RequestMethod.POST)
+    public String create(@Valid @ModelAttribute("studyPlanForm") StudyPlanFormDTO studyPlanFormDTO,Model model) {
+    	System.out.println("0-----------------------");
+    	StudyPlanDAO studyPlanDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
+    	DegreeCourseDAO degreeCourseDAO = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
+    	StudyPlanExamDAO studyPlanExamDAO = (StudyPlanExamDAO) context.getBean("studyPlanExamDAO");
+    	ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
+    	System.out.println("1------------------------");
+    	DegreeCourse degreeCourse = degreeCourseDAO.retrieveByName(studyPlanFormDTO.getNameDegreeCourse());
+    	StudyPlan studyPlan = new StudyPlan(studyPlanFormDTO.getNameStudyPlan(),degreeCourse);
+    	studyPlanDAO.create(studyPlan);
+    	
+    	System.out.println("2---------------------");
+    	List<String> l = studyPlanFormDTO.getNameExams();
+    	for(String nameExam: l){
+    		studyPlanExamDAO.create(new StudyPlanExam(studyPlan,examDAO.retrieve(nameExam),"period"));
+    		System.out.println("LOOOOOOOOOOOOOP");
+    	}
+    	System.out.println("FINISH");
+    	return "admin/dashboard";
+    }
+    
 }

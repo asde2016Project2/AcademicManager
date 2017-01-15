@@ -27,5 +27,7 @@ public interface ExamDAO {
     boolean exists(String username);
     
     List<Exam> getAllExams();
+    
+    List<String> getAllNameExams();
 
 }

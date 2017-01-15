@@ -65,6 +65,17 @@ public class ExamDAOImp implements ExamDAO {
         return exams;
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<String> getAllNameExams() {
+
+        String queryString = "select c.name from Exam c order by c.name";
+        Query query = dbHandler.getSession().createQuery(queryString);
+        List<String> exams = (List<String>) query.list();
+        dbHandler.close();
+        return exams;
+    }
+    
     @Override
     public Exam getExamById(int id) {
         String hql = "from Exam where id =:id";

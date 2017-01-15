@@ -18,4 +18,8 @@ public interface DegreeCourseDAO {
    void update(DegreeCourse degreeCourse);
    
    List<DegreeCourse> getAllDegrees();
+   
+   List<String> getAllNameDegrees();
+   
+   DegreeCourse retrieveByName(String name);
 }
