@@ -57,6 +57,10 @@
         <property name="dbHandler" ref="dbHandler" />
     </bean>
     
+     <bean id="administratorDAO" class="it.unical.asde.uam.persistence.AdministratorDAOImp" >
+        <property name="dbHandler" ref="dbHandler" />
+    </bean>
+    
     <bean id="degreeCourseDAO" class="it.unical.asde.uam.persistence.DegreeCourseDAOImp" >
         <property name="dbHandler" ref="dbHandler" />
     </bean>

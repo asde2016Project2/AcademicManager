@@ -4,5 +4,3 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <h1>DASHBOARD ADMIN</h1>
-
-<img src="data:image/jpeg;base64,${photo}" />

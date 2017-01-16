@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import it.unical.asde.uam.helper.SessionHelper;
 import it.unical.asde.uam.helper.UserProfileHelper;
 import it.unical.asde.uam.controllers.core.BaseController;
-import it.unical.asde.uam.model.LoginFormDTO;
+import it.unical.asde.uam.dto.LoginFormDTO;
+import it.unical.asde.uam.model.Administrator;
 import it.unical.asde.uam.model.Professor;
 import it.unical.asde.uam.model.Student;
+import it.unical.asde.uam.persistence.AdministratorDAO;
 import it.unical.asde.uam.persistence.ProfessorDAO;
 import it.unical.asde.uam.persistence.StudentDAO;
 
@@ -106,27 +108,20 @@ public class HomeController extends BaseController{
     }
     
     private String loginAdministrator(LoginFormDTO loginForm, Model model, HttpServletRequest request){
-        /*
         
-        TODO:
-            1) remove -> return "redirect:/";
-            2) add AdministratorDao the method retrieveForLogin copying it from Professor
-            3) decomment this code and replace Professor with Administrator
-            
         
-        ProfessorDAO professorDao = (ProfessorDAO) context.getBean("professorDAO");
+        AdministratorDAO administratorDao = (AdministratorDAO) context.getBean("administratorDAO");
         
-        Professor professor = professorDao.retrieveForLogin(loginForm.getUsername(), loginForm.getPassword());        
-        if (professor  == null) {
+        Administrator administrator = administratorDao.retrieveAdminForLogin(loginForm.getUsername(), loginForm.getPassword());        
+        if (administrator  == null) {
             model.addAttribute("error", messageSource.getMessage("message.invalid", null, localeResolver.resolveLocale(request)));
             SessionHelper.cleanSession(request.getSession());
             return "home/login";
         }
         
-       SessionHelper.setUserProfessorLogged(professor, request.getSession()); 
-       return "redirect:/professor/dashboard";
-       */
-       return "redirect:/";
+       SessionHelper.setUserAdministratorLogged(administrator, request.getSession()); 
+       return "redirect:/admin/dashboard";
+       
     }
     
     private String loginStudent(LoginFormDTO loginForm, Model model, HttpServletRequest request){
@@ -144,7 +139,7 @@ public class HomeController extends BaseController{
   
 
        SessionHelper.setUserStudentLogged(stud, request.getSession());
-       return "redirect:/student/studentDashboard";
+       return "redirect:/student/dashboard";
          
        
       

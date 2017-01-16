@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import it.unical.asde.uam.controllers.core.BaseController;
+import it.unical.asde.uam.helper.SessionHelper;
 import it.unical.asde.uam.model.CareerExam;
 import it.unical.asde.uam.model.DegreeCourse;
 import it.unical.asde.uam.model.Exam;
@@ -28,7 +29,7 @@ import it.unical.asde.uam.model.Student;
 import it.unical.asde.uam.model.StudyPlan;
 import it.unical.asde.uam.model.StudyPlanExam;
 
-import it.unical.asde.uam.model.StudyPlanFormDTO;
+import it.unical.asde.uam.dto.StudyPlanFormDTO;
 import it.unical.asde.uam.persistence.CareerExamDAO;
 
 import it.unical.asde.uam.persistence.DegreeCourseDAO;
@@ -48,22 +49,26 @@ public class AdministratorController extends BaseController {
   private static final Logger logger = LoggerFactory.getLogger(AdministratorController.class);
   
     @RequestMapping(value = "dashboard", method = RequestMethod.GET)
-    public String showDashboad(HttpServletRequest request) {
+    public String showDashboad(HttpServletRequest request, Model model) {
 
-        //if(!SessionHelper.isAdmin(request.getSession())){
-        //    return "redirect:/";
-        //}
+        model.addAttribute("pageTitle","Admin Dashboard");
+        
+        if(!SessionHelper.isAdmin(request.getSession())){
+            return "redirect:/";
+        }
         return "admin/dashboard";
     }
 
     @RequestMapping(value = "list/studyplan", method = RequestMethod.GET)
     public String showListStudyPlan(Model model) {
+        model.addAttribute("pageTitle","List all Study Plan");
         model.addAttribute("studyPlans", ((StudyPlanDAO) context.getBean("studyPlanDAO")).getAllPlans());
         return "admin/list_studyplans";
     }
 
     @RequestMapping(value = "detail/studyplan/{id}", method = RequestMethod.GET)
     public String showDetailStudyPlan(@PathVariable("id") int id, Model model) {
+        model.addAttribute("pageTitle","Study Plan Detail");
         StudyPlanDAO studyPlanDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
         StudyPlan studyPlan;
         ArrayList<StudyPlanExam> listStudyPlanExams = new ArrayList<>();
@@ -89,6 +94,7 @@ public class AdministratorController extends BaseController {
 
     @RequestMapping(value = "create/studyplan", method = RequestMethod.GET)
     public String showCreateStudyPlan(Model model) {
+        model.addAttribute("pageTitle","Create Study Plan");
         model.addAttribute("studyPlanForm", new StudyPlanFormDTO());
         model.addAttribute("degreeCourseList", ((DegreeCourseDAO) context.getBean("degreeCourseDAO")).getAllDegrees());
         model.addAttribute("examList", ((ExamDAO) context.getBean("examDAO")).getAllExams());
@@ -99,6 +105,7 @@ public class AdministratorController extends BaseController {
     public String doCreateStudyPlan(@Valid @ModelAttribute("studyPlanForm") StudyPlanFormDTO studyPlanFormDTO, BindingResult result, HttpServletRequest request, Model model) {
 
         if (result.hasErrors()) {
+            model.addAttribute("pageTitle","Create Study Plan");
             model.addAttribute("degreeCourseList", ((DegreeCourseDAO) context.getBean("degreeCourseDAO")).getAllDegrees());
             model.addAttribute("examList", ((ExamDAO) context.getBean("examDAO")).getAllExams());
             return "admin/create_studyplan";
@@ -130,7 +137,7 @@ public class AdministratorController extends BaseController {
     }
 
     @RequestMapping(value = "registrations", method = RequestMethod.GET)
-    public String registations(Model model) {
+    public String registations(Model model) {        
         StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
         List<Student> listStudents = studentDAO.getAllStudentsToAcceptRefuse();
         model.addAttribute("listStudents", listStudents);
