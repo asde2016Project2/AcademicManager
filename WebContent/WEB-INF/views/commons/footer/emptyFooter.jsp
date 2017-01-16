@@ -14,15 +14,17 @@
             </li>
             <li>        
                 <a href="<c:url value="/dummyData/registerStudent" />">Create dummy Student</a>
-                <p>From 1 to 6:  username <b>stud1</b>...  -  <b>password</b>: 666666</p>
+                <p>From 1 to 6:  username <b>stud1</b>...  -  <b>password</b>: 123456</p>
             </li> 
-            <li>        
-                <a href="<c:url value="/dummyData/addeDegreeCourse" />">Add Degree Course</a>                
-                <p>&nbsp;</p>
+             <li>        
+                <a href="<c:url value="/dummyData/registerAdmin" />">Create dummy Admin</a>
+                <p>From 1 to 6:  username <b>admin</b>...  -  <b>password</b>: 123456</p>
+            </li> 
+            <li style="margin-top: 10px">                
+                <a href="<c:url value="/dummyData/addeDegreeCourse" />">Create Dummy Degree Course</a>                                
             </li>
-            <li>        
-                <a href="<c:url value="/dummyData/registerStudyPlan" />">Create dummy Study Plan</a>                
-                <p>&nbsp;</p>
+            <li style="margin-top: 10px">       
+                <a href="<c:url value="/dummyData/registerStudyPlan" />">Create dummy Study Plan</a>                                
             </li>  
 
         </ul>

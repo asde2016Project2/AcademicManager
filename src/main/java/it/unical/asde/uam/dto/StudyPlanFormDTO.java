@@ -1,4 +1,4 @@
-package it.unical.asde.uam.model;
+package it.unical.asde.uam.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
