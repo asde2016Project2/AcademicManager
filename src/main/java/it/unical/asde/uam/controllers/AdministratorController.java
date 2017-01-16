@@ -1,7 +1,5 @@
 package it.unical.asde.uam.controllers;
 
-
-
 import it.unical.asde.uam.model.AcceptingStudentFormDTO;
 
 import java.util.ArrayList;
@@ -10,7 +8,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,22 +15,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import it.unical.asde.uam.Helper.SessionHelper;
 import it.unical.asde.uam.controllers.core.BaseController;
 import it.unical.asde.uam.model.CareerExam;
 import it.unical.asde.uam.model.DegreeCourse;
 import it.unical.asde.uam.model.Exam;
-import it.unical.asde.uam.model.LoginFormDTO;
 import it.unical.asde.uam.model.Student;
 import it.unical.asde.uam.model.StudyPlan;
 import it.unical.asde.uam.model.StudyPlanExam;
@@ -42,7 +32,6 @@ import it.unical.asde.uam.model.StudyPlanFormDTO;
 import it.unical.asde.uam.persistence.CareerExamDAO;
 
 import it.unical.asde.uam.persistence.DegreeCourseDAO;
-import it.unical.asde.uam.persistence.DegreeCourseDAOImp;
 import it.unical.asde.uam.persistence.ExamDAO;
 import it.unical.asde.uam.persistence.StudentDAO;
 import it.unical.asde.uam.persistence.StudyPlanDAO;
@@ -50,6 +39,7 @@ import it.unical.asde.uam.persistence.StudyPlanExamDAO;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/admin")
