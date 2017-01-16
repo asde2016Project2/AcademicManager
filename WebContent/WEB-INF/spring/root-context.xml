@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:tx="http://www.springframework.org/schema/tx"	
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
 
     <!-- Root Context: defines shared resources visible to all other web components -->	
@@ -38,6 +37,19 @@
     
     <bean id="examDAO" class="it.unical.asde.uam.persistence.ExamDAOImp" >
         <property name="dbHandler" ref="dbHandler" />
+    </bean>    
+
+    <bean id="examSessionDAO" class="it.unical.asde.uam.persistence.ExamSessionDAOImp">
+            <property name="dbHandler" ref="dbHandler" />
+    </bean>            
+
+    <bean id="userAttemptRegistrationDAO"
+            class="it.unical.asde.uam.persistence.UserAttemptRegistrationDAOImp">
+            <property name="dbHandler" ref="dbHandler" />
+    </bean>
+
+    <bean id="attemptDAO" class="it.unical.asde.uam.persistence.AttemptDAOImp">
+            <property name="dbHandler" ref="dbHandler" />
     </bean>
     
     <bean id="professorDAO" class="it.unical.asde.uam.persistence.ProfessorDAOImp" >
@@ -60,20 +72,25 @@
         <property name="dbHandler" ref="dbHandler" />
     </bean>
     
+    
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     <tx:annotation-driven transaction-manager="transactionManager"/>
 	
     <!-- Root Context: defines shared resources visible to all other web components -->
-    <bean id="user" class="it.unical.asde.uam.model.User"></bean>
-    <bean id="student" class="it.unical.asde.uam.model.Student"></bean>
-    <bean id="careerExam" class="it.unical.asde.uam.model.CareerExam"></bean>
-    <bean id="exam" class="it.unical.asde.uam.model.Exam"></bean>
-    <bean id="degreeCourse" class="it.unical.asde.uam.model.DegreeCourse"></bean>
-    <bean id="studyPlan" class="it.unical.asde.uam.model.StudyPlan"></bean>
-	<bean id="studyPlanExam" class="it.unical.asde.uam.model.StudyPlanExam"></bean>
-    <bean id="professor" class="it.unical.asde.uam.model.Professor"></bean>
+                       
 	
-  
+        <bean id="user" class="it.unical.asde.uam.model.User"></bean>
+	<bean id="careerExam" class="it.unical.asde.uam.model.CareerExam"></bean>
+	<bean id="exam" class="it.unical.asde.uam.model.Exam"></bean>
+	<bean id="degreeCourse" class="it.unical.asde.uam.model.DegreeCourse"></bean>
+	<bean id="studyPlan" class="it.unical.asde.uam.model.StudyPlan"></bean>
+	<bean id="studyPlanExam" class="it.unical.asde.uam.model.StudyPlanExam"></bean>
+	<bean id="professor" class="it.unical.asde.uam.model.Professor"></bean>
+	<bean id="examSession" class="it.unical.asde.uam.model.ExamSession"></bean>
+	<bean id="student" class="it.unical.asde.uam.model.Student"></bean>
+	<bean id="userAttemptRegistration" class="it.unical.asde.uam.model.UserAttemptRegistration"></bean>
+
+        
 </beans>

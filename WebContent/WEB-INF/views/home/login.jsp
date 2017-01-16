@@ -3,10 +3,15 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<div class="login-form">
-    <form:form method="post" action="login" modelAttribute="loginForm">
+<div class="form-message">
+    <% //show additional message set in the controller %>
+    <h2>${message}</h2>
+</div>
 
-        <label for="nameInput">Username</label>
+<div class="login-form">
+    <form:form method="post" action="" modelAttribute="loginForm">
+
+        <label for="username">Username</label>
         <form:input path="username" id="username"></form:input>
         <br/>
         <form:errors path="username" class="error"></form:errors>
@@ -23,7 +28,7 @@
             <option value="">Select Type</option>
             <option value="administrator">Administrator</option>
             <option value="professor">Professor</option>
-            <option value="Student">Student</option>
+            <option value="student">Student</option>
         </form:select>
             <br/>
         <form:errors path="profileType" class="error"></form:errors> 
@@ -35,4 +40,4 @@
     <div class="form-error">${error}</div> 
 </div>
 
-
+<div class="message">${message}</div>

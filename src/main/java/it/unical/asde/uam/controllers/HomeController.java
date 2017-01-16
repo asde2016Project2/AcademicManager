@@ -1,7 +1,7 @@
 package it.unical.asde.uam.controllers;
 
-import it.unical.asde.uam.Helper.SessionHelper;
-import it.unical.asde.uam.Helper.UserProfileHelper;
+import it.unical.asde.uam.helper.SessionHelper;
+import it.unical.asde.uam.helper.UserProfileHelper;
 import it.unical.asde.uam.controllers.core.BaseController;
 import it.unical.asde.uam.model.LoginFormDTO;
 import it.unical.asde.uam.model.Professor;
@@ -32,8 +32,8 @@ public class HomeController extends BaseController{
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String showLogin(@ModelAttribute("loginForm") LoginFormDTO loginForm, Model model, HttpServletRequest request) {
-        model.addAttribute("loginForm",new LoginFormDTO()); 
-        model.addAttribute("pageTitle","Login");
+        model.addAttribute("pageTitle","Login");     
+        model.addAttribute("loginForm",new LoginFormDTO());          
         return "home/login";
     }
     
@@ -46,9 +46,10 @@ public class HomeController extends BaseController{
      * or for showing errors
      * 
      */
-    @RequestMapping(value = "login", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public String doLogin(@Valid @ModelAttribute("loginForm") LoginFormDTO loginForm, BindingResult result, HttpServletRequest request, Model model) {                            
         
+                
         String viewToRender = "home/login";
         
         switch(loginForm.getProfileType()){
@@ -62,6 +63,7 @@ public class HomeController extends BaseController{
                 viewToRender = loginStudent(loginForm,model,request); 
                 break;                
             default:
+                model.addAttribute("pageTitle","Login"); 
                 model.addAttribute("loginForm",loginForm);
                 viewToRender = "home/login";
                 break;
@@ -117,7 +119,7 @@ public class HomeController extends BaseController{
         if (professor  == null) {
             model.addAttribute("error", messageSource.getMessage("message.invalid", null, localeResolver.resolveLocale(request)));
             SessionHelper.cleanSession(request.getSession());
-            return "login";
+            return "home/login";
         }
         
        SessionHelper.setUserProfessorLogged(professor, request.getSession()); 
@@ -135,12 +137,12 @@ public class HomeController extends BaseController{
         if (stud  == null) {
             model.addAttribute("error", messageSource.getMessage("message.invalid", null, localeResolver.resolveLocale(request)));
             SessionHelper.cleanSession(request.getSession());
-            return "login";
+            return "home/login";
         }
         
   
-       SessionHelper.setUserStudenLogged(stud, request.getSession());
-       return "redirect:/professor/dashboard";
+       SessionHelper.setUserStudentLogged(stud, request.getSession());
+       return "redirect:/student/studentDashboard";
          
        
       

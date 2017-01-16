@@ -1,4 +1,4 @@
-package it.unical.asde.uam.Helper;
+package it.unical.asde.uam.helper;
 
 import it.unical.asde.uam.model.Administrator;
 import it.unical.asde.uam.model.Professor;
@@ -93,7 +93,7 @@ public class SessionHelper {
      * @param user The administrator object to store in session
      * @param session 
      */
-    public static void setUserStudenLogged(Student user, HttpSession session) {
+    public static void setUserStudentLogged(Student user, HttpSession session) {
         session.setAttribute("user", user);
         session.setAttribute("profile", UserProfileHelper._STUDENT);
     }

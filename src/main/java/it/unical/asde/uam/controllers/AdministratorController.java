@@ -1,28 +1,43 @@
 package it.unical.asde.uam.controllers;
 
-import it.unical.asde.uam.Helper.SessionHelper;
+import it.unical.asde.uam.helper.SessionHelper;
 import it.unical.asde.uam.controllers.core.BaseController;
 import it.unical.asde.uam.model.AcceptingStudentFormDTO;
 import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.validation.Valid;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.servlet.ModelAndView;
+
+import it.unical.asde.uam.model.CareerExam;
 import it.unical.asde.uam.model.DegreeCourse;
 import it.unical.asde.uam.model.Exam;
 import it.unical.asde.uam.model.LoginFormDTO;
 import it.unical.asde.uam.model.Student;
 import it.unical.asde.uam.model.StudyPlan;
 import it.unical.asde.uam.model.StudyPlanExam;
+
 import it.unical.asde.uam.model.StudyPlanFormDTO;
+import it.unical.asde.uam.persistence.CareerExamDAO;
+
 import it.unical.asde.uam.persistence.DegreeCourseDAO;
 import it.unical.asde.uam.persistence.DegreeCourseDAOImp;
 import it.unical.asde.uam.persistence.ExamDAO;
@@ -36,9 +51,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 @RequestMapping("/admin")
 public class AdministratorController extends BaseController {
-
-    @Autowired
-    private WebApplicationContext context;
 
     @RequestMapping(value = "dashboard", method = RequestMethod.GET)
     public String showDashboad(HttpServletRequest request) {
@@ -123,7 +135,7 @@ public class AdministratorController extends BaseController {
     }
 
     @RequestMapping(value = "registrations", method = RequestMethod.GET)
-    public String registations(Model model) {        
+    public String registations(Model model) {
         StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
         List<Student> listStudents = studentDAO.getAllStudentsToAcceptRefuse();
         model.addAttribute("listStudents", listStudents);
@@ -165,6 +177,99 @@ public class AdministratorController extends BaseController {
         List<Student> listStudents = studentDAO.getAllStudentsToAcceptRefuse();
         model.addAttribute("listStudents", listStudents);
         return "admin/registrations";
+    }
+
+    //-----------New Updated Creating and updating Exam,CareerExam -----//	
+    // @GetMapping("/examForm")
+    @RequestMapping(value = "/examForm", method = RequestMethod.GET)
+    public String addExams(Model model, Exam exam) {
+        model.addAttribute("exam", exam);
+        System.out.println("FirstCome==");
+        return "admin/examForm";
+    }
+
+    @RequestMapping(value = "/examForm", method = RequestMethod.POST)
+    public ModelAndView addExams(@ModelAttribute("exam") Exam exam) {
+        ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
+        if (exam.getId() == 0) {
+            examDAO.create(exam);
+        }
+        System.out.println("SecondCome==");
+        return new ModelAndView("redirect:/admin/exams");
+    }
+
+    @RequestMapping(value = "exams", method = RequestMethod.GET)
+    public String listExams(Model model) throws NullPointerException {
+        ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
+        model.addAttribute("listExams", examDAO.getAllExams());
+
+        return "admin/exams";
+    }
+
+    @RequestMapping(value = {"/examForm/edit/id={examId:.+}",
+        "/examForm/edit/{examId:.+}"}, method = RequestMethod.POST)
+    public String updateExamInfo(@Validated @ModelAttribute("exam") Exam exam, BindingResult bindingResult) {
+        ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
+        if (bindingResult.hasErrors()) {
+            ModelAndView modelAndView = new ModelAndView("/examEdit");
+            modelAndView.addObject("exam", examDAO.getExamById(exam.getId()));
+            return modelAndView.getViewName();
+        }
+
+        examDAO.updateExam(exam);
+
+        return "redirect:/admin/examForm/id=" + exam.getId();
+    }
+
+    @RequestMapping("/exams/delete/{examId}")
+    public String removeExam(@PathVariable("examId") Integer examId) {
+        ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
+
+        examDAO.removeExam(examId);
+        return "redirect:/admin/exams";
+    }
+
+    @RequestMapping(value = "/examForm/edit/{id}")
+    public String editExam(@PathVariable("id") int id, Model model) {
+        ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
+        model.addAttribute("exam", examDAO.getExamById(id));
+        model.addAttribute("listExams", examDAO.getAllExams());
+        return "admin/exams";
+    }
+    // </editor-fold>
+
+    // ----------------------------CareerExam Registration ---------------//
+    @RequestMapping(value = "/careerExamForm", method = RequestMethod.GET)
+    public String addCareerExams(Model model, CareerExam careerExam) {
+        model.addAttribute("careerExam", careerExam);
+        System.out.println("FirstCome==");
+        return "admin/careerExamForm";
+    }
+
+    @RequestMapping(value = "/careerExamForm", method = RequestMethod.POST)
+    public ModelAndView addCareerExams(@ModelAttribute("careerExam") CareerExam careerExam) {
+        CareerExamDAO careerExamDAO = (CareerExamDAO) context.getBean("careerExamDAO");
+        if (careerExam.getCareerExamId() == 0) {
+            careerExamDAO.create(careerExam);
+        }
+        System.out.println("SecondCome==");
+        return new ModelAndView("redirect:/admin/careerExams");
+    }
+
+    @RequestMapping("/careerExams/delete/{careerExamId}")
+    public String removeCareerExam(@PathVariable("careerExamId") Integer careerExamId) {
+        CareerExamDAO careerExamDAO = (CareerExamDAO) context.getBean("careerExamDAO");
+
+        careerExamDAO.removeCareerExam(careerExamId);
+        return "redirect:/admin/careerExams";
+    }
+
+    @RequestMapping(value = "/careerExamForm/edit/{careerExamId}")
+    public String editCareerExam(@PathVariable("careerExamId") int careerExamId, Model model) {
+        CareerExamDAO careerExamDAO = (CareerExamDAO) context.getBean("careerExamDAO");
+        model.addAttribute("careerExam", careerExamDAO.getCareerExamById(careerExamId));
+        model.addAttribute("careerExamList", careerExamDAO.listCareerExams());
+        return "admin/careerExams";
     }
 
 }

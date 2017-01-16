@@ -12,108 +12,134 @@ import it.unical.asde.uam.model.Student;
 import it.unical.asde.uam.model.StudyPlan;
 import it.unical.asde.uam.model.StudyPlanExam;
 
+/**
+ * @author Nello
+ *
+ */
+public class StudentDAOImp implements StudentDAO {
 
-	/**
-	 * @author Nello  
-	*
-	 */
-	public class StudentDAOImp implements StudentDAO{
+    public StudentDAOImp() {
+    }
 
-		public StudentDAOImp() {
-	    }
+    private DBHandler dbHandler;
 
-	    private DBHandler dbHandler;
+    public DBHandler getDbHandler() {
+        return dbHandler;
+    }
 
-	    public DBHandler getDbHandler() {
-	        return dbHandler;
-	    }
+    public void setDbHandler(DBHandler dbHandler) {
+        this.dbHandler = dbHandler;
+    }
 
-	    public void setDbHandler(DBHandler dbHandler) {
-	        this.dbHandler = dbHandler;
-	    }
+    @Override
+    public void create(Student student) {
+        dbHandler.create(student);
+    }
 
-	   
+    @Override
+    public void update(Student student) {
+        dbHandler.update(student);
+    }
 
-	    @Override
-	    public void create(Student student) {
-	        dbHandler.create(student);
-	    }
+    @Override
+    public void deleteStudent(Student student) {
+        dbHandler.delete(student);
+    }
 
-	    @Override
-	    public void update(Student student) {
-	        dbHandler.update(student);
-	    }
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Student> getAllStudents() {
 
-	    @Override
-	    public void deleteStudent(Student student) {
-	        dbHandler.delete(student);
-	    }
+        String queryString = "from Student c order by c.name";
+        Query query = dbHandler.getSession().createQuery(queryString);
+        List<Student> dgs = (List<Student>) query.list();
+        dbHandler.close();
+        return dgs;
+    }
 
-	    @SuppressWarnings("unchecked")
-	    @Override
-	    public List<Student> getAllStudents() {
+    @Override
+    public StudyPlan getStudyPlan(Student student) {
 
-	        String queryString = "from Student c order by c.name";
-	        Query query = dbHandler.getSession().createQuery(queryString);
-	        List<Student> dgs = (List<Student>) query.list();
-	        dbHandler.close();
-	        return dgs;
-	    }
-	    
-	    
-	    @Override
-	    public StudyPlan getStudyPlan(Student student){
-	    	    	
-	    	int studentId = student.getUserId();
-	    	String queryString = "SELECT S.studyPlan FROM Student S WHERE S.userId =:givenId";
-	    	Query query = dbHandler.getSession().createQuery(queryString);
-	        query.setParameter("givenId", studentId);
-	        StudyPlan e = (StudyPlan) query.uniqueResult();
-	        dbHandler.close();
-	        return e;
-	    	
-	    }
-	    
-	    @Override
-	    public Student retrieve(String username) {
-	        String hql = "from Student where username =:username";
+        int studentId = student.getUserId();
+        String queryString = "SELECT S.studyPlan FROM Student S WHERE S.userId =:givenId";
+        Query query = dbHandler.getSession().createQuery(queryString);
+        query.setParameter("givenId", studentId);
+        StudyPlan e = (StudyPlan) query.uniqueResult();
+        dbHandler.close();
+        return e;
 
-	        Query query = dbHandler.getSession().createQuery(hql);
-	        query.setParameter("username", username);
-	        Student stud = (Student) query.uniqueResult();
-	        return stud;
-	    }
-	    
-	    
-	    @Override    
-	    public Student retrieveForLogin(String username,String password) {
-	        String hql = "from Student where username=:username AND password=:password";
-	        Query query = dbHandler.getSession().createQuery(hql);
-	        query.setParameter("username", username);
-	        query.setParameter("password",password);
-	        Student stud = (Student) query.uniqueResult();
-	        return stud;
-	    }
+    }
 
-		@SuppressWarnings("unchecked")
-		@Override
-		public List<Student> getAllStudentsToAcceptRefuse() {
-			String hql = "from Student where status =:value";
-	        Query query = dbHandler.getSession().createQuery(hql).setBoolean("value",false);
-	        List<Student> students = (List<Student>) query.list();
-	        dbHandler.close();
-	        return students;
-		}
-		
-		@SuppressWarnings("unchecked")
-		@Override
-		public boolean isEmpty() {
-			String queryString = "from Student";
-			Query query = dbHandler.getSession().createQuery(queryString);
-			List<Student> students = (List<Student>) query.list();
-			dbHandler.close();
-			if(students == null)
-				return true;
-			return (students.isEmpty());
-		}
-	}
+    @Override
+    public Student retrieve(String username) {
+        String hql = "from Student where username =:username";
+
+        Query query = dbHandler.getSession().createQuery(hql);
+        query.setParameter("username", username);
+        Student stud = (Student) query.uniqueResult();
+        return stud;
+    }
+
+    @Override
+    public Student retrieveForLogin(String username, String password) {
+        String hql = "from Student where username=:username AND password=:password";
+        Query query = dbHandler.getSession().createQuery(hql);
+        query.setParameter("username", username);
+        query.setParameter("password", password);
+        Student stud = (Student) query.uniqueResult();
+        return stud;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Student> getAllStudentsToAcceptRefuse() {
+        String hql = "from Student where status =:value";
+        Query query = dbHandler.getSession().createQuery(hql).setBoolean("value", false);
+        List<Student> students = (List<Student>) query.list();
+        dbHandler.close();
+        return students;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean isEmpty() {
+        String queryString = "from Student";
+        Query query = dbHandler.getSession().createQuery(queryString);
+        List<Student> students = (List<Student>) query.list();
+        dbHandler.close();
+        if (students == null) {
+            return true;
+        }
+        return (students.isEmpty());
+    }
+
+    @Override
+    public boolean register(Student u) {
+
+        //if already exist email or username
+        if (retrieve(u.getUsername()) != null || retrieveByEmail(u.getEmail()) != null) {
+            return false;
+        }
+
+        //create
+        create(u);
+
+        //check created
+        if (retrieve(u.getUsername()) == null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public Student retrieveByEmail(String email) {
+        String hql = "from Student where email =:email";
+
+        Query query = dbHandler.getSession().createQuery(hql);
+        query.setParameter("email", email);
+        Student student = (Student) query.uniqueResult();
+        return student;
+    }
+
+}

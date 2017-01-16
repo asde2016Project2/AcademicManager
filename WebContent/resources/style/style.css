@@ -13,15 +13,16 @@ html,body {
 }
 
 #header {        
-    width: 100%;
-    height: 100px;
+    width: 100% !important;
+    height: 100px !important;
     border:5px solid red; 
     padding: 15px;
+    background: none !important;
 }
 
 #footer{    
     width: 100%;
-    height: 100px;
+    height: 300px;
     border:5px solid blue; 
     padding: 15px;  
 }
@@ -29,25 +30,26 @@ html,body {
 #content {    
     width: 100%;
     border: 5px solid green;
-    display: block;
-    padding: 15px
+    display: table;
+    padding: 15px;
+    float: none !important;
 }
 
 #content > #leftColumn{
     border:5px solid black;  
     padding: 15px; 
-    display: inline-block;
-    width: 15%;
-    min-height: 200px;
-    float: left;
+    display: table-cell;
+    width: 35%;
+    height: auto !important;       
+
 }
 
 #content > #rightColumn{
     border:5px solid maroon;  
     padding: 15px; 
-    display: inline-block;
-    width: 76%;
-    min-height: 200px;
+    display: table-cell;
+    width: 65%;   
+    height: auto !important;
 }
 
 #menu { 
@@ -83,9 +85,14 @@ html,body {
 }
 
 .form-error, 
-.error{
+.error,
+.form-group.hasErrors .error ,
+span[id$='.errors'] 
+{
     color: red;    
     font-size: 12px;
+    display: block;
+    margin-top: 5px;
 }
 .form-error{
     text-align: center;
@@ -97,4 +104,14 @@ html,body {
 .btn-submit{
     display: block;
     margin: 0px auto;
+}
+
+.footer-box{
+    display: table-cell; 
+    font-size: 11px; 
+    width: 30%;
+}
+
+.form-message, form-message.h2{
+    color: green;
 }
