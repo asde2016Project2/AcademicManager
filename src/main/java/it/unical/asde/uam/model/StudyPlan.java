@@ -33,12 +33,12 @@ public class StudyPlan implements Serializable{
 	@Column(name="name",unique=true,nullable=false,length=256)
 	private String name;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="degree_course_id", nullable=false)
 	private DegreeCourse degreeCourse;
 	
 	
-	@OneToMany(fetch= FetchType.LAZY,mappedBy="studyPlan")
+	@OneToMany(fetch= FetchType.EAGER,mappedBy="studyPlan")
 	private List<StudyPlanExam> studyPlanExams= new ArrayList<>();
 	
 	

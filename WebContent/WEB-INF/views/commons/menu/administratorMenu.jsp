@@ -3,6 +3,9 @@
 <ul>
     <li>
         <a href="<c:url value="/admin/dashboard"/>"> Dashboard</a>
+       
+    </li>
+     <li>
         <a href="<c:url value="/admin/registrations"/>">Registrations</a>
     </li>
     <li>
