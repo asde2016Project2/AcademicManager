@@ -73,4 +73,14 @@ public class DegreeCourseDAOImp implements DegreeCourseDAO {
     	dbHandler.close();
     	return degreeCourse;
     }
+
+    @Override
+    public DegreeCourse retrieveById(int id) {
+        String queryString = "from DegreeCourse c where id=:id";
+    	Query query = dbHandler.getSession().createQuery(queryString);
+    	query.setParameter("id",id);
+    	DegreeCourse degreeCourse = (DegreeCourse) query.uniqueResult();
+    	//dbHandler.close();
+    	return degreeCourse;
+    }
 }

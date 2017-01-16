@@ -22,4 +22,6 @@ public interface DegreeCourseDAO {
    List<String> getAllNameDegrees();
    
    DegreeCourse retrieveByName(String name);
+   
+   DegreeCourse retrieveById(int id);
 }

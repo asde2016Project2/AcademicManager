@@ -82,13 +82,11 @@ public class ExamDAOImp implements ExamDAO {
         Query query = dbHandler.getSession().createQuery(hql);
         query.setParameter("id", id);
         Exam exam = (Exam) query.uniqueResult();
-
+         dbHandler.close();
         // Session session = dbHandler.getSessionFactory().getCurrentSession();
         // Exam exam = (Exam) session.load(Exam.class, id);
         // LOG.info("exam successfully loaded, exam info: " + exam);
         return exam;
     }
-
     
-
 }

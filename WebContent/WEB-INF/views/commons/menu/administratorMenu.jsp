@@ -5,9 +5,9 @@
             <a href="<c:url value="registrations"/>">Registrations</a>
         </li>
         <li>
-            <a href="<c:url value="studyplans"/>">StudyPlans</a>
+            <a href="<c:url value="/admin/list/studyplan"/>">StudyPlans</a>
         </li>
         <li>
-            <a href="#">Logout</a>
+            <a href="<c:url value="/logout" />">Logout</a>
         </li>
     </ul>
