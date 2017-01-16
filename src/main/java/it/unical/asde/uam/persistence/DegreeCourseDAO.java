@@ -1,3 +1,4 @@
+
 package it.unical.asde.uam.persistence;
 
 import java.util.List;
@@ -5,7 +6,7 @@ import it.unical.asde.uam.model.DegreeCourse;
 
 /**
  *
- * @author Fabrizio
+ * @author Francesco Bruno
 */
 public interface DegreeCourseDAO {
 
@@ -18,6 +19,12 @@ public interface DegreeCourseDAO {
    void update(DegreeCourse degreeCourse);
    
    List<DegreeCourse> getAllDegrees();
+   
+   List<String> getAllNameDegrees();
+   
+   DegreeCourse retrieveByName(String name);
+   
+   DegreeCourse retrieveById(int id);                 
 
    DegreeCourse getDegreeCourseByName(String nameDegree);
 }

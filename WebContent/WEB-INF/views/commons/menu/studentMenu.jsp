@@ -2,7 +2,7 @@
     <h3>Student Menu</h3>
     <ul>
         <li>
-            <a href="#">Menu Item 1</a>
+            <a href="<c:url value="/student/dashboard"/>"> Dashboard</a>
         </li>
         <li>
             <a href="#">Menu Item 2</a>

@@ -29,6 +29,10 @@ import it.unical.asde.uam.model.Student;
 	   StudyPlan getStudyPlan(Student student);
 	   
 	   Student retrieveForLogin(String username,String password);
+        
+     List<Student> getAllStudentsToAcceptRefuse();
+
+     boolean isEmpty();
 	   
 	   boolean register(Student u);
 	   

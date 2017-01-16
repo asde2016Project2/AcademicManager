@@ -1,16 +1,17 @@
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-    <h3>Admin Menu</h3>
-    <ul>
-        <li>
-            <a href="#">Menu Item 1</a>
-        </li>
-        <li>
-            <a href="#">Menu Item 2</a>
-        </li>
-        <li>
-            <a href="#">Menu Item 3</a>
-        </li>
-        <li>
-            <a href="#">Menu Item 4</a>
-        </li>
-    </ul>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<h3>Admin Menu</h3>
+<ul>
+    <li>
+        <a href="<c:url value="/admin/dashboard"/>"> Dashboard</a>
+       
+    </li>
+     <li>
+        <a href="<c:url value="/admin/registrations"/>">Registrations</a>
+    </li>
+    <li>
+        <a href="<c:url value="/admin/list/studyplan"/>">StudyPlans</a>
+    </li>       
+    <li>
+        <a href="<c:url value="/logout" />">Logout</a>        
+    </li>
+</ul>
