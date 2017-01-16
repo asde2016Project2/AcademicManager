@@ -23,9 +23,11 @@ import it.unical.asde.uam.controllers.core.BaseController;
 import it.unical.asde.uam.model.DegreeCourse;
 import it.unical.asde.uam.model.ExamSession;
 import it.unical.asde.uam.model.Professor;
+import it.unical.asde.uam.model.Student;
 import it.unical.asde.uam.persistence.DegreeCourseDAO;
 import it.unical.asde.uam.persistence.ExamSessionDAO;
 import it.unical.asde.uam.persistence.ProfessorDAO;
+import it.unical.asde.uam.persistence.StudentDAO;
 
 /**
  *
@@ -134,6 +136,16 @@ public class ProfessorController extends BaseController {
     	model.addAttribute("lista", allExamSessions);
     	return "professor/listSession";
     }
+    
+    @RequestMapping(value ="studentExtraExamSession", method = RequestMethod.GET)
+    public String viewStudentForExtraExamSession(Model model){
+    	
+    	StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
+    	ArrayList<Student> students = studentDAO.getStudentForStraordinaryExamSession(studentDAO.getAllStudents());
+    	model.addAttribute("listaStudenti", students);
+    	return "professor/listStudent";
+    }
+
 
 
 }

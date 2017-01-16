@@ -10,6 +10,9 @@
     <li>
         <a href="<c:url value="/professor/viewAllSession"/>"> List Session</a>
     </li>    
+    <li>
+        <a href="<c:url value="/professor/studentExtraExamSession"/>"> Student Extra Exam Session</a>
+    </li>  	
     <li>        
         <a href="<c:url value="/logout" />">Logout</a>
     </li>
