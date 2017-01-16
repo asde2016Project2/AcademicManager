@@ -48,6 +48,42 @@ public class DegreeCourseDAOImp implements DegreeCourseDAO {
         return dgs;
     }
     
+    
+    @SuppressWarnings("unchecked")
+	@Override
+    public List<String> getAllNameDegrees() {
+    	String queryString = "select c.name from DegreeCourse c order by c.name";
+        Query query = dbHandler.getSession().createQuery(queryString);
+        List<String> dgs = (List<String>) query.list();
+        dbHandler.close();
+        return dgs;
+    }
+    
+    @Override
+    public DegreeCourse retrieve(int grades) {
+      return null;
+    }
+    
+    @Override
+    public DegreeCourse retrieveByName(String name) {
+    	String queryString = "from DegreeCourse c where name=:name";
+    	Query query = dbHandler.getSession().createQuery(queryString);
+    	query.setParameter("name",name);
+    	DegreeCourse degreeCourse = (DegreeCourse) query.uniqueResult();
+    	dbHandler.close();
+    	return degreeCourse;
+    }
+
+    @Override
+    public DegreeCourse retrieveById(int id) {
+        String queryString = "from DegreeCourse c where id=:id";
+    	Query query = dbHandler.getSession().createQuery(queryString);
+    	query.setParameter("id",id);
+    	DegreeCourse degreeCourse = (DegreeCourse) query.uniqueResult();
+    	//dbHandler.close();
+    	return degreeCourse;
+    }
+    
     @Override
     public DegreeCourse getDegreeCourseByName(String nameDegree) {
         String queryString = "from DegreeCourse where name=:nameDeg";
@@ -58,8 +94,5 @@ public class DegreeCourseDAOImp implements DegreeCourseDAO {
         return dC;
     }
     
-    @Override
-    public DegreeCourse retrieve(int grades) {
-      return null;
-    }
+    
 }

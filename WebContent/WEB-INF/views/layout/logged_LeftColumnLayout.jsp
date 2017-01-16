@@ -8,11 +8,15 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />  
         <link rel="stylesheet" type="text/css" href="<c:url value="/resources/style/style.css"/>" />
         <link rel="stylesheet" type="text/css" href="<c:url value="/resources/style/admin-style.css"/>">
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>	
         <script type="text/javascript" src="<c:url value="/resources/script/admin-script.js"/>"></script>
-        <title>${pageTitle}</title>  
+        <script type="text/javascript" src="<c:url value="/resources/script/webcam.js" />"></script>
+
+        <title>${pageTitle}</title>      
+
     </head>  
     <body>  
         <div class="main-container boxed">
