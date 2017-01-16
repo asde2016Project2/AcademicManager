@@ -88,7 +88,6 @@ import it.unical.asde.uam.model.StudyPlanExam;
 	    @Override    
 	    public Student retrieveForLogin(String username,String password) {
 	        String hql = "from Student where username=:username AND password=:password";
-
 	        Query query = dbHandler.getSession().createQuery(hql);
 	        query.setParameter("username", username);
 	        query.setParameter("password",password);
@@ -96,6 +95,25 @@ import it.unical.asde.uam.model.StudyPlanExam;
 	        return stud;
 	    }
 
-
-	   
+		@SuppressWarnings("unchecked")
+		@Override
+		public List<Student> getAllStudentsToAcceptRefuse() {
+			String hql = "from Student where status =:value";
+	        Query query = dbHandler.getSession().createQuery(hql).setBoolean("value",false);
+	        List<Student> students = (List<Student>) query.list();
+	        dbHandler.close();
+	        return students;
+		}
+		
+		@SuppressWarnings("unchecked")
+		@Override
+		public boolean isEmpty() {
+			String queryString = "from Student";
+			Query query = dbHandler.getSession().createQuery(queryString);
+			List<Student> students = (List<Student>) query.list();
+			dbHandler.close();
+			if(students == null)
+				return true;
+			return (students.isEmpty());
+		}
 	}

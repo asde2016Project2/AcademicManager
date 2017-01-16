@@ -16,10 +16,7 @@
     </form:select><br><br>
     
     <label for="nameExams">Exams</label>
-    <form:select path="nameExams" id="nameExams" multiple="true">          
-		<form:options items="${examList}" />
-    </form:select><br><br>
+    <form:checkboxes path="nameExams" id="nameExams" items="${examList}" delimiter="<br>" /><br><br>
     
 	<form:button type="submit" value="create">create</form:button>
 </form:form>
-
