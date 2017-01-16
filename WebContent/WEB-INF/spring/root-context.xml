@@ -90,5 +90,4 @@
 	<bean id="examSession" class="it.unical.asde.uam.model.ExamSession"></bean>
 	<bean id="student" class="it.unical.asde.uam.model.Student"></bean>
 	<bean id="userAttemptRegistration" class="it.unical.asde.uam.model.UserAttemptRegistration"></bean>
-
 </beans>

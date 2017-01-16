@@ -28,9 +28,7 @@ public class StudyPlanExam implements Serializable {
 	private StudyPlan studyPlan;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-
 	@JoinColumn(name = "exam_id")
-
 	private Exam exam; // , unique=true no
 
 	@Column(nullable = false, length = 50, name = "period")

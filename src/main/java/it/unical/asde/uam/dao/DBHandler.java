@@ -98,5 +98,10 @@ public class DBHandler {
 	public void commit() {
 		this.tx.commit();
 	}
+	
+	public void flush() {
+		session.flush();
+
+	}
 
 }

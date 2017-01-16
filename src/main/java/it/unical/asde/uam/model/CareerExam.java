@@ -20,6 +20,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.aspectj.internal.lang.annotation.ajcPrivileged;
+
 /**
  *
  * @author Gezahegn
@@ -44,25 +46,48 @@ public class CareerExam implements Serializable {
     @Column(name = "mandatory")
     private boolean mandatory;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "careerExam")
-    private Set<Attempt> attempts = new HashSet<Attempt>(0);
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "attempt_id")
+    private Set<Attempt> attempts = new HashSet<Attempt>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Student student;
+    
+    @ManyToOne
+    @JoinColumn(name = "exam_id")
+    private Exam exam;
 
     public CareerExam() {
     }
 
-    public CareerExam(boolean done, int grade,  boolean mandatory, Set<Attempt> attempts, Student student) {
+    public CareerExam(boolean done, int grade,  boolean mandatory, Set<Attempt> attempts, Student student, Exam exam) {
         this.done = done;
         this.grade = grade;
         this.mandatory = mandatory;
         this.attempts = attempts;
         this.student = student;
+        this.exam = exam;
+    }
+    
+    public CareerExam(boolean done, int grade,  boolean mandatory, Student student, Exam exam) {
+        this.done = done;
+        this.grade = grade;
+        this.mandatory = mandatory;
+//        this.attempts = attempts;
+        this.student = student;
+        this.exam = exam;
     }
 
-    public CareerExam(boolean done, int grade,  boolean mandatory) {
+    public Exam getExam() {
+		return exam;
+	}
+
+	public void setExam(Exam exam) {
+		this.exam = exam;
+	}
+
+	public CareerExam(boolean done, int grade,  boolean mandatory) {
         this.done = done;
         this.grade = grade;
         this.mandatory = mandatory;

@@ -43,27 +43,27 @@ public class Attempt implements Serializable {
 	private String status;
 
 	// @Column(name = "professor") //foreign key with professor??
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id", nullable = false)
 	private Professor professor;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "career_exam_id", nullable = false)
-	private CareerExam careerExam;
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "career_exam_id", nullable = false)
+//	private CareerExam careerExam;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "exam_id", nullable = false)
 	private Exam exam;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "exam_session_id", nullable = false)
 	private ExamSession examSession;
 
 	public Attempt() {
 	}
 
-	public Attempt(int attemptId, Date examDate, String classroom, Date startRegistrationDate, Date endRegistrationDate,
-			Professor professor, CareerExam careerExam, Exam exam, ExamSession examSession) {
+	public Attempt(Date examDate, String classroom, Date startRegistrationDate, Date endRegistrationDate,
+			Professor professor, Exam exam, ExamSession examSession) { // CareerExam careerExam,
 		super();
 
 		this.examDate = examDate;
@@ -71,11 +71,11 @@ public class Attempt implements Serializable {
 		this.startRegistrationDate = startRegistrationDate;
 		this.endRegistrationDate = endRegistrationDate;
 		this.professor = professor;
-		this.careerExam = careerExam;
+//		this.careerExam = careerExam;
 		this.exam = exam;
 		this.examSession = examSession;
 	}
-
+	
 	public int getAttemptId() {
 		return attemptId;
 	}
@@ -124,13 +124,13 @@ public class Attempt implements Serializable {
 		this.professor = professor;
 	}
 
-	public CareerExam getCareerExam() {
-		return careerExam;
-	}
-
-	public void setCareerExam(CareerExam careerExam) {
-		this.careerExam = careerExam;
-	}
+//	public CareerExam getCareerExam() {
+//		return careerExam;
+//	}
+//
+//	public void setCareerExam(CareerExam careerExam) {
+//		this.careerExam = careerExam;
+//	}
 
 	public Exam getExam() {
 		return exam;
