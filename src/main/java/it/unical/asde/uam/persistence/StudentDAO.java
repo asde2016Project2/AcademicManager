@@ -28,5 +28,6 @@ package it.unical.asde.uam.persistence;
 	   Student retrieveForLogin(String username,String password);
 
 	   List<Student> getAllStudentsToAcceptRefuse();
-			   
+
+	   boolean isEmpty();  
 	}

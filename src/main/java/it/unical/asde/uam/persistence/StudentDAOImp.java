@@ -98,9 +98,22 @@ import it.unical.asde.uam.model.StudyPlanExam;
 		@SuppressWarnings("unchecked")
 		@Override
 		public List<Student> getAllStudentsToAcceptRefuse() {
-			String hql = "from Student where status = 0";
-	        Query query = dbHandler.getSession().createQuery(hql);
+			String hql = "from Student where status =:value";
+	        Query query = dbHandler.getSession().createQuery(hql).setBoolean("value",false);
 	        List<Student> students = (List<Student>) query.list();
+	        dbHandler.close();
 	        return students;
+		}
+		
+		@SuppressWarnings("unchecked")
+		@Override
+		public boolean isEmpty() {
+			String queryString = "from Student";
+			Query query = dbHandler.getSession().createQuery(queryString);
+			List<Student> students = (List<Student>) query.list();
+			dbHandler.close();
+			if(students == null)
+				return true;
+			return (students.isEmpty());
 		}
 	}

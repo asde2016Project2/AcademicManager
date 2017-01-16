@@ -3,7 +3,7 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 			
-			<a href="<c:url value="newstudyPlan"/>">new</a>
+			<a href="<c:url value="newstudyplan"/>">new</a>
 			<div class="divTable">
 				<div class="divTableBody">
 					<div class="divTableRow">
