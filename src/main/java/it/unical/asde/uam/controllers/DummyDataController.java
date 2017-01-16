@@ -70,18 +70,18 @@ public class DummyDataController extends BaseController {
         studyPlanDAO.create(businessStudyPlan);
 
         for (int i = 0; i < 5; i++) {
-            Student p = new Student("stud" + i, "666666", "pierino", "stecchino", true, businessStudyPlan);
-            p.setEmail("stud" + i + "@mat.unical.it");
-            p.setAge(19);
+        	 Student p = new Student("stud"+i, "666666", "pro", "asde", true, businessStudyPlan);
+        	 p.setEmail("stud" + i + "@mat.unical.it");
+           p.setAge(19);
 
-            String dateOfBirth = "11-11-1999";
-            String dateOfBirthFormat = "dd-mm-yyyy";
-            DateFormat format = new SimpleDateFormat(dateOfBirthFormat, Locale.ENGLISH);
-            Date dateOfBirthObject = format.parse(dateOfBirth);
+           String dateOfBirth = "11-11-1999";
+           String dateOfBirthFormat = "dd-mm-yyyy";
+           DateFormat format = new SimpleDateFormat(dateOfBirthFormat, Locale.ENGLISH);
+           Date dateOfBirthObject = format.parse(dateOfBirth);
 
-            p.setDateOfBirth(dateOfBirthObject);
+           p.setDateOfBirth(dateOfBirthObject);
 
-            studentDAO.create(p);
+           studentDAO.create(p);
         }
         return "redirect:/";
     }

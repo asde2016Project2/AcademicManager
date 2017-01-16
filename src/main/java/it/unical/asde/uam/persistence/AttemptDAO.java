@@ -7,6 +7,12 @@ import it.unical.asde.uam.model.Professor;
 
 public interface AttemptDAO {
 
+	void create(Attempt attempt);
+
+	void update(Attempt attempt);
+
+	void delete(Attempt attempt);
+	
 	List<Professor> getProfessorToAttempt(Integer attemptId);
 
 	List<Attempt> getExamSessionToAttempt(Integer sessionId);
@@ -16,5 +22,9 @@ public interface AttemptDAO {
 	void updateAttempt(Attempt attempt);
 
 	void updateAttemptExamReserv(Attempt attempt);
+
+	void flush();
+
+	
 
 }

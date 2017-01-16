@@ -1,5 +1,7 @@
 package it.unical.asde.uam.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -13,7 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import it.unical.asde.uam.helper.SessionHelper;
+
+import it.unical.asde.uam.Helper.SessionHelper;
 import it.unical.asde.uam.controllers.core.BaseController;
 import it.unical.asde.uam.model.ExamSession;
 import it.unical.asde.uam.model.Professor;
@@ -23,35 +26,29 @@ import it.unical.asde.uam.persistence.ExamSessionDAO;
 import it.unical.asde.uam.persistence.ProfessorDAO;
 import it.unical.asde.uam.persistence.StudentDAO;
 import it.unical.asde.uam.persistence.UserAttemptRegistrationDAO;
-import java.util.List;
 
-/**
- *
- * @author Gezahegn
- */
 @Controller
 @RequestMapping("/student")
 public class StudentController extends BaseController {
 
 	private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
+	@RequestMapping(value = "dashboard", method = RequestMethod.GET)
+    public String showDashboad(HttpServletRequest request,Model model) {
+        
+        model.addAttribute("pageTitle","Professor Area");     
+        
+        if (!SessionHelper.isProfessor(request.getSession())) {
+            return "redirect:/";
+        }
 
-	@RequestMapping(value = "studentDashboard", method = RequestMethod.GET)
-	public String showDashboad(HttpServletRequest request) {
+        return "student/dashboard";
+    }
 
-		if (!SessionHelper.isStudent(request.getSession())) {
-			return "redirect:/";
-		}
 
-		return "student/studentDashboard";
-	}
+	// -------------------Exam Reservation process-------//
 
 	
-
-
-
-	// -------------Exam Booking source code----------------------------//
-
-	@RequestMapping(value = "/registrationAppeals", method = RequestMethod.GET)
+	@RequestMapping(value = "registrationAppeals", method = RequestMethod.GET)
 	public String viewExamBooking(Model model) {
 		ExamSessionDAO examSessionDAO = (ExamSessionDAO) context.getBean("examSessionDAO");
 		List<ExamSession> listExamSession = examSessionDAO.listExamRegAppeals();
@@ -59,28 +56,30 @@ public class StudentController extends BaseController {
 
 		return "student/registrationAppeals";
 	}
+	
 
-	@RequestMapping(value = { "/examSession/id={sessionId:.+}",
-			"/registrationAppeals/examSession/{sessionId:.+}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "examSession/id={sessionId:.+}",
+			"registrationAppeals/examSession/{sessionId:.+}" }, method = RequestMethod.GET)
 	public String examReservationView(@PathVariable("sessionId") Integer sessionId, Model model) throws Exception {
 		ExamSessionDAO examSessionDAO = (ExamSessionDAO) context.getBean("examSessionDAO");
 		model.addAttribute("examSession", examSessionDAO.getExamSessionById(sessionId));
-
+		
 		AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
 		model.addAttribute("listOfExamReservation", attemptDAO.getExamSessionToAttempt(sessionId));
 
 		return "student/examReservationBoard";
 	}
 
-	@RequestMapping(value = { "/attempt/id={attemptId:.+}",
-			"/examReservationBoard/attempt/{attemptId:.+}" }, method = RequestMethod.GET)
+	
+	
+	@RequestMapping(value = { "attempt/id={attemptId:.+}",
+			"examReservationBoard/attempt/{attemptId:.+}" }, method = RequestMethod.GET)
 	public String cancelExamReservationView(@PathVariable("attemptId") Integer attemptId, Model model)
 			throws Exception {
-		UserAttemptRegistrationDAO userAttemptRegistrationDAO = (UserAttemptRegistrationDAO) context
-				.getBean("userAttemptRegistrationDAO");
-		// model.addAttribute("userAttemptRegistration",
-		// userAttemptRegistrationDAO.getUserAttemptRegById(attemptId));
-
+		UserAttemptRegistrationDAO userAttemptRegistrationDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
+//		model.addAttribute("userAttemptRegistration", userAttemptRegistrationDAO.getUserAttemptRegById(attemptId));
+		
+		
 		model.addAttribute("listResrveExams", userAttemptRegistrationDAO.getAttemptToUserAttemptReg(attemptId));
 
 		return "student/reserveExam";
@@ -89,14 +88,14 @@ public class StudentController extends BaseController {
 	/**
 	 * Reserve for final exam
 	 */
-	@RequestMapping(value = { "/userAttemptRegistration/id={userAtRegId:.+}",
-			"/reserveExam/userAttemptRegistration/{userAtRegId:.+}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "userAttemptRegistration/id={userAtRegId:.+}",
+			"reserveExam/userAttemptRegistration/{userAtRegId:.+}" }, method = RequestMethod.GET)
 	public String reserveExam(@PathVariable("userAtRegId") Integer userAtRegId, Model model) throws Exception {
-		UserAttemptRegistrationDAO userAttemptRegistrationDAO = (UserAttemptRegistrationDAO) context
-				.getBean("userAttemptRegistrationDAO");
+		UserAttemptRegistrationDAO userAttemptRegistrationDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
 		model.addAttribute("userAttemptRegistration", userAttemptRegistrationDAO.getUserAttemptRegById(userAtRegId));
-
-		// AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
+		
+//		AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
+	
 
 		return "student/reserveExam";
 	}
