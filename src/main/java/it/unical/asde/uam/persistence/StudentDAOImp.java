@@ -14,7 +14,6 @@ import it.unical.asde.uam.model.Exam;
 import it.unical.asde.uam.model.Professor;
 import it.unical.asde.uam.model.Student;
 import it.unical.asde.uam.model.StudyPlan;
-import it.unical.asde.uam.model.StudyPlanExam;
 
 
 /**

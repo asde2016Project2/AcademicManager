@@ -1,22 +1,15 @@
 package it.unical.asde.uam.controllers;
 
-import it.unical.asde.uam.helper.SessionHelper;
-import it.unical.asde.uam.controllers.core.BaseController;
-import it.unical.asde.uam.model.DegreeCourse;
-import it.unical.asde.uam.model.Exam;
-import it.unical.asde.uam.model.ExamSession;
-import it.unical.asde.uam.model.Professor;
-import it.unical.asde.uam.persistence.DegreeCourseDAO;
-import it.unical.asde.uam.persistence.ExamSessionDAO;
-import it.unical.asde.uam.persistence.ProfessorDAO;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+//github.com/asde2016Project2/AcademicManager.git
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +17,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import it.unical.asde.uam.Helper.SessionHelper;
+import it.unical.asde.uam.controllers.core.BaseController;
+import it.unical.asde.uam.model.DegreeCourse;
+import it.unical.asde.uam.model.ExamSession;
+import it.unical.asde.uam.model.Professor;
+import it.unical.asde.uam.persistence.DegreeCourseDAO;
+import it.unical.asde.uam.persistence.ExamSessionDAO;
+import it.unical.asde.uam.persistence.ProfessorDAO;
 
 /**
  *

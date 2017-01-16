@@ -23,7 +23,7 @@ public class Attempt implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "attempt_id")
 	private int attemptId;
 
@@ -155,5 +155,7 @@ public class Attempt implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	
 
 }

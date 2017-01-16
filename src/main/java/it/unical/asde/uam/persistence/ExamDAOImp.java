@@ -52,20 +52,40 @@ public class ExamDAOImp implements ExamDAO {
         dbHandler.close();
         return e;
     }
+  
+    
+  @Override
+	public Exam retrieve(Exam examName) {
+		// Session session = dbHandler.getSessionFactory().openSession();
+		String queryString = "from Exam as exam where exam.name = :ex";
+		Query query = dbHandler.getSession().createQuery(queryString);
+		query.setParameter("ex", examName.getName());
+		try {
+			dbHandler.begin();
+			Exam exam = (Exam) query.uniqueResult();
+			System.out.println("when i am gone------" + exam.getName());
+			dbHandler.commit();
+			return exam;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+  }
 
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<Exam> getAllExams() {
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Exam> getAllExams() {
 
-        String queryString = "from Exam c order by c.name";
-        Query query = dbHandler.getSession().createQuery(queryString);
-        dbHandler.begin();
-        List<Exam> exams = (List<Exam>) query.list();
-        dbHandler.commit();
-        return exams;
-    }
-
+		String queryString = "from Exam c order by c.name";
+		Query query = dbHandler.getSession().createQuery(queryString);
+		dbHandler.begin();
+		List<Exam> exams = (List<Exam>) query.list();
+		dbHandler.commit();
+		return exams;
+	}
+  
+  
     @Override
     public Exam getExamById(int id) {
         String hql = "from Exam where id =:id";
@@ -79,7 +99,8 @@ public class ExamDAOImp implements ExamDAO {
         // LOG.info("exam successfully loaded, exam info: " + exam);
         dbHandler.commit();
         return exam;
-    }
+    }       
+  
 
     @SuppressWarnings("unchecked")
     @Override
@@ -105,6 +126,42 @@ public class ExamDAOImp implements ExamDAO {
         // Persists to HSQLDB
         int result = query.executeUpdate();
         logger.info("Exam updated successfully, Exam Details=" + exam);
+    }
+  
+    
+    
+	/*
+	 * retrieving the total number of Exams from the db
+	 */
+
+	@Override
+	public Integer getTotalNumberOfExams() {
+		String hql = "SELECT COUNT(*) FROM Exam";
+		Query query = dbHandler.getSession().createQuery(hql);
+		Long singleResult = (Long) query.uniqueResult();
+		Integer numOfExams = singleResult.intValue();
+		logger.info("nr of exams is {} ", numOfExams);
+		return numOfExams;
+
+	}
+  
+  
+  
+	
+	@SuppressWarnings("unchecked")
+    @Override
+    public List<Exam> listExams(Integer pageNumber, Integer examPerPage) {
+        int start = examPerPage * (pageNumber - 1);
+        Query query = dbHandler.getSession().createQuery("from Exam");
+        query.setFirstResult(start);
+        query.setMaxResults(examPerPage);
+
+        List<Exam> exams = query.list();
+
+        for (Exam exam : exams) {
+            logger.info("Exam list:"+exams);
+        }
+        return exams;
     }
 
     

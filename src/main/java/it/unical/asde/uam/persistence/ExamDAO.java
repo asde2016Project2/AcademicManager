@@ -19,17 +19,26 @@ public interface ExamDAO {
     Exam getExamById(int id);
 
     Exam retrieve(String examName);
+  
+    Exam retrieve(Exam examName);
 
     void updateExam(Exam exam);
 
     boolean exists(String username);
+  
+    boolean exists(Exam username);
 
     List<Exam> getAllExams();
 
     List<String> getAllNameExams();
 
     void removeExam(Integer exam);
+     
+	  List<Exam> listExams(Integer pageNumber, Integer examPerPage);
 
-    boolean exists(Exam username);
+	  Integer getTotalNumberOfExams();
+  
+  
 
 }
+
