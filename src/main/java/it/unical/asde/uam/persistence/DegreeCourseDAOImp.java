@@ -44,7 +44,7 @@ public class DegreeCourseDAOImp implements DegreeCourseDAO {
         String queryString = "from DegreeCourse c order by c.name";
         Query query = dbHandler.getSession().createQuery(queryString);
         List<DegreeCourse> dgs = (List<DegreeCourse>) query.list();
-        dbHandler.close();
+        //dbHandler.close();
         return dgs;
     }
     
@@ -55,7 +55,7 @@ public class DegreeCourseDAOImp implements DegreeCourseDAO {
     	String queryString = "select c.name from DegreeCourse c order by c.name";
         Query query = dbHandler.getSession().createQuery(queryString);
         List<String> dgs = (List<String>) query.list();
-        dbHandler.close();
+        //dbHandler.close();
         return dgs;
     }
     
@@ -70,7 +70,7 @@ public class DegreeCourseDAOImp implements DegreeCourseDAO {
     	Query query = dbHandler.getSession().createQuery(queryString);
     	query.setParameter("name",name);
     	DegreeCourse degreeCourse = (DegreeCourse) query.uniqueResult();
-    	dbHandler.close();
+    	//dbHandler.close();
     	return degreeCourse;
     }
 
@@ -80,7 +80,7 @@ public class DegreeCourseDAOImp implements DegreeCourseDAO {
     	Query query = dbHandler.getSession().createQuery(queryString);
     	query.setParameter("id",id);
     	DegreeCourse degreeCourse = (DegreeCourse) query.uniqueResult();
-    	//dbHandler.close();
+    	////dbHandler.close();
     	return degreeCourse;
     }
     
@@ -90,7 +90,7 @@ public class DegreeCourseDAOImp implements DegreeCourseDAO {
         Query query = dbHandler.getSession().createQuery(queryString);
         query.setParameter("nameDeg", nameDegree);
         DegreeCourse dC = (DegreeCourse) query.uniqueResult();
-        dbHandler.close();
+        //dbHandler.close();
         return dC;
     }
     
