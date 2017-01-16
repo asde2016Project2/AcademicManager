@@ -14,22 +14,31 @@ import java.util.List;
  */
 public interface ExamDAO {
 
-	void create(Exam exam);
+    void create(Exam exam);
 
-	Exam getExamById(int id);
+    Exam getExamById(int id);
 
-	Exam retrieve(Exam examName);
+    Exam retrieve(String examName);
+  
+    Exam retrieve(Exam examName);
 
-	void updateExam(Exam exam);
+    void updateExam(Exam exam);
 
-	void removeExam(Integer exam);
+    boolean exists(String username);
+  
+    boolean exists(Exam username);
 
-	boolean exists(Exam username);
+    List<Exam> getAllExams();
 
-	List<Exam> getAllExams();
+    List<String> getAllNameExams();
 
-	List<Exam> listExams(Integer pageNumber, Integer examPerPage);
+    void removeExam(Integer exam);
+     
+	  List<Exam> listExams(Integer pageNumber, Integer examPerPage);
 
-	Integer getTotalNumberOfExams();
+	  Integer getTotalNumberOfExams();
+  
+  
 
 }
+

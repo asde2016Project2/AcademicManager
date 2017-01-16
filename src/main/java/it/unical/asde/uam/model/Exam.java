@@ -21,20 +21,20 @@ public class Exam implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column
+    @Column(name = "exam_id")
     private int id;
 
-    @Column(nullable = false, length = 50)
+    @Column(name = "name", nullable = false, length = 50)
     private String name; //, unique=true no
 
-    @Column(nullable = false)
+    @Column(name = "cfu",nullable = false)
     private int cfu;
 
-    @Column(nullable = false)
+    @Column(name = "code",nullable = false)
     private int code;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "exam")
-    private Set<Attempt> attempts = new HashSet<Attempt>(0);
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "exam")
+//    private Set<Attempt> attempts = new HashSet<Attempt>(0);
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "exam")
     private Set<StudyPlanExam> studyPlanExams = new HashSet<>();
@@ -54,7 +54,7 @@ public class Exam implements Serializable {
         this.cfu = cfu;
         this.code = code;
         this.name = name;
-        this.attempts = attempts;
+//        this.attempts = attempts;
         this.studyPlanExams = studyPlanExams;
     }
 
@@ -90,13 +90,13 @@ public class Exam implements Serializable {
         this.code = code;
     }
 
-    public Set<Attempt> getAttempts() {
-        return attempts;
-    }
-
-    public void setAttempts(Set<Attempt> attempts) {
-        this.attempts = attempts;
-    }
+//    public Set<Attempt> getAttempts() {
+//        return attempts;
+//    }
+//
+//    public void setAttempts(Set<Attempt> attempts) {
+//        this.attempts = attempts;
+//    }
 
     public Set<StudyPlanExam> getStudyPlanExams() {
         return studyPlanExams;
