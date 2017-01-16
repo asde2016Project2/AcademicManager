@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import it.unical.asde.uam.Helper.SessionHelper;
-import it.unical.asde.uam.Helper.UserProfileHelper;
+import it.unical.asde.uam.helper.SessionHelper;
+import it.unical.asde.uam.helper.UserProfileHelper;
 import it.unical.asde.uam.controllers.core.BaseController;
 import it.unical.asde.uam.model.LoginFormDTO;
 import it.unical.asde.uam.model.Professor;
