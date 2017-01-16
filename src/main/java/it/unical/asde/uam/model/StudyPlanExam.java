@@ -26,7 +26,7 @@ public class StudyPlanExam implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "study_plan_id", nullable=false)
 	private StudyPlan studyPlan;
-
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "exam_id")
 	private Exam exam; // , unique=true no

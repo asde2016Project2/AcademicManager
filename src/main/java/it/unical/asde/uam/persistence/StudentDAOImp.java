@@ -1,16 +1,21 @@
 package it.unical.asde.uam.persistence;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 
 import it.unical.asde.uam.dao.DBHandler;
+import it.unical.asde.uam.model.Attempt;
 import it.unical.asde.uam.model.CareerExam;
+import it.unical.asde.uam.model.Exam;
 import it.unical.asde.uam.model.Professor;
 import it.unical.asde.uam.model.Student;
 import it.unical.asde.uam.model.StudyPlan;
 import it.unical.asde.uam.model.StudyPlanExam;
+
 
 /**
  * @author Nello
@@ -141,5 +146,97 @@ public class StudentDAOImp implements StudentDAO {
         Student student = (Student) query.uniqueResult();
         return student;
     }
+  
+  
+    	@SuppressWarnings("unchecked")
+		@Override
+		public ArrayList<Exam> getAllExamDone(int studentId) {
+
+			String hql = "from CareerExam where student.userId=:studentID AND done=:true";
+			Query query = dbHandler.getSession().createQuery(hql);
+			query.setParameter("studentID", studentId);
+			query.setParameter("true", true);
+			ArrayList<CareerExam> careerExams = (ArrayList<CareerExam>) query.list();
+			
+			ArrayList<Exam> exams = new ArrayList<>();
+			
+			for(int i = 0; i < careerExams.size(); i++) {
+				exams.add(careerExams.get(i).getExam());
+			}
+			
+			return exams;
+		}
+  
+  
+  	@Override
+		public ArrayList<Exam> getAllExam(int studentId) {
+
+			String hql = "from CareerExam where student.userId=:studentID";
+			Query query = dbHandler.getSession().createQuery(hql);
+			query.setParameter("studentID", studentId);
+			
+			ArrayList<CareerExam> careerExams = (ArrayList<CareerExam>) query.list();
+			
+			ArrayList<Exam> exams = new ArrayList<>();
+			
+			for(int i = 0; i < careerExams.size(); i++) {
+				exams.add(careerExams.get(i).getExam());
+			}
+			
+			return exams;
+		}  
+    
+  
+  
+		
+		@Override
+		public ArrayList<Student> getStudentForStraordinaryExamSession(List<Student> studentList) {
+			
+			ArrayList<Student> studentExamSession = new ArrayList<>();
+
+			for(int i = 0; i < studentList.size(); i++) {
+				
+				ArrayList<Exam> exams = new ArrayList<>();
+				ArrayList<Exam> exams2 = new ArrayList<>();
+				int totalCredits = 0;
+				int totalCreditsEarned = 0;
+				
+//			tutti gli esami
+				String hql = "from CareerExam where student.userId=:studentIDD";
+				Query query = dbHandler.getSession().createQuery(hql);
+				query.setParameter("studentIDD", studentList.get(i).getUserId());
+				
+				ArrayList<CareerExam> careerExams = (ArrayList<CareerExam>) query.list();
+				
+				for(int q = 0; q < careerExams.size(); q++) {
+					exams.add(careerExams.get(q).getExam());
+					totalCredits = totalCredits + (careerExams.get(q).getExam().getCfu());
+
+				}
+			
+//			quelli fatti
+				String hql2 = "from CareerExam where student.userId=:studentID AND done=:true";
+				Query query2 = dbHandler.getSession().createQuery(hql2);
+				query2.setParameter("studentID", studentList.get(i).getUserId());
+				query2.setParameter("true", true);
+				
+				ArrayList<CareerExam> careerExams2 = (ArrayList<CareerExam>) query2.list();
+				
+				for(int j = 0; j < careerExams2.size(); j++) {
+					exams2.add(careerExams2.get(j).getExam());
+					totalCreditsEarned = totalCreditsEarned + (careerExams2.get(j).getExam().getCfu());
+				}
+				
+				if((exams.size()-exams2.size() <= 2 ) && (exams.size()-exams2.size() >= 1)) {
+					if(totalCredits - totalCreditsEarned <= 10)
+						studentExamSession.add(studentList.get(i));
+					
+				}
+				
+			}
+			return studentExamSession;
+		}
+  
+  
 
 }

@@ -29,9 +29,9 @@ public class ExamSession implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "session_id")
+    @Column(name = "exam_session_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int sessionId;
+    private int examSessionId;
 
     @Column(name = "startingDate")
     private Date startingDate;
@@ -70,12 +70,22 @@ public class ExamSession implements Serializable {
     	this.setEndingDataString(sdf.format(this.endingDate));
     }
 
+    public ExamSession(Date startingDate, Date endingDate, String academicYear) {
+        super();
+        this.startingDate = startingDate;
+        this.endingDate = endingDate;
+        this.academicYear = academicYear;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    	this.setStartingDataString(sdf.format(this.startingDate));
+    	this.setEndingDataString(sdf.format(this.endingDate));
+    }
+
     public int getSessionId() {
-        return sessionId;
+        return examSessionId;
     }
 
     public void setSessionId(int sessionId) {
-        this.sessionId = sessionId;
+        this.examSessionId = sessionId;
     }
 
     
