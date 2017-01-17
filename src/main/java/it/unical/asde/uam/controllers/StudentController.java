@@ -1,5 +1,6 @@
 package it.unical.asde.uam.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,13 +18,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.unical.asde.uam.helper.SessionHelper;
 import it.unical.asde.uam.controllers.core.BaseController;
+import it.unical.asde.uam.model.Exam;
 import it.unical.asde.uam.model.ExamSession;
 import it.unical.asde.uam.model.Professor;
 import it.unical.asde.uam.model.Student;
+import it.unical.asde.uam.model.StudyPlan;
+import it.unical.asde.uam.model.StudyPlanExam;
 import it.unical.asde.uam.persistence.AttemptDAO;
+import it.unical.asde.uam.persistence.ExamDAO;
 import it.unical.asde.uam.persistence.ExamSessionDAO;
 import it.unical.asde.uam.persistence.ProfessorDAO;
 import it.unical.asde.uam.persistence.StudentDAO;
+import it.unical.asde.uam.persistence.StudyPlanExamDAO;
 import it.unical.asde.uam.persistence.UserAttemptRegistrationDAO;
 
 @Controller
@@ -129,5 +135,26 @@ public class StudentController extends BaseController {
 
         return "student/register";
     }
+
+    
+    @RequestMapping(value = "visualizeStudyPlan", method = RequestMethod.GET)
+		public String listStudyPlanExams(Model model, HttpServletRequest request) throws NullPointerException {
+	    	    	
+    	 	Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
+    	 	
+    	 	StudyPlan studyPlan = loggedStudent.getStudyPlan();
+    	 	model.addAttribute("studyPlanName", studyPlan.getName());
+    	 	
+    	 	StudyPlanExamDAO spexamDAO = (StudyPlanExamDAO) context.getBean("studyPlanExamDAO");
+    	 	List<StudyPlanExam> spexams = spexamDAO.getAllExamsOfAstudyPlan(studyPlan); 	 	
+    	 	List<Exam> exams = new ArrayList<>();
+    	 	
+    	 	for(StudyPlanExam spe : spexams)
+    			exams.add(spe.getExam());
+    	 					
+			model.addAttribute("listStudyPlanExams", exams);
+
+			return "student/visualizeStudyPlan";
+		}
 
 }

@@ -1,11 +1,16 @@
 package it.unical.asde.uam.persistence;
 
-import static org.junit.Assert.assertEquals;
 
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +20,7 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
-import it.unical.asde.uam.model.CareerExam;
+
 import it.unical.asde.uam.model.DegreeCourse;
 import it.unical.asde.uam.model.Exam;
 import it.unical.asde.uam.model.Student;
@@ -63,10 +68,14 @@ public class StudentFeatureTest {
 		studyPlanExamDAO = (StudyPlanExamDAO) context.getBean("studyPlanExamDAO");
 		studentDAO = (StudentDAO) context.getBean("studentDAO");
 		
-		Exam ex1 = new Exam("tcs", 12, 333);
-		Exam ex2 = new Exam("physics", 6, 444);
+		Exam ex1 = new Exam("theoretical computer science", 12, 333);
+		Exam ex2 = new Exam("computational physics", 6, 444);
+		Exam ex3 = new Exam("business intelligence: DW and DM", 12, 555); // NOVITA
+		Exam ex4 = new Exam("social networks and new media", 6, 777); // NOVITA
 		examDAO.create(ex1);
 		examDAO.create(ex2);
+		examDAO.create(ex3);
+		examDAO.create(ex4);
 		
 		DegreeCourse dg = new DegreeCourse("computer science");
 		degreeCourseDAO.create(dg);
@@ -82,6 +91,19 @@ public class StudentFeatureTest {
 		studyPlanExamDAO.create(spe2);
 		
 		loggedStudent = new Student("usr", "pwd", "ciccio", "pasticcio", true, businessStudyPlan);
+		loggedStudent.setEmail("stud@mat.unical.it");
+		loggedStudent.setAge(19);
+        String dateOfBirth = "11-11-1999";
+        String dateOfBirthFormat = "dd-mm-yyyy";
+        DateFormat format = new SimpleDateFormat(dateOfBirthFormat, Locale.ENGLISH);
+        Date dateOfBirthObject = null;;
+		try {
+			dateOfBirthObject = format.parse(dateOfBirth);
+		} catch (ParseException e) {
+			
+			e.printStackTrace();
+		}
+        loggedStudent.setDateOfBirth(dateOfBirthObject);
 		studentDAO.create(loggedStudent);
 	}
 	
