@@ -8,12 +8,14 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import it.unical.asde.uam.dao.DBHandler;
+import it.unical.asde.uam.helper.Accepted;
 import it.unical.asde.uam.model.Attempt;
 import it.unical.asde.uam.model.CareerExam;
 import it.unical.asde.uam.model.Exam;
 import it.unical.asde.uam.model.Professor;
 import it.unical.asde.uam.model.Student;
 import it.unical.asde.uam.model.StudyPlan;
+import it.unical.asde.uam.model.StudyPlanExam;
 
 
 /**
@@ -54,7 +56,7 @@ public class StudentDAOImp implements StudentDAO {
     @Override
     public List<Student> getAllStudents() {
 
-        String queryString = "from Student";// c order by c.name";
+        String queryString = "from Student c order by c.name";
         Query query = dbHandler.getSession().createQuery(queryString);
         List<Student> dgs = (List<Student>) query.list();
         dbHandler.close();
@@ -97,8 +99,9 @@ public class StudentDAOImp implements StudentDAO {
     @SuppressWarnings("unchecked")
     @Override
     public List<Student> getAllStudentsToAcceptRefuse() {
-        String hql = "from Student where status =:value";
-        Query query = dbHandler.getSession().createQuery(hql).setBoolean("value", false);
+        String hql = "from Student where accepted =:value";
+        Query query = dbHandler.getSession().createQuery(hql);
+        query.setParameter("value",Accepted.NOT_ACCEPTED);
         List<Student> students = (List<Student>) query.list();
         dbHandler.close();
         return students;
@@ -235,17 +238,7 @@ public class StudentDAOImp implements StudentDAO {
 			}
 			return studentExamSession;
 		}
-		
-		@Override
-		public ArrayList<CareerExam> getInformationStudent(String studentUsername) {
-
-			String hql = "from CareerExam where student.username=:studentUN";
-			Query query = dbHandler.getSession().createQuery(hql);
-			query.setParameter("studentUN", studentUsername);
-			
-			ArrayList<CareerExam> careerExams = (ArrayList<CareerExam>) query.list();
-			
-			return careerExams;
-		}
+  
+  
 
 }
