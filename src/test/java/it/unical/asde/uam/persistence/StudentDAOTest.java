@@ -147,5 +147,11 @@ public class StudentDAOTest {
 		StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
 		ArrayList<Student> s = studentDAO.getStudentForStraordinaryExamSession(studentDAO.getAllStudents());
 		System.out.println("studenti: "+s.get(0).getFirstName());
+		String ss = studentDAO.getAllStudents().get(0).getUsername();
+		System.out.println("student username: "+ss);
+		ArrayList<CareerExam> c = studentDAO.getInformationStudent(ss);
+		for( int i = 0; i < c.size(); i++) {
+			System.out.println("..."+c.get(i).getExam().getName()+"..."+c.get(i).isDone());
+		}
 	}
 }
