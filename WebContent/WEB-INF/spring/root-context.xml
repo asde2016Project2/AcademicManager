@@ -48,11 +48,16 @@
             <property name="dbHandler" ref="dbHandler" />
     </bean>
 
+
     <bean id="attemptDAO" class="it.unical.asde.uam.persistence.AttemptDAOImp">
             <property name="dbHandler" ref="dbHandler" />
     </bean>
     
     <bean id="professorDAO" class="it.unical.asde.uam.persistence.ProfessorDAOImp" >
+        <property name="dbHandler" ref="dbHandler" />
+    </bean>
+    
+     <bean id="administratorDAO" class="it.unical.asde.uam.persistence.AdministratorDAOImp" >
         <property name="dbHandler" ref="dbHandler" />
     </bean>
     
@@ -81,17 +86,18 @@
     <!-- Root Context: defines shared resources visible to all other web components -->
                        
 	<bean id="sendEmail" class="it.unical.asde.uam.model.SendEmail"></bean>
-	
-    <bean id="user" class="it.unical.asde.uam.model.User"></bean>
+
+  <bean id="user" class="it.unical.asde.uam.model.User"></bean>
 	<bean id="careerExam" class="it.unical.asde.uam.model.CareerExam"></bean>
 	<bean id="exam" class="it.unical.asde.uam.model.Exam"></bean>
 	<bean id="degreeCourse" class="it.unical.asde.uam.model.DegreeCourse"></bean>
 	<bean id="studyPlan" class="it.unical.asde.uam.model.StudyPlan"></bean>
 	<bean id="studyPlanExam" class="it.unical.asde.uam.model.StudyPlanExam"></bean>
 	<bean id="professor" class="it.unical.asde.uam.model.Professor"></bean>
-	<bean id="examSession" class="it.unical.asde.uam.model.ExamSession"></bean>
-	<bean id="student" class="it.unical.asde.uam.model.Student"></bean>
+	<bean id="administrator" class="it.unical.asde.uam.model.Administrator"></bean>
 	<bean id="userAttemptRegistration" class="it.unical.asde.uam.model.UserAttemptRegistration"></bean>
+	<bean id="attempt" class="it.unical.asde.uam.model.Attempt"></bean>
+	<bean id="examSession" class="it.unical.asde.uam.model.ExamSession"></bean>
 
-        
+
 </beans>

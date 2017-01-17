@@ -12,74 +12,62 @@
 	rel="stylesheet">
 </head>
 <body>
-	<jsp:include page="adminDashboard.jsp" />
-	<div class="container">
+	<div class="panel panel-default">
+		<div class="panel-body" style="min-height: 100; max-height: 100;">
 
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="page-header">
-					<h1 id="forms">New Exam</h1>
-				</div>
-			</div>
-		</div>
 
-		<div class="row">
-			<div class="col-lg-6">
-				<div class="well bs-component">
+			<form:form method="POST" modelAttribute="exam"
+				class="form-horizontal">
 
-					<form:form method="POST" modelAttribute="exam" class="form-horizontal">
-					
-						<fieldset>
-							<legend>Add new Exam Information</legend>
+				<fieldset>
+					<legend>Add new Exam Information</legend>
 
-							<%--Exam name--%>
-							<div class="form-group row">
-								<label class="col-xs-2 col-form-label">Exam name</label>
-								<div class="col-xs-10">
-									<div class="radio">
-										<form:input class="form-control" type="text" path="name"
-											placeholder="Exam Name" />
-										
-									</div>
-								</div>
+					<%--Exam name--%>
+					<div class="form-group row">
+						<label class="col-xs-2 col-form-label">Exam name</label>
+						<div class="col-xs-10">
+							<div class="radio">
+								<form:input class="form-control" type="text" path="name"
+									placeholder="Exam Name" />
+
 							</div>
+						</div>
+					</div>
 
 
-							<div class="form-group row">
-								<label for="cfu" class="col-xs-2 col-form-label">CFU</label>
-								<div class="col-xs-8">
-									<form:input class="form-control" type="number" path="cfu"
-										placeholder="cfu" id="cfu" />
-								</div>
-							</div>
+					<div class="form-group row">
+						<label for="cfu" class="col-xs-2 col-form-label">CFU</label>
+						<div class="col-xs-6">
+							<form:input class="form-control" type="number" path="cfu"
+								placeholder="cfu" id="cfu" />
+						</div>
+					</div>
 
-							<div class="form-group row">
-								<label for="code" class="col-xs-2 col-form-label">Code</label>
-								<div class="col-xs-8">
-									<form:input class="form-control" type="number" path="code"
-										placeholder="code" id="code" />
+					<div class="form-group row">
+						<label for="code" class="col-xs-2 col-form-label">Code</label>
+						<div class="col-xs-6">
+							<form:input class="form-control" type="number" path="code"
+								placeholder="code" id="code" />
 
-								</div>
-							</div>
-
-
+						</div>
+					</div>
 
 
-							<div class="form-group">
-								<div class="col-lg-8 col-lg-offset-6">
-									<button type="submit" class="btn btn-primary">Submit</button>
-									<a class="btn btn-default" onclick="history.back()">Back</a>
-								</div>
-							</div>
 
-						</fieldset>
 
-					</form:form>
+					<div class="form-group">
+						<div class="col-lg-6 col-lg-offset-6">
+							<button type="submit" class="btn btn-primary">Submit</button>
+							<a class="btn btn-default" onclick="history.back()">Back</a>
+						</div>
+					</div>
 
-				</div>
-			</div>
+				</fieldset>
+
+			</form:form>
+
 		</div>
 	</div>
-	
+
 </body>
 </html>

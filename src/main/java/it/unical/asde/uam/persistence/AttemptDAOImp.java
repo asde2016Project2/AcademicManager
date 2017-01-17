@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import it.unical.asde.uam.dao.DBHandler;
 import it.unical.asde.uam.model.Attempt;
 import it.unical.asde.uam.model.Professor;
+import it.unical.asde.uam.model.Student;
 
 public class AttemptDAOImp implements AttemptDAO {
 
@@ -25,6 +26,26 @@ public class AttemptDAOImp implements AttemptDAO {
 
 	public AttemptDAOImp() {
 	}
+
+	@Override
+    public void create(Attempt attempt) {
+        dbHandler.create(attempt);
+    }
+
+    @Override
+    public void update(Attempt attempt) {
+        dbHandler.update(attempt);
+    }
+
+    @Override
+    public void delete(Attempt attempt) {
+        dbHandler.delete(attempt);
+    }
+    
+    @Override
+    public void flush() {
+		dbHandler.flush();
+    }
 
 	@Override
 	public Attempt getAttemptById(int attemptId) {

@@ -6,12 +6,14 @@
 package it.unical.asde.uam.controllers;
 
 import it.unical.asde.uam.controllers.core.BaseController;
+import it.unical.asde.uam.model.Administrator;
 import it.unical.asde.uam.model.DegreeCourse;
 import it.unical.asde.uam.model.Exam;
 import it.unical.asde.uam.model.Professor;
 import it.unical.asde.uam.model.Student;
 import it.unical.asde.uam.model.StudyPlan;
 import it.unical.asde.uam.model.StudyPlanExam;
+import it.unical.asde.uam.persistence.AdministratorDAO;
 import it.unical.asde.uam.persistence.DegreeCourseDAO;
 import it.unical.asde.uam.persistence.ExamDAO;
 import it.unical.asde.uam.persistence.ProfessorDAO;
@@ -71,20 +73,22 @@ public class DummyDataController extends BaseController {
 
         for (int i = 0; i < 5; i++) {
             Student p = new Student("stud" + i, "666666", "pierino", "stecchino", true, businessStudyPlan);
-            if(i==0)
-            p.setEmail("effe.sessa" +  "@gmail.com");
-            else
+            if(i==0){
+              p.setEmail("effe.sessa" +  "@gmail.com");
+            }
+            else {
             	p.setEmail("stud" + i +  "@mat.unical.it");
+            }
             p.setAge(19);
 
-            String dateOfBirth = "11-11-1999";
-            String dateOfBirthFormat = "dd-mm-yyyy";
-            DateFormat format = new SimpleDateFormat(dateOfBirthFormat, Locale.ENGLISH);
-            Date dateOfBirthObject = format.parse(dateOfBirth);
+           String dateOfBirth = "11-11-1999";
+           String dateOfBirthFormat = "dd-mm-yyyy";
+           DateFormat format = new SimpleDateFormat(dateOfBirthFormat, Locale.ENGLISH);
+           Date dateOfBirthObject = format.parse(dateOfBirth);
 
-            p.setDateOfBirth(dateOfBirthObject);
+           p.setDateOfBirth(dateOfBirthObject);
 
-            studentDAO.create(p);
+           studentDAO.create(p);
         }
         return "redirect:/";
     }
@@ -157,5 +161,27 @@ public class DummyDataController extends BaseController {
 
         return viewToRender;
     }
+    
+    
+    @RequestMapping(value = "registerAdmin", method = RequestMethod.GET)
+    public String registerAdmin() throws ParseException {
+        AdministratorDAO administratorDAO = (AdministratorDAO) context.getBean("administratorDAO");
+        for (int i = 0; i < 5; i++) {
+            Administrator p = new Administrator("admin" + i, "123456", "mario", "rossi", true);
+            p.setEmail("prof" + i + "@mat.unical.it");
+            p.setAge(21);
+
+            String dateOfBirth = "01-01-1971";
+            String dateOfBirthFormat = "dd-mm-yyyy";
+            DateFormat format = new SimpleDateFormat(dateOfBirthFormat, Locale.ENGLISH);
+            Date dateOfBirthObject = format.parse(dateOfBirth);
+
+            p.setDateOfBirth(dateOfBirthObject);
+
+            administratorDAO.create(p);
+        }
+        return "redirect:/";
+    }
+
 
 }

@@ -11,7 +11,6 @@
 </head>
 <body>
 
-    <jsp:include page="studentDashboard.jsp" />
 
 <div class="container">
 		<div class="bs-docs-section">
@@ -55,7 +54,7 @@
 									<tbody>
 										<div class="pagination-container">
 											<c:forEach var="page" begin="1" end="${numberOfPages}">
-												<c:url var="url" value="/student/examReservationBoard/${page}" />
+												<c:url var="url" value="/admin/students/${page}" />
 												<span id="page-number"> <a href="${url}"> ${page}
 												</a>
 												</span>

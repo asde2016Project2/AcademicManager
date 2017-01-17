@@ -7,6 +7,7 @@ package it.unical.asde.uam.persistence;
 
 import it.unical.asde.uam.dao.DBHandler;
 import it.unical.asde.uam.model.CareerExam;
+import it.unical.asde.uam.model.Exam;
 
 import java.util.List;
 
@@ -45,20 +46,19 @@ public class CareerExamDAOImp implements CareerExamDAO {
 	@Override
 	public void removeCareerExam(Integer careerId) {
 
-		// Return the persistent instance of the given entity class with the
-		// given identifier
-		CareerExam careerExam = (CareerExam) dbHandler.getSession().get(CareerExam.class, new Integer(careerId));
-		// Remove a persistent instance from the datastore.
-		if (careerExam != null)
-			dbHandler.getSession().delete(careerExam);
-		System.out.println("finally it's works now ---" + careerExam);
-		
-		logger.info("CareerExam deleted successfully, CareerExam details= " + careerExam);
+		  // Return the persistent instance of the given entity class with the given identifier
+		CareerExam careerExam = (CareerExam) dbHandler.getSession().load(CareerExam.class, new Integer(careerId));
+        // Remove a persistent instance from the datastore.
+        if (careerExam != null) dbHandler.getSession().delete(careerExam);
+        System.out.println("finally it's works now ---"+careerExam);
+        logger.info("CareerExam deleted successfully, CareerExam details= "+ careerExam);
 	}
 
 	@Override
 	public void updateCareerExam(CareerExam careerExam) {
-		
+		// Retrieve session from Hibernate using dbHandler.getSession()
+
+		// Create hql String
 		String hql = "UPDATE CareerExam set user.username = :name Where id = :examId";
 		// Create a Query instance for the given HQL query string.
 		Query query = dbHandler.getSession().createQuery(hql);
@@ -76,6 +76,10 @@ public class CareerExamDAOImp implements CareerExamDAO {
 	// it doesn't keep the object but the object detached automatically and
 	// instantiate a new
 	// transient object
+	// @Override
+	// public void updateExam(CareerExam careerExam) {
+	// dbHandler.update(careerExam);
+	// }
 
 	@Override
 	public CareerExam retrieveCareerExam(CareerExam careerExam) {
