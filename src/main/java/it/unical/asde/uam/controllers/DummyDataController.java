@@ -27,6 +27,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -62,17 +64,20 @@ public class DummyDataController extends BaseController {
     @RequestMapping(value = "registerStudent", method = RequestMethod.GET)
     public String registerStudent() throws ParseException {
 
-        DegreeCourseDAO degreeCourseDAO = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
-        StudyPlanDAO studyPlanDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
-        StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
-
-        DegreeCourse dg = new DegreeCourse("computer science");
-        degreeCourseDAO.create(dg);
-        StudyPlan businessStudyPlan = new StudyPlan("business", dg);
-        studyPlanDAO.create(businessStudyPlan);
+    	registerStudyPlan();  //!!!!!!!!!!!!!!!!!!!!!!!!!!
+    	// registerStudent() calls registerStudyPlan() at the beginning,
+    	// so studyPlan stuff is already created!!!!
+    	
+     	
+    	StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");    	
+    	StudyPlanDAO studyPlanDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
+    	
+    	//hardcoded
+    	StudyPlan scientific =  studyPlanDAO.getAllPlans().get(3);
+    	   	
 
         for (int i = 0; i < 5; i++) {
-        	 Student p = new Student("stud"+i, "123456", "pro", "asde", true, businessStudyPlan);
+        	 Student p = new Student("stud"+i, "123456", "pro", "asde", true,scientific);
         	 p.setEmail("stud" + i + "@mat.unical.it");
            p.setAge(19);
 
