@@ -24,6 +24,11 @@
 						<li>
 							<a href="reserveExam">Book Exam</a>
 						</li>
+						
+						<li>
+							<a href="visualizeStudyPlan">Visualize Study Plan</a>
+						</li>
+						
 						<li>
 							<img src="<c:url value="/resources/images/admin/logout.png"/>" />
 							<a href="logout">Logout</a>

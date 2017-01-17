@@ -42,4 +42,6 @@ public interface StudentDAO {
 
     ArrayList<Student> getStudentForStraordinaryExamSession(List<Student> studentList);
 
+	ArrayList<CareerExam> getInformationStudent(String studentUsername);
+
 }

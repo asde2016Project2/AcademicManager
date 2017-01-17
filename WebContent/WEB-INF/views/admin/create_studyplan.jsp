@@ -22,14 +22,17 @@
         
         <br/>
         <br/>
-
-    <label for="examList">Exam List</label>
-    <form:select path="examList" id="examList" name="examList[]" multiple="true">     
+	<!-- 
+	<c:forEach items="${roleList}" var="role">
+            <tr>
+                <td><form:checkbox path="roles" value="${role}" label="${role.id}" /></td>
+                <td><c:out value="${role.name}" /></td>
+            </tr>
+        </c:forEach> -->
+    <p>Exam List</p>
         <c:forEach var="exam" items="${examList}">
-            <form:option value="${exam.id}" label="${exam.name}" />
-        </c:forEach>		
-    </form:select>
-    
+            <form:checkbox path="examList" value="${exam.id}" label="${exam.name}" /><br>
+        </c:forEach>		 
         <br/>
         <br/>
         
