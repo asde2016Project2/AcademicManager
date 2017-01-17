@@ -1,10 +1,11 @@
 package it.unical.asde.uam.controllers;
 
+import it.unical.asde.uam.helper.Accepted;
 import it.unical.asde.uam.helper.SessionHelper;
 import it.unical.asde.uam.controllers.core.BaseController;
 import it.unical.asde.uam.model.AcceptingStudentFormDTO;
 import java.util.ArrayList;
-
+import java.util.Base64;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -160,15 +161,20 @@ public class AdministratorController extends BaseController {
     public String acceptingStudent(@Valid @ModelAttribute("acceptingStudentForm") AcceptingStudentFormDTO acceptingStudentFormDTO, Model model) {
         StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
         Student student = studentDAO.retrieve(acceptingStudentFormDTO.getUsername());
-        System.out.println(acceptingStudentFormDTO.getUsername());
-        System.out.println(acceptingStudentFormDTO.getPhoto());
-        student.setPhoto(acceptingStudentFormDTO.getPhoto());
+        
+        student.setPhoto(acceptingStudentFormDTO.decodeBase64());
+        student.setAccepted(acceptingStudentFormDTO.getAccepted());      
         studentDAO.update(student);
+        
         model.addAttribute("username", student.getUsername());
-        model.addAttribute("photo", studentDAO.retrieve(student.getUsername()).getPhoto());
+        model.addAttribute("photo",encode(studentDAO.retrieve(student.getUsername()).getPhoto()));
         return "admin/dashboard";
     }
 
+    private String encode(byte[] photo) {
+		return Base64.getEncoder().encodeToString(photo);
+	}
+    
     @RequestMapping(value = "registrations", method = RequestMethod.POST, params = "refuse")
     public String refuseStudent(@RequestParam(value = "refuse") String username, Model model) {
         StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
