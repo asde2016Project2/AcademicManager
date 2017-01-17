@@ -71,7 +71,10 @@ public class DummyDataController extends BaseController {
 
         for (int i = 0; i < 5; i++) {
             Student p = new Student("stud" + i, "666666", "pierino", "stecchino", true, businessStudyPlan);
-            p.setEmail("stud" + i + "@mat.unical.it");
+            if(i==0)
+            p.setEmail("effe.sessa" +  "@gmail.com");
+            else
+            	p.setEmail("stud" + i +  "@mat.unical.it");
             p.setAge(19);
 
             String dateOfBirth = "11-11-1999";

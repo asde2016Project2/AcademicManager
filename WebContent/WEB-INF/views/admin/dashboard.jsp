@@ -5,4 +5,7 @@
 
 <h1>DASHBOARD ADMIN</h1>
 
-<img src="data:image/jpeg;base64,${photo}" />
+<!--<img src="data:image/jpeg;base64,${photo}" />-->
+
+<span>${number}</span> 
+<span>registration requests to accept or reject</span>
