@@ -12,6 +12,9 @@
     </li>    
     <li>
         <a href="<c:url value="/professor/studentExtraExamSession"/>"> Student Extra Exam Session</a>
+    </li>  
+    <li>
+        <a href="<c:url value="/professor/informationStudent"/>"> Information Student</a>
     </li>  	
     <li>        
         <a href="<c:url value="/logout" />">Logout</a>

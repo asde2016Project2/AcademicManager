@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import it.unical.asde.uam.helper.SessionHelper;
 import it.unical.asde.uam.controllers.core.BaseController;
+import it.unical.asde.uam.model.CareerExam;
 import it.unical.asde.uam.model.DegreeCourse;
 import it.unical.asde.uam.model.ExamSession;
 import it.unical.asde.uam.model.Professor;
@@ -144,6 +145,23 @@ public class ProfessorController extends BaseController {
     	ArrayList<Student> students = studentDAO.getStudentForStraordinaryExamSession(studentDAO.getAllStudents());
     	model.addAttribute("listaStudenti", students);
     	return "professor/listStudent";
+    }
+    
+    @RequestMapping(value ="informationStudent", method = RequestMethod.GET)
+    public String getInformationStudent(Model model){
+    	
+    	return "professor/informationStudent";
+    }
+    
+    @RequestMapping(value ="informationStudent", method = RequestMethod.POST)
+    public String getInformationStudentByUsername(Model model, @ModelAttribute("username") String username){
+    	
+    	StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
+    	ArrayList<CareerExam> students = studentDAO.getInformationStudent(username);
+    	Student stud = studentDAO.retrieve(username);
+    	model.addAttribute("infoStudent", students);
+    	model.addAttribute("student", stud);
+    	return "professor/informationStudent";
     }
 
 
