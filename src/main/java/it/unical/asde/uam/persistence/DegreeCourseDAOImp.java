@@ -41,7 +41,7 @@ public class DegreeCourseDAOImp implements DegreeCourseDAO {
     @SuppressWarnings("unchecked")
     @Override
     public List<DegreeCourse> getAllDegrees() {
-        String queryString = "from DegreeCourse c order by c.name";
+        String queryString = "from DegreeCourse";// c order by c.name";
         Query query = dbHandler.getSession().createQuery(queryString);
         List<DegreeCourse> dgs = (List<DegreeCourse>) query.list();
         //dbHandler.close();

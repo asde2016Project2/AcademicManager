@@ -54,7 +54,7 @@ public class StudentDAOImp implements StudentDAO {
     @Override
     public List<Student> getAllStudents() {
 
-        String queryString = "from Student c order by c.name";
+        String queryString = "from Student";// c order by c.name";
         Query query = dbHandler.getSession().createQuery(queryString);
         List<Student> dgs = (List<Student>) query.list();
         dbHandler.close();
@@ -235,7 +235,17 @@ public class StudentDAOImp implements StudentDAO {
 			}
 			return studentExamSession;
 		}
-  
-  
+		
+		@Override
+		public ArrayList<CareerExam> getInformationStudent(String studentUsername) {
+
+			String hql = "from CareerExam where student.username=:studentUN";
+			Query query = dbHandler.getSession().createQuery(hql);
+			query.setParameter("studentUN", studentUsername);
+			
+			ArrayList<CareerExam> careerExams = (ArrayList<CareerExam>) query.list();
+			
+			return careerExams;
+		}
 
 }
