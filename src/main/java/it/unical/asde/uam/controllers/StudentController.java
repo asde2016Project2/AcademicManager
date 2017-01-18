@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.unical.asde.uam.helper.SessionHelper;
 import it.unical.asde.uam.controllers.core.BaseController;
+import it.unical.asde.uam.dto.ProjectionFormDTO;
+import it.unical.asde.uam.model.CareerExam;
 import it.unical.asde.uam.model.Exam;
 import it.unical.asde.uam.model.ExamSession;
 import it.unical.asde.uam.model.Professor;
@@ -25,6 +27,7 @@ import it.unical.asde.uam.model.Student;
 import it.unical.asde.uam.model.StudyPlan;
 import it.unical.asde.uam.model.StudyPlanExam;
 import it.unical.asde.uam.persistence.AttemptDAO;
+import it.unical.asde.uam.persistence.CareerExamDAO;
 import it.unical.asde.uam.persistence.ExamDAO;
 import it.unical.asde.uam.persistence.ExamSessionDAO;
 import it.unical.asde.uam.persistence.ProfessorDAO;
@@ -156,5 +159,50 @@ public class StudentController extends BaseController {
 
 			return "student/visualizeStudyPlan";
 		}
+    
+    @RequestMapping(value="projection", method = RequestMethod.GET)
+    public String projection(Model model, HttpServletRequest request) {
+    	Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
+    	CareerExamDAO careerExamDAO = (CareerExamDAO) context.getBean("careerExamDAO");
+    	List<CareerExam> listCareerExam = (List<CareerExam>) careerExamDAO.getCareerExamsOfaStudent(loggedStudent.getUserId());
+    	double avgScore = 0;
+    	int cfuDone = 0;
+    	for(CareerExam careerExam : listCareerExam) {
+    		if(careerExam.isDone()) {
+    			avgScore+= (careerExam.getGrade() * careerExam.getExam().getCfu());
+    			cfuDone+=careerExam.getExam().getCfu();
+    		}
+    	}
+    	if(cfuDone != 0)
+    		avgScore/=cfuDone;
+    	model.addAttribute("pageTitle","Student Projection");
+    	model.addAttribute("avgScore",avgScore);
+    	model.addAttribute("gbg",((double)(avgScore*11)/3));
+    	model.addAttribute("listCareerExam",listCareerExam);
+    	model.addAttribute("projectionForm",new ProjectionFormDTO());
+    	return "student/projection";
+    }
+    
+    @RequestMapping(value="projection", method = RequestMethod.POST)
+    public String makeProjection(@Valid @ModelAttribute("projectionForm") ProjectionFormDTO projectionFormDTO,Model model, HttpServletRequest request) {
+    	Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
+    	double avgScore = 0;
+    	int cfuDone = 0;
+    	for(int i=0;i<projectionFormDTO.getGradeExams().size();i++) {
+    		if(!projectionFormDTO.getGradeExams().get(i).equals("")) {
+    			avgScore+=(Integer.parseInt(projectionFormDTO.getGradeExams().get(i)) 
+    					* Integer.parseInt(projectionFormDTO.getCfuExams().get(i)));
+    			cfuDone+=Integer.parseInt(projectionFormDTO.getCfuExams().get(i));
+    		}
+    	}
+    	avgScore/=cfuDone;
+    	model.addAttribute("pageTitle","Projection result");
+    	model.addAttribute("avgScore",avgScore);
+    	model.addAttribute("gbg",((double)(avgScore*11)/3));
+    	model.addAttribute("nameExams",projectionFormDTO.getNameExams());
+    	model.addAttribute("cfuExams",projectionFormDTO.getCfuExams());
+    	model.addAttribute("gradeExams",projectionFormDTO.getGradeExams());
+    	return "student/projectionResult";
+    }
 
 }

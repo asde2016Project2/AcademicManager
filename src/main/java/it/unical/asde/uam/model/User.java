@@ -5,11 +5,14 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,6 +26,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import it.unical.asde.uam.helper.Accepted;
 
 /**
  *
@@ -77,6 +82,14 @@ public class User implements Serializable {
     @Column(name = "status")
     private boolean status;
 
+    @Lob
+	@Column(name="photo",nullable=true,length=20971520)
+	private byte[] photo;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name="accepted",nullable=true,columnDefinition = "varchar(32) default 'NOT_ACCEPTED'")
+	private Accepted accepted = Accepted.NOT_ACCEPTED;
+	
     public User(String username, String password, String firstName, String lastName, boolean status) {
         this.username = username;
         this.password = password;
@@ -178,14 +191,27 @@ public class User implements Serializable {
         this.dateOfBirth = dateOfBirth;
     }
 
-    
-    
-    
-    
     @Override
     public String toString() {
         return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", firstName="
                 + firstName + ", lastName=" + lastName + ", status=" + status + "]";
     }
+    
+    public void setPhoto(byte[] photo) {
+		this.photo = photo;
+	}
+	
+	public byte[] getPhoto() {
+		return photo;
+	}
+	
+	public void setAccepted(Accepted accepted) {
+		this.accepted = accepted;
+	}
+	
+	public Accepted getAccepted() {
+		return accepted;
+	}
+
 
 }

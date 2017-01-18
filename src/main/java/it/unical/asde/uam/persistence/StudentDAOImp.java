@@ -238,6 +238,12 @@ public class StudentDAOImp implements StudentDAO {
 			}
 			return studentExamSession;
 		}
+
+		@Override
+		public ArrayList<CareerExam> getInformationStudent(String studentUsername) {
+			// TODO Auto-generated method stub
+			return null;
+		}
   
   
 

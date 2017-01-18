@@ -6,8 +6,12 @@
 package it.unical.asde.uam.persistence;
 
 import it.unical.asde.uam.dao.DBHandler;
+import it.unical.asde.uam.helper.Accepted;
 import it.unical.asde.uam.model.Administrator;
 import it.unical.asde.uam.model.Student;
+
+import java.util.List;
+
 import org.hibernate.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,5 +57,34 @@ public class AdministratorDAOImp implements AdministratorDAO {
         dbHandler.commit();
         return administrator;
     }
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Administrator> getAllAdminsToAcceptRefuse() {
+		String hql = "from Administrator where accepted=:value";
+		Query query = dbHandler.getSession().createQuery(hql);
+		query.setParameter("value",Accepted.NOT_ACCEPTED);
+		List<Administrator> administrators = (List<Administrator>) query.list();
+		return administrators;
+	}
+
+	@Override
+	public Administrator retrieve(String username) {
+		String hql = "from Administrator where username=:username";
+		Query query = dbHandler.getSession().createQuery(hql);
+		query.setParameter("username",username);
+		Administrator administrator = (Administrator) query.uniqueResult();
+		return administrator;
+	}
+
+	@Override
+	public void update(Administrator administrator) {
+		dbHandler.update(administrator);
+	}
+
+	@Override
+	public void delete(Administrator administrator) {
+		dbHandler.delete(administrator);
+	}
 
 }
