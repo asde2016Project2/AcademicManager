@@ -1,5 +1,6 @@
 package it.unical.asde.uam.persistence;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import it.unical.asde.uam.model.Attempt;
@@ -15,7 +16,7 @@ public interface AttemptDAO {
 	
 	List<Professor> getProfessorToAttempt(Integer attemptId);
 
-	List<Attempt> getExamSessionToAttempt(Integer sessionId);
+	ArrayList<Attempt> getExamSessionToAttempt(Integer sessionId);
 
 	Attempt getAttemptById(int attemptId);
 
@@ -24,6 +25,8 @@ public interface AttemptDAO {
 	void updateAttemptExamReserv(Attempt attempt);
 
 	void flush();
+
+	ArrayList<Attempt> listActiveExamforAttempt();
 
 	
 

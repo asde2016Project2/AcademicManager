@@ -1,5 +1,6 @@
 package it.unical.asde.uam.persistence;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -10,8 +11,7 @@ import it.unical.asde.uam.dao.DBHandler;
 import it.unical.asde.uam.model.UserAttemptRegistration;
 import it.unical.asde.uam.model.Student;
 
-public class UserAttemptRegistrationDAOImp implements  UserAttemptRegistrationDAO{
-	
+public class UserAttemptRegistrationDAOImp implements UserAttemptRegistrationDAO {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserAttemptRegistrationDAOImp.class);
 	private DBHandler dbHandler;
@@ -49,7 +49,8 @@ public class UserAttemptRegistrationDAOImp implements  UserAttemptRegistrationDA
 		query.setParameter("userAtRegId", userAttemptRegistration.getUserAtRegId());
 		// Persists to HSQLDB
 		int result = query.executeUpdate();
-		logger.info("UserAttemptRegistration updated successfully, UserAttemptRegistration Details=" + userAttemptRegistration);
+		logger.info("UserAttemptRegistration updated successfully, UserAttemptRegistration Details="
+				+ userAttemptRegistration);
 	}
 
 	@Override
@@ -64,23 +65,29 @@ public class UserAttemptRegistrationDAOImp implements  UserAttemptRegistrationDA
 
 		return student;
 	}
-	
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<UserAttemptRegistration> getAttemptToUserAttemptReg(Integer attemptId) {
+	public ArrayList<UserAttemptRegistration> getAttemptToUserAttemptReg(Integer attemptId) {
 
 		Query query = dbHandler.getSession()
 				.createQuery("FROM UserAttemptRegistration s WHERE s.attempt.attemptId = :attemptId");
 		query.setParameter("attemptId", attemptId);
-
-		
-		List<UserAttemptRegistration> attempts = query.list();
-
-		return attempts;
+		try {
+			dbHandler.begin();
+			ArrayList<UserAttemptRegistration> attempts = new ArrayList(query.list());
+			dbHandler.commit();
+			return attempts;
+		} catch (Exception ex) {
+			logger.debug("List of UserAttemptRegistrationt" + ex);
+			return null;
+		}
 	}
 
-	
-	
+	@Override
+	public void create(UserAttemptRegistration userAttemptRegistration) {
+		dbHandler.create(userAttemptRegistration);
+
+	}
 
 }

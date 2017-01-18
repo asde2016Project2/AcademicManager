@@ -1,5 +1,6 @@
 package it.unical.asde.uam.persistence;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -28,24 +29,24 @@ public class AttemptDAOImp implements AttemptDAO {
 	}
 
 	@Override
-    public void create(Attempt attempt) {
-        dbHandler.create(attempt);
-    }
+	public void create(Attempt attempt) {
+		dbHandler.create(attempt);
+	}
 
-    @Override
-    public void update(Attempt attempt) {
-        dbHandler.update(attempt);
-    }
+	@Override
+	public void update(Attempt attempt) {
+		dbHandler.update(attempt);
+	}
 
-    @Override
-    public void delete(Attempt attempt) {
-        dbHandler.delete(attempt);
-    }
-    
-    @Override
-    public void flush() {
+	@Override
+	public void delete(Attempt attempt) {
+		dbHandler.delete(attempt);
+	}
+
+	@Override
+	public void flush() {
 		dbHandler.flush();
-    }
+	}
 
 	@Override
 	public Attempt getAttemptById(int attemptId) {
@@ -87,24 +88,42 @@ public class AttemptDAOImp implements AttemptDAO {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Attempt> getExamSessionToAttempt(Integer sessionId) {
+	public ArrayList<Attempt> getExamSessionToAttempt(Integer examSessionId) {
 
 		Query query = dbHandler.getSession()
-				.createQuery("FROM Attempt s WHERE s.examSession.sessionId = :sessionId");
-		query.setParameter("sessionId", sessionId);
-
-		List<Attempt> getExamSessionToAttempt = query.list();
-
-		return getExamSessionToAttempt;
+				.createQuery("FROM Attempt s WHERE s.examSession.examSessionId = :examSessionId");
+		query.setParameter("examSessionId", examSessionId);
+		try {
+			dbHandler.begin();
+			ArrayList<Attempt> getExamSessionToAttempt = new ArrayList(query.list());
+			dbHandler.commit();
+			return getExamSessionToAttempt;
+		} catch (Exception ex) {
+			logger.debug("List of exam attempt" + ex);
+			return null;
+		}
 	}
 
 	@Override
 	public void updateAttempt(Attempt attempt) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	
-	
-	
+	@Override
+	@SuppressWarnings("unchecked")
+	public ArrayList<Attempt> listActiveExamforAttempt() {
+
+		Query query = dbHandler.getSession().createQuery("FROM Attempt ");
+		try {
+			dbHandler.begin();
+			ArrayList<Attempt> attempts = new ArrayList(query.list());
+			dbHandler.commit();
+			return attempts;
+		} catch (Exception ex) {
+			logger.debug("List of exam attempt" + ex);
+			return null;
+		}
+	}
+
 }

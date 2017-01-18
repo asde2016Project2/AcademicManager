@@ -1,21 +1,16 @@
 package it.unical.asde.uam.persistence;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Query;
-import org.hibernate.Session;
 
 import it.unical.asde.uam.dao.DBHandler;
 import it.unical.asde.uam.helper.Accepted;
-import it.unical.asde.uam.model.Attempt;
 import it.unical.asde.uam.model.CareerExam;
 import it.unical.asde.uam.model.Exam;
-import it.unical.asde.uam.model.Professor;
 import it.unical.asde.uam.model.Student;
 import it.unical.asde.uam.model.StudyPlan;
-import it.unical.asde.uam.model.StudyPlanExam;
 
 
 /**
@@ -237,6 +232,12 @@ public class StudentDAOImp implements StudentDAO {
 				
 			}
 			return studentExamSession;
+		}
+
+		@Override
+		public ArrayList<CareerExam> getInformationStudent(String studentUsername) {
+			// TODO Auto-generated method stub
+			return null;
 		}
   
   

@@ -1,5 +1,6 @@
 package it.unical.asde.uam.persistence;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import it.unical.asde.uam.model.Attempt;
@@ -12,8 +13,10 @@ public interface UserAttemptRegistrationDAO {
 
 	void updateUserAttemptRegistration(UserAttemptRegistration userAttemptRegistration);
 
-	List<UserAttemptRegistration> getAttemptToUserAttemptReg(Integer attemptId);
+	ArrayList<UserAttemptRegistration> getAttemptToUserAttemptReg(Integer attemptId);
 
 	Student getStudentToUserAttemptReg(Integer userAtRegId);
+
+	void create(UserAttemptRegistration userAttemptRegistration);
 
 }
