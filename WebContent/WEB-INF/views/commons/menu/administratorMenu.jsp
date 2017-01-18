@@ -18,7 +18,10 @@
         <a href="<c:url value="/admin/careerExams/" />">List CareerExams</a>
      </li>
      <li>
-        <a href="<c:url value="/admin/registrations"/>">Student Approval</a>
+        <a href="<c:url value="/admin/registrationStudent"/>">Student Approval</a>
+    </li>
+    <li>
+        <a href="<c:url value="/admin/registrationProfessor"/>">Professor Approval</a>
     </li>
    <li>
         <a href="<c:url value="/admin/create/studyplan"/>">Create Study Plan</a>

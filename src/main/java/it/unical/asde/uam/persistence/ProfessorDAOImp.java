@@ -6,13 +6,16 @@
 package it.unical.asde.uam.persistence;
 
 import it.unical.asde.uam.dao.DBHandler;
+import it.unical.asde.uam.helper.Accepted;
 import it.unical.asde.uam.model.ExamSession;
 import it.unical.asde.uam.model.Professor;
+import it.unical.asde.uam.model.Student;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.Query;
 
@@ -135,6 +138,16 @@ public class ProfessorDAOImp implements ProfessorDAO {
         Query query = dbHandler.getSession().createQuery(hql);
         ArrayList<ExamSession> examSessions = (ArrayList<ExamSession>) query.list();
 		return examSessions;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Professor> geAllProfessorsToAcceptRefuse() {
+		String hql = "from Professor where accepted =:value";
+		Query query = dbHandler.getSession().createQuery(hql);
+		query.setParameter("value",Accepted.NOT_ACCEPTED);
+		List<Professor> professors = (List<Professor>) query.list();
+		return professors;
 	}
 
 }

@@ -4,9 +4,11 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<h1>DASHBOARD ADMIN</h1>
+<h1>{$pageTitle}</h1>
 
 <!--<img src="data:image/jpeg;base64,${photo}" />-->
 
-<span>${number}</span> 
-<span>registration requests to accept or reject</span>
+<span>${numberStudents}</span> 
+<span>student registration requests to accept or reject</span>
+<span>${numberProfessors}</span> 
+<span>professor registration requests to accept or reject</span>
