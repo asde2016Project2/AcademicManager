@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import it.unical.asde.uam.helper.SessionHelper;
 import it.unical.asde.uam.controllers.core.BaseController;
+import it.unical.asde.uam.model.CareerExam;
 import it.unical.asde.uam.model.Exam;
 import it.unical.asde.uam.model.ExamSession;
 import it.unical.asde.uam.model.Professor;
@@ -25,6 +26,7 @@ import it.unical.asde.uam.model.Student;
 import it.unical.asde.uam.model.StudyPlan;
 import it.unical.asde.uam.model.StudyPlanExam;
 import it.unical.asde.uam.persistence.AttemptDAO;
+import it.unical.asde.uam.persistence.CareerExamDAO;
 import it.unical.asde.uam.persistence.ExamDAO;
 import it.unical.asde.uam.persistence.ExamSessionDAO;
 import it.unical.asde.uam.persistence.ProfessorDAO;
@@ -138,23 +140,46 @@ public class StudentController extends BaseController {
 
     
     @RequestMapping(value = "visualizeStudyPlan", method = RequestMethod.GET)
-		public String listStudyPlanExams(Model model, HttpServletRequest request) throws NullPointerException {
-	    	    	
-    	 	Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
-    	 	
-    	 	StudyPlan studyPlan = loggedStudent.getStudyPlan();
-    	 	model.addAttribute("studyPlanName", studyPlan.getName());
-    	 	
-    	 	StudyPlanExamDAO spexamDAO = (StudyPlanExamDAO) context.getBean("studyPlanExamDAO");
-    	 	List<StudyPlanExam> spexams = spexamDAO.getAllExamsOfAstudyPlan(studyPlan); 	 	
-    	 	List<Exam> exams = new ArrayList<>();
-    	 	
-    	 	for(StudyPlanExam spe : spexams)
-    			exams.add(spe.getExam());
-    	 					
-			model.addAttribute("listStudyPlanExams", exams);
+	public String listStudyPlanExams(Model model, HttpServletRequest request) throws NullPointerException {
+    	    	
+	 	Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
+	 	model.addAttribute("studentName", loggedStudent.getFirstName()+" "+loggedStudent.getLastName());
+	 	
+	 	StudyPlan studyPlan = loggedStudent.getStudyPlan();
+	 	model.addAttribute("studyPlanName", studyPlan.getName());
+	 	
+	 	StudyPlanExamDAO spexamDAO = (StudyPlanExamDAO) context.getBean("studyPlanExamDAO");
+	 	List<StudyPlanExam> spexams = spexamDAO.getAllExamsOfAstudyPlan(studyPlan); 	 	
+		 					
+		model.addAttribute("listStudyPlanExams", spexams);
 
-			return "student/visualizeStudyPlan";
-		}
+		return "student/visualizeStudyPlan";
+	}
+    
+    
+    @RequestMapping(value = "visualizeCareer", method = RequestMethod.GET)
+	public String listCareerExams(Model model, HttpServletRequest request) throws NullPointerException {
+    	    	
+	 	Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
+	 	model.addAttribute("studentName", loggedStudent.getFirstName()+" "+loggedStudent.getLastName());
+	 	
+	 	int studID = loggedStudent.getUserId();
+	 		 	
+	 	CareerExamDAO cexamDAO = (CareerExamDAO) context.getBean("careerExamDAO");
+	 	List<CareerExam> cexams = cexamDAO.getDoneCareerExamsOfaStudent(studID);
+	 					
+		model.addAttribute("listCareerExams", cexams);
 
+		return "student/visualizeCareer";
+	}
+
+    
+    @RequestMapping(value = "visualizeStatistics", method = RequestMethod.GET)
+  	public String showStatistics(Model model, HttpServletRequest request) throws NullPointerException {
+      	    	
+  	 	//TODO
+
+  		return "student/visualizeStatistics";
+  	}
+    
 }

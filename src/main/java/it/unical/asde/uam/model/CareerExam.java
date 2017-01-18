@@ -19,8 +19,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import org.aspectj.internal.lang.annotation.ajcPrivileged;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -57,6 +62,13 @@ public class CareerExam implements Serializable {
     @ManyToOne
     @JoinColumn(name = "exam_id")
     private Exam exam;
+    
+    @Column(name = "dateOfExam")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @Past()
+    private Date dateOfExam;
+    // it should be set manually
 
     public CareerExam() {
     }
@@ -142,5 +154,13 @@ public class CareerExam implements Serializable {
     public void setStudent(Student student) {
         this.student = student;
     }
+
+	public Date getDateOfExam() {
+		return dateOfExam;
+	}
+
+	public void setDateOfExam(Date dateOfExam) {
+		this.dateOfExam = dateOfExam;
+	}
 
 }

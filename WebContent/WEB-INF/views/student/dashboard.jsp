@@ -30,6 +30,14 @@
 						</li>
 						
 						<li>
+							<a href="visualizeCareer">Visualize Career</a>
+						</li>
+						
+						<li>
+							<a href="visualizeStatistics">Visualize Statistics</a>
+						</li>
+						
+						<li>
 							<img src="<c:url value="/resources/images/admin/logout.png"/>" />
 							<a href="logout">Logout</a>
 						</li>

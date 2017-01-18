@@ -24,7 +24,7 @@ public class SendEmail {
 	public static final String TEXT_NOT_ACCEPTED_REGISTRATION = "your registration request has been rejected.";
 	public static final String SIGNATURE = "Sincerely," + "\n" + "UAM - Unical Academic Manager";
 	
-	@Autowired
+
 	public SendEmail() {}
 	
 	@Async

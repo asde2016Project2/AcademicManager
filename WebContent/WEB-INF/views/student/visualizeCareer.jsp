@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-<title>Visualize Study Plan</title>
+<title>Visualize Career</title>
 
 <link href="<c:url value="/resources/core/css/bootstrap.min.css"/>"
 	rel="stylesheet">
@@ -14,7 +14,7 @@
 	<div class="panel panel-default">
 		<div class="panel-body" style="min-height: 100; max-height: 100;">
 
-			<label>${studentName}, your study plan is ${studyPlanName} </label>
+			<label>Career of ${studentName}</label>
 
 			<table class="table table-striped table-hover ">
 				<thead>
@@ -22,17 +22,19 @@
 						<th width="80">ID</th> 
 						<th width="120">Name</th>
 						<th width="120">CFU</th>
-						<th width="120">CODE</th>
+						<th width="120">Grade</th>
+						<th width="120">Date</th>
 
 					</tr>
 				</thead>
-				<c:forEach var="spexam" items="${listStudyPlanExams}" varStatus="status">
+				<c:forEach var="cexam" items="${listCareerExams}" varStatus="status">
 					<tbody>
 						<tr>
 							<td>${status.index+1}</td>
-							<td>${spexam.exam.name}</td>
-							<td>${spexam.exam.cfu}</td>
-							<td>${spexam.exam.code}</td>
+							<td>${cexam.exam.name}</td>
+							<td>${cexam.exam.cfu}</td>
+							<td>${cexam.grade}</td>
+							<td>${cexam.dateOfExam}</td>
 							
 						</tr>
 					</tbody>

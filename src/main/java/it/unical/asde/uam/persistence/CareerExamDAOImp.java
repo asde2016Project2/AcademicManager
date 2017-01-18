@@ -8,6 +8,7 @@ package it.unical.asde.uam.persistence;
 import it.unical.asde.uam.dao.DBHandler;
 import it.unical.asde.uam.model.CareerExam;
 import it.unical.asde.uam.model.Exam;
+import it.unical.asde.uam.model.StudyPlanExam;
 
 import java.util.List;
 
@@ -134,6 +135,23 @@ public class CareerExamDAOImp implements CareerExamDAO {
 		logger.info("careerExam successfully loaded, careerExam info: " + careerExam);
 		dbHandler.commit();
 		return careerExam;
+	}
+	
+	// author: Nello
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CareerExam> getDoneCareerExamsOfaStudent(int studentID) {
+		
+		String queryString = "from CareerExam c where c.student.id =:givenid AND c.done is true";
+		Query query = dbHandler.getSession().createQuery(queryString);
+		 query.setParameter("givenid", studentID);
+		dbHandler.begin();
+		List<CareerExam> careerExamList = (List<CareerExam>) query.list();
+		//for (CareerExam careerExam : careerExamList) {
+		//	logger.info("CareerExam successfully populated" + careerExam);
+		//}
+		dbHandler.commit();
+		return careerExamList;
 	}
 
 }

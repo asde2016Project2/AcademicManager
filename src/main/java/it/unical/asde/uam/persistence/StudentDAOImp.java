@@ -239,6 +239,11 @@ public class StudentDAOImp implements StudentDAO {
 			return studentExamSession;
 		}
   
+		public ArrayList<CareerExam> getInformationStudent(String studentUsername)
+		{
+			//TODO
+			return null;
+		}
   
 
 }
