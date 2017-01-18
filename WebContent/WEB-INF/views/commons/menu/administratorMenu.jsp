@@ -23,6 +23,9 @@
     <li>
         <a href="<c:url value="/admin/registrationProfessor"/>">Professor Approval</a>
     </li>
+    <li>
+        <a href="<c:url value="/admin/registrationAdmin"/>">Admin Approval</a>
+    </li>
    <li>
         <a href="<c:url value="/admin/create/studyplan"/>">Create Study Plan</a>
     </li>  

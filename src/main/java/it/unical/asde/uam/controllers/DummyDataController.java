@@ -44,7 +44,10 @@ public class DummyDataController extends BaseController {
         ProfessorDAO professorDAO = (ProfessorDAO) context.getBean("professorDAO");
         for (int i = 0; i < 5; i++) {
             Professor p = new Professor("prof" + i, "123456", "mario", "rossi", true);
-            p.setEmail("prof" + i + "@mat.unical.it");
+            if(i==0)
+            	p.setEmail("effe.sessa@gmail.com");
+            else
+            	p.setEmail("prof" + i + "@mat.unical.it");
             p.setAge(21);
 
             String dateOfBirth = "01-01-1971";
@@ -168,7 +171,10 @@ public class DummyDataController extends BaseController {
         AdministratorDAO administratorDAO = (AdministratorDAO) context.getBean("administratorDAO");
         for (int i = 0; i < 5; i++) {
             Administrator p = new Administrator("admin" + i, "123456", "mario", "rossi", true);
-            p.setEmail("prof" + i + "@mat.unical.it");
+            if(i==0)
+            	p.setEmail("effe.sessa@gmail.com");
+            else
+            	p.setEmail("admin" + i + "@mat.unical.it");
             p.setAge(21);
 
             String dateOfBirth = "01-01-1971";
