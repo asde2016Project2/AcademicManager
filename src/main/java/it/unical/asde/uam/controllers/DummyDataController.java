@@ -104,10 +104,10 @@ public class DummyDataController extends BaseController {
 		for (int i = 0; i < 5; i++) {
 			Student p = new Student("stud" + i, "123456", "Pierino", "Stecchino", true, scientific);
 			if(i==0){
-				p.setEmail("effe.sessa" +  "@gmail.com");
+				p.setEmail("gezu_tse" +  "@yahoo.com");
 			}
 			else {
-				p.setEmail("stud" + i +  "@mat.unical.it");
+				p.setEmail("gezu_tse" +  "@yahoo.com");
 			}
 			p.setAge(19);
 
@@ -335,7 +335,7 @@ public class DummyDataController extends BaseController {
 			Attempt attempt = new Attempt();
 			examSessionDAO.listExamRegAppeals();
 			examDAO.getAllExams();
-			attempt.setClassroom("MT23");
+			attempt.setClassroom("MT06");
 			attempt.setEndRegistrationDate(dateValue());
 			exams.get(i).getId();
 			attempt.setExam(exams.get(0));
@@ -350,14 +350,14 @@ public class DummyDataController extends BaseController {
 
 			StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
 			Student student = null;
-			StudyPlan businessStudyPlan = new StudyPlan("Computer Scineces", degreeCourses.get(0));
+			StudyPlan businessStudyPlan = new StudyPlan("Computer Sciencea", degreeCourses.get(0));
 			
 			StudyPlanDAO studyPlanDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
 			studyPlanDAO.create(businessStudyPlan);
 			
 			student = new Student("GavinKing" + i, "123456", "Gavin", "King", true, businessStudyPlan);
-			student.setEmail("gavKing" + i + "@mat.unical.it");
-			student.setAge(19);
+			student.setEmail("gezu_tse" +  "@yahoo.com");
+			student.setAge(23);
 			student.setDateOfBirth(dateValue());
 			studentDAO.create(student);
 			

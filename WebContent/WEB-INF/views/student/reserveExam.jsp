@@ -45,7 +45,7 @@
 				<div class="divTableCell">
 					<form method="post">
 						<input type="hidden" name="attemptId" value="${attempt.attemptId}" />
-						<button type="submit" name="cancel" value="${attempt.status}">Cancel</button>
+						<button type="submit" disabled="disabled" name="cancel" value="${attempt.status}">Cancel</button>
 					</form>					
 					<form method="post">
 					    <input type="hidden" name="attemptId" value="${attempt.attemptId}" />

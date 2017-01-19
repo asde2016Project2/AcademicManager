@@ -34,7 +34,6 @@
 
 		</table>
 	</c:if>
-	<button>Cancel</button>
-	<button>Book Appeal</button>
+	
 </div>
 

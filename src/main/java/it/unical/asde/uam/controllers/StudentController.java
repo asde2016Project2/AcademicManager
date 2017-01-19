@@ -141,7 +141,7 @@ public class StudentController extends BaseController {
 		return "student/listExamReservationBoard";
 	}
 
-	/////////////////////////////////// this done
+	
 
 	@RequestMapping(value = "list/ExamReserve", method = RequestMethod.GET)
 	public String viewAttempt(Model model) throws NullPointerException {
@@ -212,17 +212,22 @@ public class StudentController extends BaseController {
 		Attempt attempt = attemptDAO.getAttemptById(attemptId);
 		Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
 
-		
-		model.addAttribute("signedStudent",signedStudent=userAttRegDAO.getUserAttemptByStudentNum().size());
+		signedStudent=userAttRegDAO.getUserAttemptByStudentNum().size();
+		model.addAttribute("signedStudent", signedStudent);
 		if(attempt !=null && loggedStudent != null ){
 			UserAttemptRegistration attemptRegistration2 = new UserAttemptRegistration(attempt, loggedStudent);
 			attemptRegistration2.setBooking(Booking.SIGNUP);
 			attemptRegistration2.setStatus("SIGNUP");
 			userAttRegDAO.create(attemptRegistration2);
+			model.addAttribute("examName", attempt.getExam().getName());
+			model.addAttribute("startDate", attempt.getStartRegistrationDate());
+			model.addAttribute("accademicSession", attempt.getExamSession().getAcademicYear());
+			String studFullName=loggedStudent.getFirstName() +" "+ loggedStudent.getLastName();
+			model.addAttribute("studFullName",studFullName);
 			System.out.println("//////////////////////" + attemptRegistration2);
 			
 			sendEmail.sendEmailRegistration(loggedStudent.getEmail(),loggedStudent.getFirstName(),
-					loggedStudent.getLastName(),SendEmail.SUBJECT_REQUEST_REGISTATION,SendEmail.TEXT_ACCEPTED_REGISTRATION);
+					loggedStudent.getLastName(),SendEmail.SUBJECT_EXAM_BOOKING,SendEmail.EXAM_SESSION_ATTEMPT_SIGNUP);
 	    	int userId= loggedStudent.getUserId();
 	    	System.out.println("userId====logger="+userId);
 		
@@ -234,18 +239,19 @@ public class StudentController extends BaseController {
 
 	/**
 	 * Cancel Reservation for final exam
+	 * although it takes some parameters to cancel the reservation
 	 */
-	 @RequestMapping(value = "resultReserveExam", method = RequestMethod.POST, params = "cancel")
-	    public String cancelReservation(@RequestParam(value = "cancel") String status, 
-	    		@RequestParam(value = "userAtRegId") int userAtRegId,Model model,HttpServletRequest  request) {
+	 @RequestMapping(value = "detail/examBooking/{userAttRegId}", method = RequestMethod.POST, params = "cancel")
+	    public String cancelReservation(@RequestParam(value = "userAtRegId") int userAtRegId, @RequestParam(value = "cancel") String status, 
+	    		Model model,HttpServletRequest  request) {
 		 UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
 
+		 System.out.println("userAtRegId===="+userAtRegId);
 	       
-	        
 		UserAttemptRegistration result = userAttRegDAO.getUserAttemptRegById(userAtRegId);
 //		model.addAttribute("userAttemptRegistration", result);
 		Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
-		
+		System.out.println("result======"+result.getStudent());
 		Attempt attempt = new Attempt();
 		attempt=result.getAttempt();
 		UserAttemptRegistration attemptRegistration2 = new UserAttemptRegistration(attempt, loggedStudent);
@@ -253,7 +259,7 @@ public class StudentController extends BaseController {
 		attemptRegistration2.setStatus("Cancel");
 		System.out.println("//////////////////////" + attemptRegistration2);
 		 sendEmail.sendEmailRegistration(loggedStudent.getEmail(),loggedStudent.getFirstName(),loggedStudent.getLastName(),
-	        		SendEmail.SUBJECT_REQUEST_REGISTATION,SendEmail.TEXT_NOT_ACCEPTED_REGISTRATION);
+	        		SendEmail.SUBJECT_EXAM_BOOKING,SendEmail.EXAM_SESSION_ATTEMPT_CANCELED);
 		userAttRegDAO.delete(result);
 		
 		
@@ -261,13 +267,61 @@ public class StudentController extends BaseController {
 		List<ExamSession> listExamSession = examSessionDAO.listExamRegAppeals();
 		model.addAttribute("listExamSession", listExamSession);
 
-		return "student/registrationAppeals";
+		return "student/listExamReservationBoard";
 	}
 
 
-
-	
-	
+	    /**
+	     * When the student login they will find the signup exam sessions
+		 * Exam reserved by students
+		 */
+      @RequestMapping(value = "cancelExamBook", method = RequestMethod.GET)
+	  public String examReservedByStudent(Model model,HttpServletRequest  request) {
+	  UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) 
+			  context.getBean("userAttemptRegistrationDAO");
+		 Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
+		 int userIds=loggedStudent.getUserId();
+			 	if(userIds > 0 ){
+			 	UserAttemptRegistration attemptRegistration = new UserAttemptRegistration();
+			 	attemptRegistration=userAttRegDAO.getUserAttemptByStudentUserName(userIds);
+				 if(attemptRegistration !=null){
+				 	model.addAttribute("examName", attemptRegistration.getAttempt().getExam().getName());
+					model.addAttribute("startDate", attemptRegistration.getAttempt().getStartRegistrationDate());
+					model.addAttribute("accademicSession", attemptRegistration.getAttempt().getExamSession().getAcademicYear());
+				
+					String studFullName=loggedStudent.getFirstName() +" "+ loggedStudent.getLastName();
+					model.addAttribute("studFullName",studFullName);
+					System.out.println("user userIds----" +userIds);
+					
+					
+				 	ArrayList<UserAttemptRegistration> listStudentBooked = userAttRegDAO.getUserAttemptByStudentUserNames(userIds);
+			    	model.addAttribute("listStudentBooked", listStudentBooked);
+			    	System.out.println("user booked----" +listStudentBooked.size());
+				 }
+				 
+			   }
+	  return "student/cancelExamBook";
+      }
+     
+      @RequestMapping(value = "cancelExamBook", method = RequestMethod.POST)
+      public String cancelSignup(Model model,HttpServletRequest  request) {
+    	  UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) 
+    			  context.getBean("userAttemptRegistrationDAO");
+    		 Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
+    		 int userIds=loggedStudent.getUserId();
+    			UserAttemptRegistration attemptRegistration = new UserAttemptRegistration();
+			 	attemptRegistration=userAttRegDAO.getUserAttemptByStudentUserName(userIds);
+  		System.out.println("//////////////////////" + attemptRegistration);
+  		 sendEmail.sendEmailRegistration(loggedStudent.getEmail(),loggedStudent.getFirstName(),loggedStudent.getLastName(),
+  	        		SendEmail.SUBJECT_EXAM_BOOKING,SendEmail.EXAM_SESSION_ATTEMPT_CANCELED);
+  		userAttRegDAO.delete(attemptRegistration);
+  		
+  		ArrayList<UserAttemptRegistration> listStudentBooked = userAttRegDAO.getUserAttemptByStudentUserNames(userIds);
+    	model.addAttribute("listStudentBooked", listStudentBooked);
+    	System.out.println("user booked----" +listStudentBooked.size());
+          return "student/listExamReservationBoard";
+      }
+      
 	
 
 	// registration stuff
