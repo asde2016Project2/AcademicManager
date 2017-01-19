@@ -213,12 +213,17 @@ public class StudentController extends BaseController {
 		Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
 
 		
-		model.addAttribute("signedStudent",signedStudent=userAttRegDAO.getUserAttemptByStudentNum().size());
+		model.addAttribute("signedStudent", userAttRegDAO.getUserAttemptByStudentNum().size());
 		if(attempt !=null && loggedStudent != null ){
 			UserAttemptRegistration attemptRegistration2 = new UserAttemptRegistration(attempt, loggedStudent);
 			attemptRegistration2.setBooking(Booking.SIGNUP);
 			attemptRegistration2.setStatus("SIGNUP");
 			userAttRegDAO.create(attemptRegistration2);
+			model.addAttribute("examName", attempt.getExam().getName());
+			model.addAttribute("startDate", attempt.getStartRegistrationDate());
+			model.addAttribute("accademicSession", attempt.getExamSession().getAcademicYear());
+			String studFullName=loggedStudent.getFirstName() +" "+ loggedStudent.getLastName();
+			model.addAttribute("studFullName",studFullName);
 			System.out.println("//////////////////////" + attemptRegistration2);
 			
 			sendEmail.sendEmailRegistration(loggedStudent.getEmail(),loggedStudent.getFirstName(),
@@ -235,7 +240,7 @@ public class StudentController extends BaseController {
 	/**
 	 * Cancel Reservation for final exam
 	 */
-	 @RequestMapping(value = "resultReserveExam", method = RequestMethod.POST, params = "cancel")
+	 @RequestMapping(value = "detail/examBooking/{userAttRegId}/resultReserveExam", method = RequestMethod.POST, params = "cancel")
 	    public String cancelReservation(@RequestParam(value = "cancel") String status, 
 	    		@RequestParam(value = "userAtRegId") int userAtRegId,Model model,HttpServletRequest  request) {
 		 UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
