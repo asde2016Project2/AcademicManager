@@ -38,8 +38,8 @@ public class UserAttemptRegistration implements Serializable {
     private Student student;
 
     @Enumerated(EnumType.STRING)
-	@Column(name="booking",nullable=true, columnDefinition = "varchar(32) default 'SIGNUP'")
-	private Booking booking = Booking.SIGNUP;
+	@Column(name="booking",nullable=true, columnDefinition = "varchar(32) default 'CANCEL'")
+	private Booking booking = Booking.CANCEL;
     
     
     public UserAttemptRegistration() {

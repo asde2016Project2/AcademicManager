@@ -21,9 +21,7 @@
 						<li>
 							<a href="list/ExamReserve">Exam Reservation Board</a>
 						</li>
-						<li>
-							<a href="reserveExam">Book Exam</a>
-						</li>
+						
 						
 						<li>
 							<a href="visualizeStudyPlan">Visualize Study Plan</a>

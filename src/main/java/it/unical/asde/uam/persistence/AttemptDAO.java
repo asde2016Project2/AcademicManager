@@ -28,6 +28,8 @@ public interface AttemptDAO {
 
 	ArrayList<Attempt> listActiveExamforAttempt();
 
+	ArrayList<Attempt> getNewExamSessionAttempt(int attemptId);
+
 	
 
 }

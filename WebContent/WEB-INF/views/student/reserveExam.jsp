@@ -12,8 +12,8 @@
         <label>Student Name:</label>
         <label>${studentName}</label>
         <br>
-        <label>Number of Students Registered:</label>
-        <lable>23</lable>
+        <label>Number of Students:</label>
+        <lable>${signedStudent}</lable>
         <br>
         
         <label></label>
@@ -26,7 +26,7 @@
      
 
     
-    <c:if test="${!empty listExamForSignuporCancel}">
+    <c:if test="${!empty attempts}">
     <div class="divTable">
 	<div class="divTableBody">
 		<div class="divTableRow">
@@ -36,17 +36,21 @@
 			<div class="divTableCell"><strong>Professor</strong></div>
 			<div class="divTableCell"><strong>Reserve</strong></div>
 		</div>
-		<c:forEach var="userAttemptRegistration" items="${listExamForSignuporCancel}"  varStatus="status">
+		<c:forEach var="attempt" items="${attempts}"  varStatus="status">
 			<div class="divTableRow">
 		     	<div class="divTableCell">${status.index+1}</div>
-				<div class="divTableCell">${userAttemptRegistration.attempt.examDate}</div>
-				<div class="divTableCell">${userAttemptRegistration.attempt.classroom}</div>
-				<div class="divTableCell">${userAttemptRegistration.attempt.professor.firstName}</div>
-				<div class="divTableCell">${userAttemptRegistration.student.firstName}</div>
-				<div class="divTableCell">${professor.email}</div>
+				<div class="divTableCell">${attempt.examDate}</div>
+				<div class="divTableCell">${attempt.classroom}</div>
+				<div class="divTableCell">${attempt.professor.firstName}</div>
 				<div class="divTableCell">
-					<form method="post"><button type="submit" name="cancel" value="${userAttemptRegistration.status}">canel</button></form>
-					<form method="post"><button type="submit" name="signup" value="${userAttemptRegistration.status}">signup</button></form>
+					<form method="post">
+						<input type="hidden" name="attemptId" value="${attempt.attemptId}" />
+						<button type="submit" name="cancel" value="${attempt.status}">Cancel</button>
+					</form>					
+					<form method="post">
+					    <input type="hidden" name="attemptId" value="${attempt.attemptId}" />
+					    <button type="submit" name="signup" value="${attempt.status}">Signup</button>
+					</form>
 				</div>
 			</div>
 		</c:forEach>	

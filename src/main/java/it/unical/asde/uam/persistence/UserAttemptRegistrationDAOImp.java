@@ -101,14 +101,36 @@ public class UserAttemptRegistrationDAOImp implements UserAttemptRegistrationDAO
 	}
 	
 	
+	@Override
+	public void delete(UserAttemptRegistration userAttemptRegistration) {
+		dbHandler.delete(userAttemptRegistration);
+
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
-	public ArrayList<UserAttemptRegistration> getUserAttemptByStudentUserNames(String username) {
+	public ArrayList<UserAttemptRegistration> getUserAttemptByStudentNum() {
+		Query query = dbHandler.getSession()
+	    .createQuery("FROM UserAttemptRegistration ");
+					
+		try {
+			dbHandler.begin();
+			ArrayList<UserAttemptRegistration> attemptRegistrations = new ArrayList<>(query.list());
+			dbHandler.commit();
+			return attemptRegistrations;
+		} catch (Exception ex) {
+			logger.debug("List of UserAttemptRegistrationt" + ex);
+			return null;
+		}
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<UserAttemptRegistration> getUserAttemptByStudentUserNames(int userId) {
 
 		Query query = dbHandler.getSession()
 				.createQuery("SELECT userAttemptRegistration FROM UserAttemptRegistration AS userAttemptRegistration"
-						+ "  WHERE userAttemptRegistration.student.username = :username");
-		query.setParameter("username", username);
+						+ "  WHERE userAttemptRegistration.student.userId = :userId");
+		query.setParameter("userId", userId);
 		try {
 			dbHandler.begin();
 			ArrayList<UserAttemptRegistration> attemptRegistrations = new ArrayList<>(query.list());
@@ -122,12 +144,12 @@ public class UserAttemptRegistrationDAOImp implements UserAttemptRegistrationDAO
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public UserAttemptRegistration getUserAttemptByStudentUserName(String username) {
+	public UserAttemptRegistration getUserAttemptByStudentUserName(int userId) {
 
 		Query query = dbHandler.getSession()
 				.createQuery("SELECT userAttemptRegistration FROM UserAttemptRegistration AS userAttemptRegistration"
-						+ "  WHERE userAttemptRegistration.student.username = :username");
-		query.setParameter("username", username);
+						+ "  WHERE userAttemptRegistration.student.userId =:userId");
+		query.setParameter("userId", userId);
 		try {
 			dbHandler.begin();
 			UserAttemptRegistration attemptRegistration = (UserAttemptRegistration) query.uniqueResult();

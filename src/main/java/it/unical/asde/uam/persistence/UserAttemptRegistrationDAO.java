@@ -19,8 +19,11 @@ public interface UserAttemptRegistrationDAO {
 
 	void create(UserAttemptRegistration userAttemptRegistration);
 
-	ArrayList<UserAttemptRegistration> getUserAttemptByStudentUserNames(String username);
+	ArrayList<UserAttemptRegistration> getUserAttemptByStudentUserNames(int userId);
 
-	UserAttemptRegistration getUserAttemptByStudentUserName(String username);
+	UserAttemptRegistration getUserAttemptByStudentUserName(int userId);
 
+	void delete(UserAttemptRegistration userAttemptRegistration);
+	
+	ArrayList<UserAttemptRegistration> getUserAttemptByStudentNum();
 }
