@@ -44,15 +44,14 @@
                                                     <td>${examSession.startingDate}</td>
                                                     <td>${examSession.endingDate}</td>
                                                     <td>${examSession.academicYear}</td>
-                                                    <td><a href="<c:url value='registrationAppeals/examSession/${examSession.sessionId}'/>">View</a></td>
-
+                                                    <td><a href="<c:url value='/student/registrationAppeals/examSession/${examSession.sessionId}'/>">View</a></td>
                                                 </tr>
 
                                             </c:forEach>
                                         </tbody>
 
                                         <tbody>
-                                        <div class="pagination-container">
+                                        <!-- div class="pagination-container">
                                             <c:forEach var="page" begin="1" end="${numberOfPages}">
                                                 <c:url var="url" value="registrationAppeals/${page}" />
                                                 <span id="page-number"> <a href="${url}"> ${page}
@@ -60,7 +59,7 @@
                                                 </span>
                                             </c:forEach>
                                         </div>
-                                        </tbody>
+                                        </tbody -->
 
                                     </table>
                                 </c:if>

@@ -13,28 +13,32 @@
 
     </head>
     <body>
-        <h1>Reservation for Examinations</h1>
-
-        <form action=""></form>
-        <label>Name:</label>
+        <h1>Exam Booklet</h1>
+        
+        <label>Exam Name:</label>
+         <label>${examName} <label>
+        <br>
+        <label>Student Name:</label>
+        <label>${studentName}</label>
+        <br>
+        <label>Number of Students Registered:</label>
+        <lable>23</lable>
+        <br>
+        
         <label></label>
-        <label>Course</label>
-        <label></label>
-        <label>NumberofStudents</label>
-        <label></label>
-        <label>Exam Type</label>
-        <label></label>
+        <label>Exam Type:</label>
+        <label>Writen Exam</label>
+        <br>
         <label>Test Method</label>
         <label></label>
 
 
         <div class="panel panel-default">
             <div class="panel-body">
-
-                <fieldset>
-                    <legend>Exam Booklet</legend>
-                    <h1>Exam Booklet</h1>
-                    <c:if test="${!empty listResrveExams}">
+            <form:form method="post" modelAttribute="examBookingForm" action="book/exam">
+               		 <fieldset>
+                  
+                    <c:if test="${!empty listExamForSignuporCancel}">
                         <div class="bs-component">
                             <table class="table table-striped table-hover ">
                                 <thead>
@@ -47,7 +51,7 @@
                                         <th width="60">Reserve</th>
                                     </tr>
                                 </thead>
-                                <c:forEach var="userAttemptRegistration" items="${listResrveExams}"
+                                <c:forEach var="userAttemptRegistration" items="${listExamForSignuporCancel}"
                                            varStatus="status">
 
                                     <tr>
@@ -56,6 +60,11 @@
                                         <td>${userAttemptRegistration.attempt.classroom}</td>
                                         <td>${userAttemptRegistration.attempt.professor.firstName}</td>
                                         <td>${userAttemptRegistration.student.firstName}</td>
+                                        <td><input type="hidden" name="reserve" value="${username}"/></td>
+                                         <td><input type="hidden" name="cancel" value="${userAtteRegId}"/></td>
+                                        <td> <form:button id="reserved" type="submit">Reserved</form:button></td>
+                                         <td><form:button id="canceled" type="submit">Cancel</form:button></td>
+                                             
                                     </tr>
 
                                 </c:forEach>
@@ -64,6 +73,7 @@
                     </c:if>
 
                 </fieldset>
+                </form:form>
             </div>
         </div>
 

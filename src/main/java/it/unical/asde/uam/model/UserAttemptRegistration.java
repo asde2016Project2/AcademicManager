@@ -24,11 +24,11 @@ public class UserAttemptRegistration implements Serializable {
     @Column(name="status")
     private String status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "attempt_id", nullable = false)
     private Attempt attempt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private Student student;
 

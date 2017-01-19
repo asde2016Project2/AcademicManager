@@ -211,9 +211,9 @@ public class DummyDataController extends BaseController {
 
 		DegreeCourseDAO degreeCourseDAO = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
 		ArrayList<DegreeCourse> degreeCourses = new ArrayList<>();
-		degreeCourses.add(new DegreeCourse("Computer Science"));
-		degreeCourses.add(new DegreeCourse("Engineering"));
-		degreeCourses.add(new DegreeCourse("Mathematics"));
+		degreeCourses.add(new DegreeCourse("Computer Sciencea"));
+		degreeCourses.add(new DegreeCourse("Engineeringa"));
+		degreeCourses.add(new DegreeCourse("Mathematicsa"));
 
 		degreeCourseDAO.create(degreeCourses.get(0));
 		degreeCourseDAO.create(degreeCourses.get(1));
@@ -232,15 +232,15 @@ public class DummyDataController extends BaseController {
 		}
 
 		ArrayList<Exam> exams = new ArrayList<>();
-		exams.add(new Exam("Theoretical Computer Science", 10, 23));
-		exams.add(new Exam("Knowledge Management", 10, 21));
-		exams.add(new Exam("Intelligent System", 5, 22));
-		exams.add(new Exam("Network and Security", 10, 18));
-		exams.add(new Exam("Mobile and Social Computing", 5, 19));
-		exams.add(new Exam("Models and simulation", 5, 17));
-		exams.add(new Exam("Data Mining and Data Warehouse", 10, 15));
-		exams.add(new Exam("Social network and new media", 5, 12));
-		exams.add(new Exam("Criptography", 5, 11));
+		exams.add(new Exam("Theoretical Computer Sciences", 10, 23));
+		exams.add(new Exam("Knowledge Managements", 10, 21));
+		exams.add(new Exam("Intelligent Systems", 5, 22));
+		exams.add(new Exam("Network and Securitys", 10, 18));
+		exams.add(new Exam("Mobile and Social Computings", 5, 19));
+		exams.add(new Exam("Models and simulations", 5, 17));
+		exams.add(new Exam("Data Mining and Data Warehouses", 10, 15));
+		exams.add(new Exam("Social network and new medias", 5, 12));
+		exams.add(new Exam("Criptographys", 5, 11));
 		ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
 		for (Exam e : exams) {
 			examDAO.create(e);
@@ -250,21 +250,12 @@ public class DummyDataController extends BaseController {
 		Professor professor = null;
 		for (int i = 0; i < 5; i++) {
 //			ArrayList<Professor> professors = new ArrayList<>();
-			professor = new Professor("prof2" + i, "123456", "mario", "rossi", true);
+			professor = new Professor("professors" + i, "123456", "professors", "professors", true);
 
-			professor.setEmail("prof2" + i + "@mat.unical.it");
+			professor.setEmail("professors" + i + "@mat.unical.it");
 			professor.setAge(21);
 			professor.setDateOfBirth(dateValue());
 			professorDAO.create(professor);
-
-			System.out.println("Information professor--" + professor.getUserId());
-			System.out.println("Information Exams--" + exams.get(i));
-
-			// ArrayList<Professor> prof = new ArrayList<>();
-			// for (Attempt attempt : attempts) {
-			// attempt.setStatus("active");
-			// attemptDAO.create(attempt);
-			// }
 
 			AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
 
@@ -286,25 +277,27 @@ public class DummyDataController extends BaseController {
 
 			StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
 			Student student = null;
-			StudyPlan businessStudyPlan = new StudyPlan("business", degreeCourses.get(0));
+			StudyPlan businessStudyPlan = new StudyPlan("Computer Scineces", degreeCourses.get(0));
+			
 			StudyPlanDAO studyPlanDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
 			studyPlanDAO.create(businessStudyPlan);
 			
-			student = new Student("stud" + i, "123456", "pro", "asde", true, businessStudyPlan);
-			student.setEmail("stud" + i + "@mat.unical.it");
+			student = new Student("GavinKing" + i, "123456", "Gavin", "King", true, businessStudyPlan);
+			student.setEmail("gavKing" + i + "@mat.unical.it");
 			student.setAge(19);
 			student.setDateOfBirth(dateValue());
 			studentDAO.create(student);
 			
 			UserAttemptRegistrationDAO attemptRegistrationDAO = (UserAttemptRegistrationDAO) context
 					.getBean("userAttemptRegistrationDAO");
-			ArrayList<UserAttemptRegistration> attemptRegistrations = new ArrayList<>();
-
-			attemptRegistrations.add(new UserAttemptRegistration(attempt, student));
-			for (UserAttemptRegistration userAttemptRegistration : attemptRegistrations) {
+			UserAttemptRegistration userAttemptRegistration = new UserAttemptRegistration();
 				userAttemptRegistration.setStatus("active");
+				attempt.getAttemptId();
+				userAttemptRegistration.setAttempt(attempt);
+				student.getUserId();
+				userAttemptRegistration.setStudent(student);
 				attemptRegistrationDAO.create(userAttemptRegistration);
-			}
+			
 
 		}
 

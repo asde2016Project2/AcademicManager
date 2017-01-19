@@ -40,7 +40,7 @@ public class UserAttemptRegistrationDAOImp implements UserAttemptRegistrationDAO
 	}
 
 	@Override
-	public void updateUserAttemptRegistration(UserAttemptRegistration userAttemptRegistration) {
+	public boolean updateUserAttemptRegistration(UserAttemptRegistration userAttemptRegistration) {
 
 		String hql = "UPDATE UserAttemptRegistration set status = :status Where userAtRegId = :userAtRegId";
 		// Create a Query instance for the given HQL query string.
@@ -48,22 +48,30 @@ public class UserAttemptRegistrationDAOImp implements UserAttemptRegistrationDAO
 		query.setParameter("status", userAttemptRegistration.getStatus());
 		query.setParameter("userAtRegId", userAttemptRegistration.getUserAtRegId());
 		// Persists to HSQLDB
-		int result = query.executeUpdate();
-		logger.info("UserAttemptRegistration updated successfully, UserAttemptRegistration Details="
-				+ userAttemptRegistration);
+		try {
+			dbHandler.begin();
+			int result = query.executeUpdate();
+			logger.info("UserAttemptRegistration updated successfully, UserAttemptRegistration Details="
+					+ userAttemptRegistration);
+			dbHandler.commit();
+			return true;
+		} catch (RuntimeException rex) {
+			return false;
+		}
 	}
 
 	@Override
-	public Student getStudentToUserAttemptReg(Integer userAtRegId) {
+	public UserAttemptRegistration getUserAttemptRegByAttemptId(Integer attemptId) {
 
-		Query query = dbHandler.getSession()
-				.createQuery("SELECT professor FROM UserAttemptRegistration s WHERE s.userAtRegId = :userAtRegId");
-		query.setParameter("userAtRegId", userAtRegId);
-
-		Student student = (Student) query.uniqueResult();
+		String hql = "SELECT userAttemptRegistration from UserAttemptRegistration AS userAttemptRegistration"
+				+ "  where userAttemptRegistration.attempt.attemptId=:attemptId";
+		Query query = dbHandler.getSession().createQuery(hql);
+		query.setParameter("attemptId", attemptId);
+		dbHandler.begin();
+		UserAttemptRegistration attemptRegistration = (UserAttemptRegistration) query.uniqueResult();
 		dbHandler.commit();
 
-		return student;
+		return attemptRegistration;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -71,11 +79,13 @@ public class UserAttemptRegistrationDAOImp implements UserAttemptRegistrationDAO
 	public ArrayList<UserAttemptRegistration> getAttemptToUserAttemptReg(Integer attemptId) {
 
 		Query query = dbHandler.getSession()
-				.createQuery("FROM UserAttemptRegistration s WHERE s.attempt.attemptId = :attemptId");
+				.createQuery("SELECT userAttemptRegistration FROM UserAttemptRegistration AS userAttemptRegistration"
+						+ " join fetch userAttemptRegistration.student"
+						+ "  WHERE userAttemptRegistration.attempt.attemptId = :attemptId");
 		query.setParameter("attemptId", attemptId);
 		try {
 			dbHandler.begin();
-			ArrayList<UserAttemptRegistration> attempts = new ArrayList(query.list());
+			ArrayList<UserAttemptRegistration> attempts = new ArrayList<>(query.list());
 			dbHandler.commit();
 			return attempts;
 		} catch (Exception ex) {

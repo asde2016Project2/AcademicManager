@@ -91,7 +91,9 @@ public class AttemptDAOImp implements AttemptDAO {
 	public ArrayList<Attempt> getExamSessionToAttempt(Integer examSessionId) {
 
 		Query query = dbHandler.getSession()
-				.createQuery("FROM Attempt s WHERE s.examSession.examSessionId = :examSessionId");
+				.createQuery("SELECT attempt FROM Attempt AS attempt "
+						+ " join fetch attempt.professor "
+						+ " join fetch attempt.exam WHERE attempt.examSession.examSessionId = :examSessionId");
 		query.setParameter("examSessionId", examSessionId);
 		try {
 			dbHandler.begin();
@@ -113,10 +115,13 @@ public class AttemptDAOImp implements AttemptDAO {
 	@Override
 	@SuppressWarnings("unchecked")
 	public ArrayList<Attempt> listActiveExamforAttempt() {
-
-		Query query = dbHandler.getSession().createQuery("FROM Attempt ");
 		try {
 			dbHandler.begin();
+			Query query = dbHandler.getSession().createQuery("SELECT attempt FROM Attempt AS attempt"
+					+ " join fetch attempt.examSession"
+					+ " join fetch attempt.professor"
+					+ " join fetch attempt.exam ");
+
 			ArrayList<Attempt> attempts = new ArrayList(query.list());
 			dbHandler.commit();
 			return attempts;

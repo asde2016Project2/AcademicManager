@@ -11,11 +11,11 @@ public interface UserAttemptRegistrationDAO {
 
 	UserAttemptRegistration getUserAttemptRegById(int userAtRegId);
 
-	void updateUserAttemptRegistration(UserAttemptRegistration userAttemptRegistration);
+	boolean updateUserAttemptRegistration(UserAttemptRegistration userAttemptRegistration);
 
 	ArrayList<UserAttemptRegistration> getAttemptToUserAttemptReg(Integer attemptId);
 
-	Student getStudentToUserAttemptReg(Integer userAtRegId);
+	UserAttemptRegistration getUserAttemptRegByAttemptId(Integer userAtRegId);
 
 	void create(UserAttemptRegistration userAttemptRegistration);
 
