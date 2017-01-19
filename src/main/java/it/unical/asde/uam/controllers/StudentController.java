@@ -1,5 +1,6 @@
 package it.unical.asde.uam.controllers;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -177,8 +178,45 @@ public class StudentController extends BaseController {
     @RequestMapping(value = "visualizeStatistics", method = RequestMethod.GET)
   	public String showStatistics(Model model, HttpServletRequest request) throws NullPointerException {
       	    	
-  	 	//TODO
-
+    	Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
+	 	model.addAttribute("studentName", loggedStudent.getFirstName()+" "+loggedStudent.getLastName());
+	 	
+	 	int studID = loggedStudent.getUserId();
+	 		 	
+	 	CareerExamDAO cexamDAO = (CareerExamDAO) context.getBean("careerExamDAO");
+	 	List<CareerExam> cexams = cexamDAO.getDoneCareerExamsOfaStudent(studID);
+	 					
+		
+	 	//average Weighted Score computing
+	 	double numerator = 0;
+	 	double denominator = 0;	 	
+	 	for(CareerExam ce : cexams)
+	 	{
+	 		int examCredits = ce.getExam().getCfu();	 		
+	 		int grade = ce.getGrade();
+	 		
+	 		if(ce.isHonours()) //lode
+	 		{
+	 			if(examCredits > 5)
+	 				grade += 0.3;
+	 			
+	 			else // <= 5
+	 				grade += 0.15; 
+	 		}	 		
+	 		
+	 		numerator += examCredits * grade;
+	 		denominator += examCredits;	 		
+	 	}	 	
+	 	double averageWeightedScore = (denominator != 0) ? numerator/denominator : 0;
+	 	double graduationBaseGrade = (averageWeightedScore * 11) / 3;
+	 	DecimalFormat dec = new DecimalFormat("#.##");
+	
+	 	int integerCredits = (int) denominator;
+	 	model.addAttribute("averageWeightedScore", dec.format(averageWeightedScore));
+	 	model.addAttribute("earnedCredits", integerCredits);
+	 	model.addAttribute("graduationBaseGrade", dec.format(graduationBaseGrade));
+	 	
+	 	
   		return "student/visualizeStatistics";
   	}
     

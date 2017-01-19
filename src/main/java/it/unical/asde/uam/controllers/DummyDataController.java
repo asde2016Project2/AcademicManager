@@ -200,8 +200,8 @@ public class DummyDataController extends BaseController {
 	private void populateStudentCareer(Student stud)
 	{
 		StudyPlanExamDAO spexamDAO = (StudyPlanExamDAO) context.getBean("studyPlanExamDAO");
-	 	List<StudyPlanExam> spexams = spexamDAO.getAllExamsOfAstudyPlan(stud.getStudyPlan()); 
-		
+		List<StudyPlanExam> spexams = spexamDAO.getAllExamsOfAstudyPlan(stud.getStudyPlan()); 
+
 		CareerExamDAO careerExamDAO = (CareerExamDAO) context.getBean("careerExamDAO");
 
 		// I'm assuming that current user (the first, stud0) has done half exams of his studyplan
@@ -211,19 +211,28 @@ public class DummyDataController extends BaseController {
 		{
 			//just to have random grades
 			int randomGrade = ThreadLocalRandom.current().nextInt(18, 31);
-			
+
 			//stud0 has done half exams of his studyplan
 			boolean done = (index %2 == 0) ? true : false;
-			index++;
-						
-			CareerExam ce = new CareerExam(done, randomGrade, true, stud, spex.getExam());
-			
+
+			CareerExam ce;
+			if(index == 0) // the first exam grade is 30 with honours
+			{
+				ce = new CareerExam(done, 30, true, stud, spex.getExam());
+				ce.setHonours(true);
+			}
+			else  // other exams grades are randomly generated
+			{
+				ce = new CareerExam(done, randomGrade, true, stud, spex.getExam());
+				ce.setHonours(false);
+			}
+
 			StringBuilder sb = new StringBuilder();
 			sb.append(dummyDay.toString());
 			sb.append("-01-2017");
 			String dateOfExam = sb.toString();
 			dummyDay++;
-				
+
 			String dateOfExamFormat = "dd-mm-yyyy";
 			DateFormat format = new SimpleDateFormat(dateOfExamFormat, Locale.ENGLISH);
 			Date dateOfExamObject = null;
@@ -235,10 +244,12 @@ public class DummyDataController extends BaseController {
 			ce.setDateOfExam(dateOfExamObject);
 
 			careerExamDAO.create(ce);
+
+			index++;
 		}
 
-		
-		
+
+
 	}
 
 }

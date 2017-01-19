@@ -10,7 +10,7 @@
 
 </head>
 <body>
-<!--  author: Nello -->
+	<!--  author: Nello -->
 	<div class="panel panel-default">
 		<div class="panel-body" style="min-height: 100; max-height: 100;">
 
@@ -19,10 +19,11 @@
 			<table class="table table-striped table-hover ">
 				<thead>
 					<tr>
-						<th width="80">ID</th> 
+						<th width="80">ID</th>
 						<th width="120">Name</th>
 						<th width="120">CFU</th>
 						<th width="120">Grade</th>
+						<th width="120">Honours</th>
 						<th width="120">Date</th>
 
 					</tr>
@@ -34,8 +35,12 @@
 							<td>${cexam.exam.name}</td>
 							<td>${cexam.exam.cfu}</td>
 							<td>${cexam.grade}</td>
+							<td><c:choose>
+									<c:when test="${cexam.honours==true}">Honours</c:when>
+									<c:otherwise>None</c:otherwise>    
+								</c:choose></td>
 							<td>${cexam.dateOfExam}</td>
-							
+
 						</tr>
 					</tbody>
 
@@ -43,7 +48,7 @@
 				</c:forEach>
 
 			</table>
-			
+
 		</div>
 
 	</div>

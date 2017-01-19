@@ -10,7 +10,45 @@
 
 </head>
 <body>
+
+	
+
 <!--  author: Nello -->
-	<label>Your statistics</label>
+	<div class="panel panel-default">
+		<div class="panel-body" style="min-height: 100; max-height: 100;">
+
+			<label>Statistics of ${studentName}</label>
+
+			<table class="table table-striped table-hover ">
+				<thead>
+					<tr>
+						<th width="120">Average Weighted Score</th>
+						<th width="120">Earned Credits</th>
+						<th width="120">Graduation Base Grade</th>
+
+					</tr>
+				</thead>
+				
+					<tbody>
+						<tr>
+							<td>${averageWeightedScore}</td>
+							<td>${earnedCredits}</td>
+							<td>${graduationBaseGrade}</td>
+													
+
+						</tr>
+					</tbody>
+
+
+				
+
+			</table>
+
+		</div>
+
+	</div>
+</body>
+
+
 </body>
 </html>

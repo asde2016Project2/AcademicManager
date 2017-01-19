@@ -47,10 +47,13 @@ public class CareerExam implements Serializable {
     @Column(name = "grade")
     private int grade;
     
-
     @Column(name = "mandatory")
     private boolean mandatory;
 
+    @Column(name = "honours")
+    private boolean honours;
+ // it should be set manually
+    
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "attempt_id")
     private Set<Attempt> attempts = new HashSet<Attempt>();
@@ -161,6 +164,14 @@ public class CareerExam implements Serializable {
 
 	public void setDateOfExam(Date dateOfExam) {
 		this.dateOfExam = dateOfExam;
+	}
+
+	public boolean isHonours() {
+		return honours;
+	}
+
+	public void setHonours(boolean honours) {
+		this.honours = honours;
 	}
 
 }
