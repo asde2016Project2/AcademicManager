@@ -3,17 +3,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Insert title here</title>
-        <link href="<c:url value="/resources/code/css/bootstrap.min.css"/>"
-              rel="stylesheet">
-
-
-    </head>
-    <body>
-        <h1>Exam Booklet</h1>
+<div>
+     <h1>Exam Booklet</h1>
         
         <label>Exam Name:</label>
          <label>${examName} <label>
@@ -32,50 +23,35 @@
         <label>Test Method</label>
         <label></label>
 
+     
 
-        <div class="panel panel-default">
-            <div class="panel-body">
-            <form:form method="post" modelAttribute="examBookingForm" action="book/exam">
-               		 <fieldset>
-                  
-                    <c:if test="${!empty listExamForSignuporCancel}">
-                        <div class="bs-component">
-                            <table class="table table-striped table-hover ">
-                                <thead>
-                                    <tr>
-                                        <th width="80">ID</th>
-                                        <th width="120">Day</th>
-                                        <th width="120">ClassRoom</th>
-                                        <th width="120">Professor</th>
-                                        <th width="60">Student</th>
-                                        <th width="60">Reserve</th>
-                                    </tr>
-                                </thead>
-                                <c:forEach var="userAttemptRegistration" items="${listExamForSignuporCancel}"
-                                           varStatus="status">
+    
+    <c:if test="${!empty listExamForSignuporCancel}">
+    <div class="divTable">
+	<div class="divTableBody">
+		<div class="divTableRow">
+			<div class="divTableCell"><strong>ID</strong></div>
+			<div class="divTableCell"><strong>Day</strong></div>
+			<div class="divTableCell"><strong>ClassRoom</strong></div>
+			<div class="divTableCell"><strong>Professor</strong></div>
+			<div class="divTableCell"><strong>Reserve</strong></div>
+		</div>
+		<c:forEach var="userAttemptRegistration" items="${listExamForSignuporCancel}"  varStatus="status">
+			<div class="divTableRow">
+		     	<div class="divTableCell">${status.index+1}</div>
+				<div class="divTableCell">${userAttemptRegistration.attempt.examDate}</div>
+				<div class="divTableCell">${userAttemptRegistration.attempt.classroom}</div>
+				<div class="divTableCell">${userAttemptRegistration.attempt.professor.firstName}</div>
+				<div class="divTableCell">${userAttemptRegistration.student.firstName}</div>
+				<div class="divTableCell">${professor.email}</div>
+				<div class="divTableCell">
+					<form method="post"><button type="submit" name="cancel" value="${userAttemptRegistration.status}">canel</button></form>
+					<form method="post"><button type="submit" name="signup" value="${userAttemptRegistration.status}">signup</button></form>
+				</div>
+			</div>
+		</c:forEach>	
+	</div>
+</div>
+</c:if>
 
-                                    <tr>
-                                        <td>${status.index+1 }</td>
-                                        <td>${userAttemptRegistration.attempt.examDate}</td>
-                                        <td>${userAttemptRegistration.attempt.classroom}</td>
-                                        <td>${userAttemptRegistration.attempt.professor.firstName}</td>
-                                        <td>${userAttemptRegistration.student.firstName}</td>
-                                        <td><input type="hidden" name="reserve" value="${username}"/></td>
-                                         <td><input type="hidden" name="cancel" value="${userAtteRegId}"/></td>
-                                        <td> <form:button id="reserved" type="submit">Reserved</form:button></td>
-                                         <td><form:button id="canceled" type="submit">Cancel</form:button></td>
-                                             
-                                    </tr>
-
-                                </c:forEach>
-                            </table>
-                        </div>
-                    </c:if>
-
-                </fieldset>
-                </form:form>
-            </div>
-        </div>
-
-    </body>
-</html>
+</div>

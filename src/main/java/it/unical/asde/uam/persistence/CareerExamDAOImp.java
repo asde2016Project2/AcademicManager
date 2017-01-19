@@ -134,5 +134,36 @@ public class CareerExamDAOImp implements CareerExamDAO {
 		dbHandler.commit();
 		return careerExam;
 	}
+	
+	// author: Nello
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CareerExam> getDoneCareerExamsOfaStudent(int studentID) {
+		
+		String queryString = "from CareerExam c where c.student.id =:givenid AND c.done is true";
+		Query query = dbHandler.getSession().createQuery(queryString);
+		 query.setParameter("givenid", studentID);
+		dbHandler.begin();
+		List<CareerExam> careerExamList = (List<CareerExam>) query.list();
+		//for (CareerExam careerExam : careerExamList) {
+		//	logger.info("CareerExam successfully populated" + careerExam);
+		//}
+		dbHandler.commit();
+		return careerExamList;
+	}
+	
+	//author: Fabrizio
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CareerExam> getCareerExamsOfaStudent(int studentId) {
+		String queryString = "from CareerExam c where c.student.id =:value";
+		Query query = dbHandler.getSession().createQuery(queryString);
+		query.setParameter("value", studentId);
+		dbHandler.begin();
+		List<CareerExam> careerExamList = (List<CareerExam>) query.list();
+		dbHandler.commit();
+		return careerExamList;
+	}
+
 
 }

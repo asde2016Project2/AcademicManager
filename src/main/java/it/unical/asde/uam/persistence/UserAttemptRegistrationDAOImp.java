@@ -99,5 +99,44 @@ public class UserAttemptRegistrationDAOImp implements UserAttemptRegistrationDAO
 		dbHandler.create(userAttemptRegistration);
 
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<UserAttemptRegistration> getUserAttemptByStudentUserNames(String username) {
+
+		Query query = dbHandler.getSession()
+				.createQuery("SELECT userAttemptRegistration FROM UserAttemptRegistration AS userAttemptRegistration"
+						+ "  WHERE userAttemptRegistration.student.username = :username");
+		query.setParameter("username", username);
+		try {
+			dbHandler.begin();
+			ArrayList<UserAttemptRegistration> attemptRegistrations = new ArrayList<>(query.list());
+			dbHandler.commit();
+			return attemptRegistrations;
+		} catch (Exception ex) {
+			logger.debug("List of UserAttemptRegistrationt" + ex);
+			return null;
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public UserAttemptRegistration getUserAttemptByStudentUserName(String username) {
+
+		Query query = dbHandler.getSession()
+				.createQuery("SELECT userAttemptRegistration FROM UserAttemptRegistration AS userAttemptRegistration"
+						+ "  WHERE userAttemptRegistration.student.username = :username");
+		query.setParameter("username", username);
+		try {
+			dbHandler.begin();
+			UserAttemptRegistration attemptRegistration = (UserAttemptRegistration) query.uniqueResult();
+			dbHandler.commit();
+			return attemptRegistration;
+		} catch (Exception ex) {
+			logger.debug("List of UserAttemptRegistrationt" + ex);
+			return null;
+		}
+	}
 
 }

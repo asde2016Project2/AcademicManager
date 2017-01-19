@@ -5,13 +5,33 @@
  */
 package it.unical.asde.uam.controllers;
 
+import it.unical.asde.uam.controllers.core.BaseController;
+import it.unical.asde.uam.model.Administrator;
+import it.unical.asde.uam.model.CareerExam;
+import it.unical.asde.uam.model.DegreeCourse;
+import it.unical.asde.uam.model.Exam;
+import it.unical.asde.uam.model.Professor;
+import it.unical.asde.uam.model.Student;
+import it.unical.asde.uam.model.StudyPlan;
+import it.unical.asde.uam.model.StudyPlanExam;
+import it.unical.asde.uam.persistence.AdministratorDAO;
+import it.unical.asde.uam.persistence.CareerExamDAO;
+import it.unical.asde.uam.persistence.DegreeCourseDAO;
+import it.unical.asde.uam.persistence.ExamDAO;
+import it.unical.asde.uam.persistence.ProfessorDAO;
+import it.unical.asde.uam.persistence.StudentDAO;
+import it.unical.asde.uam.persistence.StudyPlanDAO;
+import it.unical.asde.uam.persistence.StudyPlanExamDAO;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,28 +67,28 @@ import it.unical.asde.uam.persistence.UserAttemptRegistrationDAO;
 @RequestMapping("/dummyData")
 public class DummyDataController extends BaseController {
 
-    @RequestMapping(value = "registerProfessor", method = RequestMethod.GET)
-    public String registerProfessor() throws ParseException {
-        ProfessorDAO professorDAO = (ProfessorDAO) context.getBean("professorDAO");
-        for (int i = 0; i < 5; i++) {
-            Professor p = new Professor("prof" + i, "123456", "mario", "rossi", true);
-            p.setEmail("prof" + i + "@mat.unical.it");
-            p.setAge(21);
+	@RequestMapping(value = "registerProfessor", method = RequestMethod.GET)
+	public String registerProfessor() throws ParseException {
+		ProfessorDAO professorDAO = (ProfessorDAO) context.getBean("professorDAO");
+		for (int i = 0; i < 5; i++) {
+			Professor p = new Professor("prof" + i, "123456", "mario", "rossi", true);
+			p.setEmail("prof" + i + "@mat.unical.it");
+			p.setAge(21);
 
-            String dateOfBirth = "01-01-1971";
-            String dateOfBirthFormat = "dd-mm-yyyy";
-            DateFormat format = new SimpleDateFormat(dateOfBirthFormat, Locale.ENGLISH);
-            Date dateOfBirthObject = format.parse(dateOfBirth);
+			String dateOfBirth = "01-01-1971";
+			String dateOfBirthFormat = "dd-mm-yyyy";
+			DateFormat format = new SimpleDateFormat(dateOfBirthFormat, Locale.ENGLISH);
+			Date dateOfBirthObject = format.parse(dateOfBirth);
 
-            p.setDateOfBirth(dateOfBirthObject);
+			p.setDateOfBirth(dateOfBirthObject);
 
-            professorDAO.create(p);
-        }
-        return "redirect:/";
-    }
+			professorDAO.create(p);
+		}
+		return "redirect:/";
+	}
 
-    @RequestMapping(value = "registerStudent", method = RequestMethod.GET)
-    public String registerStudent() throws ParseException {
+	@RequestMapping(value = "registerStudent", method = RequestMethod.GET)
+	public String registerStudent() throws ParseException {
 
         DegreeCourseDAO degreeCourseDAO = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
         StudyPlanDAO studyPlanDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
@@ -304,5 +324,6 @@ public class DummyDataController extends BaseController {
 		return "redirect:/";
 	}
 
+		
 
 }
