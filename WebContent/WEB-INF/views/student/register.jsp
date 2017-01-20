@@ -18,88 +18,75 @@
 <div class="form-error">${error}</div>
 
 <div class="register-form">
-	<form:form method="post" action="register" modelAttribute="student">
+	
+	<form:form method="post" modelAttribute="studentForm" id="studentForm">
 
 
-		<spring:bind path="username">
-			<div class="form-group ${status.error ? 'has-error' : ''}">
-				<form:label path="username">Username</form:label>
-				<form:input path="username" type="text" name="username"
-					id="username" />
-				<form:errors path="username" />
-			</div>
-		</spring:bind>
-		<br />
+ <label for="username">Username</label>
+    <form:input path="username" id="username"></form:input>
+         
+        <br/>
+        <br/>
+        
+         <label for="password">Password</label>
+    <form:input path="password" id="password"></form:input>
+         
+        <br/>
+        <br/>
+        
+         <label for="firstName">FirstName</label>
+    <form:input path="firstName" id="firstName"></form:input>
+         
+        <br/>
+        <br/>
+        
+         <label for="lastName">Last Name</label>
+    <form:input path="lastName" id="lastName"></form:input>
+         
+        <br/>
+        <br/>
+        
+         <label for="email">Email</label>
+    <form:input path="email" id="email"></form:input>
+         
+        <br/>
+        <br/>
+        
+         <label for="age">Age</label>
+    <form:input path="age" id="age"></form:input>
+         
+        <br/>
+        <br/>
+        
+      
+        
+         <label for="dateOfBirth">Date of Birth</label>
+    <form:input path="dateOfBirth" id="dateOfBirth"></form:input>
+         
+        <br/>
+        <br/>
 
-		<label for="password">Password</label>
-		<form:password path="password" id="password" name="password"></form:password>
-		<br />
-		<form:errors path="password" class="error"></form:errors>
 
-		<br />
-		<hr />
-		<br />
+ 
 
-		<form:label path="firstName">First Name</form:label>
-		<form:input path="firstName" id="firstName" name="firstName"></form:input>
-		<br />
-		<form:errors path="firstName" class="error"></form:errors>
-
-		<br />
-		<br />
-
-		<label for="lastName">Last Name</label>
-		<form:input path="lastName" id="lastName" name="lastName"></form:input>
-		<br />
-		<form:errors path="lastName" class="error"></form:errors>
-
-		<br />
-		<br />
-
-		<label for="email">Email</label>
-		<form:input path="email" id="email" name="email"></form:input>
-		<br />
-		<form:errors path="email" class="error"></form:errors>
-
-		<br />
-		<br />
-
-		<label for="age">Age</label>
-		<form:input path="age" id="age" name="age"></form:input>
-		<br />
-		<form:errors path="age" class="error"></form:errors>
-
-		<br />
-		<br />
-
-		<label for="dateOfBirth">Date of birth</label>
-		<form:input path="dateOfBirth" id="dateOfBirth" name="dateOfBirth"></form:input>
-		<br />
-		<form:errors path="dateOfBirth" class="error"></form:errors>
-
-		<br />
-		<br />
-
-		<input class="btn-submit" type="submit" value="Register" />
-	</form:form>
-
-	<%
-		/*
-		    // an alternative way of display errors
-		    <spring:hasBindErrors name="student">
-		<c:forEach var="error" items="${errors.allErrors}">
-		    <div class="form-error">${error}</div> 
-		    <br />
-		</c:forEach>
-		    </spring:hasBindErrors>
-		    
-		    //another way too
-		    <form:errors path="*" class="has-error" />
-		*/
-	%>
+        <label for="studyPlanId">Study Plan</label>
+    <form:select path="studyPlanId" id="studyPlanId" name="studyPlanId">   
+        <c:forEach var="studyPlanItem" items="${studyPlanList}">
+            <form:option value="${studyPlanItem.studyPlanId}" label="${studyPlanItem.name}" />
+        </c:forEach>        
+    </form:select>
 
 
 
+        
+          <br/>
+        <br/>
+        
+    <form:button type="submit" value="create"> Register </form:button>
+        
+</form:form>
+
+		
 
 </div>
 
