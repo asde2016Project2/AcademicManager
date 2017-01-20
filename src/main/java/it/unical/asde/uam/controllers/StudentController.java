@@ -214,6 +214,7 @@ public class StudentController extends BaseController {
 
 		signedStudent=userAttRegDAO.getUserAttemptByStudentNum().size();
 		model.addAttribute("signedStudent", signedStudent);
+
 		if(attempt !=null && loggedStudent != null ){
 			UserAttemptRegistration attemptRegistration2 = new UserAttemptRegistration(attempt, loggedStudent);
 			attemptRegistration2.setBooking(Booking.SIGNUP);
@@ -244,6 +245,7 @@ public class StudentController extends BaseController {
 	 @RequestMapping(value = "detail/examBooking/{userAttRegId}", method = RequestMethod.POST, params = "cancel")
 	    public String cancelReservation(@RequestParam(value = "userAtRegId") int userAtRegId, @RequestParam(value = "cancel") String status, 
 	    		Model model,HttpServletRequest  request) {
+
 		 UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
 
 		 System.out.println("userAtRegId===="+userAtRegId);

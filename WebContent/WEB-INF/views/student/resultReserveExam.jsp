@@ -39,7 +39,7 @@
 				<div class="divTableCell"><c:out value="${userAttemptRegistration.attempt.professor.firstName} ${userAttemptRegistration.attempt.professor.lastName}"></c:out> </div>
 				<div class="divTableCell">
 					<form method="post">
-						<input id="userAtId" type="hidden" name="userAtRegId" value="${userAttemptRegistration.userAtRegId}" />
+						<input id="userAtId" type="hidden" name="userAtRegId" value="${userAttemptRegistration.attempt.attemptId}" />
 						<button id="btnCancel" type="submit" name="cancel" value="${userAttemptRegistration.attempt.status}">Cancel</button>
 						<button id="btnSignup" type="submit" disabled="disabled"  name="signup" value="${userAttemptRegistration.status}">Signup</button>
 					</form>
