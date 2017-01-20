@@ -16,6 +16,9 @@
     <li>
         <a href="<c:url value="/professor/informationStudent"/>"> Information Student</a>
     </li>  	
+    <li>
+        <a href="<c:url value="/professor/registerExam"/>"> Register Exam</a>
+    </li>  
     <li>        
         <a href="<c:url value="/logout" />">Logout</a>
     </li>

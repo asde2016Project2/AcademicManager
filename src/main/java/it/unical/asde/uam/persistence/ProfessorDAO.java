@@ -38,4 +38,6 @@ public interface ProfessorDAO {
     boolean checkExamSession(String startingDate, String endingDate, String academicYear);
     
     ArrayList<ExamSession> listAllSession();
+    
+    ArrayList<Professor> getAllProfessor();
 }

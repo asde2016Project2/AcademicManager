@@ -34,9 +34,11 @@ public interface ExamDAO {
 
     void removeExam(Integer exam);
      
-	  List<Exam> listExams(Integer pageNumber, Integer examPerPage);
+	List<Exam> listExams(Integer pageNumber, Integer examPerPage);
 
-	  Integer getTotalNumberOfExams();
+	Integer getTotalNumberOfExams();
+
+	Exam getExamByName(String name);
   
   
 

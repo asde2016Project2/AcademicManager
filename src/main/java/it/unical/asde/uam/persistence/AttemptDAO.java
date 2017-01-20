@@ -3,6 +3,7 @@ package it.unical.asde.uam.persistence;
 import java.util.List;
 
 import it.unical.asde.uam.model.Attempt;
+import it.unical.asde.uam.model.Exam;
 import it.unical.asde.uam.model.Professor;
 
 public interface AttemptDAO {
@@ -23,8 +24,8 @@ public interface AttemptDAO {
 
 	void updateAttemptExamReserv(Attempt attempt);
 
-	void flush();
+	int getAttemptByProfessorByExam(Professor p, Exam e);
 
-	
+	List<Attempt> getAllAttempts();
 
 }

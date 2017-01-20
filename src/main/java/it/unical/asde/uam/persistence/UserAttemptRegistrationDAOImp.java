@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import it.unical.asde.uam.dao.DBHandler;
 import it.unical.asde.uam.model.UserAttemptRegistration;
+import it.unical.asde.uam.model.Attempt;
 import it.unical.asde.uam.model.Student;
 
 public class UserAttemptRegistrationDAOImp implements  UserAttemptRegistrationDAO{
@@ -24,7 +25,19 @@ public class UserAttemptRegistrationDAOImp implements  UserAttemptRegistrationDA
 		this.dbHandler = dbHandler;
 	}
 
-	public UserAttemptRegistrationDAOImp() {
+	@Override
+	public void create(UserAttemptRegistration userAttemptRegistration) {
+		dbHandler.create(userAttemptRegistration);
+	}
+
+	@Override
+	public void update(UserAttemptRegistration userAttemptRegistration) {
+		dbHandler.update(userAttemptRegistration);
+	}
+
+	@Override
+	public void delete(UserAttemptRegistration userAttemptRegistration) {
+		dbHandler.delete(userAttemptRegistration);
 	}
 
 	@Override
@@ -80,6 +93,32 @@ public class UserAttemptRegistrationDAOImp implements  UserAttemptRegistrationDA
 		return attempts;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UserAttemptRegistration> getUserAttemptRegistrationByAttempId(int attemptId) {
+		
+//		int attemptId = attempt.getAttemptId();
+		System.out.println("aTTEMPT id = "+attemptId);
+		String hql = "from UserAttemptRegistration where attempt_id=:attemptID";
+		Query query = dbHandler.getSession().createQuery(hql);
+		query.setParameter("attemptID", attemptId);
+		List<UserAttemptRegistration> uAr = query.list();
+		return uAr;
+		
+	}
+
+	@Override
+	public UserAttemptRegistration getAttemptRegistrationByStudentByAttempt(Attempt attempt, Student student) {
+
+		String hql = "from UserAttemptRegistration where student.username=:studUsername and attempt.attemptId=:attemptId";
+		Query query = dbHandler.getSession().createQuery(hql);
+		query.setParameter("studUsername", student.getUsername());
+		query.setParameter("attemptId", attempt.getAttemptId());
+		UserAttemptRegistration uar = (UserAttemptRegistration) query.uniqueResult();
+		return uar;
+	}
+
+	
 	
 	
 

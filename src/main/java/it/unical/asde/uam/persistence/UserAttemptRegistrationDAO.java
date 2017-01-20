@@ -8,6 +8,12 @@ import it.unical.asde.uam.model.UserAttemptRegistration;
 
 public interface UserAttemptRegistrationDAO {
 
+	void create(UserAttemptRegistration userAttemptRegistration);
+
+	void update(UserAttemptRegistration userAttemptRegistration);
+
+	void delete(UserAttemptRegistration userAttemptRegistration);
+	
 	UserAttemptRegistration getUserAttemptRegById(int userAtRegId);
 
 	void updateUserAttemptRegistration(UserAttemptRegistration userAttemptRegistration);
@@ -16,4 +22,7 @@ public interface UserAttemptRegistrationDAO {
 
 	Student getStudentToUserAttemptReg(Integer userAtRegId);
 
+	List<UserAttemptRegistration> getUserAttemptRegistrationByAttempId(int attemptId);
+
+	UserAttemptRegistration getAttemptRegistrationByStudentByAttempt(Attempt attempt, Student student);
 }

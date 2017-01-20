@@ -137,4 +137,12 @@ public class ProfessorDAOImp implements ProfessorDAO {
 		return examSessions;
 	}
 
+	@Override
+	public ArrayList<Professor> getAllProfessor() {
+		String hql = "from Professor";
+        Query query = dbHandler.getSession().createQuery(hql);
+        ArrayList<Professor> professors = (ArrayList<Professor>) query.list();
+		return professors;
+	}
+
 }

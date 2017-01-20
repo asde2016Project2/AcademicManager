@@ -5,11 +5,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 //github.com/asde2016Project2/AcademicManager.git
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,18 +19,26 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import it.unical.asde.uam.helper.SessionHelper;
 import it.unical.asde.uam.controllers.core.BaseController;
 import it.unical.asde.uam.model.CareerExam;
 import it.unical.asde.uam.model.DegreeCourse;
+import it.unical.asde.uam.model.Exam;
 import it.unical.asde.uam.model.ExamSession;
 import it.unical.asde.uam.model.Professor;
 import it.unical.asde.uam.model.Student;
+import it.unical.asde.uam.model.UserAttemptRegistration;
+import it.unical.asde.uam.persistence.AttemptDAO;
+import it.unical.asde.uam.persistence.CareerExamDAO;
 import it.unical.asde.uam.persistence.DegreeCourseDAO;
+import it.unical.asde.uam.persistence.ExamDAO;
 import it.unical.asde.uam.persistence.ExamSessionDAO;
 import it.unical.asde.uam.persistence.ProfessorDAO;
 import it.unical.asde.uam.persistence.StudentDAO;
+import it.unical.asde.uam.persistence.UserAttemptRegistrationDAO;
 
 /**
  *
@@ -163,7 +173,71 @@ public class ProfessorController extends BaseController {
     	model.addAttribute("student", stud);
     	return "professor/informationStudent";
     }
+ 
+    String examName = "";
+    List<UserAttemptRegistration> uar = new ArrayList<>();
+    
+    @RequestMapping(value ="registerExam", method = RequestMethod.GET)
+    public String getRegisterExam(Model model, HttpServletRequest request){
+    	model.addAttribute("examName", examName);
+    	model.addAttribute("userar", uar);
+    	if(!(examName.equals("")))
+    		doRegisterExam(model, examName, request);
+    	return "professor/registerExam";
+    }
+    
+    @RequestMapping(value ="registerExam", method = RequestMethod.POST)
+    public String doRegisterExam(Model model, @ModelAttribute("examname") String examname, 
+    		HttpServletRequest request){
+    	
+    	examName = examname;
+    	
+    	AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
+    	ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
+    	Exam e = examDAO.getExamByName(examName);
+    	Professor p = SessionHelper.getUserProfessorLogged(request.getSession()); 
+    	int attemptId = attemptDAO.getAttemptByProfessorByExam(p, e);
+    	
+    	UserAttemptRegistrationDAO userAttemptRegistrationDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
+    	uar = userAttemptRegistrationDAO.getUserAttemptRegistrationByAttempId(attemptId);
+    	model.addAttribute("examName", examname);
+    	model.addAttribute("userar", uar);
+    	
+    	return "professor/registerExam";
+    }
+    
+    @RequestMapping(value ="addCareerExam", method = RequestMethod.POST)
+    public String addCareerExam(Model model, @ModelAttribute("grade") int grade,
+    		@RequestParam("studentUsername") String studUsername2,
+    		@RequestParam("attemptId") int attemptId){
+    	
+    	StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
+    	AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
+    	ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
+    	CareerExamDAO careerExamDAO = (CareerExamDAO) context.getBean("careerExamDAO");
+    	CareerExam c = new CareerExam();
+    	
+    	if(grade>=18) {
+    		c = new CareerExam(false, 25, true, studentDAO.retrieve(studUsername2), examDAO.getExamByName(examName));
+    		c = careerExamDAO.getCareerExamByExamByStudent(studentDAO.retrieve(studUsername2), examDAO.getExamByName(examName));
+    		c.setDone(true);
+    		c.setGrade(grade);
+    		careerExamDAO.update(c);
+    	}
+    	else {
+    		c = new CareerExam(false, 25, true, studentDAO.retrieve(studUsername2), examDAO.getExamByName(examName));
+    		careerExamDAO.update(c);
+    	}
 
+    	careerExamDAO.listCareerExams();
+    	UserAttemptRegistration userAttemptRegistration = new UserAttemptRegistration();
+    	UserAttemptRegistrationDAO attemptRegistrationDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
+    	userAttemptRegistration = attemptRegistrationDAO.getAttemptRegistrationByStudentByAttempt(attemptDAO.getAttemptById(attemptId), studentDAO.retrieve(studUsername2));
+    	attemptRegistrationDAO.delete(userAttemptRegistration);
+    	
+    	return "redirect:/professor/registerExam";
+    	
+    }
 
 
 }

@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import it.unical.asde.uam.dao.DBHandler;
 import it.unical.asde.uam.model.Attempt;
+import it.unical.asde.uam.model.Exam;
 import it.unical.asde.uam.model.Professor;
 import it.unical.asde.uam.model.Student;
 
@@ -40,11 +41,6 @@ public class AttemptDAOImp implements AttemptDAO {
     @Override
     public void delete(Attempt attempt) {
         dbHandler.delete(attempt);
-    }
-    
-    @Override
-    public void flush() {
-		dbHandler.flush();
     }
 
 	@Override
@@ -104,7 +100,29 @@ public class AttemptDAOImp implements AttemptDAO {
 		
 	}
 
-	
-	
+	@Override
+	public int getAttemptByProfessorByExam(Professor p, Exam e) {
+		
+		int profId = p.getUserId();
+		int examId = e.getId();
+		System.out.println("query prof id: "+p.getUserId());
+		System.out.println("query exam id: "+e.getId());
+		String hql = "from Attempt where exam_id=:examID and user_id=:profID";
+		Query query = dbHandler.getSession().createQuery(hql);
+		query.setParameter("profID", profId);
+		query.setParameter("examID", examId);
+		Attempt a = (Attempt) query.uniqueResult();
+		System.out.println("nella query valore di attempt id: "+a.getAttemptId());
+		return a.getAttemptId();
+	}
+
+	@Override
+	public List<Attempt> getAllAttempts() {
+		
+		String hql = "from Attempt";
+		Query query = dbHandler.getSession().createQuery(hql);
+		List<Attempt> attempts = query.list();
+		return attempts;
+	}
 	
 }

@@ -46,9 +46,9 @@ public class CareerExam implements Serializable {
     @Column(name = "mandatory")
     private boolean mandatory;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "attempt_id")
-    private Set<Attempt> attempts = new HashSet<Attempt>();
+//    @OneToMany(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "attempt_id")
+//    private Set<Attempt> attempts = new HashSet<Attempt>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -65,7 +65,7 @@ public class CareerExam implements Serializable {
         this.done = done;
         this.grade = grade;
         this.mandatory = mandatory;
-        this.attempts = attempts;
+//        this.attempts = attempts;
         this.student = student;
         this.exam = exam;
     }
@@ -127,13 +127,13 @@ public class CareerExam implements Serializable {
         this.mandatory = mandatory;
     }
 
-    public Set<Attempt> getAttempts() {
-        return attempts;
-    }
-
-    public void setAttempts(Set<Attempt> attempts) {
-        this.attempts = attempts;
-    }
+//    public Set<Attempt> getAttempts() {
+//        return attempts;
+//    }
+//
+//    public void setAttempts(Set<Attempt> attempts) {
+//        this.attempts = attempts;
+//    }
 
     public Student getStudent() {
         return student;

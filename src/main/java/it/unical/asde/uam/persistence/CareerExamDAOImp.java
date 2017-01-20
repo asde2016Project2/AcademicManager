@@ -8,6 +8,7 @@ package it.unical.asde.uam.persistence;
 import it.unical.asde.uam.dao.DBHandler;
 import it.unical.asde.uam.model.CareerExam;
 import it.unical.asde.uam.model.Exam;
+import it.unical.asde.uam.model.Student;
 
 import java.util.List;
 
@@ -41,6 +42,14 @@ public class CareerExamDAOImp implements CareerExamDAO {
 	@Override
 	public void create(CareerExam careerExam) {
 		dbHandler.create(careerExam);
+	}
+	@Override
+	public void update(CareerExam careerExam) {
+		dbHandler.update(careerExam);
+	}
+	@Override
+	public void delete(CareerExam careerExam) {
+		dbHandler.delete(careerExam);
 	}
 
 	@Override
@@ -133,6 +142,19 @@ public class CareerExamDAOImp implements CareerExamDAO {
 		// id);
 		logger.info("careerExam successfully loaded, careerExam info: " + careerExam);
 		dbHandler.commit();
+		return careerExam;
+	}
+
+	@Override
+	public CareerExam getCareerExamByExamByStudent(Student s, Exam e) {
+		
+		String studUser = s.getUsername();
+		int examId = e.getId();
+		String hql = "from CareerExam where student.username=:studUser and exam.id=:examID";
+		Query query = dbHandler.getSession().createQuery(hql);
+		query.setParameter("studUser", studUser);
+		query.setParameter("examID", examId);
+		CareerExam careerExam = (CareerExam) query.uniqueResult();
 		return careerExam;
 	}
 
