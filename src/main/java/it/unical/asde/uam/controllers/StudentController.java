@@ -138,28 +138,14 @@ public class StudentController extends BaseController {
 			return "student/register";
 		}
 
-
 		StudentDAO studentDao = (StudentDAO) context.getBean("studentDAO");
-		
-
 
 		StudyPlan sp = studyPlanDAO.retrieve(Integer.parseInt(studentFormDTO.getStudyPlanId()));
 		Student student = new Student(studentFormDTO.getUsername(), studentFormDTO.getPassword(), studentFormDTO.getFirstName(), studentFormDTO.getLastName(), true, sp);
-		student.setAge(Integer.parseInt(studentFormDTO.getAge()));       
+		//status is set to true
+		student.setAge(studentFormDTO.getAge());
 		student.setEmail(studentFormDTO.getEmail());		
-
-		String dateOfBirth = studentFormDTO.getDateOfBirth();
-		String dateOfBirthFormat = "dd-mm-yyyy";
-		DateFormat format = new SimpleDateFormat(dateOfBirthFormat, Locale.ENGLISH);
-		Date dateOfBirthObject=null;
-		try {
-			dateOfBirthObject = format.parse(dateOfBirth);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		student.setDateOfBirth(dateOfBirthObject);
-
-
+		student.setDateOfBirth(studentFormDTO.getDateOfBirth());
 
 		//Set to false in production or add a default value "false" for this field
 		//student.setStatus(true);
@@ -216,7 +202,7 @@ public class StudentController extends BaseController {
 
 
 	@RequestMapping(value = "visualizeStatistics", method = RequestMethod.GET)
-	public String showStatistics(Model model, HttpServletRequest request) throws NullPointerException {
+	public String listStatistics(Model model, HttpServletRequest request) throws NullPointerException {
 
 		Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
 		model.addAttribute("studentName", loggedStudent.getFirstName()+" "+loggedStudent.getLastName());
@@ -260,4 +246,37 @@ public class StudentController extends BaseController {
 		return "student/visualizeStatistics";
 	}
 
+	
+	//details for the student in registration phase
+	@RequestMapping(value = "showStudyPlans", method = RequestMethod.GET)
+	public String showStudyPlans(Model model, HttpServletRequest request) throws NullPointerException {
+
+		StudyPlanDAO spDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
+		
+		model.addAttribute("pageTitle", "Available Study Plans");
+		model.addAttribute("studyPlans", spDAO.getAllPlans());
+
+		return "student/showStudyPlans";
+	}
+	
+	//details for the student in registration phase
+	 @RequestMapping(value = "details/studyplan/{id}", method = RequestMethod.GET)
+	    public String showDetailStudyPlan(@PathVariable("id") int id, Model model) {
+		 
+		 StudyPlanDAO spDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
+		 
+		
+		 
+			StudyPlan studyPlan = spDAO.retrieve(id);
+			model.addAttribute("studyPlanName", studyPlan.getName());
+
+			StudyPlanExamDAO spexamDAO = (StudyPlanExamDAO) context.getBean("studyPlanExamDAO");
+			List<StudyPlanExam> spexams = spexamDAO.getAllExamsOfAstudyPlan(studyPlan); 	 	
+
+			model.addAttribute("listStudyPlanExams", spexams);
+
+			return "student/showStudyPlanExams";
+	 }
+	 
+	
 }
