@@ -93,7 +93,7 @@ public class AttemptDAOTest {
         examSessionDAO.create(es3);
         examSessionDAO.create(es4);
      	
-        System.out.println("user id exam session prima: "+es1.getSessionId());
+        System.out.println("user id exam session prima: "+es1.getExamSessionId());
         System.out.println("user id exam prima: "+e1.getId());
         AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
 		

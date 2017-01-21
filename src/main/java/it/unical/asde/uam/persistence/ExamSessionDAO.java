@@ -25,5 +25,7 @@ public interface ExamSessionDAO {
 	   
 	 void deleteAttempt(ExamSession examSession);
 
+	List<ExamSession> getAllExamSession();
+
 }
 

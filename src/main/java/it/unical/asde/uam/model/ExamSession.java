@@ -84,7 +84,7 @@ public class ExamSession implements Serializable {
     	this.setEndingDataString(sdf.format(this.endingDate));
     }
 
-    public int getSessionId() {
+    public int getExamSessionId() {
         return examSessionId;
     }
 

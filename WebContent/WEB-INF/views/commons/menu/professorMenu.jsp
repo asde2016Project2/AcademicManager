@@ -18,6 +18,9 @@
     </li>  	
     <li>
         <a href="<c:url value="/professor/registerExam"/>"> Register Exam</a>
+    </li>
+    <li>
+        <a href="<c:url value="/professor/createAttempt"/>"> Create Attempt</a>
     </li>  
     <li>        
         <a href="<c:url value="/logout" />">Logout</a>

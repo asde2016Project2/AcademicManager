@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import it.unical.asde.uam.helper.SessionHelper;
 import it.unical.asde.uam.controllers.core.BaseController;
+import it.unical.asde.uam.model.Attempt;
 import it.unical.asde.uam.model.CareerExam;
 import it.unical.asde.uam.model.DegreeCourse;
 import it.unical.asde.uam.model.Exam;
@@ -134,7 +135,7 @@ public class ProfessorController extends BaseController {
     		ExamSession examSession = new ExamSession(startingDate, endingDate, academicYear, degreeCourse);
 
     		examSessionDao.create(examSession);
-    		ArrayList<ExamSession> allExamSessions = professorDao.listAllSession();
+    		ArrayList<ExamSession> allExamSessions = (ArrayList<ExamSession>) examSessionDao.getAllExamSession();//professorDao.listAllSession();
     		return "professor/dashboard";
     	}
     	else return "professor/errorExamSession";
@@ -142,9 +143,11 @@ public class ProfessorController extends BaseController {
     
     @RequestMapping(value ="viewAllSession", method = RequestMethod.GET)
     public String viewAllSession(Model model){
-    	ProfessorDAO professorDao = (ProfessorDAO) context.getBean("professorDAO");
-    	ArrayList<ExamSession> allExamSessions = professorDao.listAllSession();
+    	ExamSessionDAO examSessionDao = (ExamSessionDAO) context.getBean("examSessionDAO");
+    	AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
+    	ArrayList<ExamSession> allExamSessions = (ArrayList<ExamSession>) examSessionDao.getAllExamSession();//.listAllSession();
     	model.addAttribute("lista", allExamSessions);
+    	model.addAttribute("attemptList", attemptDAO.getAllAttempts());
     	return "professor/listSession";
     }
     
@@ -238,6 +241,40 @@ public class ProfessorController extends BaseController {
     	return "redirect:/professor/registerExam";
     	
     }
+    
+    @RequestMapping(value = "createAttempt", method = RequestMethod.GET)
+    public String createNewAttempt(Model model) {
+    	ExamSessionDAO examSessionDAO = (ExamSessionDAO) context.getBean("examSessionDAO");
+    	model.addAttribute("examSessions", examSessionDAO.getAllExamSession());
+    	ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
+    	model.addAttribute("exams", examDAO.getAllExams());	
+    	System.out.println("create attempt getttt");
+        return "professor/createAttempt";
+    }
 
 
+    @RequestMapping(value = "createAttempt", method = RequestMethod.POST)
+    public String doCreateNewAttempt(Model model, @ModelAttribute("examDate") String examDateString,
+    		@ModelAttribute("startingDate") String startingDateString, @ModelAttribute("endingDate") String endingDateString,
+    		@ModelAttribute("classRoom") String classRoom, @ModelAttribute("examSession") String examSession,
+    		@ModelAttribute("exam") String exam, HttpServletRequest request) throws ParseException {
+    	
+    	ExamSessionDAO examSessionDAO = (ExamSessionDAO) context.getBean("examSessionDAO");
+    	ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
+    	
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date startingDate = sdf.parse(startingDateString);
+		Date endingDate = sdf.parse(endingDateString);
+		Date examDate = sdf.parse(examDateString);
+
+		String[] examSessionIdStr = examSession.split("---");
+		int examSessionId = Integer.parseInt(examSessionIdStr[0]);
+    	
+		AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
+    	Attempt a = new Attempt(examDate, classRoom, startingDate, endingDate,
+    			SessionHelper.getUserProfessorLogged(request.getSession()), examDAO.getExamByName(exam), examSessionDAO.getExamSessionById(examSessionId));
+    	attemptDAO.create(a);
+    	
+        return "professor/createAttempt";
+    }
 }

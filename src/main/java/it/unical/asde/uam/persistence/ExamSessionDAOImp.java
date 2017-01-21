@@ -41,7 +41,7 @@ public class ExamSessionDAOImp implements ExamSessionDAO {
 
 	@Override
 	public ExamSession getExamSessionById(int id) {
-		String hql = "from ExamSession where sessionId =:id";
+		String hql = "from ExamSession where examSessionId =:id";
 		Query query = dbHandler.getSession().createQuery(hql);
 		query.setParameter("id", id);
 		dbHandler.begin();
@@ -94,6 +94,13 @@ public class ExamSessionDAOImp implements ExamSessionDAO {
 		return getDegreeCourseToExamSession;
 	}
 
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<ExamSession> getAllExamSession() {
+
+		Query query = dbHandler.getSession().createQuery("from ExamSession");
+		return query.list();
+	}
 
   @Override
 	public void create(ExamSession examSession) {
