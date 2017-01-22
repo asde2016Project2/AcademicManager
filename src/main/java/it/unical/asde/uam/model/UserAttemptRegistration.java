@@ -3,6 +3,8 @@ package it.unical.asde.uam.model;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import it.unical.asde.uam.helper.Accepted;
+import it.unical.asde.uam.helper.Booking;
 
 @Entity
 @Table(name = "user_attempt_registration")
@@ -24,15 +29,19 @@ public class UserAttemptRegistration implements Serializable {
     @Column(name="status")
     private String status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "attempt_id", nullable = false)
     private Attempt attempt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private Student student;
 
-
+    @Enumerated(EnumType.STRING)
+	@Column(name="booking",nullable=true, columnDefinition = "varchar(32) default 'CANCEL'")
+	private Booking booking = Booking.CANCEL;
+    
+    
     public UserAttemptRegistration() {
         this.attempt = new Attempt();
         this.student = new Student();
@@ -78,4 +87,15 @@ public class UserAttemptRegistration implements Serializable {
         this.userAtRegId = userAtRegId;
     }
 
+	public Booking getBooking() {
+		return booking;
+	}
+
+	public void setBooking(Booking booking) {
+		this.booking = booking;
+	}
+
+    
+    
+    
 }

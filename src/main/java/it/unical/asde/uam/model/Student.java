@@ -32,21 +32,9 @@ public class Student extends User {
 	
 	@Column(name = "id_number", nullable = false)
 	private int idNumber;//matricola: non ci devono essere matricole uguali e non deve essere nullo
-
-	@Lob
-	@Column(name="photo",nullable=true,length=20971520)
-	private byte[] photo;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(name="accepted",nullable=true,columnDefinition = "varchar(32) default 'NOT_ACCEPTED'")
-	private Accepted accepted = Accepted.NOT_ACCEPTED;
-  
 	
 	public Student(){
 		super();
-		studyPlan = null;
-		photo = null;
-			
 	}
 	
 	public Student(String username, String password, String firstName, String lastName, boolean status, StudyPlan  studyPlan) {
@@ -67,21 +55,4 @@ public class Student extends User {
 	public void setStudyPlan(StudyPlan studyPlan) {
 		this.studyPlan = studyPlan;
 	}
-
-	public void setPhoto(byte[] photo) {
-		this.photo = photo;
-	}
-	
-	public byte[] getPhoto() {
-		return photo;
-	}
-	
-	public void setAccepted(Accepted accepted) {
-		this.accepted = accepted;
-	}
-	
-	public Accepted getAccepted() {
-		return accepted;
-	}
-
 }
