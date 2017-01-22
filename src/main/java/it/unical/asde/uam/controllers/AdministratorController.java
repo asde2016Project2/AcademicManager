@@ -4,33 +4,34 @@ import it.unical.asde.uam.model.AcceptingStudentFormDTO;
 import it.unical.asde.uam.model.Administrator;
 
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import it.unical.asde.uam.controllers.core.BaseController;
+import it.unical.asde.uam.dto.StudyPlanFormDTO;
 import it.unical.asde.uam.helper.Accepted;
 import it.unical.asde.uam.helper.SessionHelper;
+import it.unical.asde.uam.model.AcceptingStudentFormDTO;
 import it.unical.asde.uam.model.CareerExam;
 import it.unical.asde.uam.model.DegreeCourse;
 import it.unical.asde.uam.model.Exam;
 import it.unical.asde.uam.model.Professor;
 import it.unical.asde.uam.model.SendEmail;
-
 import it.unical.asde.uam.model.Student;
 import it.unical.asde.uam.model.StudyPlan;
 import it.unical.asde.uam.model.StudyPlanExam;
@@ -38,7 +39,6 @@ import it.unical.asde.uam.model.StudyPlanExam;
 import it.unical.asde.uam.dto.StudyPlanFormDTO;
 import it.unical.asde.uam.persistence.AdministratorDAO;
 import it.unical.asde.uam.persistence.CareerExamDAO;
-
 import it.unical.asde.uam.persistence.DegreeCourseDAO;
 import it.unical.asde.uam.persistence.ExamDAO;
 import it.unical.asde.uam.persistence.ProfessorDAO;

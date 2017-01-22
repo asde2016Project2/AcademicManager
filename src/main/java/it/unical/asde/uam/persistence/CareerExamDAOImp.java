@@ -5,15 +5,14 @@
  */
 package it.unical.asde.uam.persistence;
 
-import it.unical.asde.uam.dao.DBHandler;
-import it.unical.asde.uam.model.CareerExam;
-import it.unical.asde.uam.model.Exam;
-
 import java.util.List;
 
 import org.hibernate.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import it.unical.asde.uam.dao.DBHandler;
+import it.unical.asde.uam.model.CareerExam;
 
 /**
  *
@@ -34,7 +33,7 @@ public class CareerExamDAOImp implements CareerExamDAO {
 	}
 
 	public CareerExamDAOImp() {
-		// TODO Auto-generated constructor stub
+		
 
 	}
 

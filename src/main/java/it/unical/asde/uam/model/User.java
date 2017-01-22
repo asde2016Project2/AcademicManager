@@ -87,7 +87,7 @@ public class User implements Serializable {
 	private byte[] photo;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name="accepted",nullable=true,columnDefinition = "varchar(32) default 'NOT_ACCEPTED'")
+	@Column(name="accepted",nullable=true, columnDefinition = "varchar(32) default 'NOT_ACCEPTED'")
 	private Accepted accepted = Accepted.NOT_ACCEPTED;
 	
     public User(String username, String password, String firstName, String lastName, boolean status) {

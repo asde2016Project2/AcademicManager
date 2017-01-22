@@ -28,6 +28,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
@@ -35,6 +36,28 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import it.unical.asde.uam.controllers.core.BaseController;
+import it.unical.asde.uam.model.Administrator;
+import it.unical.asde.uam.model.Attempt;
+import it.unical.asde.uam.model.DegreeCourse;
+import it.unical.asde.uam.model.Exam;
+import it.unical.asde.uam.model.ExamSession;
+import it.unical.asde.uam.model.Professor;
+import it.unical.asde.uam.model.Student;
+import it.unical.asde.uam.model.StudyPlan;
+import it.unical.asde.uam.model.StudyPlanExam;
+import it.unical.asde.uam.model.UserAttemptRegistration;
+import it.unical.asde.uam.persistence.AdministratorDAO;
+import it.unical.asde.uam.persistence.AttemptDAO;
+import it.unical.asde.uam.persistence.DegreeCourseDAO;
+import it.unical.asde.uam.persistence.ExamDAO;
+import it.unical.asde.uam.persistence.ExamSessionDAO;
+import it.unical.asde.uam.persistence.ProfessorDAO;
+import it.unical.asde.uam.persistence.StudentDAO;
+import it.unical.asde.uam.persistence.StudyPlanDAO;
+import it.unical.asde.uam.persistence.StudyPlanExamDAO;
+import it.unical.asde.uam.persistence.UserAttemptRegistrationDAO;
 
 /**
  *
@@ -81,10 +104,10 @@ public class DummyDataController extends BaseController {
 		for (int i = 0; i < 5; i++) {
 			Student p = new Student("stud" + i, "123456", "Pierino", "Stecchino", true, scientific);
 			if(i==0){
-				p.setEmail("effe.sessa" +  "@gmail.com");
+				p.setEmail("gezu_tse" +  "@yahoo.com");
 			}
 			else {
-				p.setEmail("stud" + i +  "@mat.unical.it");
+				p.setEmail("gezu_tse" +  "@yahoo.com");
 			}
 			p.setAge(19);
 
@@ -240,5 +263,120 @@ public class DummyDataController extends BaseController {
 		
 		
 	}
+    
+    
+    protected Date dateValue() {
+		GregorianCalendar calendar2 = new GregorianCalendar();
+		// Calendar calendar2 = Calendar.getInstance(Locale.ENGLISH);
+		calendar2.setLenient(false);
+		calendar2.set(GregorianCalendar.YEAR, 2016);
+		calendar2.set(GregorianCalendar.MONTH, 01);
+		calendar2.set(GregorianCalendar.DATE, 12);
+		Date dates = calendar2.getTime();
+		return dates;
+	}
+    
+    
+    @RequestMapping(value = "addAttempt", method = RequestMethod.GET)
+	public String addAttempt() {
+
+		System.out.println("dat----" + dateValue());
+
+		DegreeCourseDAO degreeCourseDAO = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
+		ArrayList<DegreeCourse> degreeCourses = new ArrayList<>();
+		degreeCourses.add(new DegreeCourse("Computer Sciencea"));
+		degreeCourses.add(new DegreeCourse("Engineeringa"));
+		degreeCourses.add(new DegreeCourse("Mathematicsa"));
+
+		degreeCourseDAO.create(degreeCourses.get(0));
+		degreeCourseDAO.create(degreeCourses.get(1));
+		degreeCourseDAO.create(degreeCourses.get(2));
+
+		ArrayList<ExamSession> examSessions = new ArrayList<>();
+
+		examSessions.add(new ExamSession(dateValue(), dateValue(), "2016", degreeCourses.get(0)));
+		examSessions.add(new ExamSession(dateValue(), dateValue(), "2016", degreeCourses.get(1)));
+		examSessions.add(new ExamSession(dateValue(), dateValue(), "2016", degreeCourses.get(2)));
+
+		ExamSessionDAO examSessionDAO = (ExamSessionDAO) context.getBean("examSessionDAO");
+		for (ExamSession examSession : examSessions) {
+			examSession.setStatus("active");
+			examSessionDAO.create(examSession);
+		}
+
+		ArrayList<Exam> exams = new ArrayList<>();
+		exams.add(new Exam("Theoretical Computer Sciences", 10, 23));
+		exams.add(new Exam("Knowledge Managements", 10, 21));
+		exams.add(new Exam("Intelligent Systems", 5, 22));
+		exams.add(new Exam("Network and Securitys", 10, 18));
+		exams.add(new Exam("Mobile and Social Computings", 5, 19));
+		exams.add(new Exam("Models and simulations", 5, 17));
+		exams.add(new Exam("Data Mining and Data Warehouses", 10, 15));
+		exams.add(new Exam("Social network and new medias", 5, 12));
+		exams.add(new Exam("Criptographys", 5, 11));
+		ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
+		for (Exam e : exams) {
+			examDAO.create(e);
+		}
+
+		ProfessorDAO professorDAO = (ProfessorDAO) context.getBean("professorDAO");
+		Professor professor = null;
+		for (int i = 0; i < 5; i++) {
+//			ArrayList<Professor> professors = new ArrayList<>();
+			professor = new Professor("professors" + i, "123456", "professors", "professors", true);
+
+			professor.setEmail("professors" + i + "@mat.unical.it");
+			professor.setAge(21);
+			professor.setDateOfBirth(dateValue());
+			professorDAO.create(professor);
+
+			AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
+
+			Attempt attempt = new Attempt();
+			examSessionDAO.listExamRegAppeals();
+			examDAO.getAllExams();
+			attempt.setClassroom("MT06");
+			attempt.setEndRegistrationDate(dateValue());
+			exams.get(i).getId();
+			attempt.setExam(exams.get(0));
+			attempt.setExamDate(dateValue());
+			attempt.setExamSession(examSessions.get(0));
+			professor.getUserId();
+			attempt.setProfessor(professor);
+			attempt.setStartRegistrationDate(dateValue());
+			attempt.setStatus("active");
+
+			attemptDAO.create(attempt);
+
+			StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
+			Student student = null;
+			StudyPlan businessStudyPlan = new StudyPlan("Computer Sciencea", degreeCourses.get(0));
+			
+			StudyPlanDAO studyPlanDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
+			studyPlanDAO.create(businessStudyPlan);
+			
+			student = new Student("GavinKing" + i, "123456", "Gavin", "King", true, businessStudyPlan);
+			student.setEmail("gezu_tse" +  "@yahoo.com");
+			student.setAge(23);
+			student.setDateOfBirth(dateValue());
+			studentDAO.create(student);
+			
+//			UserAttemptRegistrationDAO attemptRegistrationDAO = (UserAttemptRegistrationDAO) context
+//					.getBean("userAttemptRegistrationDAO");
+//			UserAttemptRegistration userAttemptRegistration = new UserAttemptRegistration();
+//				userAttemptRegistration.setStatus("active");
+//				attempt.getAttemptId();
+//				userAttemptRegistration.setAttempt(attempt);
+//				student.getUserId();
+//				userAttemptRegistration.setStudent(student);
+//				attemptRegistrationDAO.create(userAttemptRegistration);
+			
+
+		}
+
+		return "redirect:/";
+	}
+
+		
 
 }
