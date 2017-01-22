@@ -51,7 +51,7 @@ public class StudentDAOImp implements StudentDAO {
     @Override
     public List<Student> getAllStudents() {
 
-        String queryString = "from Student c order by c.name";
+        String queryString = "from Student"; //c order by c.name";
         Query query = dbHandler.getSession().createQuery(queryString);
         List<Student> dgs = (List<Student>) query.list();
         dbHandler.close();
