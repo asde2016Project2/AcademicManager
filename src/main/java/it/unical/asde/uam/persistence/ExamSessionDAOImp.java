@@ -40,10 +40,10 @@ public class ExamSessionDAOImp implements ExamSessionDAO {
 	}
 
 	@Override
-	public ExamSession getExamSessionById(int id) {
-		String hql = "from ExamSession where sessionId =:id";
+	public ExamSession getExamSessionById(int examSessionId) {
+		String hql = "from ExamSession where examSessionId =:examSessionId";
 		Query query = dbHandler.getSession().createQuery(hql);
-		query.setParameter("id", id);
+		query.setParameter("examSessionId", examSessionId);
 		dbHandler.begin();
 		ExamSession examSession = (ExamSession) query.uniqueResult();
 		dbHandler.commit();
@@ -86,8 +86,8 @@ public class ExamSessionDAOImp implements ExamSessionDAO {
 	public List<DegreeCourse> getDegreeCourseToExamSession(Integer examSessionId) {
 
 		Query query = dbHandler.getSession()
-				.createQuery("SELECT degreeCourse FROM ExamSession s WHERE s.sessionId = :sessionId");
-		query.setParameter("sessionId", examSessionId);
+				.createQuery("SELECT degreeCourse FROM ExamSession s WHERE s.examSessionId = :examSessionId");
+		query.setParameter("examSessionId", examSessionId);
 
 		List<DegreeCourse> getDegreeCourseToExamSession = query.list();
 

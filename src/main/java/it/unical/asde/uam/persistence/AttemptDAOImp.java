@@ -1,5 +1,6 @@
 package it.unical.asde.uam.persistence;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -28,28 +29,31 @@ public class AttemptDAOImp implements AttemptDAO {
 	}
 
 	@Override
-    public void create(Attempt attempt) {
-        dbHandler.create(attempt);
-    }
+	public void create(Attempt attempt) {
+		dbHandler.create(attempt);
+	}
 
-    @Override
-    public void update(Attempt attempt) {
-        dbHandler.update(attempt);
-    }
+	@Override
+	public void update(Attempt attempt) {
+		dbHandler.update(attempt);
+	}
 
-    @Override
-    public void delete(Attempt attempt) {
-        dbHandler.delete(attempt);
-    }
-    
-    @Override
-    public void flush() {
+	@Override
+	public void delete(Attempt attempt) {
+		dbHandler.delete(attempt);
+	}
+
+	@Override
+	public void flush() {
 		dbHandler.flush();
-    }
+	}
 
 	@Override
 	public Attempt getAttemptById(int attemptId) {
-		String hql = "from Attempt where attemptId=:attemptId";
+		String hql = "SELECT attempt FROM Attempt AS attempt"
+				+ " join fetch attempt.exam "
+				+ " join fetch attempt.examSession"
+				+ " where attempt.attemptId=:attemptId";
 		Query query = dbHandler.getSession().createQuery(hql);
 		query.setParameter("attemptId", attemptId);
 
@@ -87,24 +91,67 @@ public class AttemptDAOImp implements AttemptDAO {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Attempt> getExamSessionToAttempt(Integer sessionId) {
+	public ArrayList<Attempt> getExamSessionToAttempt(Integer examSessionId) {
 
 		Query query = dbHandler.getSession()
-				.createQuery("FROM Attempt s WHERE s.examSession.sessionId = :sessionId");
-		query.setParameter("sessionId", sessionId);
-
-		List<Attempt> getExamSessionToAttempt = query.list();
-
-		return getExamSessionToAttempt;
+				.createQuery("SELECT attempt FROM Attempt AS attempt "
+						+ " join fetch attempt.professor "
+						+ " join fetch attempt.exam WHERE attempt.examSession.examSessionId = :examSessionId");
+		query.setParameter("examSessionId", examSessionId);
+		try {
+			dbHandler.begin();
+			ArrayList<Attempt> getExamSessionToAttempt = new ArrayList(query.list());
+			dbHandler.commit();
+			return getExamSessionToAttempt;
+		} catch (Exception ex) {
+			logger.debug("List of exam attempt" + ex);
+			return null;
+		}
 	}
 
 	@Override
 	public void updateAttempt(Attempt attempt) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	
-	
+	@Override
+	@SuppressWarnings("unchecked")
+	public ArrayList<Attempt> listActiveExamforAttempt() {
+		try {
+			dbHandler.begin();
+			Query query = dbHandler.getSession().createQuery("SELECT attempt FROM Attempt AS attempt"
+					+ " join fetch attempt.examSession"
+					+ " join fetch attempt.professor"
+					+ " join fetch attempt.exam ");
+
+			ArrayList<Attempt> attempts = new ArrayList(query.list());
+			dbHandler.commit();
+			return attempts;
+		} catch (Exception ex) {
+			logger.debug("List of exam attempt" + ex);
+			return null;
+		}
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public ArrayList<Attempt> getNewExamSessionAttempt(int attemptId) {
+		try {
+			
+			Query query = dbHandler.getSession().createQuery("SELECT attempt FROM Attempt AS attempt"
+					+ " join fetch attempt.examSession"
+					+ " WHERE attempt.status ='active' AND attempt.attemptId=:attemptId");
+			query.setParameter("attemptId", attemptId);
+			dbHandler.begin();
+			ArrayList<Attempt> attempts = new ArrayList(query.list());
+			dbHandler.commit();
+			return attempts;
+		} catch (Exception ex) {
+			logger.debug("List of exam attempt" + ex);
+			return null;
+		}
+	}
+
 	
 }

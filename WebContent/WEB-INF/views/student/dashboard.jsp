@@ -19,14 +19,20 @@
 							<a href="registrationAppeals">Registration Appeals</a>
 						</li>
 						<li>
-							<a href="examReservationBoard">Exam Reservation Board</a>
+							<a href="list/ExamReserve">Exam Reservation Board</a>
 						</li>
-						<li>
-							<a href="reserveExam">Book Exam</a>
-						</li>
+						
 						
 						<li>
 							<a href="visualizeStudyPlan">Visualize Study Plan</a>
+						</li>
+						
+						<li>
+							<a href="visualizeCareer">Visualize Career</a>
+						</li>
+						
+						<li>
+							<a href="visualizeStatistics">Visualize Statistics</a>
 						</li>
 						
 						<li>
