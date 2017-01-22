@@ -26,7 +26,7 @@ import it.unical.asde.uam.model.CareerExam;
 import it.unical.asde.uam.model.DegreeCourse;
 import it.unical.asde.uam.model.Exam;
 
-import it.unical.asde.uam.model.LoginFormDTO;
+import it.unical.asde.uam.dto.LoginFormDTO;
 import it.unical.asde.uam.model.SendEmail;
 
 import it.unical.asde.uam.model.Student;
@@ -42,6 +42,7 @@ import it.unical.asde.uam.persistence.StudentDAO;
 import it.unical.asde.uam.persistence.StudyPlanDAO;
 import it.unical.asde.uam.persistence.StudyPlanExamDAO;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,7 +55,7 @@ public class AdministratorController extends BaseController {
   private static final Logger logger = LoggerFactory.getLogger(AdministratorController.class);
   
   @Autowired
-	SendEmail sendEmail;
+  SendEmail sendEmail;
   
     @RequestMapping(value = "dashboard", method = RequestMethod.GET)
     public String showDashboad(HttpServletRequest request, Model model) {
