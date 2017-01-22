@@ -31,4 +31,5 @@ public interface CareerExamDAO {
 	
 	List<CareerExam> getDoneCareerExamsOfaStudent(int studentID);
 
+	List<CareerExam> getCareerExamsOfaStudent(int studentId);
 }

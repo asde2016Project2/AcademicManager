@@ -1,51 +1,67 @@
 package it.unical.asde.uam.controllers;
 
 import it.unical.asde.uam.model.AcceptingStudentFormDTO;
+import it.unical.asde.uam.model.Administrator;
 
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
 import javax.validation.Valid;
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import it.unical.asde.uam.controllers.core.BaseController;
+import it.unical.asde.uam.helper.Accepted;
 import it.unical.asde.uam.helper.SessionHelper;
+
+
+import it.unical.asde.uam.dto.StudyPlanFormDTO;
+import it.unical.asde.uam.dto.LoginFormDTO;
+
+import it.unical.asde.uam.model.Professor;
+import it.unical.asde.uam.model.SendEmail;
+import it.unical.asde.uam.model.Student;
+import it.unical.asde.uam.model.StudyPlan;
+import it.unical.asde.uam.model.StudyPlanExam;
+import it.unical.asde.uam.model.AcceptingStudentFormDTO;
 import it.unical.asde.uam.model.CareerExam;
 import it.unical.asde.uam.model.DegreeCourse;
 import it.unical.asde.uam.model.Exam;
 
-import it.unical.asde.uam.dto.LoginFormDTO;
+
 import it.unical.asde.uam.model.SendEmail;
 
-import it.unical.asde.uam.model.Student;
-import it.unical.asde.uam.model.StudyPlan;
-import it.unical.asde.uam.model.StudyPlanExam;
 
-import it.unical.asde.uam.dto.StudyPlanFormDTO;
+import it.unical.asde.uam.persistence.AdministratorDAO;
 import it.unical.asde.uam.persistence.CareerExamDAO;
-
 import it.unical.asde.uam.persistence.DegreeCourseDAO;
 import it.unical.asde.uam.persistence.ExamDAO;
+import it.unical.asde.uam.persistence.ProfessorDAO;
 import it.unical.asde.uam.persistence.StudentDAO;
 import it.unical.asde.uam.persistence.StudyPlanDAO;
 import it.unical.asde.uam.persistence.StudyPlanExamDAO;
+
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+
+/**
+ * @author Fabrizio
+ *
+ */
 
 @Controller
 @RequestMapping("/admin")
@@ -55,7 +71,7 @@ public class AdministratorController extends BaseController {
   private static final Logger logger = LoggerFactory.getLogger(AdministratorController.class);
   
   @Autowired
-	SendEmail sendEmail;
+  SendEmail sendEmail;
   
     @RequestMapping(value = "dashboard", method = RequestMethod.GET)
     public String showDashboad(HttpServletRequest request, Model model) {
@@ -65,7 +81,11 @@ public class AdministratorController extends BaseController {
         }
       
         StudentDAO studentDAO  = (StudentDAO) context.getBean("studentDAO");
-    	  model.addAttribute("number",studentDAO.getAllStudentsToAcceptRefuse().size());
+        ProfessorDAO professorDAO = (ProfessorDAO) context.getBean("professorDAO");
+        AdministratorDAO administratorDAO = (AdministratorDAO) context.getBean("administratorDAO");
+        model.addAttribute("numberAdmins",administratorDAO.getAllAdminsToAcceptRefuse().size());
+    	model.addAttribute("numberStudents",studentDAO.getAllStudentsToAcceptRefuse().size());
+    	model.addAttribute("numberProfessors",professorDAO.geAllProfessorsToAcceptRefuse().size());
         model.addAttribute("pageTitle","Admin Dashboard");
         return "admin/dashboard";
     }
@@ -148,26 +168,64 @@ public class AdministratorController extends BaseController {
 
     }
 
-    @RequestMapping(value = "registrations", method = RequestMethod.GET)
-    public String registations(Model model) {        
+    @RequestMapping(value = "registrationStudent", method = RequestMethod.GET)
+    public String registationStudent(Model model) {        
         StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
         List<Student> listStudents = studentDAO.getAllStudentsToAcceptRefuse();
         model.addAttribute("listStudents", listStudents);
-        return "admin/registrations";
+        return "admin/registrationStudent";
+    }
+    
+    @RequestMapping(value = "registrationProfessor", method = RequestMethod.GET)
+    public String registationProfessor(Model model) {        
+        ProfessorDAO professorDAO = (ProfessorDAO) context.getBean("professorDAO");
+        List<Professor> listProfessors = professorDAO.geAllProfessorsToAcceptRefuse();
+        model.addAttribute("listProfessors", listProfessors);
+        return "admin/registrationProfessor";
+    }
+    
+    @RequestMapping(value = "registrationAdmin", method = RequestMethod.GET)
+    public String registationAdmin(Model model) {        
+        AdministratorDAO administratorDAO = (AdministratorDAO) context.getBean("administratorDAO");
+        List<Administrator> listAdministrators = administratorDAO.getAllAdminsToAcceptRefuse();
+        model.addAttribute("listAdministrators", listAdministrators);
+        return "admin/registrationAdmin";
     }
 
-    @RequestMapping(value = "registrations", method = RequestMethod.POST, params = "accept")
+    @RequestMapping(value = "registrationStudent", method = RequestMethod.POST, params = "accept")
     public String acceptStudent(@RequestParam(value = "accept") String username, Model model) {
-        /*StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO"); 
-    	Student student = studentDAO.retrieve(username);
-    	student.setStatus(true);
-    	studentDAO.update(student);
-    	List<Student> listStudents = studentDAO.getAllStudentsToAcceptRefuse();
-    	model.addAttribute("listStudents",listStudents);
-         */
         model.addAttribute("username", username);
         model.addAttribute("acceptingStudentForm", new AcceptingStudentFormDTO());
         return "admin/accepting";
+    }
+    
+    
+    @RequestMapping(value = "registrationProfessor", method = RequestMethod.POST, params = "accept")
+    public String acceptProfessor(@RequestParam(value = "accept") String username, Model model) {
+    	ProfessorDAO professorDAO = (ProfessorDAO) context.getBean("professorDAO");
+    	Professor professor = professorDAO.retrieve(username);
+    	professor.setAccepted(Accepted.ACCEPTED);
+    	professorDAO.update(professor);
+    	sendEmail.sendEmailRegistration(professor.getEmail(), professor.getFirstName(), professor.getLastName(),
+    			SendEmail.SUBJECT_REQUEST_REGISTATION,SendEmail.TEXT_ACCEPTED_REGISTRATION);
+    	
+    	List<Professor> listProfessors = professorDAO.geAllProfessorsToAcceptRefuse();
+        model.addAttribute("listProfessors", listProfessors);
+        return "admin/registrationProfessor";
+    }
+    
+    @RequestMapping(value = "registrationAdmin", method = RequestMethod.POST, params = "accept")
+    public String acceptAdmin(@RequestParam(value = "accept") String username, Model model) {
+    	AdministratorDAO administratorDAO = (AdministratorDAO) context.getBean("administratorDAO");
+        Administrator administrator = administratorDAO.retrieve(username);
+    	administrator.setAccepted(Accepted.ACCEPTED);
+    	administratorDAO.update(administrator);
+    	sendEmail.sendEmailRegistration(administrator.getEmail(), administrator.getFirstName(), administrator.getLastName(),
+    			SendEmail.SUBJECT_REQUEST_REGISTATION,SendEmail.TEXT_ACCEPTED_REGISTRATION);
+    	
+    	List<Administrator> listAdministrator = administratorDAO.getAllAdminsToAcceptRefuse();
+        model.addAttribute("listProfessors", listAdministrator);
+        return "admin/registrationAdmin";
     }
 
     @RequestMapping(value = "accepting", method = RequestMethod.POST)
@@ -184,10 +242,10 @@ public class AdministratorController extends BaseController {
         
         List<Student> listStudents = studentDAO.getAllStudentsToAcceptRefuse();
         model.addAttribute("listStudents", listStudents);
-        return "admin/registrations";
+        return "admin/registrationStudent";
     }
     
-    @RequestMapping(value = "registrations", method = RequestMethod.POST, params = "refuse")
+    @RequestMapping(value = "registrationStudent", method = RequestMethod.POST, params = "refuse")
     public String refuseStudent(@RequestParam(value = "refuse") String username, Model model) {
         StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
         Student student = studentDAO.retrieve(username);
@@ -197,7 +255,33 @@ public class AdministratorController extends BaseController {
         studentDAO.deleteStudent(student);
         List<Student> listStudents = studentDAO.getAllStudentsToAcceptRefuse();
         model.addAttribute("listStudents", listStudents);
-        return "admin/registrations";
+        return "admin/registrationStudent";
+    }
+    
+    @RequestMapping(value = "registrationProfessor", method = RequestMethod.POST, params = "refuse")
+    public String refuseProfessor(@RequestParam(value = "refuse") String username, Model model) {
+    	ProfessorDAO professorDAO = (ProfessorDAO) context.getBean("professorDAO");
+        Professor professor = professorDAO.retrieve(username);
+        
+        sendEmail.sendEmailRegistration(professor.getEmail(),professor.getFirstName(),professor.getLastName(),
+        		SendEmail.SUBJECT_REQUEST_REGISTATION,SendEmail.TEXT_NOT_ACCEPTED_REGISTRATION);
+        professorDAO.delete(professor);
+        List<Professor> listProfessors = professorDAO.geAllProfessorsToAcceptRefuse();
+        model.addAttribute("listProfessors", listProfessors);
+        return "admin/registrationProfessor";
+    }
+    
+    @RequestMapping(value = "registrationAdmin", method = RequestMethod.POST, params = "refuse")
+    public String refuseAdmin(@RequestParam(value = "refuse") String username, Model model) {
+    	AdministratorDAO administratorDAO = (AdministratorDAO) context.getBean("administratorDAO");
+        Administrator administrator = administratorDAO.retrieve(username);
+        
+        sendEmail.sendEmailRegistration(administrator.getEmail(),administrator.getFirstName(),administrator.getLastName(),
+        		SendEmail.SUBJECT_REQUEST_REGISTATION,SendEmail.TEXT_NOT_ACCEPTED_REGISTRATION);
+        administratorDAO.delete(administrator);
+        List<Administrator> listAdministrators = administratorDAO.getAllAdminsToAcceptRefuse();
+        model.addAttribute("listAdministrators", listAdministrators);
+        return "admin/registrationAdmin";
     }
 
   @RequestMapping(value = "createExam", method = RequestMethod.GET)
