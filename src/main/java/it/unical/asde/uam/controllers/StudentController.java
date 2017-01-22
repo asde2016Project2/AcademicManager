@@ -340,16 +340,6 @@ public class StudentController extends BaseController {
         return "student/listExamReservationBoard";
     }
 
-    // -------------------Exam Reservation process-------//
-    @RequestMapping(value = "registrationAppeals", method = RequestMethod.GET)
-    public String viewExamBooking(Model model) {
-        ExamSessionDAO examSessionDAO = (ExamSessionDAO) context.getBean("examSessionDAO");
-        List<ExamSession> listExamSession = examSessionDAO.listExamRegAppeals();
-        model.addAttribute("listExamSession", listExamSession);
-
-        return "student/registrationAppeals";
-    }
-
     @RequestMapping(value = {"examSession/id={sessionId:.+}",
         "registrationAppeals/examSession/{sessionId:.+}"}, method = RequestMethod.GET)
     public String examReservationView(@PathVariable("sessionId") Integer sessionId, Model model) throws Exception {
