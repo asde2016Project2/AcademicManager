@@ -40,6 +40,9 @@ import it.unical.asde.uam.model.DegreeCourse;
 import it.unical.asde.uam.model.Exam;
 
 
+import it.unical.asde.uam.model.SendEmail;
+
+
 import it.unical.asde.uam.persistence.AdministratorDAO;
 import it.unical.asde.uam.persistence.CareerExamDAO;
 import it.unical.asde.uam.persistence.DegreeCourseDAO;

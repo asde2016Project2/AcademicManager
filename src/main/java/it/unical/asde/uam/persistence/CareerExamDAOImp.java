@@ -5,6 +5,7 @@
  */
 package it.unical.asde.uam.persistence;
 
+
 import java.util.List;
 
 import org.hibernate.Query;
@@ -13,6 +14,8 @@ import org.slf4j.LoggerFactory;
 
 import it.unical.asde.uam.dao.DBHandler;
 import it.unical.asde.uam.model.CareerExam;
+import it.unical.asde.uam.model.Exam;
+import it.unical.asde.uam.model.StudyPlanExam;
 
 /**
  *
@@ -151,7 +154,7 @@ public class CareerExamDAOImp implements CareerExamDAO {
 		dbHandler.commit();
 		return careerExamList;
 	}
-	
+
 	//author: Fabrizio
 	@SuppressWarnings("unchecked")
 	@Override
@@ -164,6 +167,5 @@ public class CareerExamDAOImp implements CareerExamDAO {
 		dbHandler.commit();
 		return careerExamList;
 	}
-
 
 }

@@ -28,8 +28,8 @@ public interface CareerExamDAO {
 	List<CareerExam> listCareerExams();
 	
 	void removeCareerExam(Integer careerId);
-
-	List<CareerExam> getDoneCareerExamsOfaStudent(int studentID);
 	
+	List<CareerExam> getDoneCareerExamsOfaStudent(int studentID);
+
 	List<CareerExam> getCareerExamsOfaStudent(int studentId);
 }

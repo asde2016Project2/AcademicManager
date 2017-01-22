@@ -14,7 +14,7 @@
 	<div class="panel panel-default">
 		<div class="panel-body" style="min-height: 100; max-height: 100;">
 
-			<label>${studentName}, your study plan is ${studyPlanName} </label>
+			<label> ${studyPlanName} </label>
 
 			<table class="table table-striped table-hover ">
 				<thead>
