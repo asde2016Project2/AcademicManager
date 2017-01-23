@@ -3,6 +3,9 @@ package it.unical.asde.uam.helper;
 import it.unical.asde.uam.model.Administrator;
 import it.unical.asde.uam.model.Professor;
 import it.unical.asde.uam.model.Student;
+
+import java.util.Base64;
+
 import javax.servlet.http.HttpSession;
 
 /**
@@ -123,6 +126,10 @@ public class SessionHelper {
     
     public static Student getUserStudentLogged(HttpSession session) {
         return (Student) session.getAttribute("user");        
+    }
+    
+    public static String getPhoto(byte[] photo) {
+    	return Base64.getEncoder().encodeToString(photo);
     }
     
     
