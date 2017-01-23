@@ -8,21 +8,26 @@
 <span>average weighted score after projection: ${avgScore}</span><br>
 <span>graduation basic grade after projection: ${gbg}</span><br><br>
 
-<div class="divTable">
-    <div class="divTableBody">
-        <div class="divTableRow">
-            <div class="divTableCell"><strong>Exam</strong></div>
-            <div class="divTableCell"><strong>CFU</strong></div>
-            <div class="divTableCell"><strong>Grade</strong></div>
-        </div>
-        <c:forEach var="nameExam" items="${nameExams}" varStatus="status">
-            <div class="divTableRow">
-                <div class="divTableCell">${nameExam}</div>
-                <div class="divTableCell">${cfuExams[status.index]}</div>
-                <div class="divTableCell">${gradeExams[status.index]}</div>
-            </div>
-        </c:forEach>	
-    </div>
+<div class="row">
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+	            <th>Exam</th>
+	            <th>CFU</th>
+	            <th>Grade</th>
+	        <tr>
+        </thead>
+        <tbody>
+        	<c:forEach var="nameExam" items="${nameExams}" varStatus="status">
+	            <tr>
+	                <td>${nameExam}</td>
+	                <td>${cfuExams[status.index]}</td>
+	                <td>${gradeExams[status.index]}</td>
+	            </tr>
+        	</c:forEach>	
+        </tbody>
+    </table>
 </div>
+	        
 <br>
-<a href="<c:url value="/student/projection"/>">Make another projection</a>
+<a href="<c:url value="/student/projection"/>" class="btn btn-primary">Make another projection</a>

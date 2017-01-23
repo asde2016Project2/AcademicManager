@@ -11,22 +11,54 @@
 <form:form method="post" modelAttribute="projectionForm" id="projectionForm">
 	<c:forEach var="careerExam" items="${listCareerExam}">
 		<c:if test="${careerExam.done eq true}">
-			<form:input type="text" path ="nameExams" name="${careerExam.exam.name}" value="${careerExam.exam.name}" readonly="true" />
-			<form:input type="text" path ="cfuExams" name="${careerExam.exam.cfu}" value="${careerExam.exam.cfu}" readonly="true" />
-			<form:input type="text" path ="gradeExams" name="${careerExam.grade}" value="${careerExam.grade}" readonly="true" /><br>	
+		
+			<div class="row">
+				<div class="form-group">
+					<div class="col-md-4">
+						<form:input type="text" path ="nameExams" name="${careerExam.exam.name}" value="${careerExam.exam.name}" readonly="true"
+						cssClass="form-control col-md-4"/>
+					</div>
+					<div class="col-md-4">
+						<form:input type="text" path ="cfuExams" name="${careerExam.exam.cfu}" value="${careerExam.exam.cfu}" readonly="true"
+						cssClass="form-control col-md-4"/>
+					</div>
+					<div class="col-md-4">
+						<form:input type="text" path ="gradeExams" name="${careerExam.grade}" value="${careerExam.grade}" readonly="true"
+						cssClass="form-control col-md-4"/>
+					</div>
+				</div>
+			</div><br>
 		</c:if>
+		
 		<c:if test="${careerExam.done eq false}">
-			<form:input type="text" path ="nameExams" name="${careerExam.exam.name}" value="${careerExam.exam.name}" readonly="true" />
-			<form:input type="text" path ="cfuExams" name="${careerExam.exam.cfu}" value="${careerExam.exam.cfu}" readonly="true" /><br>
-			<form:select path="gradeExams" size="1">
-				<form:option value="" label="select grade"></form:option>
-				<c:forEach var="i" begin="18" end="30">
-					<form:option value="${i}" label="${i}"></form:option>
-				</c:forEach>
-			</form:select><br>	
+			<div class="row">
+				<div class="form-group">
+					<div class="col-md-4">
+						<form:input type="text" path ="nameExams" name="${careerExam.exam.name}" value="${careerExam.exam.name}" readonly="true"
+						cssClass="form-control col-md-4"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-4">
+					<form:input type="text" path ="cfuExams" name="${careerExam.exam.cfu}" value="${careerExam.exam.cfu}" readonly="true"
+					cssClass="form-control col-md-4"/><br>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-md-4">
+						<form:select path="gradeExams" size="1" cssClass="form-control col-md-4">
+							<form:option value="" label="select grade"></form:option>
+							<c:forEach var="i" begin="18" end="30">
+								<form:option value="${i}" label="${i}"></form:option>
+							</c:forEach>
+						</form:select>
+					</div>
+				</div>
+			</div>	
 		</c:if>
 	</c:forEach>
-	<form:button type="submit" value="projection">projection</form:button>
+	<form:button class="btn btn-primary" type="submit" value="projection">projection</form:button>
 </form:form>
 
 

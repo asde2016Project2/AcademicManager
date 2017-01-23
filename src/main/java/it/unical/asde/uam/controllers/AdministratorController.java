@@ -223,11 +223,14 @@ public class AdministratorController extends BaseController {
     	sendEmail.sendEmailRegistration(administrator.getEmail(), administrator.getFirstName(), administrator.getLastName(),
     			SendEmail.SUBJECT_REQUEST_REGISTATION,SendEmail.TEXT_ACCEPTED_REGISTRATION);
     	
-    	List<Administrator> listAdministrator = administratorDAO.getAllAdminsToAcceptRefuse();
-        model.addAttribute("listProfessors", listAdministrator);
-        return "admin/registrationAdmin";
+        return "redirect:/admin/registrationAdmin";
     }
 
+    @RequestMapping(value = "accepting", method = RequestMethod.GET) 
+    public String getAcc() {
+    	return "redirect:/admin/registrationStudent";
+    }
+    
     @RequestMapping(value = "accepting", method = RequestMethod.POST)
     public String acceptingStudent(@Valid @ModelAttribute("acceptingStudentForm") AcceptingStudentFormDTO acceptingStudentFormDTO, Model model) {
         StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
@@ -237,12 +240,19 @@ public class AdministratorController extends BaseController {
         student.setAccepted(acceptingStudentFormDTO.getAccepted());      
         studentDAO.update(student);
         
+        //now we can create , for this student,  an instance of CareerExam for each StudPlanExam         	
+        CareerExamDAO careerExamDAO = (CareerExamDAO) context.getBean("careerExamDAO");
+        StudyPlanExamDAO studyPlanExamDAO = (StudyPlanExamDAO) context.getBean("studyPlanExamDAO");
+        List<StudyPlanExam> spExams = studyPlanExamDAO.getAllExamsOfAstudyPlan(student.getStudyPlan());
+        for (StudyPlanExam spe : spExams) {
+            CareerExam ce = new CareerExam(false, 0, true, student, spe.getExam());
+            careerExamDAO.create(ce);
+        }
+        
         sendEmail.sendEmailRegistration(student.getEmail(),student.getFirstName(),student.getLastName(),
         		SendEmail.SUBJECT_REQUEST_REGISTATION,SendEmail.TEXT_ACCEPTED_REGISTRATION);
-        
-        List<Student> listStudents = studentDAO.getAllStudentsToAcceptRefuse();
-        model.addAttribute("listStudents", listStudents);
-        return "admin/registrationStudent";
+
+        return "redirect:/admin/registrationStudent";
     }
     
     @RequestMapping(value = "registrationStudent", method = RequestMethod.POST, params = "refuse")
@@ -253,9 +263,8 @@ public class AdministratorController extends BaseController {
         sendEmail.sendEmailRegistration(student.getEmail(),student.getFirstName(),student.getLastName(),
         		SendEmail.SUBJECT_REQUEST_REGISTATION,SendEmail.TEXT_NOT_ACCEPTED_REGISTRATION);
         studentDAO.deleteStudent(student);
-        List<Student> listStudents = studentDAO.getAllStudentsToAcceptRefuse();
-        model.addAttribute("listStudents", listStudents);
-        return "admin/registrationStudent";
+        
+        return "redirect:/admin/registrationStudent";
     }
     
     @RequestMapping(value = "registrationProfessor", method = RequestMethod.POST, params = "refuse")
@@ -266,9 +275,7 @@ public class AdministratorController extends BaseController {
         sendEmail.sendEmailRegistration(professor.getEmail(),professor.getFirstName(),professor.getLastName(),
         		SendEmail.SUBJECT_REQUEST_REGISTATION,SendEmail.TEXT_NOT_ACCEPTED_REGISTRATION);
         professorDAO.delete(professor);
-        List<Professor> listProfessors = professorDAO.geAllProfessorsToAcceptRefuse();
-        model.addAttribute("listProfessors", listProfessors);
-        return "admin/registrationProfessor";
+        return "redirect:/admin/registrationProfessor";
     }
     
     @RequestMapping(value = "registrationAdmin", method = RequestMethod.POST, params = "refuse")
@@ -279,9 +286,7 @@ public class AdministratorController extends BaseController {
         sendEmail.sendEmailRegistration(administrator.getEmail(),administrator.getFirstName(),administrator.getLastName(),
         		SendEmail.SUBJECT_REQUEST_REGISTATION,SendEmail.TEXT_NOT_ACCEPTED_REGISTRATION);
         administratorDAO.delete(administrator);
-        List<Administrator> listAdministrators = administratorDAO.getAllAdminsToAcceptRefuse();
-        model.addAttribute("listAdministrators", listAdministrators);
-        return "admin/registrationAdmin";
+        return "redirect:/admin/registrationAdmin";
     }
 
   @RequestMapping(value = "createExam", method = RequestMethod.GET)

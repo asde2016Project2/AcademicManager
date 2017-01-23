@@ -1,3 +1,4 @@
+<%@page import="it.unical.asde.uam.helper.SessionHelper"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -12,7 +13,21 @@
     <!-- menu profile quick info -->
     <div class="profile clearfix">
         <div class="profile_pic">
-            <img src="<c:url value="/resources/images/img.jpg"/>" alt="..." class="img-circle profile_img">
+        	<%
+        	String defaultPic = "/resources/images/default-user.png";
+        	if(SessionHelper.getUserProfessorLogged(session).getPhoto() != null) {
+        		out.print("diverso da null");
+        		defaultPic = SessionHelper.getPhoto(SessionHelper.getUserProfessorLogged(session).getPhoto());
+        		%>
+        		<img src="<c:url value="data:image/jpeg;base64,<%=defaultPic%>"/>" class="img-circle profile_img">
+        		<%
+        	}
+        	else {
+        		%>
+        		<img src="<c:url value="<%=defaultPic%>"/>" class="img-circle profile_img">
+        		<%
+        	}
+        	%>
         </div>
         <div class="profile_info">
             <span>Professor,</span>

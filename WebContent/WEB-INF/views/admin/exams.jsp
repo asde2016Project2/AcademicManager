@@ -24,7 +24,6 @@
                         <td>${exam.name}</td>
                         <td>${exam.cfu}</td>
                         <td>${exam.code}</td>
-                        <td><a href="<c:url value='exams/delete/${exam.id}'/>">Delete</a></td>
                     </tr>
                 </tbody>
 
