@@ -49,7 +49,7 @@ public class ExamDAOImp implements ExamDAO {
         Query query = session.createQuery(queryString);
         query.setParameter("ex", examName);
         Exam e = (Exam) query.uniqueResult();
-        dbHandler.close();
+        //dbHandler.close();
         return e;
     }
   
@@ -109,7 +109,7 @@ public class ExamDAOImp implements ExamDAO {
         String queryString = "select c.name from Exam c order by c.name";
         Query query = dbHandler.getSession().createQuery(queryString);
         List<String> exams = (List<String>) query.list();
-        dbHandler.close();
+        //dbHandler.close();
         return exams;
     }
 

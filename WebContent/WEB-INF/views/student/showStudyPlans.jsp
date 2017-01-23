@@ -3,9 +3,9 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!--  author: Nello -->
-	<label> ${pageTitle}</label>
- <br/>
-        <br/>
+<label> ${pageTitle}</label>
+<br/>
+<br/>
 <br/>
 <div class="divTable">
     <div class="divTableBody">
@@ -19,12 +19,12 @@
                 <div class="divTableCell">${studyPlan.name}</div>
                 <div class="divTableCell">${studyPlan.degreeCourse.name}</div>
                 <div class="divTableCell">
-                 
+
                     <div>
-                        
+
                         <a href="<c:url value="/student/details/studyplan/${studyPlan.studyPlanId}"/>">Details</a>                       
                     </div>        
-                  
+
 
                 </div>
             </div>

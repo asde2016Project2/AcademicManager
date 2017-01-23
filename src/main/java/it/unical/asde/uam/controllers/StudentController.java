@@ -170,21 +170,14 @@ public class StudentController extends BaseController {
         ArrayList<Attempt> listOfExamReservation = attemptDAO.listActiveExamforAttempt();
         ArrayList<Professor> professor = new ArrayList<>();
 
-        if (listOfExamReservation.isEmpty()) {
-            System.out.println("ExamBoardInformaiton--");
-            return "redirect:/";
-
+        System.out.println("ExamBoardInformaiton- return list of information-");
+        for (Attempt attempt : listOfExamReservation) {
+            professor.add(attempt.getProfessor());
         }
-        else {
 
-            System.out.println("ExamBoardInformaiton- return list of information-");
-            for (Attempt attempt : listOfExamReservation) {
-                professor.add(attempt.getProfessor());
-            }
+        // model.addAttribute("listOfExamReservation", exams);
+        model.addAttribute("listOfExamReservation", listOfExamReservation);
 
-            // model.addAttribute("listOfExamReservation", exams);
-            model.addAttribute("listOfExamReservation", listOfExamReservation);
-        }
         return "student/listExamReservationBoard";
     }
 
