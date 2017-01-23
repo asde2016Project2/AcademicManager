@@ -108,27 +108,6 @@ public class ProfessorDAOImp implements ProfessorDAO {
     }
     
 	@Override
-	public boolean checkExamSession(String startingDate, String endingDate, String academicYear) {
-		
-		String[] strs = startingDate.split("-");
-		String[] years = academicYear.split("/");
-		System.out.println("strs[0]: "+strs[0]+"....years[1]: "+years[1]);
-		if(!(strs[0].equals(years[1]))){
-			System.out.println("strs[0]: "+strs[0]+"....years[1]: "+years[1]);
-			return false;
-		}
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		try {
-			Date endDate = sdf.parse(endingDate);
-			Date startDate = sdf.parse(startingDate);
-		} catch (ParseException e) {
-			System.out.println("ERRORE inserimento data");
-			return false;
-		}
-		return true;
-	}
-
-	@Override
 	public ArrayList<ExamSession> listAllSession() {
 
 		String hql = "from ExamSession";

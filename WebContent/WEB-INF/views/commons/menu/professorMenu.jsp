@@ -5,9 +5,6 @@
         <a href="<c:url value="/professor/dashboard"/>"> Dashboard</a>
     </li>
     <li>
-        <a href="<c:url value="/professor/createSession"/>"> Create Session</a>
-    </li>
-    <li>
         <a href="<c:url value="/professor/viewAllSession"/>"> List Session</a>
     </li>    
     <li>

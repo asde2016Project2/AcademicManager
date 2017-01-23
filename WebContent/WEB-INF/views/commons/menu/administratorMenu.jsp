@@ -25,7 +25,13 @@
     </li>  
     <li>
         <a href="<c:url value="/admin/list/studyplan"/>">List Study Plan</a>
-    </li>       
+    </li>      
+    <li>
+        <a href="<c:url value="/admin/createSession"/>"> Create Session</a>
+    </li>
+     <li>
+        <a href="<c:url value="/admin/viewAllSession"/>"> List Session</a>
+    </li>    
     <li>
         <a href="<c:url value="/logout" />">Logout</a>        
     </li>

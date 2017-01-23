@@ -2,8 +2,10 @@ package it.unical.asde.uam.controllers;
 
 import it.unical.asde.uam.model.AcceptingStudentFormDTO;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -25,15 +27,19 @@ import it.unical.asde.uam.helper.SessionHelper;
 import it.unical.asde.uam.model.CareerExam;
 import it.unical.asde.uam.model.DegreeCourse;
 import it.unical.asde.uam.model.Exam;
+import it.unical.asde.uam.model.ExamSession;
 import it.unical.asde.uam.model.Student;
 import it.unical.asde.uam.model.StudyPlan;
 import it.unical.asde.uam.model.StudyPlanExam;
 
 import it.unical.asde.uam.dto.StudyPlanFormDTO;
+import it.unical.asde.uam.persistence.AttemptDAO;
 import it.unical.asde.uam.persistence.CareerExamDAO;
 
 import it.unical.asde.uam.persistence.DegreeCourseDAO;
 import it.unical.asde.uam.persistence.ExamDAO;
+import it.unical.asde.uam.persistence.ExamSessionDAO;
+import it.unical.asde.uam.persistence.ProfessorDAO;
 import it.unical.asde.uam.persistence.StudentDAO;
 import it.unical.asde.uam.persistence.StudyPlanDAO;
 import it.unical.asde.uam.persistence.StudyPlanExamDAO;
@@ -277,5 +283,55 @@ public class AdministratorController extends BaseController {
 
 		return "admin/careerExams";
 	}
+	
+	// ----------------------------Create Session ---------------//
+	
+	 @RequestMapping(value = "createSession", method = RequestMethod.GET)
+	    public String openCreateNewSession(Model model) {
+		 
+	    	DegreeCourseDAO degreeCourseDao = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
+	    	ArrayList<DegreeCourse> allDegrees = (ArrayList<DegreeCourse>) degreeCourseDao.getAllDegrees();
+	    	model.addAttribute("degreeCourses", allDegrees);
+	    	
+	        return "admin/createSession";
+	    }
+	    
+	
+	    @RequestMapping(value = "createSession", method = RequestMethod.POST)
+	    public String createNewSession(@RequestParam("startingDate") String startingDateString, @RequestParam("endingDate") String endingDateString,
+	    		@RequestParam("degreeCourse") String degreeCourseName, @RequestParam("academicYear") String academicYear,
+	    		HttpServletRequest request) throws ParseException{
+	    	
+	    	ExamSessionDAO examSessionDao = (ExamSessionDAO) context.getBean("examSessionDAO");
+	    	if(examSessionDao.checkExamSession(request.getParameter("startingDate"),request.getParameter("endingDate"), request.getParameter("academicYear")))
+	    	{
+	    		DegreeCourseDAO degreeCourseDAO = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
+	    		DegreeCourse degreeCourse = degreeCourseDAO.getDegreeCourseByName(degreeCourseName);
+	    		
+	    		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	    		Date startingDate = null;
+	   			startingDate = sdf.parse(startingDateString);
+	   			Date endingDate = null;
+	   			endingDate = sdf.parse(endingDateString);
+	    		
+	    		ExamSession examSession = new ExamSession(startingDate, endingDate, academicYear, degreeCourse);
+
+	    		examSessionDao.create(examSession);
+	    		ArrayList<ExamSession> allExamSessions = (ArrayList<ExamSession>) examSessionDao.getAllExamSession();//professorDao.listAllSession();
+	    		return "admin/dashboard";
+	    	}
+	    	else return "admin/errorExamSession";
+	    }
+	    
+	    @RequestMapping(value ="viewAllSession", method = RequestMethod.GET)
+	    public String viewAllSession(Model model){
+	    	ExamSessionDAO examSessionDao = (ExamSessionDAO) context.getBean("examSessionDAO");
+	    	AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
+	    	ArrayList<ExamSession> allExamSessions = (ArrayList<ExamSession>) examSessionDao.getAllExamSession();//.listAllSession();
+	    	model.addAttribute("lista", allExamSessions);
+	    	model.addAttribute("attemptList", attemptDAO.getAllAttempts());
+	    	return "admin/listSession";
+	    }
+
 
 }
