@@ -414,6 +414,14 @@ public class StudentController extends BaseController {
             return "student/register";
         }
         else {
+            //now we can create , for this student,  an instance of CareerExam for each StudPlanExam         	
+            CareerExamDAO careerExamDAO = (CareerExamDAO) context.getBean("careerExamDAO");
+            StudyPlanExamDAO studyPlanExamDAO = (StudyPlanExamDAO) context.getBean("studyPlanExamDAO");
+            List<StudyPlanExam> spExams = studyPlanExamDAO.getAllExamsOfAstudyPlan(sp);
+            for (StudyPlanExam spe : spExams) {
+                CareerExam ce = new CareerExam(false, 0, true, student, spe.getExam());
+                careerExamDAO.create(ce);
+            }
             model.addAttribute("message", messageSource.getMessage("registration.ok", null, localeResolver.resolveLocale(request)));
             //we clean the model passed to view
             model.addAttribute("studentForm", new StudentFormDTO());
