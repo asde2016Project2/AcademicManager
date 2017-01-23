@@ -58,33 +58,62 @@ public class AdministratorDAOImp implements AdministratorDAO {
         return administrator;
     }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Administrator> getAllAdminsToAcceptRefuse() {
-		String hql = "from Administrator where accepted=:value";
-		Query query = dbHandler.getSession().createQuery(hql);
-		query.setParameter("value",Accepted.NOT_ACCEPTED);
-		List<Administrator> administrators = (List<Administrator>) query.list();
-		return administrators;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Administrator> getAllAdminsToAcceptRefuse() {
+        String hql = "from Administrator where accepted=:value";
+        Query query = dbHandler.getSession().createQuery(hql);
+        query.setParameter("value", Accepted.NOT_ACCEPTED);
+        List<Administrator> administrators = (List<Administrator>) query.list();
+        return administrators;
+    }
 
-	@Override
-	public Administrator retrieve(String username) {
-		String hql = "from Administrator where username=:username";
-		Query query = dbHandler.getSession().createQuery(hql);
-		query.setParameter("username",username);
-		Administrator administrator = (Administrator) query.uniqueResult();
-		return administrator;
-	}
+    @Override
+    public Administrator retrieve(String username) {
+        String hql = "from Administrator where username=:username";
+        Query query = dbHandler.getSession().createQuery(hql);
+        query.setParameter("username", username);
+        Administrator administrator = (Administrator) query.uniqueResult();
+        return administrator;
+    }
 
-	@Override
-	public void update(Administrator administrator) {
-		dbHandler.update(administrator);
-	}
+    @Override
+    public void update(Administrator administrator) {
+        dbHandler.update(administrator);
+    }
 
-	@Override
-	public void delete(Administrator administrator) {
-		dbHandler.delete(administrator);
-	}
+    @Override
+    public void delete(Administrator administrator) {
+        dbHandler.delete(administrator);
+    }
+
+    @Override
+    public Administrator retrieveByEmail(String email) {
+        String hql = "from Administrator where email =:email";
+
+        Query query = dbHandler.getSession().createQuery(hql);
+        query.setParameter("email", email);
+        Administrator administrator = (Administrator) query.uniqueResult();
+        return administrator;
+    }
+
+    @Override
+    public boolean register(Administrator u) {
+
+        //if already exist email or username
+        if (retrieve(u.getUsername()) != null || retrieveByEmail(u.getEmail()) != null) {
+            return false;
+        }
+
+        //create
+        create(u);
+
+        //check created
+        if (retrieve(u.getUsername()) == null) {
+            return false;
+        }
+
+        return true;
+    }
 
 }

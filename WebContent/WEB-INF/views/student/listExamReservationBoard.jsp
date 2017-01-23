@@ -4,12 +4,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <h1>${pageTitle}</h1>
 
-<div class="divTable">
+<div>
 	<c:if test="${!empty listOfExamReservation }">
 		<table class="table table-striped table-hover ">
 			<thead>
 				<tr>
 					<th width="80">ID</th>
+					<th width="120">Exam Name</th>
 					<th width="120">Date Hour</th>
 					<th width="120">Building Class Room</th>
 					<th width="120">Registration Starting Date</th>
@@ -22,12 +23,14 @@
 
 					<tr>
 						<td>${status.index+1 }</td>
+						<td>${attempt.exam.name}</td>
 						<td>${attempt.examDate}</td>
 						<td>${attempt.classroom}</td>
 						<td>${attempt.startRegistrationDate}</td>
 						<td>${attempt.endRegistrationDate}</td>
-						<td>${attempt.professor.firstName} ${attempt.professor.lastName}</td>
-						<td><a href="<c:url value="/student/detail/examBooking/${attempt.attemptId}"/>">Book Exam</a> </td>
+						<td><c:out value="${attempt.professor.firstName}"/> 
+										<c:out value="${attempt.professor.lastName}"/></td>
+						<td><a class="btn btn-primary" href="<c:url value="/student/detail/examBooking/${attempt.attemptId}"/>">Sign-up</a> </td>
 					</tr>
 
 				</c:forEach>

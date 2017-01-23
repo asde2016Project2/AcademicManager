@@ -4,11 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.unical.asde.uam.model.Attempt;
+import it.unical.asde.uam.model.Professor;
 import it.unical.asde.uam.model.Student;
 import it.unical.asde.uam.model.UserAttemptRegistration;
 
 public interface UserAttemptRegistrationDAO {
 
+	void create(UserAttemptRegistration userAttemptRegistration);
+
+	void update(UserAttemptRegistration userAttemptRegistration);
+
+	void delete(UserAttemptRegistration userAttemptRegistration);
+	
 	UserAttemptRegistration getUserAttemptRegById(int userAtRegId);
 
 	boolean updateUserAttemptRegistration(UserAttemptRegistration userAttemptRegistration);
@@ -17,13 +24,25 @@ public interface UserAttemptRegistrationDAO {
 
 	UserAttemptRegistration getUserAttemptRegByAttemptId(Integer userAtRegId);
 
-	void create(UserAttemptRegistration userAttemptRegistration);
+	List<UserAttemptRegistration> getUserAttemptRegistrationByAttempId(int attemptId);
 
-	ArrayList<UserAttemptRegistration> getUserAttemptByStudentUserNames(int userId);
+	UserAttemptRegistration getAttemptRegistrationByStudentByAttempt(Attempt attempt, Student student);
+
+//	ArrayList<UserAttemptRegistration> getUserAttemptByStudentUserNames(int userId);
 
 	UserAttemptRegistration getUserAttemptByStudentUserName(int userId);
-
-	void delete(UserAttemptRegistration userAttemptRegistration);
 	
 	ArrayList<UserAttemptRegistration> getUserAttemptByStudentNum();
+
+	ArrayList<UserAttemptRegistration> getStudentSignupProfExamSession(Professor professor);
+
+	// UserAttemptRegistration getUserAttemptByStudentById(int userId);
+
+	UserAttemptRegistration getUserAttemptByProfessorUserName(Professor professor);
+
+	UserAttemptRegistration getUserAttemptByStudentById(Student student);
+
+	ArrayList<UserAttemptRegistration> getUserAttemptByStudentUserNames(Student student);
+
+	
 }

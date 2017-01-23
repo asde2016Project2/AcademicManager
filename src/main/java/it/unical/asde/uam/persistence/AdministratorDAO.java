@@ -14,11 +14,21 @@ import it.unical.asde.uam.model.Administrator;
  * @author Gezahegn
  */
 public interface AdministratorDAO {
-    
+
     public void create(Administrator administrator);
+
     public Administrator retrieveAdminForLogin(String username, String password);
+
     public List<Administrator> getAllAdminsToAcceptRefuse();
+
     public Administrator retrieve(String username);
+
     public void update(Administrator administrator);
-	public void delete(Administrator administrator);
+
+    public void delete(Administrator administrator);
+
+    boolean register(Administrator u);
+    
+    public Administrator retrieveByEmail(String email);
+    
 }
