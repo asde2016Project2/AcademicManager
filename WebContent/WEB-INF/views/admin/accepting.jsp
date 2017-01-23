@@ -3,13 +3,13 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<h1>Accepting ${username}</h1>
+<h3>Accepting ${username}</h3>
 
 	
 	<div id="my_camera"></div><br>
 	
 	<form>
-		<input type="button" id="capture" value="capture" onClick="take_snapshot()">
+		<input type="button" class="btn btn-primary" id="capture" value="capture" onClick="take_snapshot()">
 	</form>
 	
 	<div id="results"></div><br>
@@ -21,7 +21,7 @@
 			<form:option value="ACCEPTED" label="ACCEPT" />
 			<form:option value="NOT_ACCEPTED" label="NOT ACCEPT"></form:option>
 		</form:select>
-		<form:button type="submit">Accept</form:button>
+		<form:button class="btn btn-success" type="submit">Accept</form:button>
 	</form:form>
 	
 	<script type="text/javaScript">
@@ -39,7 +39,7 @@
 			// take snapshot and get image data
 			Webcam.snap( function(data_uri) {
 				// display results in page
-				document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+				document.getElementById('results').innerHTML = '<h3>Photo captured</h3><img src="'+data_uri+'"/>';
 				var raw_image_data = data_uri.replace(/^data\:image\/\w+\;base64\,/, '');
 		        document.getElementById('photo').value = raw_image_data;
 			});

@@ -102,7 +102,7 @@ public class StudentController extends BaseController {
         }
         model.addAttribute("pageTitle", "Student Projection");
         model.addAttribute("avgScore", avgScore);
-        model.addAttribute("gbg", ((double) (avgScore * 11) / 3));
+        model.addAttribute("gbg",String.format( "%.2f",((avgScore * 11) / 3)));
         model.addAttribute("listCareerExam", listCareerExam);
         model.addAttribute("projectionForm", new ProjectionFormDTO());
         return "student/projection";
@@ -123,7 +123,7 @@ public class StudentController extends BaseController {
         avgScore /= cfuDone;
         model.addAttribute("pageTitle", "Projection result");
         model.addAttribute("avgScore", avgScore);
-        model.addAttribute("gbg", ((double) (avgScore * 11) / 3));
+        model.addAttribute("gbg",String.format( "%.2f",((avgScore * 11) / 3)));
         model.addAttribute("nameExams", projectionFormDTO.getNameExams());
         model.addAttribute("cfuExams", projectionFormDTO.getCfuExams());
         model.addAttribute("gradeExams", projectionFormDTO.getGradeExams());
@@ -411,14 +411,6 @@ public class StudentController extends BaseController {
             return "student/register";
         }
         else {
-            //now we can create , for this student,  an instance of CareerExam for each StudPlanExam         	
-            CareerExamDAO careerExamDAO = (CareerExamDAO) context.getBean("careerExamDAO");
-            StudyPlanExamDAO studyPlanExamDAO = (StudyPlanExamDAO) context.getBean("studyPlanExamDAO");
-            List<StudyPlanExam> spExams = studyPlanExamDAO.getAllExamsOfAstudyPlan(sp);
-            for (StudyPlanExam spe : spExams) {
-                CareerExam ce = new CareerExam(false, 0, true, student, spe.getExam());
-                careerExamDAO.create(ce);
-            }
             model.addAttribute("message", messageSource.getMessage("registration.ok", null, localeResolver.resolveLocale(request)));
             //we clean the model passed to view
             model.addAttribute("studentForm", new StudentFormDTO());
