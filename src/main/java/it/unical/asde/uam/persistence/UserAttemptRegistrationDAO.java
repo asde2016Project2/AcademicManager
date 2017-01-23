@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.unical.asde.uam.model.Attempt;
+import it.unical.asde.uam.model.Professor;
 import it.unical.asde.uam.model.Student;
 import it.unical.asde.uam.model.UserAttemptRegistration;
 
@@ -27,9 +28,21 @@ public interface UserAttemptRegistrationDAO {
 
 	UserAttemptRegistration getAttemptRegistrationByStudentByAttempt(Attempt attempt, Student student);
 
-	ArrayList<UserAttemptRegistration> getUserAttemptByStudentUserNames(int userId);
+//	ArrayList<UserAttemptRegistration> getUserAttemptByStudentUserNames(int userId);
 
 	UserAttemptRegistration getUserAttemptByStudentUserName(int userId);
 	
 	ArrayList<UserAttemptRegistration> getUserAttemptByStudentNum();
+
+	ArrayList<UserAttemptRegistration> getStudentSignupProfExamSession(Professor professor);
+
+	// UserAttemptRegistration getUserAttemptByStudentById(int userId);
+
+	UserAttemptRegistration getUserAttemptByProfessorUserName(Professor professor);
+
+	UserAttemptRegistration getUserAttemptByStudentById(Student student);
+
+	ArrayList<UserAttemptRegistration> getUserAttemptByStudentUserNames(Student student);
+
+	
 }
