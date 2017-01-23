@@ -38,7 +38,7 @@
 											<td>${examSession.endingDate}</td>
 											<td>${examSession.academicYear}</td>
 											<td><a
-												href="<c:url value='/student/academicExamSessionList/examSession/${examSession.sessionId}'/>">View</a></td>
+												href="<c:url value='/student/academicExamSessionList/examSession/${examSession.examSessionId}'/>">View</a></td>
 										</tr>
 
 									</c:forEach>

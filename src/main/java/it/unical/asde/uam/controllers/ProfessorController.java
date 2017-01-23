@@ -11,6 +11,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,6 +28,7 @@ import it.unical.asde.uam.model.CareerExam;
 import it.unical.asde.uam.model.Exam;
 import it.unical.asde.uam.model.ExamSession;
 import it.unical.asde.uam.model.Professor;
+import it.unical.asde.uam.model.SendEmail;
 import it.unical.asde.uam.model.Student;
 import it.unical.asde.uam.model.UserAttemptRegistration;
 import it.unical.asde.uam.persistence.AttemptDAO;
@@ -45,7 +47,8 @@ import it.unical.asde.uam.persistence.UserAttemptRegistrationDAO;
 @RequestMapping("/professor")
 public class ProfessorController extends BaseController {
 
-  
+	 @Autowired
+	  SendEmail sendEmail;
     
     @RequestMapping(value = "dashboard", method = RequestMethod.GET)
     public String showDashboad(HttpServletRequest request, Model model) {
@@ -241,8 +244,8 @@ public class ProfessorController extends BaseController {
     
     
     
-    
-    /**
+
+/**
  * View students sign-up for exam session 
  * if the student meets the basic requirement of professors list it will accepted to take the exam
  * otherwise it will rejected from the exam sessions
@@ -274,8 +277,9 @@ public String acceptStudentSignupForExamSession(Model model, HttpServletRequest 
     userAttReg.setBooking(Booking.SIGNUP);
     userAttRegDAO.create(userAttReg);
 	
-//	sendEmail.sendEmailRegistration(professor.getEmail(), professor.getFirstName(), professor.getLastName(),
-//			SendEmail.SUBJECT_REQUEST_REGISTATION,SendEmail.TEXT_ACCEPTED_REGISTRATION);
+    sendEmail.sendEmailRegistration(userAttReg.getStudent().getEmail(),userAttReg.getStudent().getFirstName(),userAttReg.getStudent().getLastName(),
+    		SendEmail.SUBJECT_EXAM_BOOKING,SendEmail.EXAM_SESSION_ATTEMPT_SIGNUP);
+    
 	
     if(loggedProfessor !=null){
    	 List<UserAttemptRegistration> listStudentExamSignup = userAttRegDAO.getStudentSignupProfExamSession(loggedProfessor);
@@ -292,10 +296,9 @@ public String rejectStudentSignupforExam(@RequestParam(value = "reject") String 
 	 UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
     UserAttemptRegistration userAttReg= userAttRegDAO.getUserAttemptByProfessorUserName(loggedProfessor);
     
-//    sendEmail.sendEmailRegistration(student.getEmail(),student.getFirstName(),student.getLastName(),
-//    		SendEmail.SUBJECT_REQUEST_REGISTATION,SendEmail.TEXT_NOT_ACCEPTED_REGISTRATION);
-    
     userAttRegDAO.delete(userAttReg);
+    sendEmail.sendEmailRegistration(userAttReg.getStudent().getEmail(),userAttReg.getStudent().getFirstName(),userAttReg.getStudent().getLastName(),
+    		SendEmail.SUBJECT_EXAM_BOOKING,SendEmail.EXAM_SESSION_ATTEMPT_CANCELED);
     
 
     if(loggedProfessor !=null){

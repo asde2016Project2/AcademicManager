@@ -57,9 +57,9 @@ public class CareerExam implements Serializable {
     private boolean honours;
     // it should be set manually
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "attempt_id")
-    private Set<Attempt> attempts = new HashSet<Attempt>();
+//    @OneToMany(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "attempt_id")
+//    private Set<Attempt> attempts = new HashSet<Attempt>();
 
 //    @OneToMany(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "attempt_id")
