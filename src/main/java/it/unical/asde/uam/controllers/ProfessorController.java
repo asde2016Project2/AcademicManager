@@ -11,7 +11,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,22 +19,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import it.unical.asde.uam.helper.SessionHelper;
 import it.unical.asde.uam.controllers.core.BaseController;
+import it.unical.asde.uam.helper.Booking;
 import it.unical.asde.uam.model.Attempt;
 import it.unical.asde.uam.model.CareerExam;
-import it.unical.asde.uam.model.DegreeCourse;
 import it.unical.asde.uam.model.Exam;
 import it.unical.asde.uam.model.ExamSession;
 import it.unical.asde.uam.model.Professor;
+import it.unical.asde.uam.model.SendEmail;
 import it.unical.asde.uam.model.Student;
 import it.unical.asde.uam.model.UserAttemptRegistration;
 import it.unical.asde.uam.persistence.AttemptDAO;
 import it.unical.asde.uam.persistence.CareerExamDAO;
-import it.unical.asde.uam.persistence.DegreeCourseDAO;
 import it.unical.asde.uam.persistence.ExamDAO;
 import it.unical.asde.uam.persistence.ExamSessionDAO;
 import it.unical.asde.uam.persistence.ProfessorDAO;
@@ -49,7 +47,8 @@ import it.unical.asde.uam.persistence.UserAttemptRegistrationDAO;
 @RequestMapping("/professor")
 public class ProfessorController extends BaseController {
 
-  
+	 @Autowired
+	  SendEmail sendEmail;
     
     @RequestMapping(value = "dashboard", method = RequestMethod.GET)
     public String showDashboad(HttpServletRequest request, Model model) {
@@ -238,4 +237,74 @@ public class ProfessorController extends BaseController {
     	
         return "professor/createAttempt";
     }
+    
+    
+    
+    
+    
+    
+    
+
+/**
+ * View students sign-up for exam session 
+ * if the student meets the basic requirement of professors list it will accepted to take the exam
+ * otherwise it will rejected from the exam sessions
+ */
+@RequestMapping(value = "viewStudentExamSignup", method = RequestMethod.GET)
+public String getStudentSignupForExamSession(Model model,HttpServletRequest request){
+	  
+	 Professor loggedProfessor = SessionHelper.getUserProfessorLogged(request.getSession());
+	 UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
+    
+	 if(loggedProfessor !=null){
+    	 List<UserAttemptRegistration> listStudentExamSignup = userAttRegDAO.getStudentSignupProfExamSession(loggedProfessor);
+    	 model.addAttribute("listStudentExamSignup", listStudentExamSignup);
+     }
+	 
+	return "professor/viewStudentExamSignup";
+}
+
+
+
+
+@RequestMapping(value = "viewStudentExamSignup", method = RequestMethod.POST)
+public String acceptStudentSignupForExamSession(Model model, HttpServletRequest request){
+//	System.out.println("prof user name==="+ username);
+	Professor loggedProfessor = SessionHelper.getUserProfessorLogged(request.getSession());
+	 UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
+    UserAttemptRegistration userAttReg= userAttRegDAO.getUserAttemptByProfessorUserName(loggedProfessor);
+    System.out.println("prof user name==="+ loggedProfessor.getUsername());
+    userAttReg.setBooking(Booking.SIGNUP);
+    userAttRegDAO.create(userAttReg);
+	
+    sendEmail.sendEmailRegistration(userAttReg.getStudent().getEmail(),userAttReg.getStudent().getFirstName(),userAttReg.getStudent().getLastName(),
+    		SendEmail.SUBJECT_EXAM_BOOKING,SendEmail.EXAM_SESSION_ATTEMPT_SIGNUP);
+    
+	
+    if(loggedProfessor !=null){
+   	 List<UserAttemptRegistration> listStudentExamSignup = userAttRegDAO.getStudentSignupProfExamSession(loggedProfessor);
+   	 model.addAttribute("listStudentExamSignup", listStudentExamSignup);
+    }
+    return "professor/viewStudentSignupExam";
+}
+//
+//
+//
+@RequestMapping(value = "viewStudentExamSignup", method = RequestMethod.POST, params = "reject")
+public String rejectStudentSignupforExam(@RequestParam(value = "reject") String username, Model model,HttpServletRequest request) {
+	 Professor loggedProfessor = SessionHelper.getUserProfessorLogged(request.getSession());
+	 UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
+    UserAttemptRegistration userAttReg= userAttRegDAO.getUserAttemptByProfessorUserName(loggedProfessor);
+    
+    userAttRegDAO.delete(userAttReg);
+    sendEmail.sendEmailRegistration(userAttReg.getStudent().getEmail(),userAttReg.getStudent().getFirstName(),userAttReg.getStudent().getLastName(),
+    		SendEmail.SUBJECT_EXAM_BOOKING,SendEmail.EXAM_SESSION_ATTEMPT_CANCELED);
+    
+
+    if(loggedProfessor !=null){
+   	 List<UserAttemptRegistration> listStudentExamSignup = userAttRegDAO.getStudentSignupProfExamSession(loggedProfessor);
+   	 model.addAttribute("listStudentExamSignup", listStudentExamSignup);
+    }
+    return "admin/viewStudentExamSignup";
+}
 }
