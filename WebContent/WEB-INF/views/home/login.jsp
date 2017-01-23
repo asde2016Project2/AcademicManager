@@ -3,41 +3,94 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<div class="form-message">
-    <% //show additional message set in the controller %>
-    <h2>${message}</h2>
+
+
+<div>
+
+    <div class="login_wrapper">
+
+        <div class="animate form login_form">
+            <section class="login_content">
+                <div>
+                    <h1><i class="fa fa-paw"></i> AcademicManager</h1>                    
+                </div>
+
+                <form:form method="post" action="" modelAttribute="loginForm">
+
+                    <h1>Login</h1>
+                    <div>     
+                        <div>
+                            <form:input path="username" id="username" cssClass="form-control" required="true"></form:input>                            
+                            <form:errors path="username" cssClass="error form-error"></form:errors>                        
+                            </div>
+                            <div>
+                            <form:password path="password" id="password" cssClass="form-control" required="true"></form:password>                                
+                            <form:errors path="password" cssClass="form-error error"></form:errors>    
+                            </div>
+                            <div>
+                            <form:select path="profileType" id="profileType" name="profileType" cssClass="form-control">
+                                <option value="">Select Type</option>
+                                <option value="administrator">Administrator</option>
+                                <option value="professor">Professor</option>
+                                <option value="student">Student</option>
+                            </form:select>                            
+                            <form:errors path="profileType" cssClass="form-error error"></form:errors> 
+                            </div>
+
+                        <c:if test="${!empty error }">
+                            <br/>
+                            <div class="clearfix"></div>
+                            <div class="row alert alert-danger">${error}</div> 
+                            <div class="clearfix"></div>
+                        </c:if>
+
+                        <div>
+                            <br/>
+                            <button type='submit' class="btn btn-default submit">Login</button>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+
+                        <div class="separator">
+
+                            <p class="change_link">
+                                <a href="<c:url value="/student/register" />" class="to_register"> Register as Student </a>
+                            </p>
+
+
+                            <p class="change_link">
+                                <a href="<c:url value="/professor/register" />" class="to_register"> Register as Professor </a>
+                            </p>
+
+                            <p class="change_link">
+                                <a href="<c:url value="/admin/register" />" class="to_register"> Register as Admin </a>
+                            </p>
+
+                            <div class="clearfix"></div>
+                            <br />
+
+                            <div>                                    
+                                <p>©2017 All Rights Reserved. - AcademicManager v0.0.1</p>
+                            </div>
+                        </div>
+                    </form:form>
+
+
+
+
+
+            </section>
+        </div>                            
+
+
+
+    </div>
+
+
+
 </div>
 
-<div class="login-form">
-    <form:form method="post" action="" modelAttribute="loginForm">
 
-        <label for="username">Username</label>
-        <form:input path="username" id="username"></form:input>
-        <br/>
-        <form:errors path="username" class="error"></form:errors>
-            <br/>
-            <br/>
-            <label for="password">Password</label>
-        <form:password path="password" id="password"></form:password>
-        <br/>
-        <form:errors path="password" class="error"></form:errors>            
-            <br/>
-            <br/>
-            <label for="profileType">Profile Type</label>
-        <form:select path="profileType" id="profileType" name="profileType">
-            <option value="">Select Type</option>
-            <option value="administrator">Administrator</option>
-            <option value="professor">Professor</option>
-            <option value="student">Student</option>
-        </form:select>
-            <br/>
-        <form:errors path="profileType" class="error"></form:errors> 
-            <br/>
-            <br/>
-            <input class="btn-submit" type="submit" value="Login" />
-    </form:form>
 
-    <div class="form-error">${error}</div> 
-</div>
 
-<div class="message">${message}</div>

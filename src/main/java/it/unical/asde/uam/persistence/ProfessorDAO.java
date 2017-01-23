@@ -6,9 +6,11 @@
 package it.unical.asde.uam.persistence;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import it.unical.asde.uam.model.ExamSession;
 import it.unical.asde.uam.model.Professor;
+import it.unical.asde.uam.model.Student;
 
 
 /**
@@ -38,4 +40,8 @@ public interface ProfessorDAO {
     ArrayList<ExamSession> listAllSession();
     
     ArrayList<Professor> getAllProfessor();
+    
+    List<Professor> geAllProfessorsToAcceptRefuse();
+
+    
 }

@@ -6,13 +6,16 @@
 package it.unical.asde.uam.persistence;
 
 import it.unical.asde.uam.dao.DBHandler;
+import it.unical.asde.uam.helper.Accepted;
 import it.unical.asde.uam.model.ExamSession;
 import it.unical.asde.uam.model.Professor;
+import it.unical.asde.uam.model.Student;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.Query;
 
@@ -80,20 +83,20 @@ public class ProfessorDAOImp implements ProfessorDAO {
 
     @Override
     public boolean register(Professor u) {
-        
+
         //if already exist email or username
         if (retrieve(u.getUsername()) != null || retrieveByEmail(u.getEmail()) != null) {
             return false;
         }
-        
+
         //create
         create(u);
-        
+
         //check created
-        if(retrieve(u.getUsername()) == null){
+        if (retrieve(u.getUsername()) == null) {
             return false;
         }
-        
+
         return true;
     }
 
@@ -106,22 +109,32 @@ public class ProfessorDAOImp implements ProfessorDAO {
         Professor professor = (Professor) query.uniqueResult();
         return professor;
     }
-    
-	@Override
-	public ArrayList<ExamSession> listAllSession() {
 
-		String hql = "from ExamSession";
+    @Override
+    public ArrayList<ExamSession> listAllSession() {
+
+        String hql = "from ExamSession";
         Query query = dbHandler.getSession().createQuery(hql);
         ArrayList<ExamSession> examSessions = (ArrayList<ExamSession>) query.list();
-		return examSessions;
-	}
+        return examSessions;
+    }
 
-	@Override
-	public ArrayList<Professor> getAllProfessor() {
-		String hql = "from Professor";
+    @Override
+    public ArrayList<Professor> getAllProfessor() {
+        String hql = "from Professor";
         Query query = dbHandler.getSession().createQuery(hql);
         ArrayList<Professor> professors = (ArrayList<Professor>) query.list();
-		return professors;
-	}
+        return professors;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Professor> geAllProfessorsToAcceptRefuse() {
+        String hql = "from Professor where accepted =:value";
+        Query query = dbHandler.getSession().createQuery(hql);
+        query.setParameter("value", Accepted.NOT_ACCEPTED);
+        List<Professor> professors = (List<Professor>) query.list();
+        return professors;
+    }
 
 }

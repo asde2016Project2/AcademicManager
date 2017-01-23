@@ -2,10 +2,14 @@ package it.unical.asde.uam.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import it.unical.asde.uam.helper.Accepted;
 
 /**
 *
@@ -28,15 +32,9 @@ public class Student extends User {
 	
 	@Column(name = "id_number", nullable = false)
 	private int idNumber;//matricola: non ci devono essere matricole uguali e non deve essere nullo
-
-	@Column(name="photo",nullable=true,length=100000)
-	private String photo;
 	
 	public Student(){
 		super();
-		studyPlan = null;
-		photo = null;
-			
 	}
 	
 	public Student(String username, String password, String firstName, String lastName, boolean status, StudyPlan  studyPlan) {
@@ -57,13 +55,4 @@ public class Student extends User {
 	public void setStudyPlan(StudyPlan studyPlan) {
 		this.studyPlan = studyPlan;
 	}
-
-	public void setPhoto(String photo) {
-		this.photo = photo;
-	}
-	
-	public String getPhoto() {
-		return photo;
-	}
-
 }

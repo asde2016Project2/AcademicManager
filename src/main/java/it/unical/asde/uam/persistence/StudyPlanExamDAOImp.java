@@ -3,11 +3,8 @@ package it.unical.asde.uam.persistence;
 import java.util.List;
 
 import org.hibernate.Query;
-import org.hibernate.Session;
 
 import it.unical.asde.uam.dao.DBHandler;
-import it.unical.asde.uam.model.CareerExam;
-import it.unical.asde.uam.model.DegreeCourse;
 import it.unical.asde.uam.model.StudyPlan;
 import it.unical.asde.uam.model.StudyPlanExam;
 
@@ -58,7 +55,7 @@ public class StudyPlanExamDAOImp implements StudyPlanExamDAO{
 	        Query query = dbHandler.getSession().createQuery(queryString);
 	        query.setParameter("sp", studyPlanId);
 	        List<StudyPlanExam> dgs = (List<StudyPlanExam>) query.list();
-	        dbHandler.close();
+	        //dbHandler.close();
 	        return dgs;
 	        
 	    }
