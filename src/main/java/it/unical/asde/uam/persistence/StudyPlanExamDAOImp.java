@@ -55,7 +55,7 @@ public class StudyPlanExamDAOImp implements StudyPlanExamDAO{
 	        Query query = dbHandler.getSession().createQuery(queryString);
 	        query.setParameter("sp", studyPlanId);
 	        List<StudyPlanExam> dgs = (List<StudyPlanExam>) query.list();
-	        dbHandler.close();
+	        //dbHandler.close();
 	        return dgs;
 	        
 	    }

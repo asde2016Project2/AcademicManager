@@ -1,0 +1,17 @@
+body.nav-md.loginBody,
+body.nav-md.loginBody a
+{
+    color: white;
+    text-shadow: none;
+}
+
+.form-error.error{
+    color: #E9EDEF;
+    background-color: rgba(231, 76, 60, 0.88);
+    border-color: rgba(231, 76, 60, 0.88);
+    text-align: left;
+    margin-top: 2px;
+    margin-bottom: 10px;
+    display:block;
+    padding: 5px;
+}

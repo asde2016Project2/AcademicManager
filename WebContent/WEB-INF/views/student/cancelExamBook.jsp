@@ -3,7 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<h1>Create new Session</h1>
+<h1>${pageTitle}</h1>
 <div>
 <c:if test="${!empty listStudentBooked}">
     <div class="divTable">

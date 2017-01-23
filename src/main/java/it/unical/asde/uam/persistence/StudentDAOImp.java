@@ -53,7 +53,7 @@ public class StudentDAOImp implements StudentDAO {
         String queryString = "from Student"; //c order by c.name";
         Query query = dbHandler.getSession().createQuery(queryString);
         List<Student> dgs = (List<Student>) query.list();
-        dbHandler.close();
+        //dbHandler.close();
         return dgs;
     }
 
@@ -65,7 +65,7 @@ public class StudentDAOImp implements StudentDAO {
         Query query = dbHandler.getSession().createQuery(queryString);
         query.setParameter("givenId", studentId);
         StudyPlan e = (StudyPlan) query.uniqueResult();
-        dbHandler.close();
+        //dbHandler.close();
         return e;
 
     }
@@ -97,7 +97,7 @@ public class StudentDAOImp implements StudentDAO {
         Query query = dbHandler.getSession().createQuery(hql);
         query.setParameter("value", Accepted.NOT_ACCEPTED);
         List<Student> students = (List<Student>) query.list();
-        dbHandler.close();
+        //dbHandler.close();
         return students;
     }
 
@@ -107,7 +107,7 @@ public class StudentDAOImp implements StudentDAO {
         String queryString = "from Student";
         Query query = dbHandler.getSession().createQuery(queryString);
         List<Student> students = (List<Student>) query.list();
-        dbHandler.close();
+        //dbHandler.close();
         if (students == null) {
             return true;
         }
