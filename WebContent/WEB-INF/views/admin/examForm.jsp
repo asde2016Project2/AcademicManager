@@ -1,10 +1,13 @@
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="panel panel-default">
-    <div class="panel-body" style="min-height: 100; max-height: 100;">
+    <div class="panel-body">
 
 
-        <form:form method="POST" modelAttribute="exam"
-                   class="form-horizontal">
+        <form:form method="POST" modelAttribute="exam" cssClass="form-horizontal">
 
             <fieldset>
                 <legend>Add new Exam Information</legend>
