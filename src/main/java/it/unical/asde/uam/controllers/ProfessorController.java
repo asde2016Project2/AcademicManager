@@ -102,14 +102,20 @@ public class ProfessorController extends BaseController {
         return "professor/register";
     }
     
-    @RequestMapping(value ="viewAllSession", method = RequestMethod.GET)
+    @RequestMapping(value ="listSession", method = RequestMethod.GET)
     public String viewAllSession(Model model){
     	ExamSessionDAO examSessionDao = (ExamSessionDAO) context.getBean("examSessionDAO");
-    	AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
     	ArrayList<ExamSession> allExamSessions = (ArrayList<ExamSession>) examSessionDao.getAllExamSession();//.listAllSession();
     	model.addAttribute("lista", allExamSessions);
-    	model.addAttribute("attemptList", attemptDAO.getAllAttempts());
     	return "professor/listSession";
+    }
+    
+    @RequestMapping(value ="listAttempt", method = RequestMethod.GET)
+    public String viewAllAttempts(Model model, HttpServletRequest request){
+    	Professor p = SessionHelper.getUserProfessorLogged(request.getSession()); 
+    	AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
+    	model.addAttribute("attemptList", attemptDAO.getAttemptByProfessor(p));
+    	return "professor/listAttempt";
     }
     
     @RequestMapping(value ="studentExtraExamSession", method = RequestMethod.GET)

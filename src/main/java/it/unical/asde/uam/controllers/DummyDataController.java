@@ -476,5 +476,89 @@ public class DummyDataController extends BaseController {
 
         return "redirect:/";
     }
+    
+    @RequestMapping(value = "addExamSession", method = RequestMethod.GET)
+    public String addExamSession() throws ParseException {
+    	ExamSessionDAO examSessionDAO = (ExamSessionDAO) context.getBean("examSessionDAO");
+    	
+    	DegreeCourseDAO degreeCourseDAO = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
+    	List<DegreeCourse> degrees = degreeCourseDAO.getAllDegrees();
+    	
+    	String startingD = "23-01-2017";
+    	String endingD = "04-03-2017";
+        String dateOfBirthFormat = "dd-mm-yyyy";
+        DateFormat format = new SimpleDateFormat(dateOfBirthFormat, Locale.ENGLISH);
+        Date startingDate = format.parse(startingD);
+        Date endingDate = format.parse(endingD);
+    	
+    	ExamSession e1 = new ExamSession(startingDate, endingDate, "2016/2017", degrees.get(0));
+    	ExamSession e2 = new ExamSession(startingDate, endingDate, "2016/2017", degrees.get(1));
+    	ExamSession e3 = new ExamSession(startingDate, endingDate, "2016/2017", degrees.get(2));
+    	ExamSession e4 = new ExamSession(startingDate, endingDate, "2016/2017", degrees.get(3));
+    	examSessionDAO.create(e1);
+    	examSessionDAO.create(e2);
+    	examSessionDAO.create(e3);
+    	examSessionDAO.create(e4);
+    	
+    	return "redirect:/";
+    }
+    
+    @RequestMapping(value = "addAttempts", method = RequestMethod.GET)
+    public String addAttempts() throws ParseException {
+    	
+    	String dateOfBirthFormat = "dd-MM-yyyy";
+        DateFormat format = new SimpleDateFormat(dateOfBirthFormat, Locale.ENGLISH);
+
+    	AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
+    	Date startingDate = format.parse("11-11-11");
+     	Date endingDate = format.parse("11-11-12");
+     	Date examDate = format.parse("25-11-12");
+     	
+     	ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
+     	ArrayList<Exam> exams = (ArrayList<Exam>) examDAO.getAllExams();
+     	
+     	ProfessorDAO professorDAO = (ProfessorDAO) context.getBean("professorDAO");
+     	ArrayList<Professor> profs = professorDAO.getAllProfessor();
+     	
+     	StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
+     	ArrayList<Student> studs = (ArrayList<Student>) studentDAO.getAllStudents();
+
+     	System.out.println("profs 0: "+profs.get(0).getUsername());
+     	System.out.println("profs 1: "+profs.get(1).getUsername());
+     	System.out.println("profs 2: "+profs.get(2).getUsername());
+     	System.out.println("profs 3: "+profs.get(3).getUsername());
+     	System.out.println("profs 4: "+profs.get(4).getUsername());
+     	DegreeCourseDAO degreeCourseDAO = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
+        DegreeCourse dgC = new DegreeCourse("Informatica");
+        degreeCourseDAO.create(dgC);
+ 
+    	ExamSessionDAO examSessionDAO = (ExamSessionDAO) context.getBean("examSessionDAO");
+        ExamSession es1 = new ExamSession(startingDate, endingDate, "anno1", dgC);
+        examSessionDAO.create(es1);
+
+        ArrayList<Attempt> attemtps2 = new ArrayList<>();
+     	for(int i = 0; i < 20; i++) {
+     		//da ricontrollare...non è fatto benissimo
+     		Attempt a = new Attempt(examDate, "mt"+i, startingDate, endingDate, profs.get(i/5), exams.get(i/3), es1);
+     		attemptDAO.create(a);
+     		attemtps2.add(a);
+     		System.out.println("nome prof: "+profs.get(i/5)+"...nome esame: "+exams.get(i/3).getName());
+     	}
+     	
+     	UserAttemptRegistrationDAO userAttemptRegistrationDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");        
+
+     	for(int i = 0; i < attemtps2.size(); i++) {
+        	System.out.println("coppie");
+        	for( int j = 0; j < studs.size(); j++) {
+        		System.out.println("att: "+attemtps2.get(i).getClassroom()+"...stud: "+studs.get(j).getFirstName());
+        		UserAttemptRegistration userAR = new UserAttemptRegistration(attemtps2.get(i), studs.get(j));
+        		userAttemptRegistrationDAO.create(userAR);
+        	}
+        }
+     	
+     	
+    	return "redirect:/";
+    	
+    }
 
 }

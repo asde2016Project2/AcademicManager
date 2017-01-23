@@ -175,5 +175,18 @@ public class AttemptDAOImp implements AttemptDAO {
             return null;
         }
     }
+    
+    @Override
+	public ArrayList<Attempt> getAttemptByProfessor(Professor p) {
+		
+		int profId = p.getUserId();
+		System.out.println("query prof id: "+p.getUserId());
+		String hql = "from Attempt where user_id=:profID";
+		Query query = dbHandler.getSession().createQuery(hql);
+		query.setParameter("profID", profId);
+		ArrayList<Attempt> a = (ArrayList<Attempt>) query.list();
+		return a;
+	}
+
 
 }

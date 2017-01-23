@@ -31,7 +31,6 @@
 <select name="examSession">
 	<option>Choose</option>
 	<c:forEach items="${examSessions}" var="examSes">
-    	<option><c:out value="${examSes.examSessionId}"></c:out></option>
     	<option><c:out value="${examSes.examSessionId}"></c:out>---<c:out value="${examSes.startingDate}"/>/<c:out value="${examSes.endingDate}"/></option>
   	</c:forEach>
   	</select>

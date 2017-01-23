@@ -33,4 +33,7 @@ public interface AttemptDAO {
 
 	ArrayList<Attempt> getNewExamSessionAttempt(int attemptId);
 
+	ArrayList<Attempt> getAttemptByProfessor(Professor p);
+	
+
 }
