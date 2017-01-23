@@ -336,7 +336,7 @@ public class AdministratorController extends BaseController {
     }
 
     @RequestMapping(value = "createSession", method = RequestMethod.POST)
-    public String createNewSession(@RequestParam("startingDate") String startingDateString, @RequestParam("endingDate") String endingDateString,
+    public String createNewSession(Model model, @RequestParam("startingDate") String startingDateString, @RequestParam("endingDate") String endingDateString,
             @RequestParam("degreeCourse") String degreeCourseName, @RequestParam("academicYear") String academicYear,
             HttpServletRequest request) throws ParseException {
 
@@ -358,8 +358,9 @@ public class AdministratorController extends BaseController {
             return "admin/dashboard";
         }
         else {
-            return "admin/errorExamSession";
-        }
+    		model.addAttribute("error", "The dates or academic year are not ok");
+    		return "admin/createSession";
+    	}
     }
 
     @RequestMapping(value = "viewAllSession", method = RequestMethod.GET)
