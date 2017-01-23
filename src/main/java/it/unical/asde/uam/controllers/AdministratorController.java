@@ -82,6 +82,47 @@ public class AdministratorController extends BaseController {
         model.addAttribute("pageTitle", "Admin Dashboard");
         return "admin/dashboard";
     }
+    
+    
+    @RequestMapping(value = "register", method = RequestMethod.GET)
+    public String showRegisterForm(HttpServletRequest request, Model model) {
+
+        model.addAttribute("pageTitle","Admin Register");     
+        
+        Administrator a = new Administrator();
+        model.addAttribute("administrator", a);
+
+        return "admin/register";
+    }
+
+    @RequestMapping(value = "register", method = RequestMethod.POST)
+    public String doRegister(@ModelAttribute("administrator") @Valid Administrator admin, BindingResult result, HttpServletRequest request, Model model) {
+
+        model.addAttribute("pageTitle","Admin Register");     
+        
+        AdministratorDAO adminDao = (AdministratorDAO) context.getBean("administratorDAO");
+
+        System.out.println("adminHasError: " + result.hasErrors());
+        if (!result.hasErrors()) {
+            //Set to false in production or add a default value "false" for this field
+            admin.setStatus(true);
+            boolean saved = adminDao.register(admin);
+            if (!saved) {
+                model.addAttribute("error", "Username or email already taken");
+                return "professor/register";
+            }
+            else{
+                model.addAttribute("message", messageSource.getMessage("registration.ok", null, localeResolver.resolveLocale(request)));
+                //we clean the model passed to view
+                model.addAttribute("administrator",new Administrator());
+                return "admin/register";
+            }
+
+        } 
+        
+        return "admin/register";
+    }
+ 
 
     @RequestMapping(value = "list/studyplan", method = RequestMethod.GET)
     public String showListStudyPlan(Model model) {
