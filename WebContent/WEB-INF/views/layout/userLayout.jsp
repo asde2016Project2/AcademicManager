@@ -65,6 +65,8 @@
         <script src="<c:url value="/resources/vendors/fastclick/lib/fastclick.js"/>"></script>
         <!-- NProgress -->
         <script src="<c:url value="/resources/vendors/nprogress/nprogress.js"/>"></script>        
+        
+        <script src="<c:url value="/resources/vendors/iCheck/icheck.min.js"/>"></script>        
 
         <!-- Custom Theme Scripts -->        
         <script src="<c:url value="/resources/js/custom.min.js"/>"></script>        
