@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "attempt")
@@ -47,9 +48,9 @@ public class Attempt implements Serializable {
 	@Column(name = "status")
 	private String status;
 
-	// @Column(name = "professor") //foreign key with professor??
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id", nullable = false)
+	@JoinColumn(name = "user_id")
+//	@NotNull
 	private Professor professor;
 
 	// @ManyToOne(fetch = FetchType.LAZY)
@@ -57,12 +58,14 @@ public class Attempt implements Serializable {
 	// private CareerExam careerExam;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "exam_id", nullable = false)
+	@JoinColumn(name = "exam_id")
 	private Exam exam;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "exam_session_id", nullable = false)
+	@JoinColumn(name = "exam_session_id")
 	private ExamSession examSession;
+	
+	
 
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "attempt_id")

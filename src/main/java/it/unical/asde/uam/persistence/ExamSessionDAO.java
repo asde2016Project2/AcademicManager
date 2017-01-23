@@ -8,6 +8,12 @@ import it.unical.asde.uam.model.ExamSession;
 
 public interface ExamSessionDAO {
 
+	void create(ExamSession examSession);
+
+	void saveUpdates(ExamSession examSession);
+	   
+	void delete(ExamSession examSession);
+	 
 	List<ExamSession> listExamRegAppeals();
 
 	ExamSession getExamSessionById(int id);
@@ -17,13 +23,10 @@ public interface ExamSessionDAO {
 	List<ExamSession> listExamSessions(Integer pageNumber, Integer examPerPage);
 
 	List<DegreeCourse> getDegreeCourseToExamSession(Integer examSessionId);
-	
-	
-	 void create(ExamSession examSession);
 
-	 void saveUpdates(ExamSession examSession);
-	   
-	 void deleteAttempt(ExamSession examSession);
+	List<ExamSession> getAllExamSession();
+
+	boolean checkExamSession(String startingDate, String endingDate, String academicYear);
 
 }
 

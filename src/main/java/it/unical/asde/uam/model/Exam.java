@@ -1,9 +1,12 @@
 package it.unical.asde.uam.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -33,10 +36,10 @@ public class Exam implements Serializable {
     @Column(name = "code",nullable = false)
     private int code;
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "exam")
-//    private Set<Attempt> attempts = new HashSet<Attempt>(0);
+    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER, mappedBy = "exam")
+    private Set<Attempt> attempts = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "exam")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "exam")
     private Set<StudyPlanExam> studyPlanExams = new HashSet<>();
 
     public Exam() {
@@ -90,13 +93,13 @@ public class Exam implements Serializable {
         this.code = code;
     }
 
-//    public Set<Attempt> getAttempts() {
-//        return attempts;
-//    }
-//
-//    public void setAttempts(Set<Attempt> attempts) {
-//        this.attempts = attempts;
-//    }
+    public Set<Attempt> getAttempts() {
+        return attempts;
+    }
+
+    public void setAttempts(Set<Attempt> attempts) {
+        this.attempts = attempts;
+    }
 
     public Set<StudyPlanExam> getStudyPlanExams() {
         return studyPlanExams;

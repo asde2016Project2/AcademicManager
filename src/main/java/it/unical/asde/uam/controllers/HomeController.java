@@ -135,8 +135,8 @@ public class HomeController extends BaseController{
             SessionHelper.cleanSession(request.getSession());
             return "home/login";
         }
-        
-  
+
+
 
        SessionHelper.setUserStudentLogged(stud, request.getSession());
        return "redirect:/student/dashboard";

@@ -7,6 +7,7 @@ package it.unical.asde.uam.controllers;
 
 import it.unical.asde.uam.controllers.core.BaseController;
 import it.unical.asde.uam.model.Administrator;
+import it.unical.asde.uam.model.Attempt;
 import it.unical.asde.uam.model.CareerExam;
 import it.unical.asde.uam.model.DegreeCourse;
 import it.unical.asde.uam.model.Exam;
@@ -14,7 +15,9 @@ import it.unical.asde.uam.model.Professor;
 import it.unical.asde.uam.model.Student;
 import it.unical.asde.uam.model.StudyPlan;
 import it.unical.asde.uam.model.StudyPlanExam;
+import it.unical.asde.uam.model.UserAttemptRegistration;
 import it.unical.asde.uam.persistence.AdministratorDAO;
+import it.unical.asde.uam.persistence.AttemptDAO;
 import it.unical.asde.uam.persistence.CareerExamDAO;
 import it.unical.asde.uam.persistence.DegreeCourseDAO;
 import it.unical.asde.uam.persistence.ExamDAO;
@@ -22,6 +25,7 @@ import it.unical.asde.uam.persistence.ProfessorDAO;
 import it.unical.asde.uam.persistence.StudentDAO;
 import it.unical.asde.uam.persistence.StudyPlanDAO;
 import it.unical.asde.uam.persistence.StudyPlanExamDAO;
+import it.unical.asde.uam.persistence.UserAttemptRegistrationDAO;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -271,6 +275,97 @@ public class DummyDataController extends BaseController {
             index++;
         }
 
+    }
+
+    @RequestMapping(value = "addExam", method = RequestMethod.GET)
+    public String addExam() {
+
+        ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
+
+        Exam e1 = new Exam("asde", 6, 21458);
+        Exam e2 = new Exam("asde1", 12, 21258);
+        Exam e3 = new Exam("asde2", 6, 26458);
+        Exam e4 = new Exam("asde3", 3, 21358);
+        Exam e5 = new Exam("asde4", 6, 21858);
+        Exam e6 = new Exam("asde5", 3, 21958);
+        Exam e7 = new Exam("asde6", 6, 21758);
+        Exam e8 = new Exam("asde7", 3, 21058);
+        examDAO.create(e1);
+        examDAO.create(e2);
+        examDAO.create(e3);
+        examDAO.create(e4);
+        examDAO.create(e5);
+        examDAO.create(e6);
+        examDAO.create(e7);
+        examDAO.create(e8);
+
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "addCareerExam", method = RequestMethod.GET)
+    public String addCareerExam() {
+
+        CareerExamDAO careerExamDAO = (CareerExamDAO) context.getBean("careerExamDAO");
+        StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
+        ArrayList<Student> students = (ArrayList<Student>) studentDAO.getAllStudents();
+        System.out.println("students size: " + students.size());
+
+        ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
+        List<Exam> exams = examDAO.getAllExams();
+
+        CareerExam cE1 = new CareerExam(true, 25, true, students.get(0), exams.get(0));
+        CareerExam cE2 = new CareerExam(false, 25, true, students.get(0), exams.get(1));
+        CareerExam cE3 = new CareerExam(false, 25, true, students.get(0), exams.get(2));
+        CareerExam cE4 = new CareerExam(true, 25, true, students.get(0), exams.get(3));
+        CareerExam cE5 = new CareerExam(true, 25, true, students.get(0), exams.get(4));
+        CareerExam cE6 = new CareerExam(true, 25, true, students.get(0), exams.get(5));
+        CareerExam cE7 = new CareerExam(true, 25, true, students.get(0), exams.get(6));
+        CareerExam cE8 = new CareerExam(true, 25, true, students.get(0), exams.get(7));
+
+        CareerExam cE11 = new CareerExam(true, 25, true, students.get(1), exams.get(0));
+        CareerExam cE12 = new CareerExam(false, 25, true, students.get(1), exams.get(1));
+        CareerExam cE13 = new CareerExam(false, 25, true, students.get(1), exams.get(2));
+        CareerExam cE14 = new CareerExam(true, 25, true, students.get(1), exams.get(3));
+        CareerExam cE15 = new CareerExam(false, 25, true, students.get(1), exams.get(4));
+        CareerExam cE16 = new CareerExam(true, 25, true, students.get(1), exams.get(5));
+        CareerExam cE17 = new CareerExam(true, 25, true, students.get(1), exams.get(6));
+        CareerExam cE18 = new CareerExam(true, 25, true, students.get(1), exams.get(7));
+
+        CareerExam cE21 = new CareerExam(true, 25, true, students.get(2), exams.get(0));
+        CareerExam cE22 = new CareerExam(true, 25, true, students.get(2), exams.get(1));
+        CareerExam cE23 = new CareerExam(true, 25, true, students.get(2), exams.get(2));
+        CareerExam cE24 = new CareerExam(true, 25, true, students.get(2), exams.get(3));
+        CareerExam cE25 = new CareerExam(false, 25, true, students.get(2), exams.get(4));
+        CareerExam cE26 = new CareerExam(false, 25, true, students.get(2), exams.get(5));
+        CareerExam cE27 = new CareerExam(true, 25, true, students.get(2), exams.get(6));
+        CareerExam cE28 = new CareerExam(true, 25, true, students.get(2), exams.get(7));
+
+        careerExamDAO.create(cE1);
+        careerExamDAO.create(cE2);
+        careerExamDAO.create(cE3);
+        careerExamDAO.create(cE4);
+        careerExamDAO.create(cE5);
+        careerExamDAO.create(cE6);
+        careerExamDAO.create(cE7);
+        careerExamDAO.create(cE8);
+        careerExamDAO.create(cE11);
+        careerExamDAO.create(cE12);
+        careerExamDAO.create(cE13);
+        careerExamDAO.create(cE14);
+        careerExamDAO.create(cE15);
+        careerExamDAO.create(cE16);
+        careerExamDAO.create(cE17);
+        careerExamDAO.create(cE18);
+        careerExamDAO.create(cE21);
+        careerExamDAO.create(cE22);
+        careerExamDAO.create(cE23);
+        careerExamDAO.create(cE24);
+        careerExamDAO.create(cE25);
+        careerExamDAO.create(cE26);
+        careerExamDAO.create(cE27);
+        careerExamDAO.create(cE28);
+
+        return "redirect:/";
     }
 
     protected Date dateValue() {

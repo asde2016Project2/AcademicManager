@@ -1,6 +1,9 @@
 package it.unical.asde.uam.persistence;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -27,6 +30,23 @@ public class ExamSessionDAOImp implements ExamSessionDAO {
 	public ExamSessionDAOImp() {
 	}
 
+	@Override
+	public void create(ExamSession examSession) {
+		dbHandler.create(examSession);
+	}
+
+	@Override
+	public void saveUpdates(ExamSession examSession) {
+		
+		dbHandler.update(examSession);
+	}
+
+	@Override
+	public void delete(ExamSession examSession) {
+		
+		dbHandler.delete(examSession);
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<ExamSession> listExamRegAppeals() {
@@ -39,7 +59,7 @@ public class ExamSessionDAOImp implements ExamSessionDAO {
 		return examSessions;
 	}
 
-	@Override
+	@Override		
 	public ExamSession getExamSessionById(int examSessionId) {
 		String hql = "from ExamSession where examSessionId =:examSessionId";
 		Query query = dbHandler.getSession().createQuery(hql);
@@ -94,22 +114,34 @@ public class ExamSessionDAOImp implements ExamSessionDAO {
 		return getDegreeCourseToExamSession;
 	}
 
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<ExamSession> getAllExamSession() {
 
-  @Override
-	public void create(ExamSession examSession) {
-		dbHandler.create(examSession);
+		Query query = dbHandler.getSession().createQuery("from ExamSession");
+		return query.list();
 	}
 
+  
 	@Override
-	public void saveUpdates(ExamSession examSession) {
+	public boolean checkExamSession(String startingDate, String endingDate, String academicYear) {
 		
-		dbHandler.update(examSession);
-	}
-
-	@Override
-	public void deleteAttempt(ExamSession examSession) {
-		
-		dbHandler.delete(examSession);
+		String[] strs = startingDate.split("-");
+		String[] years = academicYear.split("/");
+		System.out.println("strs[0]: "+strs[0]+"....years[1]: "+years[1]);
+		if(!(strs[0].equals(years[1]))){
+			System.out.println("strs[0]: "+strs[0]+"....years[1]: "+years[1]);
+			return false;
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			Date endDate = sdf.parse(endingDate);
+			Date startDate = sdf.parse(startingDate);
+		} catch (ParseException e) {
+			System.out.println("ERRORE inserimento data");
+			return false;
+		}
+		return true;
 	}
 
 
