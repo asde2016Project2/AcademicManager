@@ -108,4 +108,22 @@ public class SessionHelper {
         return session.getAttribute(attribute);        
     }
 
+    /**
+     * 3 methods to get the logged user object
+     * 
+     * @param session 
+     */
+    public static Administrator getUserAdministratorLogged(HttpSession session) {
+        return (Administrator) session.getAttribute("user");        
+    }
+    
+    public static Professor getUserProfessorLogged(HttpSession session) {
+        return (Professor) session.getAttribute("user");        
+    }
+    
+    public static Student getUserStudentLogged(HttpSession session) {
+        return (Student) session.getAttribute("user");        
+    }
+    
+    
 }

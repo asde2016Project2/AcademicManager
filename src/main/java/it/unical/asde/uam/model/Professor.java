@@ -1,6 +1,13 @@
 package it.unical.asde.uam.model;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -13,7 +20,10 @@ import javax.persistence.Table;
 public class Professor extends User{
 
 	private static final long serialVersionUID = 1L;
-	
+
+	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER, mappedBy = "professor")
+    private Set<Attempt> attempts = new HashSet<>();
+    
 	public Professor(){
 		super();
 		

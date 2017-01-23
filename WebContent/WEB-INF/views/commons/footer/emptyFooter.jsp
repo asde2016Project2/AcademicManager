@@ -27,6 +27,10 @@
                 <a href="<c:url value="/dummyData/registerStudyPlan" />">Create dummy Study Plan</a>                                
             </li>  
 
+			 <li style="margin-top: 10px">       
+                <a href="<c:url value="/dummyData/addAttempt" />">Create dummy Attempt</a> 
+                <p>It will Create ExamSession, Attempt, Exam and UserAttemptRegistration</p>                               
+            </li>  
         </ul>
     </div>
     <div class="footer-box">

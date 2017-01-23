@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -19,8 +20,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import org.aspectj.internal.lang.annotation.ajcPrivileged;
+
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -41,36 +49,40 @@ public class CareerExam implements Serializable {
 
     @Column(name = "grade")
     private int grade;
-    
 
     @Column(name = "mandatory")
     private boolean mandatory;
+
+    @Column(name = "honours")
+    private boolean honours;
+    // it should be set manually
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "attempt_id")
     private Set<Attempt> attempts = new HashSet<Attempt>();
 
+//    @OneToMany(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "attempt_id")
+//    private Set<Attempt> attempts = new HashSet<Attempt>();
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Student student;
-    
+
     @ManyToOne
     @JoinColumn(name = "exam_id")
     private Exam exam;
 
+    @Column(name = "dateOfExam")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @Past()
+    private Date dateOfExam;
+    // it should be set manually
+
     public CareerExam() {
     }
 
-    public CareerExam(boolean done, int grade,  boolean mandatory, Set<Attempt> attempts, Student student, Exam exam) {
-        this.done = done;
-        this.grade = grade;
-        this.mandatory = mandatory;
-        this.attempts = attempts;
-        this.student = student;
-        this.exam = exam;
-    }
-    
-    public CareerExam(boolean done, int grade,  boolean mandatory, Student student, Exam exam) {
+    public CareerExam(boolean done, int grade, boolean mandatory, Student student, Exam exam) {
         this.done = done;
         this.grade = grade;
         this.mandatory = mandatory;
@@ -78,16 +90,25 @@ public class CareerExam implements Serializable {
         this.student = student;
         this.exam = exam;
     }
+//    
+//    public CareerExam(boolean done, int grade,  boolean mandatory, Student student, Exam exam) {
+//        this.done = done;
+//        this.grade = grade;
+//        this.mandatory = mandatory;
+////        this.attempts = attempts;
+//        this.student = student;
+//        this.exam = exam;
+//    }
 
     public Exam getExam() {
-		return exam;
-	}
+        return exam;
+    }
 
-	public void setExam(Exam exam) {
-		this.exam = exam;
-	}
+    public void setExam(Exam exam) {
+        this.exam = exam;
+    }
 
-	public CareerExam(boolean done, int grade,  boolean mandatory) {
+    public CareerExam(boolean done, int grade, boolean mandatory) {
         this.done = done;
         this.grade = grade;
         this.mandatory = mandatory;
@@ -117,8 +138,6 @@ public class CareerExam implements Serializable {
         this.grade = grade;
     }
 
-   
-
     public boolean isMandatory() {
         return mandatory;
     }
@@ -127,20 +146,35 @@ public class CareerExam implements Serializable {
         this.mandatory = mandatory;
     }
 
-    public Set<Attempt> getAttempts() {
-        return attempts;
-    }
-
-    public void setAttempts(Set<Attempt> attempts) {
-        this.attempts = attempts;
-    }
-
+//    public Set<Attempt> getAttempts() {
+//        return attempts;
+//    }
+//
+//    public void setAttempts(Set<Attempt> attempts) {
+//        this.attempts = attempts;
+//    }
     public Student getStudent() {
         return student;
     }
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    public Date getDateOfExam() {
+        return dateOfExam;
+    }
+
+    public void setDateOfExam(Date dateOfExam) {
+        this.dateOfExam = dateOfExam;
+    }
+
+    public boolean isHonours() {
+        return honours;
+    }
+
+    public void setHonours(boolean honours) {
+        this.honours = honours;
     }
 
 }
