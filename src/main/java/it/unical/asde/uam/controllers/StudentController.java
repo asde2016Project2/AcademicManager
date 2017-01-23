@@ -132,243 +132,240 @@ public class StudentController extends BaseController {
     }
 
     // -------------------Exam Reservation process-------//
-    @RequestMapping(value = "registrationAppeals", method = RequestMethod.GET)
-    public String viewExamSession(Model model) {
-        model.addAttribute("pageTitle", "Registration Appeals");
-        ExamSessionDAO examSessionDAO = (ExamSessionDAO) context.getBean("examSessionDAO");
-        List<ExamSession> listExamSession = examSessionDAO.listExamRegAppeals();
-        model.addAttribute("listExamSession", listExamSession);
 
-        return "student/registrationAppeals";
-    }
+	@RequestMapping(value = "academicExamSessionList", method = RequestMethod.GET)
+	public String viewExamSession(Model model) {
+		model.addAttribute("pageTitle", "Registration Appeals");
+		ExamSessionDAO examSessionDAO = (ExamSessionDAO) context.getBean("examSessionDAO");
+		List<ExamSession> listExamSession = examSessionDAO.listExamRegAppeals();
+		model.addAttribute("listExamSession", listExamSession);
 
-    @RequestMapping(value = "registrationAppeals/examSession/{sessionId:.+}", method = RequestMethod.GET)
-    public String viewAttempt(@PathVariable("sessionId") Integer sessionId, Model model) throws Exception {
-        ExamSessionDAO examSessionDAO = (ExamSessionDAO) context.getBean("examSessionDAO");
-        model.addAttribute("examSession", examSessionDAO.getExamSessionById(sessionId));
-        ExamSession examSession = new ExamSession();
-        examSession = examSessionDAO.getExamSessionById(sessionId);
-        //
+		return "student/academicExamSessionList";
+	}
 
-        if (examSession != null) {
-            model.addAttribute("pageTitle", "Exam Reservation View");
-            AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
-            model.addAttribute("listOfExamReservation", attemptDAO.getExamSessionToAttempt(sessionId));
+	@RequestMapping(value = "academicExamSessionList/examSession/{sessionId:.+}", method = RequestMethod.GET)
+	public String viewAttempt(@PathVariable("sessionId") Integer sessionId, Model model) throws Exception {
+		ExamSessionDAO examSessionDAO = (ExamSessionDAO) context.getBean("examSessionDAO");
+		model.addAttribute("examSession", examSessionDAO.getExamSessionById(sessionId));
+		ExamSession examSession = new ExamSession();
+		examSession = examSessionDAO.getExamSessionById(sessionId);
+		//
+		if (examSession != null) {
+			model.addAttribute("pageTitle", "Exam Reservation View");
+			AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
+			model.addAttribute("listOfExamReservation", attemptDAO.getExamSessionToAttempt(sessionId));
 
-        }
-        else {
-            return "redirect:/";
-        }
+		}
 
-        return "student/listExamReservationBoard";
-    }
+		return "student/listExamReservationBoard";
+	}
 
-    @RequestMapping(value = "list/ExamReserve", method = RequestMethod.GET)
-    public String viewAttempt(Model model) throws NullPointerException {
-        model.addAttribute("pageTitle", "Exam Board");
-        AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
-        ArrayList<Attempt> listOfExamReservation = attemptDAO.listActiveExamforAttempt();
-        ArrayList<Professor> professor = new ArrayList<>();
+	@RequestMapping(value = "list/ExamReserve", method = RequestMethod.GET)
+	public String viewAttempt(Model model) throws NullPointerException {
+		model.addAttribute("pageTitle", "Exam Board");
+		AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
+		ArrayList<Attempt> listOfExamReservation = attemptDAO.listActiveExamforAttempt();
+		// ArrayList<Professor> professor = new ArrayList<>();
 
-        System.out.println("ExamBoardInformaiton- return list of information-");
-        for (Attempt attempt : listOfExamReservation) {
-            professor.add(attempt.getProfessor());
-        }
+		// if (listOfExamReservation.isEmpty()) {
+		// System.out.println("ExamBoardInformaiton--");
+		// return "redirect:/";
+		//
+		// } else {
 
-        // model.addAttribute("listOfExamReservation", exams);
-        model.addAttribute("listOfExamReservation", listOfExamReservation);
+		System.out.println("return list of information-" + listOfExamReservation.size());
+		// for (Attempt attempt : listOfExamReservation) {
+		// professor.add(attempt.getProfessor());
+		// }
 
-        return "student/listExamReservationBoard";
-    }
+		// model.addAttribute("listOfExamReservation", exams);
+		model.addAttribute("listOfExamReservation", listOfExamReservation);
+		// }
+		return "student/listExamReservationBoard";
+	}
 
-    @RequestMapping(value = "detail/examBooking/{attemptId}", method = RequestMethod.GET)
-    public String cancelOrSignupForExam(@PathVariable("attemptId") Integer attemptId, Model model,
-            HttpServletRequest request) throws Exception {
-        AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
-        Attempt attempt = new Attempt();
-        attempt = attemptDAO.getAttemptById(attemptId);
+	@RequestMapping(value = "detail/examBooking/{attemptId}", method = RequestMethod.GET)
+	public String cancelOrSignupForExam(@PathVariable("attemptId") Integer attemptId, Model model,
+			HttpServletRequest request) throws Exception {
+		AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
+		Attempt attempt = new Attempt();
+		attempt = attemptDAO.getAttemptById(attemptId);
 
-        model.addAttribute("examName", attempt.getExam().getName());
-        model.addAttribute("startDate", attempt.getStartRegistrationDate());
-        model.addAttribute("accademicSession", attempt.getExamSession().getAcademicYear());
+		model.addAttribute("examName", attempt.getExam().getName());
+		model.addAttribute("startDate", attempt.getStartRegistrationDate());
+		model.addAttribute("accademicSession", attempt.getExamSession().getAcademicYear());
 
-        System.out.println("cheching if it is not null: " + attemptId);
+		System.out.println("cheching if it is not null: " + attemptId);
 
-        ArrayList<Attempt> attempts = new ArrayList<>();
-        attempts = attemptDAO.getNewExamSessionAttempt(attemptId);
-        ArrayList<UserAttemptRegistration> userAttemptRegistrations = new ArrayList<>();
-//		
-        if (attempts.size() > 0) {
+		ArrayList<Attempt> attempts = new ArrayList<>();
+		attempts = attemptDAO.getNewExamSessionAttempt(attemptId);
+		ArrayList<UserAttemptRegistration> userAttemptRegistrations = new ArrayList<>();
+		//
+		if (attempts.size() > 0) {
 
-            model.addAttribute("attempts", attempts);
-            model.addAttribute("attemptId", attempt.getAttemptId());
-//	    	model.addAttribute("username", attemptRegistration.getStudent().getUsername());
-            model.addAttribute("examBookingForm", new ExamReserveFormDTO());
-            model.addAttribute("userAttRegId", attempt.getAttemptId());
-        }
-        else {
-            return "redirect:/student/listExamReservationBoard";
-        }
+			model.addAttribute("attempts", attempts);
+			model.addAttribute("attemptId", attempt.getAttemptId());
+			// model.addAttribute("username",
+			// attemptRegistration.getStudent().getUsername());
+			model.addAttribute("examBookingForm", new ExamReserveFormDTO());
+			model.addAttribute("userAttRegId", attempt.getAttemptId());
+		} else {
+			return "redirect:/student/listExamReservationBoard";
+		}
 
-//		
-        return "student/reserveExam";
-    }
+		//
+		return "student/reserveExam";
+	}
 
-    /**
-     * Reserve for final exam
-     */
-    @RequestMapping(value = "detail/examBooking/{userAttRegId}", method = RequestMethod.POST, params = "signup")
-    public String reserveForExam(@RequestParam(value = "attemptId") int attemptId,
-            @RequestParam(value = "signup") String status, Model model, HttpServletRequest request) {
-        UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
-        AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
+	int signedStudent = 0;
 
-        Attempt attempt = attemptDAO.getAttemptById(attemptId);
-        Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
+	/**
+	 * Reserve for final exam
+	 */
+	@RequestMapping(value = "detail/examBooking/{attemptId}", method = RequestMethod.POST, params = "signup")
+	public String reserveForExam(@RequestParam(value = "attemptId") int attemptId,
+			@RequestParam(value = "signup") String status, Model model, HttpServletRequest request) {
+		UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context
+				.getBean("userAttemptRegistrationDAO");
+		AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
 
-        int signedStudent = userAttRegDAO.getUserAttemptByStudentNum().size();
-        model.addAttribute("signedStudent", signedStudent);
+		Attempt attempt = attemptDAO.getAttemptById(attemptId);
+		Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
 
-        if (attempt != null && loggedStudent != null) {
-            UserAttemptRegistration attemptRegistration2 = new UserAttemptRegistration(attempt, loggedStudent);
-            attemptRegistration2.setBooking(Booking.SIGNUP);
-            attemptRegistration2.setStatus("SIGNUP");
-            userAttRegDAO.create(attemptRegistration2);
-            model.addAttribute("examName", attempt.getExam().getName());
-            model.addAttribute("startDate", attempt.getStartRegistrationDate());
-            model.addAttribute("accademicSession", attempt.getExamSession().getAcademicYear());
-            String studFullName = loggedStudent.getFirstName() + " " + loggedStudent.getLastName();
-            model.addAttribute("studFullName", studFullName);
-            System.out.println("//////////////////////" + attemptRegistration2);
+		signedStudent = userAttRegDAO.getUserAttemptByStudentNum().size();
+		model.addAttribute("signedStudent", signedStudent);
 
-            sendEmail.sendEmailRegistration(loggedStudent.getEmail(), loggedStudent.getFirstName(),
-                    loggedStudent.getLastName(), SendEmail.SUBJECT_EXAM_BOOKING, SendEmail.EXAM_SESSION_ATTEMPT_SIGNUP);
-            int userId = loggedStudent.getUserId();
-            System.out.println("userId====logger=" + userId);
+		if (attempt != null && loggedStudent != null) {
+			UserAttemptRegistration attemptRegistration2 = new UserAttemptRegistration(attempt, loggedStudent);
+			attemptRegistration2.setBooking(Booking.CANCEL);
+			attemptRegistration2.setStatus("SIGNUP");
 
-            ArrayList<UserAttemptRegistration> listStudentBooked = userAttRegDAO.getUserAttemptByStudentUserNames(userId);
-            model.addAttribute("listStudentBooked", listStudentBooked);
-        }
-        return "student/resultReserveExam";
-    }
+			model.addAttribute("examName", attempt.getExam().getName());
+			model.addAttribute("startDate", attempt.getStartRegistrationDate());
+			model.addAttribute("accademicSession", attempt.getExamSession().getAcademicYear());
+			String studFullName = loggedStudent.getFirstName() + " " + loggedStudent.getLastName();
+			model.addAttribute("studFullName", studFullName);
 
-    /**
-     * Cancel Reservation for final exam although it takes some parameters to
-     * cancel the reservation
-     */
-    @RequestMapping(value = "detail/examBooking/{userAttRegId}", method = RequestMethod.POST, params = "cancel")
-    public String cancelReservation(@RequestParam(value = "userAtRegId") int userAtRegId, @RequestParam(value = "cancel") String status,
-            Model model, HttpServletRequest request) {
+			System.out.println("//////////////////////" + attemptRegistration2);
+			System.out.println("user logged in detail booking =" + loggedStudent.getUserId());
 
-        UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
+			userAttRegDAO.create(attemptRegistration2);
 
-        System.out.println("userAtRegId====" + userAtRegId);
+			sendEmail.sendEmailRegistration(loggedStudent.getEmail(), loggedStudent.getFirstName(),
+					loggedStudent.getLastName(), SendEmail.SUBJECT_REQUEST_REGISTATION,
+					SendEmail.TEXT_ACCEPTED_REGISTRATION);
 
-        UserAttemptRegistration result = userAttRegDAO.getUserAttemptRegById(userAtRegId);
-//		model.addAttribute("userAttemptRegistration", result);
-        Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
-        System.out.println("result======" + result.getStudent());
-        Attempt attempt = new Attempt();
-        attempt = result.getAttempt();
-        UserAttemptRegistration attemptRegistration2 = new UserAttemptRegistration(attempt, loggedStudent);
-        attemptRegistration2.setBooking(Booking.CANCEL);
-        attemptRegistration2.setStatus("Cancel");
-        System.out.println("//////////////////////" + attemptRegistration2);
-        sendEmail.sendEmailRegistration(loggedStudent.getEmail(), loggedStudent.getFirstName(), loggedStudent.getLastName(),
-                SendEmail.SUBJECT_EXAM_BOOKING, SendEmail.EXAM_SESSION_ATTEMPT_CANCELED);
-        userAttRegDAO.delete(result);
+			ArrayList<UserAttemptRegistration> listStudentBooked = userAttRegDAO
+					.getUserAttemptByStudentUserNames(loggedStudent);
+			model.addAttribute("listStudentBooked", listStudentBooked);
+		}
+		return "student/resultReserveExam";
+	}
 
-        ExamSessionDAO examSessionDAO = (ExamSessionDAO) context.getBean("examSessionDAO");
-        List<ExamSession> listExamSession = examSessionDAO.listExamRegAppeals();
-        model.addAttribute("listExamSession", listExamSession);
+	/**
+	 * Cancel Reservation for final exam although it takes some parameters to
+	 * cancel the reservation
+	 */
+	@RequestMapping(value = "detail/examBooking/{attemptId}", method = RequestMethod.POST, params = "cancel")
+	public String cancelReservation(@RequestParam(value = "attemptId") int attemptId,
+			@RequestParam(value = "cancel") String status, Model model, HttpServletRequest request) {
+		Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
+		UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context
+				.getBean("userAttemptRegistrationDAO");
 
-        return "student/listExamReservationBoard";
-    }
+		System.out.println("userAtRegId====" + attemptId);
+		UserAttemptRegistration attemptRegistration = userAttRegDAO.getUserAttemptRegByAttemptId(attemptId);
 
-    /**
-     * When the student login they will find the signup exam sessions Exam
-     * reserved by students
-     */
-    @RequestMapping(value = "cancelExamBook", method = RequestMethod.GET)
-    public String examReservedByStudent(Model model, HttpServletRequest request) {
-        UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
-        Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
-        int userIds = loggedStudent.getUserId();
-        if (userIds > 0) {
-            UserAttemptRegistration attemptRegistration = new UserAttemptRegistration();
-            attemptRegistration = userAttRegDAO.getUserAttemptByStudentUserName(userIds);
-            if (attemptRegistration != null) {
-                model.addAttribute("examName", attemptRegistration.getAttempt().getExam().getName());
-                model.addAttribute("startDate", attemptRegistration.getAttempt().getStartRegistrationDate());
-                model.addAttribute("accademicSession", attemptRegistration.getAttempt().getExamSession().getAcademicYear());
+		System.out.println("attemptRegistration" + attemptRegistration.getUserAtRegId());
 
-                String studFullName = loggedStudent.getFirstName() + " " + loggedStudent.getLastName();
-                model.addAttribute("studFullName", studFullName);
-                System.out.println("user userIds----" + userIds);
+		// model.addAttribute("userAttemptRegistration", result);
+		System.out.println("result======" + loggedStudent.getUsername());
+		Attempt attempt = new Attempt();
+		attempt = attemptRegistration.getAttempt();
+		System.out.println("attempt=====" + attempt.getAttemptId());
 
-                ArrayList<UserAttemptRegistration> listStudentBooked = userAttRegDAO.getUserAttemptByStudentUserNames(userIds);
-                model.addAttribute("listStudentBooked", listStudentBooked);
-                System.out.println("user booked----" + listStudentBooked.size());
-            }
+		attemptRegistration = new UserAttemptRegistration(attempt, loggedStudent);
 
-        }
-        return "student/cancelExamBook";
-    }
+		userAttRegDAO.delete(attemptRegistration);
 
-    @RequestMapping(value = "cancelExamBook", method = RequestMethod.POST)
-    public String cancelSignup(Model model, HttpServletRequest request) {
-        UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
-        Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
-        int userIds = loggedStudent.getUserId();
-        UserAttemptRegistration attemptRegistration = new UserAttemptRegistration();
-        attemptRegistration = userAttRegDAO.getUserAttemptByStudentUserName(userIds);
-        System.out.println("//////////////////////" + attemptRegistration);
-        sendEmail.sendEmailRegistration(loggedStudent.getEmail(), loggedStudent.getFirstName(), loggedStudent.getLastName(),
-                SendEmail.SUBJECT_EXAM_BOOKING, SendEmail.EXAM_SESSION_ATTEMPT_CANCELED);
-        userAttRegDAO.delete(attemptRegistration);
+		sendEmail.sendEmailRegistration(loggedStudent.getEmail(), loggedStudent.getFirstName(),
+				loggedStudent.getLastName(), SendEmail.SUBJECT_REQUEST_REGISTATION,
+				SendEmail.TEXT_NOT_ACCEPTED_REGISTRATION);
 
-        ArrayList<UserAttemptRegistration> listStudentBooked = userAttRegDAO.getUserAttemptByStudentUserNames(userIds);
-        model.addAttribute("listStudentBooked", listStudentBooked);
-        System.out.println("user booked----" + listStudentBooked.size());
-        return "student/listExamReservationBoard";
-    }
+		if (attemptRegistration.getUserAtRegId() == 0) {
 
-    @RequestMapping(value = {"examSession/id={sessionId:.+}",
-        "registrationAppeals/examSession/{sessionId:.+}"}, method = RequestMethod.GET)
-    public String examReservationView(@PathVariable("sessionId") Integer sessionId, Model model) throws Exception {
-        ExamSessionDAO examSessionDAO = (ExamSessionDAO) context.getBean("examSessionDAO");
-        model.addAttribute("examSession", examSessionDAO.getExamSessionById(sessionId));
+			ExamSessionDAO examSessionDAO = (ExamSessionDAO) context.getBean("examSessionDAO");
+			List<ExamSession> listExamSession = examSessionDAO.listExamRegAppeals();
+			model.addAttribute("listExamSession", listExamSession);
+			return "student/listExamReservationBoard";
+		} else {
+			ArrayList<UserAttemptRegistration> listStudentBooked = userAttRegDAO
+					.getUserAttemptByStudentUserNames(loggedStudent);
+			model.addAttribute("listStudentBooked", listStudentBooked);
+			System.out.println("user booked----" + listStudentBooked.size());
+			
+			return "student/cancelExamBook";
+		}
 
-        AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
-        model.addAttribute("listOfExamReservation", attemptDAO.getExamSessionToAttempt(sessionId));
+		// return "student/listExamReservationBoard";
+	}
 
-        return "student/examReservationBoard";
-    }
+	/**
+	 * When the student login they will find the signup exam sessions Exam
+	 * reserved by students
+	 */
+	@RequestMapping(value = "cancelExamBook", method = RequestMethod.GET)
+	public String examReservedByStudent(Model model, HttpServletRequest request) {
+		UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context
+				.getBean("userAttemptRegistrationDAO");
+		Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
+		if (loggedStudent != null) {
+			UserAttemptRegistration attemptRegistration = new UserAttemptRegistration();
+			attemptRegistration = userAttRegDAO.getUserAttemptByStudentById(loggedStudent);
+			if (attemptRegistration != null) {
+				model.addAttribute("examName", attemptRegistration.getAttempt().getExam().getName());
+				model.addAttribute("startDate", attemptRegistration.getAttempt().getStartRegistrationDate());
+				model.addAttribute("accademicSession",
+						attemptRegistration.getAttempt().getExamSession().getAcademicYear());
 
-    @RequestMapping(value = {"attempt/id={attemptId:.+}",
-        "examReservationBoard/attempt/{attemptId:.+}"}, method = RequestMethod.GET)
-    public String cancelExamReservationView(@PathVariable("attemptId") Integer attemptId, Model model)
-            throws Exception {
-        UserAttemptRegistrationDAO userAttemptRegistrationDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
-        //		model.addAttribute("userAttemptRegistration", userAttemptRegistrationDAO.getUserAttemptRegById(attemptId));
+				String studFullName = loggedStudent.getFirstName() + " " + loggedStudent.getLastName();
+				model.addAttribute("studFullName", studFullName);
+				System.out.println("user userIds----" + loggedStudent.getUserId());
 
-        model.addAttribute("listResrveExams", userAttemptRegistrationDAO.getAttemptToUserAttemptReg(attemptId));
+				ArrayList<UserAttemptRegistration> listStudentBooked = userAttRegDAO
+						.getUserAttemptByStudentUserNames(loggedStudent);
+				model.addAttribute("listStudentBooked", listStudentBooked);
+				System.out.println("user booked----" + listStudentBooked.size());
+			}
 
-        return "student/reserveExam";
-    }
+		}
+		return "student/cancelExamBook";
+	}
 
-    /**
-     * Reserve for final exam
-     */
-    @RequestMapping(value = {"userAttemptRegistration/id={userAtRegId:.+}",
-        "reserveExam/userAttemptRegistration/{userAtRegId:.+}"}, method = RequestMethod.GET)
-    public String reserveExam(@PathVariable("userAtRegId") Integer userAtRegId, Model model) throws Exception {
-        UserAttemptRegistrationDAO userAttemptRegistrationDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
-        model.addAttribute("userAttemptRegistration", userAttemptRegistrationDAO.getUserAttemptRegById(userAtRegId));
+	/*
+	 * Cancel after the student loging to the system
+	 */
+	@RequestMapping(value = "cancelExamBook", method = RequestMethod.POST)
+	public String cancelSignup(Model model, HttpServletRequest request) {
+		UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context
+				.getBean("userAttemptRegistrationDAO");
+		Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
 
-        //		AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
-        return "student/reserveExam";
-    }
+		UserAttemptRegistration attemptRegistration = new UserAttemptRegistration();
+		attemptRegistration = userAttRegDAO.getUserAttemptByStudentById(loggedStudent);
+		System.out.println("//////////////////////" + attemptRegistration);
+		userAttRegDAO.delete(attemptRegistration);
+
+		sendEmail.sendEmailRegistration(loggedStudent.getEmail(), loggedStudent.getFirstName(),
+				loggedStudent.getLastName(), SendEmail.SUBJECT_EXAM_BOOKING, SendEmail.EXAM_SESSION_ATTEMPT_CANCELED);
+
+		ArrayList<UserAttemptRegistration> listStudentBooked = userAttRegDAO
+				.getUserAttemptByStudentUserNames(loggedStudent);
+		System.out.println("user booked----" + listStudentBooked.size());
+		model.addAttribute("listStudentBooked", listStudentBooked);
+
+		return "student/listExamReservationBoard";
+	}
 
     // registration stuff
     @RequestMapping(value = "register", method = RequestMethod.GET)

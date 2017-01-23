@@ -126,11 +126,31 @@ public class ExamSessionDAOImp implements ExamSessionDAO {
 	@Override
 	public boolean checkExamSession(String startingDate, String endingDate, String academicYear) {
 		
-		String[] strs = startingDate.split("-");
+		String[] strsStart = startingDate.split("-");
+		String[] strsEnd = endingDate.split("-");
 		String[] years = academicYear.split("/");
-		System.out.println("strs[0]: "+strs[0]+"....years[1]: "+years[1]);
-		if(!(strs[0].equals(years[1]))){
-			System.out.println("strs[0]: "+strs[0]+"....years[1]: "+years[1]);
+		
+		int dayStart = Integer.parseInt(strsStart[2]);
+		int monthStart = Integer.parseInt(strsStart[1]);
+		int yearStart = Integer.parseInt(strsStart[0]);
+		
+		int dayEnd = Integer.parseInt(strsEnd[2]);
+		int monthEnd = Integer.parseInt(strsEnd[1]);
+		int yearEnd = Integer.parseInt(strsEnd[0]);
+		
+		if(yearStart == yearEnd) {
+			if(monthStart == monthEnd) {
+				if(dayStart>=dayEnd)
+					return false;
+			}
+			else if(monthStart > monthEnd)
+				return false;
+		}
+		
+		
+		System.out.println("strs[0]: "+strsStart[0]+"....years[1]: "+years[1]);
+		if(!(strsStart[0].equals(years[1]))){
+			System.out.println("strs[0]: "+strsStart[0]+"....years[1]: "+years[1]);
 			return false;
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

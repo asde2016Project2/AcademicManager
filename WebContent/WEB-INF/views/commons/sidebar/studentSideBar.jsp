@@ -39,9 +39,9 @@
                 <li>
                     <a><i class="fa fa-home"></i> Exam <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                        <li><a href="<c:url value="/student/registrationAppeals" />">Registration Appeals</a></li>
+                        <li><a href="<c:url value="/student/academicExamSessionList" />">Academic ExamSessions List</a></li>
                         <li><a href="<c:url value="/student/list/ExamReserve" />">Reservation Board</a></li>                                               
-                        <li><a href="<c:url value="/student/cancelExamBook" />">Reserved Exam</a></li>                                               
+                        <li><a href="<c:url value="/student/cancelExamBook" />">Reserved Exam</a></li>                                              
                     </ul>
                 </li>                
                 <li><a><i class="fa fa-desktop"></i> Career & Study Plan <span class="fa fa-chevron-down"></span></a>
