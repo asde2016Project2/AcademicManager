@@ -83,20 +83,20 @@ public class ProfessorDAOImp implements ProfessorDAO {
 
     @Override
     public boolean register(Professor u) {
-        
+
         //if already exist email or username
         if (retrieve(u.getUsername()) != null || retrieveByEmail(u.getEmail()) != null) {
             return false;
         }
-        
+
         //create
         create(u);
-        
+
         //check created
-        if(retrieve(u.getUsername()) == null){
+        if (retrieve(u.getUsername()) == null) {
             return false;
         }
-        
+
         return true;
     }
 
@@ -109,45 +109,32 @@ public class ProfessorDAOImp implements ProfessorDAO {
         Professor professor = (Professor) query.uniqueResult();
         return professor;
     }
-    
-	@Override
-	public boolean checkExamSession(String startingDate, String endingDate, String academicYear) {
-		
-		String[] strs = startingDate.split("-");
-		String[] years = academicYear.split("/");
-		System.out.println("strs[0]: "+strs[0]+"....years[1]: "+years[1]);
-		if(!(strs[0].equals(years[1]))){
-			System.out.println("strs[0]: "+strs[0]+"....years[1]: "+years[1]);
-			return false;
-		}
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		try {
-			Date endDate = sdf.parse(endingDate);
-			Date startDate = sdf.parse(startingDate);
-		} catch (ParseException e) {
-			System.out.println("ERRORE inserimento data");
-			return false;
-		}
-		return true;
-	}
 
-	@Override
-	public ArrayList<ExamSession> listAllSession() {
+    @Override
+    public ArrayList<ExamSession> listAllSession() {
 
-		String hql = "from ExamSession";
+        String hql = "from ExamSession";
         Query query = dbHandler.getSession().createQuery(hql);
         ArrayList<ExamSession> examSessions = (ArrayList<ExamSession>) query.list();
-		return examSessions;
-	}
+        return examSessions;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Professor> geAllProfessorsToAcceptRefuse() {
-		String hql = "from Professor where accepted =:value";
-		Query query = dbHandler.getSession().createQuery(hql);
-		query.setParameter("value",Accepted.NOT_ACCEPTED);
-		List<Professor> professors = (List<Professor>) query.list();
-		return professors;
-	}
+    @Override
+    public ArrayList<Professor> getAllProfessor() {
+        String hql = "from Professor";
+        Query query = dbHandler.getSession().createQuery(hql);
+        ArrayList<Professor> professors = (ArrayList<Professor>) query.list();
+        return professors;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Professor> geAllProfessorsToAcceptRefuse() {
+        String hql = "from Professor where accepted =:value";
+        Query query = dbHandler.getSession().createQuery(hql);
+        query.setParameter("value", Accepted.NOT_ACCEPTED);
+        List<Professor> professors = (List<Professor>) query.list();
+        return professors;
+    }
 
 }

@@ -2,10 +2,12 @@ package it.unical.asde.uam.model;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -43,8 +45,8 @@ public class ExamSession implements Serializable {
     @Column(name="status")
     private String status;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "examSession")
-    private Set<Attempt> attempts= new HashSet<Attempt>();
+    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER, mappedBy = "examSession")
+    private Set<Attempt> attempts = new HashSet<>();
 
     @ManyToOne( fetch=FetchType.LAZY)
     @JoinColumn(name="degree_course_id")
@@ -82,7 +84,7 @@ public class ExamSession implements Serializable {
     	this.setEndingDataString(sdf.format(this.endingDate));
     }
 
-    public int getSessionId() {
+    public int getExamSessionId() {
         return examSessionId;
     }
 

@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -25,6 +26,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.aspectj.internal.lang.annotation.ajcPrivileged;
+
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -165,7 +168,6 @@ public class CareerExam implements Serializable {
     public void setDateOfExam(Date dateOfExam) {
         this.dateOfExam = dateOfExam;
     }
-
 
     public boolean isHonours() {
         return honours;

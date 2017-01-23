@@ -32,7 +32,22 @@
                 <li class="active"><a href="<c:url value="/professor/dashboard"/>"><i class="fa fa-home"></i> Dashboard</a></li>                           
             </ul>
         </div>
-
+            
+            
+        <div class="menu_section">
+            <h3>Manage Exams</h3>
+            <ul class="nav side-menu">                
+                <li>
+                    <a><i class="fa fa-home"></i> Exams <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="<c:url value="/professor/registerExam" />"> Register Exam to Student</a></li>
+                        <li><a href="<c:url value="/professor/createAttempt" />"> Open Attempt</a></li>                                               
+                    </ul>
+                </li>                                
+            </ul>
+        </div>
+            
+            
         <div class="menu_section">
             <h3>Manage Students</h3>
             <ul class="nav side-menu">                
