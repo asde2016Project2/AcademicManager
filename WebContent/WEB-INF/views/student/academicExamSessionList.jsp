@@ -44,8 +44,8 @@
 									</c:forEach>
 								</tbody>
 
-								<tbody>
-									<!-- div class="pagination-container">
+								<!-- <tbody>
+									 div class="pagination-container">
                                             <c:forEach var="page" begin="1" end="${numberOfPages}">
                                                 <c:url var="url" value="registrationAppeals/${page}" />
                                                 <span id="page-number"> <a href="${url}"> ${page}

@@ -5,10 +5,11 @@
 
 <h1>${pageTitle}</h1>
 <div class="panel panel-default">
-	<div class="panel-body" style="min-height: 100; max-height: 100;">
-
+	<div class="bs-docs-section">
+		<div class="row">
+			<div class="col-lg-8">
 		<c:if test="${!empty listStudentBooked }">
-			<table class="table table-striped table-hover ">
+			<table class="table table-hover ">
 				<thead>
 					<tr>
 						<th width="80">ID</th>
@@ -37,8 +38,8 @@
 									<input id="userAtId" type="hidden" name="userAtRegId"
 										value="${userAttemptRegistration.userAtRegId}" />
 										
-									<button id="btnCancel" type="submit">Cancel</button>
-									<button id="btnSignup" type="submit" disabled="disabled">Signup</button>
+									<button class="btn btn-danger" id="btnCancel" type="submit">Cancel</button>
+									<button class="btn btn-default" id="btnSignup" type="submit" disabled="disabled">Signup</button>
 								</form>
 							</td>
 						</tr>
@@ -47,4 +48,6 @@
 			</table>
 		</c:if>
 	</div>
+</div>
+</div>
 </div>

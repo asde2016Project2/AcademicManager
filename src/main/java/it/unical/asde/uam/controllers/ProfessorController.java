@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -261,11 +262,13 @@ public String getStudentSignupForExamSession(Model model,HttpServletRequest requ
 	  
 	 Professor loggedProfessor = SessionHelper.getUserProfessorLogged(request.getSession());
 	 UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
-    
+	 ArrayList<UserAttemptRegistration> listStudentExamSignup=null;
 	 if(loggedProfessor !=null){
-    	 List<UserAttemptRegistration> listStudentExamSignup = userAttRegDAO.getStudentSignupProfExamSession(loggedProfessor);
+    	  listStudentExamSignup = userAttRegDAO.getStudentSignupProfExamSession(loggedProfessor);
+    	  model.addAttribute("listStudentExamSignup", listStudentExamSignup);
+	 }else
     	 model.addAttribute("listStudentExamSignup", listStudentExamSignup);
-     }
+	 
 	 
 	return "professor/viewStudentExamSignup";
 }
@@ -273,44 +276,47 @@ public String getStudentSignupForExamSession(Model model,HttpServletRequest requ
 
 
 
-@RequestMapping(value = "viewStudentExamSignup", method = RequestMethod.POST)
-public String acceptStudentSignupForExamSession(Model model, HttpServletRequest request){
-//	System.out.println("prof user name==="+ username);
+@RequestMapping(value = "accept/viewStudentExamSignup/{userAtRegId}", method=RequestMethod.GET)
+public String acceptStudentSignupForExamSession(@PathVariable("userAtRegId") int userAtRegId, 
+		Model model, HttpServletRequest request){
+
 	Professor loggedProfessor = SessionHelper.getUserProfessorLogged(request.getSession());
-	 UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
+	UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
     UserAttemptRegistration userAttReg= userAttRegDAO.getUserAttemptByProfessorUserName(loggedProfessor);
     System.out.println("prof user name==="+ loggedProfessor.getUsername());
+    UserAttemptRegistration attemptRegsitration = userAttRegDAO.getUserAttemptRegById(userAtRegId);
+    
+    if(userAttReg.getUserAtRegId()==attemptRegsitration.getUserAtRegId()){
     userAttReg.setBooking(Booking.SIGNUP);
     userAttRegDAO.create(userAttReg);
 	
     sendEmail.sendEmailRegistration(userAttReg.getStudent().getEmail(),userAttReg.getStudent().getFirstName(),userAttReg.getStudent().getLastName(),
     		SendEmail.SUBJECT_EXAM_BOOKING,SendEmail.EXAM_SESSION_ATTEMPT_SIGNUP);
     
-	
-    if(loggedProfessor !=null){
+    }
    	 List<UserAttemptRegistration> listStudentExamSignup = userAttRegDAO.getStudentSignupProfExamSession(loggedProfessor);
    	 model.addAttribute("listStudentExamSignup", listStudentExamSignup);
-    }
     return "professor/viewStudentSignupExam";
 }
 //
 //
 //
-@RequestMapping(value = "viewStudentExamSignup", method = RequestMethod.POST, params = "reject")
-public String rejectStudentSignupforExam(@RequestParam(value = "reject") String username, Model model,HttpServletRequest request) {
+@RequestMapping(value = "/reject/viewStudentExamSignup/{userAtRegId}", method = RequestMethod.GET)
+public String rejectStudentSignupforExam(@PathVariable("userAtRegId") int userAtRegId, Model model,HttpServletRequest request) {
 	 Professor loggedProfessor = SessionHelper.getUserProfessorLogged(request.getSession());
 	 UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
     UserAttemptRegistration userAttReg= userAttRegDAO.getUserAttemptByProfessorUserName(loggedProfessor);
-    
+    UserAttemptRegistration attemptRegsitration = userAttRegDAO.getUserAttemptRegById(userAtRegId);
+    if(userAttReg.getUserAtRegId()==attemptRegsitration.getUserAtRegId()){
     userAttRegDAO.delete(userAttReg);
+    
     sendEmail.sendEmailRegistration(userAttReg.getStudent().getEmail(),userAttReg.getStudent().getFirstName(),userAttReg.getStudent().getLastName(),
     		SendEmail.SUBJECT_EXAM_BOOKING,SendEmail.EXAM_SESSION_ATTEMPT_CANCELED);
-    
 
-    if(loggedProfessor !=null){
-   	 List<UserAttemptRegistration> listStudentExamSignup = userAttRegDAO.getStudentSignupProfExamSession(loggedProfessor);
-   	 model.addAttribute("listStudentExamSignup", listStudentExamSignup);
     }
+   	 ArrayList<UserAttemptRegistration> listStudentExamSignup = userAttRegDAO.getStudentSignupProfExamSession(loggedProfessor);
+   	 model.addAttribute("listStudentExamSignup", listStudentExamSignup);
+    
     return "admin/viewStudentExamSignup";
 }
 }
