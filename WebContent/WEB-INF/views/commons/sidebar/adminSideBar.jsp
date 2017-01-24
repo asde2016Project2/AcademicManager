@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="left_col scroll-view">
     <div class="navbar nav_title" style="border: 0;">
-        <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+        <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>AcMan!</span></a>
     </div>
 
     <div class="clearfix"></div>
@@ -53,20 +53,20 @@
             <h3>Didattic Offer</h3>
             <ul class="nav side-menu"> 
                 <li>
-                    <a><i class="fa fa-home"></i> Session <span class="fa fa-chevron-down"></span></a>
+                    <a><i class="fa fa-calendar-plus-o"></i> Session <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="<c:url value="/admin/createSession" />">Create Sessions</a></li>
                         <li><a href="<c:url value="/admin/viewAllSession" />">List Sessions</a></li>                                               
                     </ul>
                 </li>  
                 <li>
-                    <a><i class="fa fa-home"></i> Exam <span class="fa fa-chevron-down"></span></a>
+                    <a><i class="fa fa-certificate"></i> Exam <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="<c:url value="/admin/examForm" />">Create Exam</a></li>
                         <li><a href="<c:url value="/admin/exams/" />">List Exam</a></li>                                               
                     </ul>
                 </li>                
-                <li><a><i class="fa fa-desktop"></i> Study Plan <span class="fa fa-chevron-down"></span></a>
+                <li><a><i class="fa fa-database"></i> Study Plan <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="<c:url value="/admin/create/studyplan" />">Create Study Plan</a></li>
                         <li><a href="<c:url value="/admin/list/studyplan"/>">List Study Plan</a></li>                                                                                                                                                
@@ -78,7 +78,7 @@
         <div class="menu_section">
             <h3>Manage Accounts</h3>
             <ul class="nav side-menu">                
-                <li><a><i class="fa fa-edit"></i> Approval <span class="fa fa-chevron-down"></span></a>
+                <li><a><i class="fa fa-check-circle-o"></i> Approval <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="<c:url value="/admin/registrationStudent"/>">Students Approval</a></li>
                         <li><a href="<c:url value="/admin/registrationProfessor"/>">Professor Approval</a></li>

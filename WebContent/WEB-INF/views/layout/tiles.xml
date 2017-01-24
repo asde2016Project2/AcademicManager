@@ -5,15 +5,17 @@
 <tiles-definitions>
         
     <definition name="base.definition"  template="/WEB-INF/views/layout/loginLayout.jsp">          
-        <put-attribute name="menu" value="" />                 
+        <put-attribute name="body" value="" />                 
     </definition>  
     
     
-    <definition name="home/login" extends="base.definition" >                    
+    <definition name="home/login" extends="base.definition" template="/WEB-INF/views/layout/guestLayout.jsp">      
+        <put-attribute name="sidebar" value="/WEB-INF/views/commons/sidebar/guestSideBar.jsp" />                                        
         <put-attribute name="body" value="/WEB-INF/views/home/login.jsp" />              
     </definition>
     
-    <definition name="*/register" extends="base.definition" >                     
+    <definition name="*/register" extends="base.definition" template="/WEB-INF/views/layout/guestLayout.jsp">    
+        <put-attribute name="sidebar" value="/WEB-INF/views/commons/sidebar/guestSideBar.jsp" />                          
         <put-attribute name="body" value="/WEB-INF/views/{1}/register.jsp" />              
     </definition>
     

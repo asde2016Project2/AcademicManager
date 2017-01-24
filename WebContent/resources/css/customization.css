@@ -5,6 +5,16 @@ body.nav-md.loginBody a
     text-shadow: none;
 }
 
+.guestBody .right_col{
+    background: #34495e !important;    
+    text-shadow: none !important;
+    color: white;
+}
+
+.guestBody .right_col a{
+    color: white;
+}
+
 .form-error.error{
     color: #E9EDEF;
     background-color: rgba(231, 76, 60, 0.88);
@@ -28,4 +38,9 @@ h1,h2,h3,h4,h5 {
 	padding-bottom: 10px;
 	border-bottom: 1px solid #cccccc;
 	margin-bottom: 15px;
+}
+
+.normalTitle{
+    border: 0px;
+    margin-bottom: 10px;
 }
