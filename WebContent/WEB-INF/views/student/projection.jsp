@@ -37,15 +37,12 @@
 						<form:input type="text" path ="nameExams" name="${careerExam.exam.name}" value="${careerExam.exam.name}" readonly="true"
 						cssClass="form-control col-md-4"/>
 					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-md-4">
-					<form:input type="text" path ="cfuExams" name="${careerExam.exam.cfu}" value="${careerExam.exam.cfu}" readonly="true"
-					cssClass="form-control col-md-4"/><br>
-					</div>
-				</div>
 				
-				<div class="form-group">
+					<div class="col-md-4">
+						<form:input type="text" path ="cfuExams" name="${careerExam.exam.cfu}" value="${careerExam.exam.cfu}" readonly="true"
+						cssClass="form-control col-md-4"/>
+					</div>
+				
 					<div class="col-md-4">
 						<form:select path="gradeExams" size="1" cssClass="form-control col-md-4">
 							<form:option value="" label="select grade"></form:option>
@@ -55,7 +52,7 @@
 						</form:select>
 					</div>
 				</div>
-			</div>	
+			</div><br>
 		</c:if>
 	</c:forEach>
 	<form:button class="btn btn-primary" type="submit" value="projection">projection</form:button>

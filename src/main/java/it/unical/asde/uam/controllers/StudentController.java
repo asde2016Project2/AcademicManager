@@ -88,7 +88,9 @@ public class StudentController extends BaseController {
     public String projection(Model model, HttpServletRequest request) {
         Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
         CareerExamDAO careerExamDAO = (CareerExamDAO) context.getBean("careerExamDAO");
+        
         List<CareerExam> listCareerExam = (List<CareerExam>) careerExamDAO.getCareerExamsOfaStudent(loggedStudent.getUserId());
+       
         double avgScore = 0;
         int cfuDone = 0;
         for (CareerExam careerExam : listCareerExam) {
@@ -100,9 +102,10 @@ public class StudentController extends BaseController {
         if (cfuDone != 0) {
             avgScore /= cfuDone;
         }
+        DecimalFormat dec = new DecimalFormat("#.##");
         model.addAttribute("pageTitle", "Student Projection");
-        model.addAttribute("avgScore", avgScore);
-        model.addAttribute("gbg",String.format( "%.2f",((avgScore * 11) / 3)));
+        model.addAttribute("avgScore",dec.format((avgScore)));
+        model.addAttribute("gbg",dec.format(((avgScore * 11) / 3)));
         model.addAttribute("listCareerExam", listCareerExam);
         model.addAttribute("projectionForm", new ProjectionFormDTO());
         return "student/projection";
@@ -121,9 +124,10 @@ public class StudentController extends BaseController {
             }
         }
         avgScore /= cfuDone;
+        DecimalFormat dec = new DecimalFormat("#.##");
         model.addAttribute("pageTitle", "Projection result");
-        model.addAttribute("avgScore", avgScore);
-        model.addAttribute("gbg",String.format( "%.2f",((avgScore * 11) / 3)));
+        model.addAttribute("avgScore",dec.format(avgScore));
+        model.addAttribute("gbg",dec.format(((avgScore * 11) / 3)));
         model.addAttribute("nameExams", projectionFormDTO.getNameExams());
         model.addAttribute("cfuExams", projectionFormDTO.getCfuExams());
         model.addAttribute("gradeExams", projectionFormDTO.getGradeExams());
