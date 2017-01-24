@@ -79,7 +79,7 @@ public class DegreeCourseDAOImp implements DegreeCourseDAO {
 
     @Override
     public DegreeCourse retrieveById(int id) {
-        String queryString = "from DegreeCourse c where id=:id";
+        String queryString = "from DegreeCourse c where degreeCourseId=:id";
     	Query query = dbHandler.getSession().createQuery(queryString);
     	query.setParameter("id",id);
     	dbHandler.begin();
