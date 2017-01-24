@@ -55,28 +55,36 @@ import it.unical.asde.uam.persistence.ExamSessionDAO;
 @RequestMapping("/dummyData")
 public class DummyDataController extends BaseController {
 
-	@RequestMapping(value = "addEverything", method = RequestMethod.GET)
-	public String addEverything() throws ParseException {
-		registerAdmin();
-		
-		registerProfessor();
-		
-		registerStudent();
-		
-		addExamSession();
-		
-		addCareerExam();
-		
-		addAttempts();
-		
-		return "redirect:/";
-	}
-	
+    @RequestMapping(value = "registerAdmin", method = RequestMethod.GET)
+    public String createAdmin() throws ParseException {
+        registerAdmin();
+        addOnlyDegreeCourse();
+
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "addEverything", method = RequestMethod.GET)
+    public String addEverything() throws ParseException {
+        registerAdmin();
+
+        registerProfessor();
+
+        registerStudent();
+
+        addExamSession();
+
+        addCareerExam();
+
+        addAttempts();
+
+        return "redirect:/";
+    }
+
 //    @RequestMapping(value = "registerProfessor", method = RequestMethod.GET)
     private String registerProfessor() throws ParseException {
         ProfessorDAO professorDAO = (ProfessorDAO) context.getBean("professorDAO");
         for (int i = 0; i < 10; i++) {
-            Professor p = new Professor("prof" + i, "123456", "mario"+i, "rossi"+i, true);
+            Professor p = new Professor("prof" + i, "123456", "mario" + i, "rossi" + i, true);
             p.setEmail("prof" + i + "@mat.unical.it");
             p.setAge(21);
             p.setAccepted(Accepted.ACCEPTED);
@@ -106,7 +114,7 @@ public class DummyDataController extends BaseController {
         StudyPlan scientific = studyPlanDAO.getAllPlans().get(3);
 
         for (int i = 0; i < 50; i++) {
-            Student p = new Student("stud" + i, "123456", "Pierino"+i, "Stecchino"+i, true, scientific);
+            Student p = new Student("stud" + i, "123456", "Pierino" + i, "Stecchino" + i, true, scientific);
             if (i == 0) {
                 p.setEmail("effe.sessa" + "@gmail.com");
             }
@@ -206,7 +214,7 @@ public class DummyDataController extends BaseController {
 //    @RequestMapping(value = "registerAdmin", method = RequestMethod.GET)
     private void registerAdmin() throws ParseException {
         AdministratorDAO administratorDAO = (AdministratorDAO) context.getBean("administratorDAO");
-        
+
         Administrator p = new Administrator("admin0", "123456", "mario", "rossi", true);
         p.setEmail("admin" + 0 + "@mat.unical.it");
         p.setAge(21);
@@ -495,94 +503,93 @@ public class DummyDataController extends BaseController {
 
         return "redirect:/";
     }
-    
+
 //    @RequestMapping(value = "addExamSession", method = RequestMethod.GET)
     private String addExamSession() throws ParseException {
-    	ExamSessionDAO examSessionDAO = (ExamSessionDAO) context.getBean("examSessionDAO");
-    	
-    	DegreeCourseDAO degreeCourseDAO = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
-    	List<DegreeCourse> degrees = degreeCourseDAO.getAllDegrees();
-    	
-    	String startingD = "23-01-2017";
-    	String endingD = "04-03-2017";
+        ExamSessionDAO examSessionDAO = (ExamSessionDAO) context.getBean("examSessionDAO");
+
+        DegreeCourseDAO degreeCourseDAO = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
+        List<DegreeCourse> degrees = degreeCourseDAO.getAllDegrees();
+
+        String startingD = "23-01-2017";
+        String endingD = "04-03-2017";
         String dateOfBirthFormat = "dd-MM-yyyy";
         DateFormat format = new SimpleDateFormat(dateOfBirthFormat, Locale.ENGLISH);
         Date startingDate = format.parse(startingD);
         Date endingDate = format.parse(endingD);
-    	
-    	ExamSession e1 = new ExamSession(startingDate, endingDate, "2016/2017", degrees.get(0));
-    	
-    	startingD = "23-06-2017";
-    	endingD = "28-07-2017";
+
+        ExamSession e1 = new ExamSession(startingDate, endingDate, "2016/2017", degrees.get(0));
+
+        startingD = "23-06-2017";
+        endingD = "28-07-2017";
         startingDate = format.parse(startingD);
         endingDate = format.parse(endingD);
-    	ExamSession e2 = new ExamSession(startingDate, endingDate, "2016/2017", degrees.get(1));
-    	
-    	startingD = "01-09-2017";
-    	endingD = "30-09-2017";
+        ExamSession e2 = new ExamSession(startingDate, endingDate, "2016/2017", degrees.get(1));
+
+        startingD = "01-09-2017";
+        endingD = "30-09-2017";
         startingDate = format.parse(startingD);
         endingDate = format.parse(endingD);
-    	ExamSession e3 = new ExamSession(startingDate, endingDate, "2016/2017", degrees.get(2));
-    	examSessionDAO.create(e1);
-    	examSessionDAO.create(e2);
-    	examSessionDAO.create(e3);
-    	
-    	return "redirect:/";
+        ExamSession e3 = new ExamSession(startingDate, endingDate, "2016/2017", degrees.get(2));
+        examSessionDAO.create(e1);
+        examSessionDAO.create(e2);
+        examSessionDAO.create(e3);
+
+        return "redirect:/";
     }
-    
+
     @RequestMapping(value = "addAttempts", method = RequestMethod.GET)
     public String addAttempts() throws ParseException {
-    	
-    	String dateOfBirthFormat = "dd-MM-yyyy";
+
+        String dateOfBirthFormat = "dd-MM-yyyy";
         DateFormat format = new SimpleDateFormat(dateOfBirthFormat, Locale.ENGLISH);
 
-    	AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
-    	Date startingDate = format.parse("20-01-2017");
-     	Date endingDate = format.parse("24-01-2017");
-     	Date examDate = format.parse("25-01-2017");
-     	
-     	ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
-     	ArrayList<Exam> exams = (ArrayList<Exam>) examDAO.getAllExams();
-     	
-     	ProfessorDAO professorDAO = (ProfessorDAO) context.getBean("professorDAO");
-     	ArrayList<Professor> profs = professorDAO.getAllProfessor();
-     	
-     	StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
-     	ArrayList<Student> studs = (ArrayList<Student>) studentDAO.getAllStudents();
+        AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
+        Date startingDate = format.parse("20-01-2017");
+        Date endingDate = format.parse("24-01-2017");
+        Date examDate = format.parse("25-01-2017");
 
-     	System.out.println("profs 0: "+profs.get(0).getUsername());
-     	System.out.println("profs 1: "+profs.get(1).getUsername());
-     	System.out.println("profs 2: "+profs.get(2).getUsername());
-     	System.out.println("profs 3: "+profs.get(3).getUsername());
-     	System.out.println("profs 4: "+profs.get(4).getUsername());
-     	DegreeCourseDAO degreeCourseDAO = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
+        ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
+        ArrayList<Exam> exams = (ArrayList<Exam>) examDAO.getAllExams();
+
+        ProfessorDAO professorDAO = (ProfessorDAO) context.getBean("professorDAO");
+        ArrayList<Professor> profs = professorDAO.getAllProfessor();
+
+        StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
+        ArrayList<Student> studs = (ArrayList<Student>) studentDAO.getAllStudents();
+
+        System.out.println("profs 0: " + profs.get(0).getUsername());
+        System.out.println("profs 1: " + profs.get(1).getUsername());
+        System.out.println("profs 2: " + profs.get(2).getUsername());
+        System.out.println("profs 3: " + profs.get(3).getUsername());
+        System.out.println("profs 4: " + profs.get(4).getUsername());
+        DegreeCourseDAO degreeCourseDAO = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
 //        DegreeCourse dgC = new DegreeCourse("Informatica");
 //        degreeCourseDAO.create(dgC);
         ArrayList<DegreeCourse> degrees = (ArrayList<DegreeCourse>) degreeCourseDAO.getAllDegrees();
-        
-    	ExamSessionDAO examSessionDAO = (ExamSessionDAO) context.getBean("examSessionDAO");
+
+        ExamSessionDAO examSessionDAO = (ExamSessionDAO) context.getBean("examSessionDAO");
         ExamSession es1 = new ExamSession(startingDate, endingDate, "anno1", degrees.get(0));
         examSessionDAO.create(es1);
 
         ArrayList<Attempt> attemtps2 = new ArrayList<>();
-        
+
         Attempt a = new Attempt(format.parse("30-01-2017"), "mt1", format.parse("23-01-2017"), format.parse("29-01-2017"), profs.get(0), exams.get(0), es1);
- 		attemptDAO.create(a);
- 		attemtps2.add(a);
- 		
- 		Attempt a1 = new Attempt(format.parse("06-02-2017"), "mt1", format.parse("23-01-2017"), format.parse("05-02-2017"), profs.get(1), exams.get(1), es1);
- 		attemptDAO.create(a1);
- 		attemtps2.add(a1);
- 		
- 		Attempt a2 = new Attempt(format.parse("14-02-2017"), "mt1", format.parse("01-02-2017"), format.parse("13-02-2017"), profs.get(2), exams.get(2), es1);
- 		attemptDAO.create(a2);
- 		attemtps2.add(a2);
- 		
- 		Attempt a3 = new Attempt(format.parse("23-02-2017"), "mt1", format.parse("05-02-2017"), format.parse("22-02-2017"), profs.get(3), exams.get(3), es1);
- 		attemptDAO.create(a3);
- 		attemtps2.add(a3);
- 		
- 		
+        attemptDAO.create(a);
+        attemtps2.add(a);
+
+        Attempt a1 = new Attempt(format.parse("06-02-2017"), "mt1", format.parse("23-01-2017"), format.parse("05-02-2017"), profs.get(1), exams.get(1), es1);
+        attemptDAO.create(a1);
+        attemtps2.add(a1);
+
+        Attempt a2 = new Attempt(format.parse("14-02-2017"), "mt1", format.parse("01-02-2017"), format.parse("13-02-2017"), profs.get(2), exams.get(2), es1);
+        attemptDAO.create(a2);
+        attemtps2.add(a2);
+
+        Attempt a3 = new Attempt(format.parse("23-02-2017"), "mt1", format.parse("05-02-2017"), format.parse("22-02-2017"), profs.get(3), exams.get(3), es1);
+        attemptDAO.create(a3);
+        attemtps2.add(a3);
+
 //     	for(int i = 0; i < 20; i++) {
 //     		//da ricontrollare...non è fatto benissimo
 //     		Attempt a = new Attempt(examDate, "mt"+i, startingDate, endingDate, profs.get(i/5), exams.get(i/3), es1);
@@ -590,21 +597,33 @@ public class DummyDataController extends BaseController {
 //     		attemtps2.add(a);
 //     		System.out.println("nome prof: "+profs.get(i/5)+"...nome esame: "+exams.get(i/3).getName());
 //     	}
-     	
-     	UserAttemptRegistrationDAO userAttemptRegistrationDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");        
+        UserAttemptRegistrationDAO userAttemptRegistrationDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
 
-     	for(int i = 0; i < attemtps2.size(); i++) {
-        	System.out.println("coppie");
-        	for( int j = 0; j < studs.size(); j++) {
-        		System.out.println("att: "+attemtps2.get(i).getClassroom()+"...stud: "+studs.get(j).getFirstName());
-        		UserAttemptRegistration userAR = new UserAttemptRegistration(attemtps2.get(i), studs.get(j));
-        		userAttemptRegistrationDAO.create(userAR);
-        	}
+        for (int i = 0; i < attemtps2.size(); i++) {
+            System.out.println("coppie");
+            for (int j = 0; j < studs.size(); j++) {
+                System.out.println("att: " + attemtps2.get(i).getClassroom() + "...stud: " + studs.get(j).getFirstName());
+                UserAttemptRegistration userAR = new UserAttemptRegistration(attemtps2.get(i), studs.get(j));
+                userAttemptRegistrationDAO.create(userAR);
+            }
         }
-     	
-     	
-    	return "redirect:/";
-    	
+
+        return "redirect:/";
+
+    }
+
+    private void addOnlyDegreeCourse() {
+
+        DegreeCourseDAO degreeCourseDAO = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
+        ArrayList<DegreeCourse> degreeCourses = new ArrayList<>();
+        degreeCourses.add(new DegreeCourse("Computer Sciencea"));
+        degreeCourses.add(new DegreeCourse("Engineeringa"));
+        degreeCourses.add(new DegreeCourse("Mathematicsa"));
+
+        degreeCourseDAO.create(degreeCourses.get(0));
+        degreeCourseDAO.create(degreeCourses.get(1));
+        degreeCourseDAO.create(degreeCourses.get(2));
+
     }
 
 }
