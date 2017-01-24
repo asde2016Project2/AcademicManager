@@ -70,70 +70,72 @@ import it.unical.asde.uam.persistence.UserAttemptRegistrationDAO;
 @RequestMapping("/student")
 public class StudentController extends BaseController {
 
-	@Autowired
-	SendEmail sendEmail;
-	private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
+    @Autowired
+    SendEmail sendEmail;
+    private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
 
-	@RequestMapping(value = "dashboard", method = RequestMethod.GET)
-	public String showDashboad(HttpServletRequest request, Model model) {
+    @RequestMapping(value = "dashboard", method = RequestMethod.GET)
+    public String showDashboad(HttpServletRequest request, Model model) {
 
-		if (!SessionHelper.isStudent(request.getSession())) {
-			return "redirect:/";
-		}
-		model.addAttribute("pageTitle", "Student Area");
-		return "student/dashboard";
-	}
+        if (!SessionHelper.isStudent(request.getSession())) {
+            return "redirect:/";
+        }
+        model.addAttribute("pageTitle", "Student Area");
+        return "student/dashboard";
+    }
 
-	@RequestMapping(value = "projection", method = RequestMethod.GET)
-	public String projection(Model model, HttpServletRequest request) {
-		Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
-		CareerExamDAO careerExamDAO = (CareerExamDAO) context.getBean("careerExamDAO");
-		List<CareerExam> listCareerExam = (List<CareerExam>) careerExamDAO
-				.getCareerExamsOfaStudent(loggedStudent.getUserId());
-		double avgScore = 0;
-		int cfuDone = 0;
-		for (CareerExam careerExam : listCareerExam) {
-			if (careerExam.isDone()) {
-				avgScore += (careerExam.getGrade() * careerExam.getExam().getCfu());
-				cfuDone += careerExam.getExam().getCfu();
-			}
-		}
-		if (cfuDone != 0) {
-			avgScore /= cfuDone;
-		}
-		model.addAttribute("pageTitle", "Student Projection");
-		model.addAttribute("avgScore", avgScore);
-		model.addAttribute("gbg", String.format("%.2f", ((avgScore * 11) / 3)));
-		model.addAttribute("listCareerExam", listCareerExam);
-		model.addAttribute("projectionForm", new ProjectionFormDTO());
-		return "student/projection";
-	}
+    @RequestMapping(value = "projection", method = RequestMethod.GET)
+    public String projection(Model model, HttpServletRequest request) {
+        Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
+        CareerExamDAO careerExamDAO = (CareerExamDAO) context.getBean("careerExamDAO");
+        
+        List<CareerExam> listCareerExam = (List<CareerExam>) careerExamDAO.getCareerExamsOfaStudent(loggedStudent.getUserId());
+       
+        double avgScore = 0;
+        int cfuDone = 0;
+        for (CareerExam careerExam : listCareerExam) {
+            if (careerExam.isDone()) {
+                avgScore += (careerExam.getGrade() * careerExam.getExam().getCfu());
+                cfuDone += careerExam.getExam().getCfu();
+            }
+        }
+        if (cfuDone != 0) {
+            avgScore /= cfuDone;
+        }
+        DecimalFormat dec = new DecimalFormat("#.##");
+        model.addAttribute("pageTitle", "Student Projection");
+        model.addAttribute("avgScore",dec.format((avgScore)));
+        model.addAttribute("gbg",dec.format(((avgScore * 11) / 3)));
+        model.addAttribute("listCareerExam", listCareerExam);
+        model.addAttribute("projectionForm", new ProjectionFormDTO());
+        return "student/projection";
+    }
 
-	@RequestMapping(value = "projection", method = RequestMethod.POST)
-	public String makeProjection(@Valid @ModelAttribute("projectionForm") ProjectionFormDTO projectionFormDTO,
-			Model model, HttpServletRequest request) {
-		Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
-		double avgScore = 0;
-		int cfuDone = 0;
-		for (int i = 0; i < projectionFormDTO.getGradeExams().size(); i++) {
-			if (!projectionFormDTO.getGradeExams().get(i).equals("")) {
-				avgScore += (Integer.parseInt(projectionFormDTO.getGradeExams().get(i))
-						* Integer.parseInt(projectionFormDTO.getCfuExams().get(i)));
-				cfuDone += Integer.parseInt(projectionFormDTO.getCfuExams().get(i));
-			}
-		}
-		avgScore /= cfuDone;
-		model.addAttribute("pageTitle", "Projection result");
-		model.addAttribute("avgScore", avgScore);
-		model.addAttribute("gbg", String.format("%.2f", ((avgScore * 11) / 3)));
-		model.addAttribute("nameExams", projectionFormDTO.getNameExams());
-		model.addAttribute("cfuExams", projectionFormDTO.getCfuExams());
-		model.addAttribute("gradeExams", projectionFormDTO.getGradeExams());
-		return "student/projectionResult";
+    @RequestMapping(value = "projection", method = RequestMethod.POST)
+    public String makeProjection(@Valid @ModelAttribute("projectionForm") ProjectionFormDTO projectionFormDTO, Model model, HttpServletRequest request) {
+        Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
+        double avgScore = 0;
+        int cfuDone = 0;
+        for (int i = 0; i < projectionFormDTO.getGradeExams().size(); i++) {
+            if (!projectionFormDTO.getGradeExams().get(i).equals("")) {
+                avgScore += (Integer.parseInt(projectionFormDTO.getGradeExams().get(i))
+                        * Integer.parseInt(projectionFormDTO.getCfuExams().get(i)));
+                cfuDone += Integer.parseInt(projectionFormDTO.getCfuExams().get(i));
+            }
+        }
+        avgScore /= cfuDone;
+        DecimalFormat dec = new DecimalFormat("#.##");
+        model.addAttribute("pageTitle", "Projection result");
+        model.addAttribute("avgScore",dec.format(avgScore));
+        model.addAttribute("gbg",dec.format(((avgScore * 11) / 3)));
+        model.addAttribute("nameExams", projectionFormDTO.getNameExams());
+        model.addAttribute("cfuExams", projectionFormDTO.getCfuExams());
+        model.addAttribute("gradeExams", projectionFormDTO.getGradeExams());
+        return "student/projectionResult";
 
-	}
+    }
 
-	// -------------------Exam Reservation process-------//
+    // -------------------Exam Reservation process-------//
 
 	@RequestMapping(value = "academicExamSessionList", method = RequestMethod.GET)
 	public String viewExamSession(Model model) {
@@ -487,33 +489,5 @@ public class StudentController extends BaseController {
 		return "student/visualizeStatistics";
 	}
 
-	// details for the student in registration phase
-	@RequestMapping(value = "showStudyPlans", method = RequestMethod.GET)
-	public String showStudyPlans(Model model, HttpServletRequest request) throws NullPointerException {
-
-		StudyPlanDAO spDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
-
-		model.addAttribute("pageTitle", "Available Study Plans");
-		model.addAttribute("studyPlans", spDAO.getAllPlans());
-
-		return "student/showStudyPlans";
-	}
-
-	// details for the student in registration phase
-	@RequestMapping(value = "details/studyplan/{id}", method = RequestMethod.GET)
-	public String showDetailStudyPlan(@PathVariable("id") int id, Model model) {
-
-		StudyPlanDAO spDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
-
-		StudyPlan studyPlan = spDAO.retrieve(id);
-		model.addAttribute("studyPlanName", studyPlan.getName());
-
-		StudyPlanExamDAO spexamDAO = (StudyPlanExamDAO) context.getBean("studyPlanExamDAO");
-		List<StudyPlanExam> spexams = spexamDAO.getAllExamsOfAstudyPlan(studyPlan);
-
-		model.addAttribute("listStudyPlanExams", spexams);
-
-		return "student/showStudyPlanExams";
-	}
 
 }

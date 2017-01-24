@@ -30,8 +30,8 @@ public class Student extends User {
 	//@OneToMany(mappedBy="userId")
     //private List<CareerExam>  careerExams = new ArrayList<>();
 	
-	@Column(name = "id_number", nullable = false)
-	private int idNumber;//matricola: non ci devono essere matricole uguali e non deve essere nullo
+//	@Column(name = "id_number", nullable = false)
+//	private int idNumber;//matricola: non ci devono essere matricole uguali e non deve essere nullo
 	
 	public Student(){
 		super();
@@ -42,11 +42,11 @@ public class Student extends User {
 		this.studyPlan = studyPlan;
 	}
 	
-	public Student(int idNumber, String username, String password, String firstName, String lastName, boolean status, StudyPlan  studyPlan) {
-		super(username,  password,  firstName,  lastName,  status);
-		this.studyPlan = studyPlan;
-		this.idNumber = idNumber;
-	}
+//	public Student(int idNumber, String username, String password, String firstName, String lastName, boolean status, StudyPlan  studyPlan) {
+//		super(username,  password,  firstName,  lastName,  status);
+//		this.studyPlan = studyPlan;
+//		this.idNumber = idNumber;
+//	}
 
 	public StudyPlan getStudyPlan() {
 		return studyPlan;

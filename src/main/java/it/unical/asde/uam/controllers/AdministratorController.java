@@ -109,7 +109,7 @@ public class AdministratorController extends BaseController {
             boolean saved = adminDao.register(admin);
             if (!saved) {
                 model.addAttribute("error", "Username or email already taken");
-                return "professor/register";
+                return "admin/register";
             }
             else{
                 model.addAttribute("message", messageSource.getMessage("registration.ok", null, localeResolver.resolveLocale(request)));

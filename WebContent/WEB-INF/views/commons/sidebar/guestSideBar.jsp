@@ -16,10 +16,9 @@
 
     <!-- sidebar menu -->
     <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-        <div class="menu_section">
-            <h3><i class="fa fa-home"></i> Main Menu</h3>
+        <div class="menu_section">            
             <ul class="nav side-menu">
-                <li><a href="<c:url value="/"/>"><i class="fa fa-sign-in"></i> Login</a></li>                           
+                <li><a href="<c:url value="/"/>"><i class="fa fa-home"></i> Home</a></li>                           
             </ul>
             <ul class="nav side-menu">
                 <li><a href="<c:url value="/student/register" />"><i class="fa fa-graduation-cap"></i> Register as Student</a></li>
@@ -35,7 +34,7 @@
         <div class="menu_section">
             <h3><i class="fa fa-institution"></i> Explore The University</h3>
             <ul class="nav side-menu">                
-                <li><a href="<c:url value="/student/showStudyPlans"/>"><i class="fa fa-language"></i> Show Study Plans</a></li>                                                                                                                                                 
+                <li><a href="<c:url value="/listStudyPlan"/>"><i class="fa fa-language"></i> Show Study Plans</a></li>                                                                                                                                                 
             </ul>
         </div>
 

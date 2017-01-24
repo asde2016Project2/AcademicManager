@@ -5,14 +5,29 @@ body.nav-md.loginBody a
     text-shadow: none;
 }
 
-.guestBody .right_col{
+body.lightBody .right_col,
+body.lightBody .right_col label,
+body.lightBody .right_col input,
+body.lightBody .right_col select,
+body.lightBody .right_col textarea{
+    color: #73879C;
+}
+
+body.darkBody .right_col{
     background: #34495e !important;    
     text-shadow: none !important;
     color: white;
 }
 
-.guestBody .right_col a{
+body.darkBody .right_col a{
     color: white;
+}
+
+body.darkBody input, 
+body.darkBody select, 
+body.darkBody button,
+body.darkBody textarea{
+   color: black;
 }
 
 .form-error.error{
@@ -26,18 +41,21 @@ body.nav-md.loginBody a
     padding: 5px;
 }
 
+
 .inline {
-	display: inline-block;
+    display: inline-block;
 }
 
-table.table-centered th, table.table-centered td{
-	vertical-align: middle;
+table.table-centered th, 
+table.table-centered td,
+table.table-centered tbody td{
+    vertical-align: middle;
 }
 
 h1,h2,h3,h4,h5 {
-	padding-bottom: 10px;
-	border-bottom: 1px solid #cccccc;
-	margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #cccccc;
+    margin-bottom: 15px;
 }
 
 .normalTitle{

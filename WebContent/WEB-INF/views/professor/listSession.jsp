@@ -5,7 +5,7 @@
 
 <h1>Session: </h1>
 
- <table class="tg">
+ <table class="table table-bordered">
             <tr>
                 <th width="80">ID</th>
                 <th width="120">DEGREE COURSE</th>

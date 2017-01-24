@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import it.unical.asde.uam.helper.Accepted;
 import it.unical.asde.uam.helper.SessionHelper;
 import it.unical.asde.uam.helper.UserProfileHelper;
 import it.unical.asde.uam.controllers.core.BaseController;
@@ -17,9 +18,15 @@ import it.unical.asde.uam.dto.LoginFormDTO;
 import it.unical.asde.uam.model.Administrator;
 import it.unical.asde.uam.model.Professor;
 import it.unical.asde.uam.model.Student;
+import it.unical.asde.uam.model.StudyPlan;
+import it.unical.asde.uam.model.StudyPlanExam;
 import it.unical.asde.uam.persistence.AdministratorDAO;
 import it.unical.asde.uam.persistence.ProfessorDAO;
 import it.unical.asde.uam.persistence.StudentDAO;
+import it.unical.asde.uam.persistence.StudyPlanDAO;
+import it.unical.asde.uam.persistence.StudyPlanExamDAO;
+import java.util.List;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 @RequestMapping("/")
@@ -35,7 +42,7 @@ public class HomeController extends BaseController{
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String showLogin(@ModelAttribute("loginForm") LoginFormDTO loginForm, Model model, HttpServletRequest request) {
-        model.addAttribute("pageTitle","Login");     
+        model.addAttribute("pageTitle","Academic Manager - Login");     
         model.addAttribute("loginForm",new LoginFormDTO());          
         return "home/login";
     }
@@ -89,6 +96,36 @@ public class HomeController extends BaseController{
     
     
     
+      //details for the student in registration phase
+    @RequestMapping(value = "listStudyPlan", method = RequestMethod.GET)
+    public String showStudyPlans(Model model, HttpServletRequest request) throws NullPointerException {
+
+        StudyPlanDAO spDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
+
+        model.addAttribute("pageTitle", "Available Study Plans");
+        model.addAttribute("studyPlans", spDAO.getAllPlans());
+
+        return "home/listStudyPlan";
+    }
+
+    //details for the student in registration phase
+    @RequestMapping(value = "details/studyplan/{id}", method = RequestMethod.GET)
+    public String showDetailStudyPlan(@PathVariable("id") int id, Model model) {
+
+        StudyPlanDAO spDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
+
+        StudyPlan studyPlan = spDAO.retrieve(id);
+        model.addAttribute("studyPlanName", studyPlan.getName());
+
+        StudyPlanExamDAO spexamDAO = (StudyPlanExamDAO) context.getBean("studyPlanExamDAO");
+        List<StudyPlanExam> spexams = spexamDAO.getAllExamsOfAstudyPlan(studyPlan);
+
+        model.addAttribute("listStudyPlanExams", spexams);
+
+        return "home/detailStudyPlan";
+    }
+    
+    
     
     /********** PRIVATE METHODS ********/
     
@@ -103,6 +140,11 @@ public class HomeController extends BaseController{
             return "home/login";
         }
         
+        if (professor.getAccepted() == Accepted.NOT_ACCEPTED) {
+            model.addAttribute("error", messageSource.getMessage("message.not_accepted", null, localeResolver.resolveLocale(request)));
+            SessionHelper.cleanSession(request.getSession());
+            return "home/login";
+        }
        SessionHelper.setUserProfessorLogged(professor, request.getSession()); 
        return "redirect:/professor/dashboard";
     }
@@ -119,6 +161,12 @@ public class HomeController extends BaseController{
             return "home/login";
         }
         
+        if (administrator.getAccepted() == Accepted.NOT_ACCEPTED) {
+            model.addAttribute("error", messageSource.getMessage("message.not_accepted", null, localeResolver.resolveLocale(request)));
+            SessionHelper.cleanSession(request.getSession());
+            return "home/login";
+        }
+                
        SessionHelper.setUserAdministratorLogged(administrator, request.getSession()); 
        return "redirect:/admin/dashboard";
        
@@ -135,7 +183,12 @@ public class HomeController extends BaseController{
             SessionHelper.cleanSession(request.getSession());
             return "home/login";
         }
-
+        
+        if (stud.getAccepted() == Accepted.NOT_ACCEPTED) {
+            model.addAttribute("error", messageSource.getMessage("message.not_accepted", null, localeResolver.resolveLocale(request)));
+            SessionHelper.cleanSession(request.getSession());
+            return "home/login";
+        }
 
 
        SessionHelper.setUserStudentLogged(stud, request.getSession());
