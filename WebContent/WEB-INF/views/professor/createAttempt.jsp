@@ -45,3 +45,7 @@
   
   <input type="submit" value="Submit">
 </form>
+<br><br>
+<c:if test="${not empty error}">
+   Error: ${error}
+</c:if>

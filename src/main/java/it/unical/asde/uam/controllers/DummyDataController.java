@@ -486,7 +486,7 @@ public class DummyDataController extends BaseController {
     	
     	String startingD = "23-01-2017";
     	String endingD = "04-03-2017";
-        String dateOfBirthFormat = "dd-mm-yyyy";
+        String dateOfBirthFormat = "dd-MM-yyyy";
         DateFormat format = new SimpleDateFormat(dateOfBirthFormat, Locale.ENGLISH);
         Date startingDate = format.parse(startingD);
         Date endingDate = format.parse(endingD);
