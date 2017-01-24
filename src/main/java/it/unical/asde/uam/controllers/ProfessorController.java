@@ -122,7 +122,9 @@ public class ProfessorController extends BaseController {
     	
     	StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
     	ArrayList<Student> students = studentDAO.getStudentForStraordinaryExamSession(studentDAO.getAllStudents());
-    	model.addAttribute("listaStudenti", students);
+    	if(students.size() == 0)
+    		model.addAttribute("error", "There are no students that can partecipate to extra exam session");
+    	else model.addAttribute("listaStudenti", students);
     	return "professor/listStudent";
     }
     
