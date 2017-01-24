@@ -294,7 +294,9 @@ public class ProfessorController extends BaseController {
                     SessionHelper.getUserProfessorLogged(request.getSession()), examDAO.getExamByName(exam), examSessionDAO.getExamSessionById(examSessionId));
             attemptDAO.create(a);
         }
-        else {
+        else {            
+            model.addAttribute("examSessions", examSessionDAO.getAllExamSession());            
+            model.addAttribute("exams", examDAO.getAllExams());
             model.addAttribute("error", "The dates or academic year are not ok");
             return "professor/createAttempt";
         }
@@ -308,7 +310,7 @@ public class ProfessorController extends BaseController {
      */
     @RequestMapping(value = "viewStudentExamSignup", method = RequestMethod.GET)
     public String getStudentSignupForExamSession(Model model, HttpServletRequest request) {
-        
+
         if (!SessionHelper.isProfessor(request.getSession())) {
             return "redirect:/logout";
         }
@@ -334,7 +336,7 @@ public class ProfessorController extends BaseController {
         if (!SessionHelper.isProfessor(request.getSession())) {
             return "redirect:/logout";
         }
-        
+
         Professor loggedProfessor = SessionHelper.getUserProfessorLogged(request.getSession());
         UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
         UserAttemptRegistration userAttReg = userAttRegDAO.getUserAttemptByProfessorUserName(loggedProfessor);
@@ -359,11 +361,11 @@ public class ProfessorController extends BaseController {
 
     @RequestMapping(value = "/reject/viewStudentExamSignup/{userAtRegId}", method = RequestMethod.GET)
     public String rejectStudentSignupforExam(@PathVariable("userAtRegId") int userAtRegId, Model model, HttpServletRequest request) {
-        
+
         if (!SessionHelper.isProfessor(request.getSession())) {
             return "redirect:/logout";
         }
-        
+
         Professor loggedProfessor = SessionHelper.getUserProfessorLogged(request.getSession());
         UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
         UserAttemptRegistration userAttReg = userAttRegDAO.getUserAttemptByProfessorUserName(loggedProfessor);
