@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import it.unical.asde.uam.controllers.core.BaseController;
+import it.unical.asde.uam.dto.SessionFormDTO;
 import it.unical.asde.uam.helper.Accepted;
 import it.unical.asde.uam.helper.SessionHelper;
 
@@ -405,6 +406,8 @@ public class AdministratorController extends BaseController {
     @RequestMapping(value = "examForm", method = RequestMethod.GET)
     public String addExams(Model model, Exam exam, HttpServletRequest request) {
 
+        model.addAttribute("pageTitle","Create New Exam");
+        
         if (!SessionHelper.isAdmin(request.getSession())) {
             return "redirect:/logout";
         }
@@ -415,8 +418,10 @@ public class AdministratorController extends BaseController {
     }
 
     @RequestMapping(value = "examForm", method = RequestMethod.POST)
-    public ModelAndView addExams(@ModelAttribute("exam") Exam exam, HttpServletRequest request) {
+    public ModelAndView addExams(@ModelAttribute("exam") Exam exam, HttpServletRequest request, Model model) {
 
+        model.addAttribute("pageTitle","Create New Exam");
+        
         if (!SessionHelper.isAdmin(request.getSession())) {
             return new ModelAndView("redirect:/logout");
         }
@@ -474,6 +479,8 @@ public class AdministratorController extends BaseController {
     @RequestMapping(value = "createSession", method = RequestMethod.GET)
     public String openCreateNewSession(Model model, HttpServletRequest request) {
 
+        model.addAttribute("pageTitle","Create New Session");
+        
         if (!SessionHelper.isAdmin(request.getSession())) {
             return "redirect:/logout";
         }
@@ -481,41 +488,51 @@ public class AdministratorController extends BaseController {
         DegreeCourseDAO degreeCourseDao = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
         ArrayList<DegreeCourse> allDegrees = (ArrayList<DegreeCourse>) degreeCourseDao.getAllDegrees();
         model.addAttribute("degreeCourses", allDegrees);
+        model.addAttribute("examSessionForm",new SessionFormDTO());
 
         return "admin/createSession";
     }
 
     @RequestMapping(value = "createSession", method = RequestMethod.POST)
-    public String createNewSession(Model model, @RequestParam("startingDate") String startingDateString, @RequestParam("endingDate") String endingDateString,
-            @RequestParam("degreeCourse") String degreeCourseName, @RequestParam("academicYear") String academicYear,
-            HttpServletRequest request) throws ParseException {
+    public String createNewSession(@ModelAttribute("examSessionForm") @Valid SessionFormDTO examSessionForm, BindingResult result, Model model, HttpServletRequest request) throws ParseException {
 
+        model.addAttribute("pageTitle","Create New Session");
+        
         if (!SessionHelper.isAdmin(request.getSession())) {
             return "redirect:/logout";
         }
 
         ExamSessionDAO examSessionDao = (ExamSessionDAO) context.getBean("examSessionDAO");
-        if (examSessionDao.checkExamSession(request.getParameter("startingDate"), request.getParameter("endingDate"), request.getParameter("academicYear"))) {
-            DegreeCourseDAO degreeCourseDAO = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
-            DegreeCourse degreeCourse = degreeCourseDAO.getDegreeCourseByName(degreeCourseName);
+        if(!result.hasErrors()){
+            String inputFormat = "dd-MM-yyyy";
+            String outputFormat = "yyyy-MM-dd";
+            SimpleDateFormat sdf = new SimpleDateFormat(inputFormat);
+            Date startingDate = sdf.parse(examSessionForm.getStartingDate());
+            Date endingDate = sdf.parse(examSessionForm.getEndingDate());
+            sdf.applyPattern(outputFormat);
+            String startingDateString = sdf.format(startingDate);            
+            String endingDateString = sdf.format(endingDate);            
+                        
+            if (examSessionDao.checkExamSession(startingDateString, endingDateString, examSessionForm.getAcademicYear())) {
+                DegreeCourseDAO degreeCourseDAO = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
+                DegreeCourse degreeCourse = degreeCourseDAO.retrieveById(Integer.parseInt(examSessionForm.getDegreeCourse()));                
+                ExamSession examSession = new ExamSession(startingDate, endingDate, examSessionForm.getAcademicYear(), degreeCourse);
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date startingDate = null;
-            startingDate = sdf.parse(startingDateString);
-            Date endingDate = null;
-            endingDate = sdf.parse(endingDateString);
-
-            ExamSession examSession = new ExamSession(startingDate, endingDate, academicYear, degreeCourse);
-
-            examSessionDao.create(examSession);
-            ArrayList<ExamSession> allExamSessions = (ArrayList<ExamSession>) examSessionDao.getAllExamSession();//professorDao.listAllSession();
-            return "redirect:/admin/viewAllSession";
+                examSessionDao.create(examSession);                
+                return "redirect:/admin/viewAllSession";
+            }
+            else{
+                DegreeCourseDAO degreeCourseDao = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
+                ArrayList<DegreeCourse> allDegrees = (ArrayList<DegreeCourse>) degreeCourseDao.getAllDegrees();
+                model.addAttribute("degreeCourses", allDegrees);
+                model.addAttribute("error", "The dates or academic year are not ok");
+                return "admin/createSession";
+            }
         }
         else {
             DegreeCourseDAO degreeCourseDao = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
             ArrayList<DegreeCourse> allDegrees = (ArrayList<DegreeCourse>) degreeCourseDao.getAllDegrees();
-            model.addAttribute("degreeCourses", allDegrees);
-            model.addAttribute("error", "The dates or academic year are not ok");
+            model.addAttribute("degreeCourses", allDegrees);            
             return "admin/createSession";
         }
     }
