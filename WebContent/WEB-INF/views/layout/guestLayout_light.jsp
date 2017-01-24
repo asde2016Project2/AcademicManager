@@ -21,6 +21,8 @@
         <!-- NProgress -->        
         <link href="<c:url value="/resources/vendors/nprogress/nprogress.css"/>" rel="stylesheet">                       
         
+        <link href="<c:url value="/resources/vendors/bootstrap-daterangepicker/daterangepicker.css"/>" rel="stylesheet">
+        
         <!-- Datatables -->
         <link href="<c:url value="/resources/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css"/>" rel="stylesheet">
         <link href="<c:url value="/resources/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css"/>" rel="stylesheet">
@@ -35,7 +37,7 @@
 
     </head>
 
-    <body class="nav-md">
+    <body class="nav-md lightBody">
         <div class="container body">
             <div class="main_container">
                 <div class="col-md-3 left_col">
@@ -44,7 +46,7 @@
 
                 <!-- page content -->
                 <div class="right_col" role="main">
-                    <div class="loginBody">
+                    <div>
                         <tiles:insertAttribute  name="body" />   
                     </div>
                 </div>
@@ -69,6 +71,9 @@
         <script src="<c:url value="/resources/vendors/fastclick/lib/fastclick.js"/>"></script>
         <!-- NProgress -->
         <script src="<c:url value="/resources/vendors/nprogress/nprogress.js"/>"></script>               
+        
+        <script src="<c:url value="/resources/vendors/moment/min/moment.min.js"/>"></script>    
+        <script src="<c:url value="/resources/vendors/bootstrap-daterangepicker/daterangepicker.js"/>"></script>               
         
         <script src="<c:url value="/resources/vendors/datatables.net/js/jquery.dataTables.min.js"/>"></script>
         <script src="<c:url value="/resources/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"/>"></script>

@@ -5,19 +5,28 @@ body.nav-md.loginBody a
     text-shadow: none;
 }
 
-.guestBody .right_col{
+body.lightBody .right_col,
+body.lightBody .right_col label,
+body.lightBody .right_col input,
+body.lightBody .right_col select,
+body.lightBody .right_col textarea{
+    color: #73879C;
+}
+
+body.darkBody .right_col{
     background: #34495e !important;    
     text-shadow: none !important;
     color: white;
 }
 
-.guestBody .right_col a{
+body.darkBody .right_col a{
     color: white;
 }
 
-.guestBody input, 
-.guestBody select, 
-.guestBody button{
+body.darkBody input, 
+body.darkBody select, 
+body.darkBody button,
+body.darkBody textarea{
    color: black;
 }
 
@@ -31,6 +40,7 @@ body.nav-md.loginBody a
     display:block;
     padding: 5px;
 }
+
 
 .inline {
     display: inline-block;

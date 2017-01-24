@@ -1,96 +1,133 @@
-<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>  
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<h1>${pageTitle}</h1>
-
-<div class="form-message">
-    <%
-            //show additional message set in the controller
-    %>
-    <h2>${message}</h2>
-</div>
-
-<%
-        //show additional error set in the controller
-%>
-<div class="form-error">${error}</div>
-
-<div class="register-form">
-
-    <form:form method="post" modelAttribute="studentForm" id="studentForm">
 
 
-        <label for="username">Username</label>
-        <form:input path="username" id="username"></form:input>
-        <form:errors path="username" class="error"></form:errors>  
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h1>${pageTitle}</h1>                                
+            </div>
+            <div class="x_content">                         
 
-            <br/>
-            <br/>
+                <c:if test="${!empty message }">
+                    <div class="row">
+                        <div class="alert alert-success">
+                            ${message}
+                        </div>
+                    </div>
+                </c:if>
 
-            <label for="password">Password</label>
-        <form:input path="password" id="password"></form:input>
-        <form:errors path="password" class="error"></form:errors>  
-            <br/>
-            <br/>
+                <form:form method="post" action="register" modelAttribute="studentForm" cssClass="form-horizontal form-label-left" validate="">
+                    <spring:bind path="username">
+                        <div class="form-group ${status.error ? 'has-error' : ''}">
+                            <form:label path="username" cssClass="control-label col-md-3 col-sm-3 col-xs-12">Username</form:label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                <form:input path="username" name="username" id="username" cssClass="form-control col-md-7 col-xs-12" required="required" />
+                            </div>
+                            <form:errors path="username" cssClass="error form-error col-md-6 col-md-offset-3 col-xs-12" />
+                        </div>
+                    </spring:bind>
 
-            <label for="firstName">First Name</label>
-        <form:input path="firstName" id="firstName"></form:input>
-        <form:errors path="firstName" class="error"></form:errors>  
-            <br/>
-            <br/>
+                    <spring:bind path="password">
+                        <div class="form-group ${status.error ? 'has-error' : ''}">
+                            <form:label path="password" cssClass="control-label col-md-3 col-sm-3 col-xs-12">Password</form:label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                <form:password path="password" name="password" id="password" cssClass="form-control col-md-7 col-xs-12" required="required" />
+                            </div>
+                            <form:errors path="password" cssClass="error form-error col-md-6 col-md-offset-3 col-xs-12" />
+                        </div>
+                    </spring:bind>
 
-            <label for="lastName">Last Name</label>
-        <form:input path="lastName" id="lastName"></form:input>
-        <form:errors path="lastName" class="error"></form:errors>  
-            <br/>
-            <br/>
+                    <spring:bind path="firstName">
+                        <div class="form-group ${status.error ? 'has-error' : ''}">
+                            <form:label path="firstName" cssClass="control-label col-md-3 col-sm-3 col-xs-12">First Name</form:label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                <form:input path="firstName" name="first_name" id="first_name" cssClass="form-control col-md-7 col-xs-12" required="required" />
+                            </div>
+                            <form:errors path="firstName" cssClass="error form-error col-md-6 col-md-offset-3 col-xs-12" />
+                        </div>
+                    </spring:bind>
 
-            <label for="email">Email</label>
-        <form:input path="email" id="email"></form:input>
-        <form:errors path="email" class="error"></form:errors>  
-            <br/>
-            <br/>
+                    <spring:bind path="lastName">
+                        <div class="form-group ${status.error ? 'has-error' : ''}">
+                            <form:label path="lastName" cssClass="control-label col-md-3 col-sm-3 col-xs-12">Last Name</form:label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                <form:input path="lastName" name="last_name" id="last_name" cssClass="form-control col-md-7 col-xs-12" required="required" />
+                            </div>
+                            <form:errors path="lastName" cssClass="error form-error col-md-6 col-md-offset-3 col-xs-12" />
+                        </div>
+                    </spring:bind>
 
-            <label for="age">Age</label>
-        <form:input path="age" id="age"></form:input>
-        <form:errors path="age" class="error"></form:errors>  
-            <br/>
-            <br/>
-
-
-
-            <label for="dateOfBirth">Date of Birth (dd-mm-yyyy)</label>
-        <form:input path="dateOfBirth" id="dateOfBirth"></form:input>
-        <form:errors path="dateOfBirth" class="error"></form:errors>  
-            <br/>
-            <br/>
-
-
-
-
-            <label for="studyPlanId">Study Plan</label>
-        <form:select path="studyPlanId" id="studyPlanId" name="studyPlanId">   
-            <c:forEach var="studyPlanItem" items="${studyPlanList}">
-                <form:option value="${studyPlanItem.studyPlanId}" label="${studyPlanItem.name}" />
-            </c:forEach>        
-        </form:select>
-        <form:errors path="studyPlanId" class="error"></form:errors>  
+                    <spring:bind path="email">
+                        <div class="form-group ${status.error ? 'has-error' : ''}">
+                            <form:label path="email" cssClass="control-label col-md-3 col-sm-3 col-xs-12">Email</form:label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                <form:input path="email"  name="email" id="email" cssClass="form-control col-md-7 col-xs-12" required="required" />
+                            </div>
+                            <form:errors path="email" cssClass="error form-error col-md-6 col-md-offset-3 col-xs-12" />
+                        </div>
+                    </spring:bind>
 
 
+                    <spring:bind path="age">
+                        <div class="form-group ${status.error ? 'has-error' : ''}">
+                            <form:label path="age" cssClass="control-label col-md-3 col-sm-3 col-xs-12">Age</form:label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                <form:input path="age"  name="age" id="age" cssClass="form-control col-md-7 col-xs-12" required="required" />
+                            </div>
+                            <form:errors path="age" cssClass="error form-error col-md-6 col-md-offset-3 col-xs-12" />
+                        </div>
+                    </spring:bind>
 
-            <br/>
-            <br/>
+                    <spring:bind path="dateOfBirth">
+                        <div class="form-group ${status.error ? 'has-error' : ''}">
+                            <form:label path="dateOfBirth" cssClass="control-label col-md-3 col-sm-3 col-xs-12">Date Of Birth</form:label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                <form:input path="dateOfBirth"  name="dateOfBirth" id="dateOfBirth" cssClass="form-control date-picker col-md-7 col-xs-12" required="required" />
+                            </div>
+                            <form:errors path="dateOfBirth" cssClass="error form-error col-md-6 col-md-offset-3 col-xs-12" />
+                        </div>
+                    </spring:bind>
 
-        <form:button type="submit" value="create"> Register </form:button>
+                    <spring:bind path="studyPlanId">
+                        <div class="form-group ${status.error ? 'has-error' : ''}">
+                            <form:label path="studyPlanId" cssClass="control-label col-md-3 col-sm-3 col-xs-12">Study Plan</form:label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">                                
+                                <form:select path="studyPlanId" id="studyPlanId" name="studyPlanId" cssClass="form-control col-md-7 col-xs-12" required="required">   
+                                    <form:option value="" label="Select a Study Plan" />
+                                    <c:forEach var="studyPlanItem" items="${studyPlanList}">
+                                        <form:option value="${studyPlanItem.studyPlanId}" label="${studyPlanItem.name}" />
+                                    </c:forEach>        
+                                </form:select>
+                            </div>
+                            <form:errors path="studyPlanId" cssClass="error form-error col-md-6 col-md-offset-3 col-xs-12"></form:errors>                                                                  
+                            </div>
+                    </spring:bind>
 
-    </form:form>
-    <br/>
-    <br/>
-    <div>
-        <a href="<c:url value="/listStudyPlan"/>">Click here for Study Plan info</a>                       
-    </div> 
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">                            
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </div>
 
+                </form:form>
+
+
+                <c:if test="${!empty error }">
+                    <div class="row">
+                        <div class="alert alert-danger">
+                            ${error}
+                        </div>
+                    </div>
+                </c:if>     
+
+            </div>
+        </div>
+    </div>
 </div>
 

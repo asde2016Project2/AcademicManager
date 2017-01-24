@@ -21,6 +21,8 @@
         <!-- NProgress -->        
         <link href="<c:url value="/resources/vendors/nprogress/nprogress.css"/>" rel="stylesheet">                
 
+        <link href="<c:url value="/resources/vendors/bootstrap-daterangepicker/daterangepicker.css"/>" rel="stylesheet">
+        
         <!-- Datatables -->
         <link href="<c:url value="/resources/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css"/>" rel="stylesheet">
         <link href="<c:url value="/resources/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css"/>" rel="stylesheet">
@@ -79,6 +81,9 @@
 
         <script src="<c:url value="/resources/vendors/iCheck/icheck.min.js"/>"></script>        
 
+        <script src="<c:url value="/resources/vendors/moment/min/moment.min.js"/>"></script>    
+        <script src="<c:url value="/resources/vendors/bootstrap-daterangepicker/daterangepicker.js"/>"></script>               
+        
         <script src="<c:url value="/resources/vendors/datatables.net/js/jquery.dataTables.min.js"/>"></script>
         <script src="<c:url value="/resources/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"/>"></script>
         <script src="<c:url value="/resources/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"/>"></script>
@@ -90,7 +95,7 @@
         <script src="<c:url value="/resources/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"/>"></script>
         <script src="<c:url value="/resources/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"/>"></script>
         <script src="<c:url value="/resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"/>"></script>
-        <script src="<c:url value="/resources/vendors/datatables.net-scroller/js/datatables.scroller.min.js"/>"></script>
+        <script src="<c:url value="/resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"/>"></script>
 
         <!-- Custom Theme Scripts -->        
         <script src="<c:url value="/resources/js/custom.min.js"/>"></script>  

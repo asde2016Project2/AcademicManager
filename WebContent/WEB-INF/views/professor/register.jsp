@@ -3,98 +3,115 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<h1>${pageTitle}</h1>
-
-<div class="form-message">
-    <% //show additional message set in the controller %>
-    <h2>${message}</h2>
-</div>
-
- <% //show additional error set in the controller %>
-    <div class="form-error">${error}</div> 
-
-<div class="register-form">
-    <form:form method="post" action="register" modelAttribute="professor">
 
 
-        <spring:bind path="username">
-            <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:label path="username">Username</form:label>
-                <form:input path="username" type="text" name="username" id="username" />
-                <form:errors path="username" />
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h1>${pageTitle}</h1>                                
             </div>
-        </spring:bind>
-        <br/>
+            <div class="x_content">         
 
-        <label for="password">Password</label>
-        <form:password path="password" id="password" name="password"></form:password>
-            <br/>
-        <form:errors path="password" class="error"></form:errors>            
+                <c:if test="${!empty message }">
+                    <div class="row">
+                        <div class="alert alert-success">
+                            ${message}
+                        </div>
+                    </div>
+                </c:if>
 
-            <br/>
-            <hr/>
-            <br/>
+                <form:form method="post" action="register" modelAttribute="professor" cssClass="form-horizontal form-label-left" validate="">
+                    <spring:bind path="username">
+                        <div class="form-group ${status.error ? 'has-error' : ''}">
+                            <form:label path="username" cssClass="control-label col-md-3 col-sm-3 col-xs-12">Username</form:label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                <form:input path="username" name="username" id="username" cssClass="form-control col-md-7 col-xs-12" required="required" />
+                            </div>
+                            <form:errors path="username" cssClass="error form-error col-md-6 col-md-offset-3 col-xs-12" />
+                        </div>
+                    </spring:bind>
 
-        <form:label path="firstName">First Name</form:label>
-        <form:input path="firstName" id="firstName" name="firstName"></form:input>
-            <br/>
-        <form:errors path="firstName" class="error"></form:errors>
+                    <spring:bind path="password">
+                        <div class="form-group ${status.error ? 'has-error' : ''}">
+                            <form:label path="password" cssClass="control-label col-md-3 col-sm-3 col-xs-12">Password</form:label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                <form:password path="password" name="password" id="password" cssClass="form-control col-md-7 col-xs-12" required="required" />
+                            </div>
+                            <form:errors path="password" cssClass="error form-error col-md-6 col-md-offset-3 col-xs-12" />
+                        </div>
+                    </spring:bind>
 
-            <br/>
-            <br/>
+                    <spring:bind path="firstName">
+                        <div class="form-group ${status.error ? 'has-error' : ''}">
+                            <form:label path="firstName" cssClass="control-label col-md-3 col-sm-3 col-xs-12">First Name</form:label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                <form:input path="firstName" name="first_name" id="first_name" cssClass="form-control col-md-7 col-xs-12" required="required" />
+                            </div>
+                            <form:errors path="firstName" cssClass="error form-error col-md-6 col-md-offset-3 col-xs-12" />
+                        </div>
+                    </spring:bind>
 
-            <label for="lastName">Last Name</label>
-        <form:input path="lastName" id="lastName" name="lastName"></form:input>
-            <br/>
-        <form:errors path="lastName" class="error"></form:errors>     
+                    <spring:bind path="lastName">
+                        <div class="form-group ${status.error ? 'has-error' : ''}">
+                            <form:label path="lastName" cssClass="control-label col-md-3 col-sm-3 col-xs-12">Last Name</form:label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                <form:input path="lastName" name="last_name" id="last_name" cssClass="form-control col-md-7 col-xs-12" required="required" />
+                            </div>
+                            <form:errors path="lastName" cssClass="error form-error col-md-6 col-md-offset-3 col-xs-12" />
+                        </div>
+                    </spring:bind>
 
-            <br/>
-            <br/>
+                    <spring:bind path="email">
+                        <div class="form-group ${status.error ? 'has-error' : ''}">
+                            <form:label path="email" cssClass="control-label col-md-3 col-sm-3 col-xs-12">Email</form:label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                <form:input path="email"  name="email" id="email" cssClass="form-control col-md-7 col-xs-12" required="required" />
+                            </div>
+                            <form:errors path="email" cssClass="error form-error col-md-6 col-md-offset-3 col-xs-12" />
+                        </div>
+                    </spring:bind>
 
-            <label for="email">Email</label>
-        <form:input path="email" id="email" name="email" ></form:input>
-            <br/>
-        <form:errors path="email" class="error"></form:errors>     
 
-            <br/>
-            <br/>
+                    <spring:bind path="age">
+                        <div class="form-group ${status.error ? 'has-error' : ''}">
+                            <form:label path="age" cssClass="control-label col-md-3 col-sm-3 col-xs-12">Age</form:label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                <form:input path="age"  name="age" id="age" cssClass="form-control col-md-7 col-xs-12" required="required" />
+                            </div>
+                            <form:errors path="age" cssClass="error form-error col-md-6 col-md-offset-3 col-xs-12" />
+                        </div>
+                    </spring:bind>
 
-            <label for="age">Age</label>
-        <form:input path="age" id="age" name="age"></form:input>
-            <br/>
-        <form:errors path="age" class="error"></form:errors>     
+                    <spring:bind path="dateOfBirth">
+                        <div class="form-group ${status.error ? 'has-error' : ''}">
+                            <form:label path="dateOfBirth" cssClass="control-label col-md-3 col-sm-3 col-xs-12">Date Of Birth</form:label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                <form:input path="dateOfBirth"  name="dateOfBirth" id="dateOfBirth" cssClass="form-control date-picker col-md-7 col-xs-12" required="required" />
+                            </div>
+                            <form:errors path="dateOfBirth" cssClass="error form-error col-md-6 col-md-offset-3 col-xs-12" />
+                        </div>
+                    </spring:bind>
 
-            <br/>
-            <br/>
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">                            
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </div>
 
-            <label for="dateOfBirth">Date of birth</label>
-        <form:input path="dateOfBirth" id="dateOfBirth" name="dateOfBirth"></form:input>
-            <br/>
-        <form:errors path="dateOfBirth" class="error"></form:errors>     
+                </form:form>
 
-            <br/>
-            <br/>        
 
-            <input class="btn-submit" type="submit" value="Register" />
-    </form:form>
+                <c:if test="${!empty error }">
+                    <div class="row">
+                        <div class="alert alert-danger">
+                            ${error}
+                        </div>
+                    </div>
+                </c:if>         
 
-    <%
-    /*
-        // an alternative way of display errors
-        <spring:hasBindErrors name="professor">
-            <c:forEach var="error" items="${errors.allErrors}">
-                <div class="form-error">${error}</div> 
-                <br />
-            </c:forEach>
-        </spring:hasBindErrors>
-        
-        //another way too
-        <form:errors path="*" class="has-error" />
-    */
-    %>        
-         
-    
-   
-
+            </div>
+        </div>
+    </div>
 </div>
-
