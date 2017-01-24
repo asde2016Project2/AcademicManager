@@ -140,6 +140,7 @@ public class ProfessorController extends BaseController {
     	StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
     	ArrayList<CareerExam> students = studentDAO.getInformationStudent(username);
     	Student stud = studentDAO.retrieve(username);
+    	System.out.println("studdddd size info: "+students.size());
     	model.addAttribute("infoStudent", students);
     	model.addAttribute("student", stud);
     	return "professor/informationStudent";
@@ -250,7 +251,7 @@ public class ProfessorController extends BaseController {
     		model.addAttribute("error", "The dates or academic year are not ok");
     		return "professor/createAttempt";
     	}
-        return "professor/createAttempt";
+        return "redirect:/professor/listAttempt";
     }
     
     

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import it.unical.asde.uam.helper.Accepted;
 import it.unical.asde.uam.helper.SessionHelper;
 import it.unical.asde.uam.helper.UserProfileHelper;
 import it.unical.asde.uam.controllers.core.BaseController;
@@ -103,6 +104,11 @@ public class HomeController extends BaseController{
             return "home/login";
         }
         
+        if (professor.getAccepted() == Accepted.NOT_ACCEPTED) {
+            model.addAttribute("error", messageSource.getMessage("message.not_accepted", null, localeResolver.resolveLocale(request)));
+            SessionHelper.cleanSession(request.getSession());
+            return "home/login";
+        }
        SessionHelper.setUserProfessorLogged(professor, request.getSession()); 
        return "redirect:/professor/dashboard";
     }
@@ -119,6 +125,12 @@ public class HomeController extends BaseController{
             return "home/login";
         }
         
+        if (administrator.getAccepted() == Accepted.NOT_ACCEPTED) {
+            model.addAttribute("error", messageSource.getMessage("message.not_accepted", null, localeResolver.resolveLocale(request)));
+            SessionHelper.cleanSession(request.getSession());
+            return "home/login";
+        }
+                
        SessionHelper.setUserAdministratorLogged(administrator, request.getSession()); 
        return "redirect:/admin/dashboard";
        
@@ -135,7 +147,12 @@ public class HomeController extends BaseController{
             SessionHelper.cleanSession(request.getSession());
             return "home/login";
         }
-
+        
+        if (stud.getAccepted() == Accepted.NOT_ACCEPTED) {
+            model.addAttribute("error", messageSource.getMessage("message.not_accepted", null, localeResolver.resolveLocale(request)));
+            SessionHelper.cleanSession(request.getSession());
+            return "home/login";
+        }
 
 
        SessionHelper.setUserStudentLogged(stud, request.getSession());

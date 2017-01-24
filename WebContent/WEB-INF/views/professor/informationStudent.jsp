@@ -6,7 +6,7 @@
 <h1>Session: </h1>
 
 <form action="informationStudent" method="post">
-  username: <input type="username" name="username"><br>
+<label class="control-label col-md-3 col-sm-3 col-xs-12"> Username:</label> <input type="username" name="username"class="form-control"><br>
   <input type="submit" value="Submit">
 </form>
 
@@ -16,7 +16,7 @@
   <li>Username: <c:out value="${student.username}" /></li>
   <li>Email: <c:out value="${student.email}" /></li>
 </ul>
- <table class="tg">
+ <table class="table table-bordered">
             <tr>
                 <th width="80">Exam</th>
                 <th width="120">CFU</th>
