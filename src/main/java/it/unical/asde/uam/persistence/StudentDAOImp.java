@@ -52,8 +52,9 @@ public class StudentDAOImp implements StudentDAO {
 
         String queryString = "from Student"; //c order by c.name";
         Query query = dbHandler.getSession().createQuery(queryString);
+        dbHandler.begin();
         List<Student> dgs = (List<Student>) query.list();
-        //dbHandler.close();
+        dbHandler.commit();
         return dgs;
     }
 
@@ -64,8 +65,9 @@ public class StudentDAOImp implements StudentDAO {
         String queryString = "SELECT S.studyPlan FROM Student S WHERE S.userId =:givenId";
         Query query = dbHandler.getSession().createQuery(queryString);
         query.setParameter("givenId", studentId);
+        dbHandler.begin();
         StudyPlan e = (StudyPlan) query.uniqueResult();
-        //dbHandler.close();
+        dbHandler.commit();
         return e;
 
     }
@@ -76,7 +78,9 @@ public class StudentDAOImp implements StudentDAO {
 
         Query query = dbHandler.getSession().createQuery(hql);
         query.setParameter("username", username);
+        dbHandler.begin();
         Student stud = (Student) query.uniqueResult();
+        dbHandler.commit();
         return stud;
     }
 
@@ -86,7 +90,9 @@ public class StudentDAOImp implements StudentDAO {
         Query query = dbHandler.getSession().createQuery(hql);
         query.setParameter("username", username);
         query.setParameter("password", password);
+        dbHandler.begin();
         Student stud = (Student) query.uniqueResult();
+        dbHandler.commit();
         return stud;
     }
 
@@ -96,8 +102,9 @@ public class StudentDAOImp implements StudentDAO {
         String hql = "from Student where accepted =:value";
         Query query = dbHandler.getSession().createQuery(hql);
         query.setParameter("value", Accepted.NOT_ACCEPTED);
+        dbHandler.begin();
         List<Student> students = (List<Student>) query.list();
-        //dbHandler.close();
+        dbHandler.commit();
         return students;
     }
 
@@ -106,8 +113,9 @@ public class StudentDAOImp implements StudentDAO {
     public boolean isEmpty() {
         String queryString = "from Student";
         Query query = dbHandler.getSession().createQuery(queryString);
+        dbHandler.begin();
         List<Student> students = (List<Student>) query.list();
-        //dbHandler.close();
+        dbHandler.commit();
         if (students == null) {
             return true;
         }
@@ -139,7 +147,9 @@ public class StudentDAOImp implements StudentDAO {
 
         Query query = dbHandler.getSession().createQuery(hql);
         query.setParameter("email", email);
+        dbHandler.begin();
         Student student = (Student) query.uniqueResult();
+        dbHandler.commit();
         return student;
     }
 
@@ -151,8 +161,10 @@ public class StudentDAOImp implements StudentDAO {
         Query query = dbHandler.getSession().createQuery(hql);
         query.setParameter("studentID", studentId);
         query.setParameter("true", true);
+        dbHandler.begin();
         ArrayList<CareerExam> careerExams = (ArrayList<CareerExam>) query.list();
-
+        dbHandler.commit();
+        
         ArrayList<Exam> exams = new ArrayList<>();
 
         for (int i = 0; i < careerExams.size(); i++) {
@@ -169,8 +181,10 @@ public class StudentDAOImp implements StudentDAO {
         Query query = dbHandler.getSession().createQuery(hql);
         query.setParameter("studentID", studentId);
 
+        dbHandler.begin();
         ArrayList<CareerExam> careerExams = (ArrayList<CareerExam>) query.list();
-
+        dbHandler.commit();
+        
         ArrayList<Exam> exams = new ArrayList<>();
 
         for (int i = 0; i < careerExams.size(); i++) {
@@ -196,27 +210,30 @@ public class StudentDAOImp implements StudentDAO {
             String hql = "from CareerExam where student.userId=:studentIDD";
             Query query = dbHandler.getSession().createQuery(hql);
             query.setParameter("studentIDD", studentList.get(i).getUserId());
-
+         
             ArrayList<CareerExam> careerExams = (ArrayList<CareerExam>) query.list();
-
+                        
             for (int q = 0; q < careerExams.size(); q++) {
                 exams.add(careerExams.get(q).getExam());
                 totalCredits = totalCredits + (careerExams.get(q).getExam().getCfu());
 
             }
-
+         
 //			quelli fatti
             String hql2 = "from CareerExam where student.userId=:studentID AND done=:true";
             Query query2 = dbHandler.getSession().createQuery(hql2);
             query2.setParameter("studentID", studentList.get(i).getUserId());
             query2.setParameter("true", true);
 
+         
             ArrayList<CareerExam> careerExams2 = (ArrayList<CareerExam>) query2.list();
-
+            
             for (int j = 0; j < careerExams2.size(); j++) {
                 exams2.add(careerExams2.get(j).getExam());
                 totalCreditsEarned = totalCreditsEarned + (careerExams2.get(j).getExam().getCfu());
             }
+            
+         
 
             if ((exams.size() - exams2.size() <= 2) && (exams.size() - exams2.size() >= 1)) {
                 if (totalCredits - totalCreditsEarned <= 10) {

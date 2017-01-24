@@ -43,8 +43,9 @@ public class DegreeCourseDAOImp implements DegreeCourseDAO {
     public List<DegreeCourse> getAllDegrees() {
         String queryString = "from DegreeCourse";// c order by c.name";
         Query query = dbHandler.getSession().createQuery(queryString);
+        dbHandler.begin();
         List<DegreeCourse> dgs = (List<DegreeCourse>) query.list();
-        ////dbHandler.close();
+        dbHandler.commit();
         return dgs;
     }
     
@@ -54,8 +55,9 @@ public class DegreeCourseDAOImp implements DegreeCourseDAO {
     public List<String> getAllNameDegrees() {
     	String queryString = "select c.name from DegreeCourse c order by c.name";
         Query query = dbHandler.getSession().createQuery(queryString);
+        dbHandler.begin();
         List<String> dgs = (List<String>) query.list();
-        ////dbHandler.close();
+        dbHandler.commit();
         return dgs;
     }
     
@@ -69,8 +71,9 @@ public class DegreeCourseDAOImp implements DegreeCourseDAO {
     	String queryString = "from DegreeCourse c where name=:name";
     	Query query = dbHandler.getSession().createQuery(queryString);
     	query.setParameter("name",name);
+    	dbHandler.begin();
     	DegreeCourse degreeCourse = (DegreeCourse) query.uniqueResult();
-    	////dbHandler.close();
+    	dbHandler.commit();
     	return degreeCourse;
     }
 
@@ -79,8 +82,9 @@ public class DegreeCourseDAOImp implements DegreeCourseDAO {
         String queryString = "from DegreeCourse c where id=:id";
     	Query query = dbHandler.getSession().createQuery(queryString);
     	query.setParameter("id",id);
+    	dbHandler.begin();
     	DegreeCourse degreeCourse = (DegreeCourse) query.uniqueResult();
-    	//////dbHandler.close();
+    	dbHandler.commit();
     	return degreeCourse;
     }
     
@@ -89,8 +93,9 @@ public class DegreeCourseDAOImp implements DegreeCourseDAO {
         String queryString = "from DegreeCourse where name=:nameDeg";
         Query query = dbHandler.getSession().createQuery(queryString);
         query.setParameter("nameDeg", nameDegree);
+        dbHandler.begin();
         DegreeCourse dC = (DegreeCourse) query.uniqueResult();
-        ////dbHandler.close();
+        dbHandler.commit();
         return dC;
     }
     

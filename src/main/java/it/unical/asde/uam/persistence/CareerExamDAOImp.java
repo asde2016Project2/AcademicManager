@@ -77,9 +77,11 @@ public class CareerExamDAOImp implements CareerExamDAO {
         Query query = dbHandler.getSession().createQuery(hql);
         query.setParameter("name", careerExam.getStudent().getUsername());
         query.setParameter("examId", careerExam.getCareerExamId());
+        dbHandler.begin();
         // Persists to HSQLDB
         query.executeUpdate();
         logger.info("CareerExam updated successfully, CareerExam Details=" + careerExam);
+        dbHandler.commit();
     }
 
     // I changed this method because when i tried to update the class it insert
@@ -156,7 +158,9 @@ public class CareerExamDAOImp implements CareerExamDAO {
         Query query = dbHandler.getSession().createQuery(hql);
         query.setParameter("studUser", studUser);
         query.setParameter("examID", examId);
+        dbHandler.begin();
         CareerExam careerExam = (CareerExam) query.uniqueResult();
+        dbHandler.commit();
         return careerExam;
     }
     // author: Nello
@@ -191,3 +195,4 @@ public class CareerExamDAOImp implements CareerExamDAO {
     }
 
 }
+

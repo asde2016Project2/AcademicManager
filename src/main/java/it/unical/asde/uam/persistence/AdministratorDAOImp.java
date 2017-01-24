@@ -64,7 +64,9 @@ public class AdministratorDAOImp implements AdministratorDAO {
         String hql = "from Administrator where accepted=:value";
         Query query = dbHandler.getSession().createQuery(hql);
         query.setParameter("value", Accepted.NOT_ACCEPTED);
+        dbHandler.begin();
         List<Administrator> administrators = (List<Administrator>) query.list();
+        dbHandler.commit();
         return administrators;
     }
 
@@ -73,7 +75,9 @@ public class AdministratorDAOImp implements AdministratorDAO {
         String hql = "from Administrator where username=:username";
         Query query = dbHandler.getSession().createQuery(hql);
         query.setParameter("username", username);
+        dbHandler.begin();
         Administrator administrator = (Administrator) query.uniqueResult();
+        dbHandler.commit();
         return administrator;
     }
 
@@ -93,7 +97,9 @@ public class AdministratorDAOImp implements AdministratorDAO {
 
         Query query = dbHandler.getSession().createQuery(hql);
         query.setParameter("email", email);
+        dbHandler.begin();
         Administrator administrator = (Administrator) query.uniqueResult();
+        dbHandler.commit();
         return administrator;
     }
 

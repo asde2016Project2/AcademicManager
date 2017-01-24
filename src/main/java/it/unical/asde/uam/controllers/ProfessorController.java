@@ -53,11 +53,13 @@ public class ProfessorController extends BaseController {
     @RequestMapping(value = "dashboard", method = RequestMethod.GET)
     public String showDashboad(HttpServletRequest request, Model model) {
         
-        model.addAttribute("pageTitle","Professor Area");     
-        
-        if (!SessionHelper.isProfessor(request.getSession())) {
-            return "redirect:/";
+    	if (!SessionHelper.isProfessor(request.getSession())) {
+            return "redirect:/logout";
         }
+    	
+    	model.addAttribute("pageTitle","Professor Area");     
+        
+       
 
         return "professor/dashboard";
     }
@@ -102,7 +104,12 @@ public class ProfessorController extends BaseController {
     }
     
     @RequestMapping(value ="listSession", method = RequestMethod.GET)
-    public String viewAllSession(Model model){
+    public String viewAllSession(Model model, HttpServletRequest request){
+    	
+    	if (!SessionHelper.isProfessor(request.getSession())) {
+            return "redirect:/logout";
+        }
+    	
     	ExamSessionDAO examSessionDao = (ExamSessionDAO) context.getBean("examSessionDAO");
     	ArrayList<ExamSession> allExamSessions = (ArrayList<ExamSession>) examSessionDao.getAllExamSession();//.listAllSession();
     	model.addAttribute("lista", allExamSessions);
@@ -111,6 +118,11 @@ public class ProfessorController extends BaseController {
     
     @RequestMapping(value ="listAttempt", method = RequestMethod.GET)
     public String viewAllAttempts(Model model, HttpServletRequest request){
+    	
+    	if (!SessionHelper.isProfessor(request.getSession())) {
+            return "redirect:/logout";
+        }
+    	
     	Professor p = SessionHelper.getUserProfessorLogged(request.getSession()); 
     	AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
     	model.addAttribute("attemptList", attemptDAO.getAttemptByProfessor(p));
@@ -118,7 +130,11 @@ public class ProfessorController extends BaseController {
     }
     
     @RequestMapping(value ="studentExtraExamSession", method = RequestMethod.GET)
-    public String viewStudentForExtraExamSession(Model model){
+    public String viewStudentForExtraExamSession(Model model, HttpServletRequest request){
+    	
+    	if (!SessionHelper.isProfessor(request.getSession())) {
+            return "redirect:/logout";
+        }
     	
     	StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
     	ArrayList<Student> students = studentDAO.getStudentForStraordinaryExamSession(studentDAO.getAllStudents());
@@ -129,13 +145,21 @@ public class ProfessorController extends BaseController {
     }
     
     @RequestMapping(value ="informationStudent", method = RequestMethod.GET)
-    public String getInformationStudent(Model model){
+    public String getInformationStudent(Model model, HttpServletRequest request){
+    	
+    	if (!SessionHelper.isProfessor(request.getSession())) {
+            return "redirect:/logout";
+        }
     	
     	return "professor/informationStudent";
     }
     
     @RequestMapping(value ="informationStudent", method = RequestMethod.POST)
-    public String getInformationStudentByUsername(Model model, @ModelAttribute("username") String username){
+    public String getInformationStudentByUsername(Model model, @ModelAttribute("username") String username, HttpServletRequest request){
+    	
+    	if (!SessionHelper.isProfessor(request.getSession())) {
+            return "redirect:/logout";
+        }
     	
     	StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
     	ArrayList<CareerExam> students = studentDAO.getInformationStudent(username);
@@ -150,6 +174,11 @@ public class ProfessorController extends BaseController {
     
     @RequestMapping(value ="registerExam", method = RequestMethod.GET)
     public String getRegisterExam(Model model, HttpServletRequest request){
+    	
+    	if (!SessionHelper.isProfessor(request.getSession())) {
+            return "redirect:/logout";
+        }
+    	
     	model.addAttribute("examName", examName);
     	model.addAttribute("userar", uar);
     	if(!(examName.equals("")))
@@ -160,6 +189,10 @@ public class ProfessorController extends BaseController {
     @RequestMapping(value ="registerExam", method = RequestMethod.POST)
     public String doRegisterExam(Model model, @ModelAttribute("examname") String examname, 
     		HttpServletRequest request){
+    	
+    	if (!SessionHelper.isProfessor(request.getSession())) {
+            return "redirect:/logout";
+        }
     	
     	examName = examname;
     	
@@ -180,7 +213,11 @@ public class ProfessorController extends BaseController {
     @RequestMapping(value ="addCareerExam", method = RequestMethod.POST)
     public String addCareerExam(Model model, @ModelAttribute("grade") int grade,
     		@RequestParam("studentUsername") String studUsername2,
-    		@RequestParam("attemptId") int attemptId){
+    		@RequestParam("attemptId") int attemptId, HttpServletRequest request){
+    	
+    	if (!SessionHelper.isProfessor(request.getSession())) {
+            return "redirect:/logout";
+        }
     	
     	StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
     	AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
@@ -211,7 +248,12 @@ public class ProfessorController extends BaseController {
     }
     
     @RequestMapping(value = "createAttempt", method = RequestMethod.GET)
-    public String createNewAttempt(Model model) {
+    public String createNewAttempt(Model model, HttpServletRequest request){
+    	
+    	if (!SessionHelper.isProfessor(request.getSession())) {
+            return "redirect:/logout";
+        }
+    	
     	ExamSessionDAO examSessionDAO = (ExamSessionDAO) context.getBean("examSessionDAO");
     	model.addAttribute("examSessions", examSessionDAO.getAllExamSession());
     	ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
@@ -226,6 +268,10 @@ public class ProfessorController extends BaseController {
     		@ModelAttribute("startingDate") String startingDateString, @ModelAttribute("endingDate") String endingDateString,
     		@ModelAttribute("classRoom") String classRoom, @ModelAttribute("examSession") String examSession,
     		@ModelAttribute("exam") String exam, HttpServletRequest request) throws ParseException {
+    	
+    	if (!SessionHelper.isProfessor(request.getSession())) {
+            return "redirect:/logout";
+        }
     	
     	ExamSessionDAO examSessionDAO = (ExamSessionDAO) context.getBean("examSessionDAO");
     	ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
@@ -267,6 +313,10 @@ public class ProfessorController extends BaseController {
  */
 @RequestMapping(value = "viewStudentExamSignup", method = RequestMethod.GET)
 public String getStudentSignupForExamSession(Model model,HttpServletRequest request){
+	
+	if (!SessionHelper.isProfessor(request.getSession())) {
+        return "redirect:/logout";
+    }
 	  
 	 Professor loggedProfessor = SessionHelper.getUserProfessorLogged(request.getSession());
 	 UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
@@ -284,6 +334,11 @@ public String getStudentSignupForExamSession(Model model,HttpServletRequest requ
 
 @RequestMapping(value = "viewStudentExamSignup", method = RequestMethod.POST)
 public String acceptStudentSignupForExamSession(Model model, HttpServletRequest request){
+	
+	if (!SessionHelper.isProfessor(request.getSession())) {
+        return "redirect:/logout";
+    }
+	
 //	System.out.println("prof user name==="+ username);
 	Professor loggedProfessor = SessionHelper.getUserProfessorLogged(request.getSession());
 	 UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
@@ -307,7 +362,12 @@ public String acceptStudentSignupForExamSession(Model model, HttpServletRequest 
 //
 @RequestMapping(value = "viewStudentExamSignup", method = RequestMethod.POST, params = "reject")
 public String rejectStudentSignupforExam(@RequestParam(value = "reject") String username, Model model,HttpServletRequest request) {
-	 Professor loggedProfessor = SessionHelper.getUserProfessorLogged(request.getSession());
+	 
+	if (!SessionHelper.isProfessor(request.getSession())) {
+        return "redirect:/logout";
+    }
+	
+	Professor loggedProfessor = SessionHelper.getUserProfessorLogged(request.getSession());
 	 UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
     UserAttemptRegistration userAttReg= userAttRegDAO.getUserAttemptByProfessorUserName(loggedProfessor);
     

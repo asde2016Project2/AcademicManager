@@ -48,8 +48,9 @@ public class ExamDAOImp implements ExamDAO {
         String queryString = "from Exam where name =:ex";
         Query query = session.createQuery(queryString);
         query.setParameter("ex", examName);
+        dbHandler.begin();
         Exam e = (Exam) query.uniqueResult();
-        //dbHandler.close();
+        dbHandler.commit();
         return e;
     }
   
@@ -123,8 +124,9 @@ public class ExamDAOImp implements ExamDAO {
 
         String queryString = "select c.name from Exam c order by c.name";
         Query query = dbHandler.getSession().createQuery(queryString);
-        List<String> exams = (List<String>) query.list();
-        //dbHandler.close();
+        dbHandler.begin();
+         List<String> exams = (List<String>) query.list();
+         dbHandler.commit();
         return exams;
     }
 
@@ -138,9 +140,11 @@ public class ExamDAOImp implements ExamDAO {
         Query query = dbHandler.getSession().createQuery(hql);
         query.setParameter("name", exam.getName());
         query.setParameter("examId", exam.getId());
+        dbHandler.begin();
         // Persists to HSQLDB
         int result = query.executeUpdate();
         logger.info("Exam updated successfully, Exam Details=" + exam);
+        dbHandler.commit();
     }
   
     
@@ -153,9 +157,11 @@ public class ExamDAOImp implements ExamDAO {
 	public Integer getTotalNumberOfExams() {
 		String hql = "SELECT COUNT(*) FROM Exam";
 		Query query = dbHandler.getSession().createQuery(hql);
+		dbHandler.begin();
 		Long singleResult = (Long) query.uniqueResult();
 		Integer numOfExams = singleResult.intValue();
 		logger.info("nr of exams is {} ", numOfExams);
+		dbHandler.commit();
 		return numOfExams;
 
 	}

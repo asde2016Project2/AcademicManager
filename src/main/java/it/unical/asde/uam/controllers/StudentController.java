@@ -78,14 +78,21 @@ public class StudentController extends BaseController {
     public String showDashboad(HttpServletRequest request, Model model) {
 
         if (!SessionHelper.isStudent(request.getSession())) {
-            return "redirect:/";
+            return "redirect:/logout";
         }
+        
         model.addAttribute("pageTitle", "Student Area");
         return "student/dashboard";
     }
 
     @RequestMapping(value = "projection", method = RequestMethod.GET)
     public String projection(Model model, HttpServletRequest request) {
+    	
+    	 if (!SessionHelper.isStudent(request.getSession())) {
+             return "redirect:/logout";
+         }
+    	
+    	
         Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
         CareerExamDAO careerExamDAO = (CareerExamDAO) context.getBean("careerExamDAO");
         List<CareerExam> listCareerExam = (List<CareerExam>) careerExamDAO.getCareerExamsOfaStudent(loggedStudent.getUserId());
@@ -110,6 +117,11 @@ public class StudentController extends BaseController {
 
     @RequestMapping(value = "projection", method = RequestMethod.POST)
     public String makeProjection(@Valid @ModelAttribute("projectionForm") ProjectionFormDTO projectionFormDTO, Model model, HttpServletRequest request) {
+    	
+    	 if (!SessionHelper.isStudent(request.getSession())) {
+             return "redirect:/logout";
+         }
+    	 
         Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
         double avgScore = 0;
         int cfuDone = 0;
@@ -134,7 +146,12 @@ public class StudentController extends BaseController {
     // -------------------Exam Reservation process-------//
 
 	@RequestMapping(value = "academicExamSessionList", method = RequestMethod.GET)
-	public String viewExamSession(Model model) {
+	public String viewExamSession(Model model, HttpServletRequest request) {
+		
+		 if (!SessionHelper.isStudent(request.getSession())) {
+	            return "redirect:/logout";
+	        }
+		 
 		model.addAttribute("pageTitle", "Registration Appeals");
 		ExamSessionDAO examSessionDAO = (ExamSessionDAO) context.getBean("examSessionDAO");
 		List<ExamSession> listExamSession = examSessionDAO.listExamRegAppeals();
@@ -144,7 +161,12 @@ public class StudentController extends BaseController {
 	}
 
 	@RequestMapping(value = "academicExamSessionList/examSession/{sessionId:.+}", method = RequestMethod.GET)
-	public String viewAttempt(@PathVariable("sessionId") Integer sessionId, Model model) throws Exception {
+	public String viewAttempt(@PathVariable("sessionId") Integer sessionId, Model model, HttpServletRequest request) throws Exception {
+		
+		 if (!SessionHelper.isStudent(request.getSession())) {
+	            return "redirect:/logout";
+	        }
+		 
 		ExamSessionDAO examSessionDAO = (ExamSessionDAO) context.getBean("examSessionDAO");
 		model.addAttribute("examSession", examSessionDAO.getExamSessionById(sessionId));
 		ExamSession examSession = new ExamSession();
@@ -161,7 +183,12 @@ public class StudentController extends BaseController {
 	}
 
 	@RequestMapping(value = "list/ExamReserve", method = RequestMethod.GET)
-	public String viewAttempt(Model model) throws NullPointerException {
+	public String viewAttempt(Model model, HttpServletRequest request) throws NullPointerException {
+		
+		 if (!SessionHelper.isStudent(request.getSession())) {
+	            return "redirect:/logout";
+	        }
+		 
 		model.addAttribute("pageTitle", "Exam Board");
 		AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
 		ArrayList<Attempt> listOfExamReservation = attemptDAO.listActiveExamforAttempt();
@@ -187,6 +214,12 @@ public class StudentController extends BaseController {
 	@RequestMapping(value = "detail/examBooking/{attemptId}", method = RequestMethod.GET)
 	public String cancelOrSignupForExam(@PathVariable("attemptId") Integer attemptId, Model model,
 			HttpServletRequest request) throws Exception {
+		 
+		if (!SessionHelper.isStudent(request.getSession())) {
+	            return "redirect:/logout";
+	        }
+		
+		
 		AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
 		Attempt attempt = new Attempt();
 		attempt = attemptDAO.getAttemptById(attemptId);
@@ -225,6 +258,11 @@ public class StudentController extends BaseController {
 	@RequestMapping(value = "detail/examBooking/{attemptId}", method = RequestMethod.POST, params = "signup")
 	public String reserveForExam(@RequestParam(value = "attemptId") int attemptId,
 			@RequestParam(value = "signup") String status, Model model, HttpServletRequest request) {
+		
+		 if (!SessionHelper.isStudent(request.getSession())) {
+	            return "redirect:/logout";
+	        }
+		
 		UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context
 				.getBean("userAttemptRegistrationDAO");
 		AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
@@ -269,6 +307,11 @@ public class StudentController extends BaseController {
 	@RequestMapping(value = "detail/examBooking/{attemptId}", method = RequestMethod.POST, params = "cancel")
 	public String cancelReservation(@RequestParam(value = "attemptId") int attemptId,
 			@RequestParam(value = "cancel") String status, Model model, HttpServletRequest request) {
+		
+		 if (!SessionHelper.isStudent(request.getSession())) {
+	            return "redirect:/logout";
+	        }
+		
 		Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
 		UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context
 				.getBean("userAttemptRegistrationDAO");
@@ -316,6 +359,11 @@ public class StudentController extends BaseController {
 	 */
 	@RequestMapping(value = "cancelExamBook", method = RequestMethod.GET)
 	public String examReservedByStudent(Model model, HttpServletRequest request) {
+		
+		 if (!SessionHelper.isStudent(request.getSession())) {
+	            return "redirect:/logout";
+	        }
+		
 		UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context
 				.getBean("userAttemptRegistrationDAO");
 		Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
@@ -347,6 +395,11 @@ public class StudentController extends BaseController {
 	 */
 	@RequestMapping(value = "cancelExamBook", method = RequestMethod.POST)
 	public String cancelSignup(Model model, HttpServletRequest request) {
+		
+		 if (!SessionHelper.isStudent(request.getSession())) {
+	            return "redirect:/logout";
+	        }
+		
 		UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context
 				.getBean("userAttemptRegistrationDAO");
 		Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
@@ -370,6 +423,7 @@ public class StudentController extends BaseController {
     // registration stuff
     @RequestMapping(value = "register", method = RequestMethod.GET)
     public String showRegisterForm(HttpServletRequest request, Model model) {
+    	
 
         model.addAttribute("pageTitle", "Student Register");
 
@@ -384,6 +438,8 @@ public class StudentController extends BaseController {
     @RequestMapping(value = "register", method = RequestMethod.POST)
     public String doRegister(@ModelAttribute("studentForm")
             @Valid StudentFormDTO studentFormDTO, BindingResult result, HttpServletRequest request, Model model) {
+    	
+
 
         model.addAttribute("pageTitle", "Student Register");
         StudyPlanDAO studyPlanDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
@@ -423,6 +479,10 @@ public class StudentController extends BaseController {
     @RequestMapping(value = "visualizeStudyPlan", method = RequestMethod.GET)
     public String listStudyPlanExams(Model model, HttpServletRequest request) throws NullPointerException {
 
+    	 if (!SessionHelper.isStudent(request.getSession())) {
+	            return "redirect:/logout";
+	        }
+    	
         Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
         model.addAttribute("studentName", loggedStudent.getFirstName() + " " + loggedStudent.getLastName());
 
@@ -439,6 +499,10 @@ public class StudentController extends BaseController {
 
     @RequestMapping(value = "visualizeCareer", method = RequestMethod.GET)
     public String listCareerExams(Model model, HttpServletRequest request) throws NullPointerException {
+    	
+    	 if (!SessionHelper.isStudent(request.getSession())) {
+	            return "redirect:/logout";
+	        }
 
         Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
         model.addAttribute("studentName", loggedStudent.getFirstName() + " " + loggedStudent.getLastName());
@@ -455,6 +519,10 @@ public class StudentController extends BaseController {
 
     @RequestMapping(value = "visualizeStatistics", method = RequestMethod.GET)
     public String listStatistics(Model model, HttpServletRequest request) throws NullPointerException {
+    	
+    	 if (!SessionHelper.isStudent(request.getSession())) {
+	            return "redirect:/logout";
+	        }
 
         Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
         model.addAttribute("studentName", loggedStudent.getFirstName() + " " + loggedStudent.getLastName());
@@ -502,6 +570,8 @@ public class StudentController extends BaseController {
     @RequestMapping(value = "showStudyPlans", method = RequestMethod.GET)
     public String showStudyPlans(Model model, HttpServletRequest request) throws NullPointerException {
 
+    	//PUBLIC METHOD
+    	
         StudyPlanDAO spDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
 
         model.addAttribute("pageTitle", "Available Study Plans");
@@ -514,6 +584,8 @@ public class StudentController extends BaseController {
     @RequestMapping(value = "details/studyplan/{id}", method = RequestMethod.GET)
     public String showDetailStudyPlan(@PathVariable("id") int id, Model model) {
 
+    	//PUBLIC METHOD
+    	
         StudyPlanDAO spDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
 
         StudyPlan studyPlan = spDAO.retrieve(id);

@@ -35,6 +35,22 @@ public class HomeController extends BaseController{
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String showLogin(@ModelAttribute("loginForm") LoginFormDTO loginForm, Model model, HttpServletRequest request) {
+    	
+    	//logged users cannot login again
+    	if (SessionHelper.isProfessor(request.getSession())) {
+            return "redirect:/professor/dashboard";
+        }
+    	
+    	else if (SessionHelper.isAdmin(request.getSession())) {
+            return "redirect:/admin/dashboard";
+        }
+    	
+    	else if (SessionHelper.isStudent(request.getSession())) {
+            return "redirect:/student/dashboard";
+        }
+    	//logged users cannot login again
+    	
+    	
         model.addAttribute("pageTitle","Login");     
         model.addAttribute("loginForm",new LoginFormDTO());          
         return "home/login";
@@ -52,6 +68,19 @@ public class HomeController extends BaseController{
     @RequestMapping(value = "", method = RequestMethod.POST)
     public String doLogin(@Valid @ModelAttribute("loginForm") LoginFormDTO loginForm, BindingResult result, HttpServletRequest request, Model model) {                            
         
+    	//logged users cannot login again
+    	if (SessionHelper.isProfessor(request.getSession())) {
+            return "redirect:/professor/dashboard";
+        }
+    	
+    	else if (SessionHelper.isAdmin(request.getSession())) {
+            return "redirect:/admin/dashboard";
+        }
+    	
+    	else if (SessionHelper.isStudent(request.getSession())) {
+            return "redirect:/student/dashboard";
+        }
+    	//logged users cannot login again
                 
         String viewToRender = "home/login";
         

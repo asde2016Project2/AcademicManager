@@ -78,9 +78,11 @@ public class ExamSessionDAOImp implements ExamSessionDAO {
 	public Integer getTotalNumberOfExamSession() {
 		String hql = "SELECT COUNT(*) FROM ExamSession";
 		Query query = dbHandler.getSession().createQuery(hql);
+		dbHandler.begin();
 		Long singleResult = (Long) query.uniqueResult();
 		Integer numOfExams = singleResult.intValue();
 		logger.info("nr of examSessions is {} ", numOfExams);
+		dbHandler.commit();
 		return numOfExams;
 
 	}
@@ -93,11 +95,13 @@ public class ExamSessionDAOImp implements ExamSessionDAO {
 		query.setFirstResult(start);
 		query.setMaxResults(examPerPage);
 
+		dbHandler.begin();
 		List<ExamSession> examSessions = query.list();
 
 		for (ExamSession examSession : examSessions) {
 			logger.info("ExamSession list:" + examSessions);
 		}
+		dbHandler.commit();
 		return examSessions;
 	}
 
@@ -109,8 +113,10 @@ public class ExamSessionDAOImp implements ExamSessionDAO {
 				.createQuery("SELECT degreeCourse FROM ExamSession s WHERE s.examSessionId = :examSessionId");
 		query.setParameter("examSessionId", examSessionId);
 
+		dbHandler.begin();
 		List<DegreeCourse> getDegreeCourseToExamSession = query.list();
-
+		dbHandler.commit();
+		
 		return getDegreeCourseToExamSession;
 	}
 
@@ -119,7 +125,10 @@ public class ExamSessionDAOImp implements ExamSessionDAO {
 	public List<ExamSession> getAllExamSession() {
 
 		Query query = dbHandler.getSession().createQuery("from ExamSession");
-		return query.list();
+		dbHandler.begin();
+		List<ExamSession> allExamSessions =  query.list();
+		dbHandler.commit();
+		return allExamSessions;
 	}
 
   
