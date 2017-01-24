@@ -19,8 +19,8 @@
         <!-- Font Awesome -->        
         <link href="<c:url value="/resources/vendors/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet">
         <!-- NProgress -->        
-        <link href="<c:url value="/resources/vendors/nprogress/nprogress.css"/>" rel="stylesheet">                
-
+        <link href="<c:url value="/resources/vendors/nprogress/nprogress.css"/>" rel="stylesheet">                       
+        
         <!-- Datatables -->
         <link href="<c:url value="/resources/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css"/>" rel="stylesheet">
         <link href="<c:url value="/resources/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css"/>" rel="stylesheet">
@@ -28,11 +28,11 @@
         <link href="<c:url value="/resources/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css"/>" rel="stylesheet">
         <link href="<c:url value="/resources/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css"/>" rel="stylesheet">
         
+        
         <!-- Custom Theme Style -->        
         <link href="<c:url value="/resources/css/custom.min.css"/>" rel="stylesheet">
         <link href="<c:url value="/resources/css/customization.css"/>" rel="stylesheet">
 
-        <script type="text/javascript" src="<c:url value="/resources/script/webcam.js" />"></script>
     </head>
 
     <body class="nav-md">
@@ -42,15 +42,9 @@
                     <tiles:insertAttribute  name="sidebar" />   
                 </div>
 
-                <!-- top navigation -->
-                <div class="top_nav">
-                    <tiles:insertAttribute  name="headerbar" />                       
-                </div>
-                <!-- /top navigation -->
-
                 <!-- page content -->
                 <div class="right_col" role="main">
-                    <div class="">
+                    <div class="loginBody">
                         <tiles:insertAttribute  name="body" />   
                     </div>
                 </div>
@@ -74,11 +68,8 @@
         <!-- FastClick -->        
         <script src="<c:url value="/resources/vendors/fastclick/lib/fastclick.js"/>"></script>
         <!-- NProgress -->
-
-        <script src="<c:url value="/resources/vendors/nprogress/nprogress.js"/>"></script>        
-
-        <script src="<c:url value="/resources/vendors/iCheck/icheck.min.js"/>"></script>        
-
+        <script src="<c:url value="/resources/vendors/nprogress/nprogress.js"/>"></script>               
+        
         <script src="<c:url value="/resources/vendors/datatables.net/js/jquery.dataTables.min.js"/>"></script>
         <script src="<c:url value="/resources/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"/>"></script>
         <script src="<c:url value="/resources/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"/>"></script>
@@ -90,12 +81,10 @@
         <script src="<c:url value="/resources/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"/>"></script>
         <script src="<c:url value="/resources/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"/>"></script>
         <script src="<c:url value="/resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"/>"></script>
-        <script src="<c:url value="/resources/vendors/datatables.net-scroller/js/datatables.scroller.min.js"/>"></script>
+        <script src="<c:url value="/resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"/>"></script>
 
         <!-- Custom Theme Scripts -->        
-        <script src="<c:url value="/resources/js/custom.min.js"/>"></script>  
+        <script src="<c:url value="/resources/js/custom.min.js"/>"></script>        
         <script src="<c:url value="/resources/js/customization.js"/>"></script>     
-
-
     </body>
 </html>
