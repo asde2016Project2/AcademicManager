@@ -405,6 +405,8 @@ public class AdministratorController extends BaseController {
     @RequestMapping(value = "examForm", method = RequestMethod.GET)
     public String addExams(Model model, Exam exam, HttpServletRequest request) {
 
+        model.addAttribute("pageTitle","Create New Exam");
+        
         if (!SessionHelper.isAdmin(request.getSession())) {
             return "redirect:/logout";
         }
@@ -415,8 +417,10 @@ public class AdministratorController extends BaseController {
     }
 
     @RequestMapping(value = "examForm", method = RequestMethod.POST)
-    public ModelAndView addExams(@ModelAttribute("exam") Exam exam, HttpServletRequest request) {
+    public ModelAndView addExams(@ModelAttribute("exam") Exam exam, HttpServletRequest request, Model model) {
 
+        model.addAttribute("pageTitle","Create New Exam");
+        
         if (!SessionHelper.isAdmin(request.getSession())) {
             return new ModelAndView("redirect:/logout");
         }
