@@ -10,7 +10,7 @@
                 <h1>${pageTitle}</h1>                                
             </div>
             <div class="x_content">  
-                <form:form method="post" action="createSession" startingDate="register" cssClass="form-horizontal form-label-left" validate="" modelAttribute="examSessionForm">
+                <form:form method="post" action="createSession" cssClass="form-horizontal form-label-left" validate="" modelAttribute="examSessionForm">
                     <spring:bind path="startingDate">
                         <div class="form-group ${status.error ? 'has-error' : ''}">
                             <form:label path="startingDate" cssClass="control-label col-md-3 col-sm-3 col-xs-12">Start Date</form:label>
