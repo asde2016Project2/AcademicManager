@@ -3,6 +3,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<h3>List exams</h3>
+
 <div class="panel panel-default">
     <div class="panel-body" style="min-height: 100; max-height: 100;">
 
@@ -13,8 +15,6 @@
                     <th width="120">Name</th>
                     <th width="120">CFU</th>
                     <th width="120">CODE</th>
-
-                    <th colspan="3" class="actions">Actions</th>
                 </tr>
             </thead>
             <c:forEach var="exam" items="${listExams}" varStatus="status">
@@ -31,7 +31,6 @@
             </c:forEach>
 
         </table>
-        <label>This is it</label>
     </div>
 
 </div>
