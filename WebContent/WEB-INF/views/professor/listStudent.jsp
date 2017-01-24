@@ -5,7 +5,7 @@
 
 <h1>Student </h1>
 
- <table class="tg">
+ <table class="table table-bordered">
             <tr>
                 <th width="80">USERNAME</th>
                 <th width="120">FIRST NAME</th>
@@ -24,5 +24,5 @@
        </c:forEach>
 </table>
  <c:if test="${not empty error}">
-   			Error: ${error}
+   			 ${error}
 	   </c:if>

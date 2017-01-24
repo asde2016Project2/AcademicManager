@@ -1,18 +1,12 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-
-
+<h1>${pageTitle}</h1>
 <div class="panel panel-default">
 	<div class="bs-docs-section">
 		<div class="row">
-			<div class="col-lg-6">
-				<div class="page-header">
-					<h1 id="tables">Exam Registration Appeals</h1>
-				</div>
-
+			<div class="col-lg-10">
 				<div class="bs-component">
 					<div class="divTable">
 						<c:if test="${!empty listExamSession }">
@@ -20,7 +14,7 @@
 								<thead>
 									<tr>
 										<th width="80">ID</th>
-										<th width="120">Degree Course</th>
+										<th width="220">Degree Course</th>
 										<th width="120">Appeal</th>
 										<th width="120">Entry</th>
 										<th width="120">Academic Year</th>
@@ -37,15 +31,15 @@
 											<td>${examSession.startingDate}</td>
 											<td>${examSession.endingDate}</td>
 											<td>${examSession.academicYear}</td>
-											<td><a
-												href="<c:url value='/student/academicExamSessionList/examSession/${examSession.examSessionId}'/>">View</a></td>
+											<td><a class = "btn btn-default"
+												href="<c:url  value='/student/academicExamSessionList/examSession/${examSession.examSessionId}'/>">View</a></td>
 										</tr>
 
 									</c:forEach>
 								</tbody>
 
-								<tbody>
-									<!-- div class="pagination-container">
+								<!-- <tbody>
+									 div class="pagination-container">
                                             <c:forEach var="page" begin="1" end="${numberOfPages}">
                                                 <c:url var="url" value="registrationAppeals/${page}" />
                                                 <span id="page-number"> <a href="${url}"> ${page}

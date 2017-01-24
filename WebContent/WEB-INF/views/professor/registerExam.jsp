@@ -6,18 +6,18 @@
 <h1>Session: </h1>
 
 <form action="registerExam" method="post">
-  exam name: <input type="text" name="examname"><br>
+  exam name: <input type="text" name="examname">
   <input type="submit" value="Submit">
 </form>
 
 exam: <c:out value="${examName}"/>
- <table class="tg">
+ <table class="table table-bordered">
             <tr>
-                <th width="80">username Student</th>
+                <th width="80">Student Username</th>
                 <th width="120">First Name</th>
                 <th width="120">Last Name</th>
-                <th width="120">nome esame</th>
-                <th width="120">grade</th>
+                <th width="120">Exam</th>
+                <th width="120">Grade</th>
             </tr>
            
        <c:forEach items="${userar}" var="uar">
@@ -30,7 +30,7 @@ exam: <c:out value="${examName}"/>
             	<form action="addCareerExam" method="post">
             	<input type="text" name="studentUsername" value="${uar.student.username}" hidden="true">
             	<input type="number" name="attemptId" value="${uar.attempt.attemptId}" hidden="true">
-            	<input type="number" name="grade">
+            	<input type="number" name="grade" max="30" min="0">
             		<input type="submit" value="Submit" onsubmit="history.go(-1);">
             	 </form>
             	</td>

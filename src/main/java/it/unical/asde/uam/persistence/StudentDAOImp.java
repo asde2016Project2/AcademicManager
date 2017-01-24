@@ -248,8 +248,14 @@ public class StudentDAOImp implements StudentDAO {
 
     @Override
     public ArrayList<CareerExam> getInformationStudent(String studentUsername) {
-        // TODO Auto-generated method stub
-        return null;
+    	
+    	String hql = "from CareerExam where student.username=:studentUN";
+		Query query = dbHandler.getSession().createQuery(hql);
+		query.setParameter("studentUN", studentUsername);
+		
+		ArrayList<CareerExam> careerExams = (ArrayList<CareerExam>) query.list();
+		
+		return careerExams;
     }
 
 }

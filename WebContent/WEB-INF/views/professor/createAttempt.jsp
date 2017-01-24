@@ -6,19 +6,18 @@
 <h1>Create Attempt</h1>
 
 <form method="post" action="createAttempt">
-<label for="dates">Exam Date </label>
-<input id="examDate" name="examDate" type="date" value="01-01-2017"/>
-
-<label for="dates">Open Registration </label>
-<input id="startingDate" name="startingDate" type="date" value="01-01-2017"/>
+<label for="dates" class="control-label col-md-3 col-sm-3 col-xs-12">Exam Date </label>
+<input class="form-control" id="examDate" name="examDate" type="date" value="01-01-2017"/>
 <br>
-<label for="dates">Close Registration </label>
-<input id="endingDate" name="endingDate" type="date" value="01-01-2017"/>
+<label for="dates" class="control-label col-md-3 col-sm-3 col-xs-12">Open Registration </label>
+<input class="form-control" id="startingDate" name="startingDate" type="date" value="01-01-2017"/>
+<br>
+<label for="dates" class="control-label col-md-3 col-sm-3 col-xs-12">Close Registration </label>
+<input class="form-control" id="endingDate" name="endingDate" type="date" value="01-01-2017"/>
 
 <br>
-<label>Class: </label>
-<select name="classRoom">
-	<option>Choose</option>
+<label class="control-label col-md-3 col-sm-3 col-xs-12">Class: </label>
+<select name="classRoom" class="form-control">
 	<option>mt1</option>
 	<option>mt2</option>
 	<option>mt3</option>
@@ -27,25 +26,26 @@
 	<option>mt6</option>
 	<option>mt8</option>
   	</select>
-<label>Exam Session </label>
-<select name="examSession">
+<br>
+<label class="control-label col-md-3 col-sm-3 col-xs-12">Exam Session </label>
+<select name="examSession" class="form-control">
 	<option>Choose</option>
 	<c:forEach items="${examSessions}" var="examSes">
-    	<option><c:out value="${examSes.examSessionId}"></c:out>---<c:out value="${examSes.startingDate}"/>/<c:out value="${examSes.endingDate}"/></option>
+    	<option><c:out value="${examSes.examSessionId}"></c:out>---<c:out value="${examSes.startingDataString}"/>/<c:out value="${examSes.endingDataString}"/></option>
   	</c:forEach>
   	</select>
-  	
+
 <br>
-<label>Exam: </label>
-<select name="exam">
+<label class="control-label col-md-3 col-sm-3 col-xs-12">Exam: </label>
+<select name="exam" class="form-control">
     <c:forEach items="${exams}" var="exam">
     <option> <c:out value="${exam.name}"/></option>
     </c:forEach>
   </select>
-  
-  <input type="submit" value="Submit">
+  <br>
+  <input class="btn btn-primary" type="submit" value="Submit">
 </form>
 <br><br>
 <c:if test="${not empty error}">
-   Error: ${error}
+    ${error}
 </c:if>
