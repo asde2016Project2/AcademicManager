@@ -104,7 +104,7 @@ public class ExamDAOImp implements ExamDAO {
     
     @Override
     public Exam getExamByName(String name) {
-        String hql = "from Exam where name =:nameExam";
+        String hql = "from Exam where name LIKE '%=:nameExam%'";
         Query query = dbHandler.getSession().createQuery(hql);
         query.setParameter("nameExam", name);
         dbHandler.begin();
