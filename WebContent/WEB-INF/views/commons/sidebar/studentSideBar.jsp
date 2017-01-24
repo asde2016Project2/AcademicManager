@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="left_col scroll-view">
     <div class="navbar nav_title" style="border: 0;">
-        <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+        <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>AcMan!</span></a>
     </div>
 
     <div class="clearfix"></div>
@@ -54,20 +54,20 @@
             <h3>Didattic Offer</h3>
             <ul class="nav side-menu">                
                 <li>
-                    <a><i class="fa fa-home"></i> Exam <span class="fa fa-chevron-down"></span></a>
+                    <a><i class="fa fa-certificate"></i> Exam <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="<c:url value="/student/academicExamSessionList" />">Academic ExamSessions List</a></li>
                         <li><a href="<c:url value="/student/list/ExamReserve" />">Reservation Board</a></li>                                               
                         <li><a href="<c:url value="/student/cancelExamBook" />">Reserved Exam</a></li>                                              
                     </ul>
                 </li>                
-                <li><a><i class="fa fa-desktop"></i> Career & Study Plan <span class="fa fa-chevron-down"></span></a>
+                <li><a><i class="fa fa-database"></i> Career & Study Plan <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="<c:url value="/student/visualizeStudyPlan" />">Show Study Plan</a></li>
                         <li><a href="<c:url value="/student/visualizeCareer"/>">Show Career</a></li>                                                                                                                                                                                                                                                                                                                     
                     </ul>
                 </li>
-                <li><a><i class="fa fa-desktop"></i> Statistics <span class="fa fa-chevron-down"></span></a>
+                <li><a><i class="fa fa-area-chart"></i> Statistics <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="<c:url value="/student/visualizeStatistics" />">Show Statistic</a></li>
                         <li><a href="<c:url value="/student/projection"/>">Make Projection</a></li>                                                                                                                                                                                                                                                                                                                     

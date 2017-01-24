@@ -2,33 +2,66 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">  
-<html>  
-    <head>  
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />  
-        <link rel="stylesheet" type="text/css" href="<c:url value="/resources/style/style.css"/>" />
-        <link rel="stylesheet" type="text/css" href="<c:url value="/resources/style/admin-style.css"/>">
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>	
-        <script type="text/javascript" src="<c:url value="/resources/script/admin-script.js"/>"></script>
-        <script type="text/javascript" src="<c:url value="/resources/script/webcam.js" />"></script>
+<!DOCTYPE html>
+<html lang="en" class=" ">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- Meta, title, CSS, favicons, etc. -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>${pageTitle}</title>     
-    </head>  
-    <body>  
-        <div class="main-box boxed">
-            <div id="header">
-                <tiles:insertAttribute  name="header" />  
+        <title>${pageTitle}</title>
+
+        <!-- Bootstrap -->
+        <link href="<c:url value="/resources/vendors/bootstrap/dist/css/bootstrap.min.css"/>" rel="stylesheet">        
+        <!-- Font Awesome -->        
+        <link href="<c:url value="/resources/vendors/font-awesome/css/font-awesome.min.css"/>" rel="stylesheet">
+        <!-- NProgress -->        
+        <link href="<c:url value="/resources/vendors/nprogress/nprogress.css"/>" rel="stylesheet">                
+
+        <!-- Custom Theme Style -->        
+        <link href="<c:url value="/resources/css/custom.min.css"/>" rel="stylesheet">
+        <link href="<c:url value="/resources/css/customization.css"/>" rel="stylesheet">
+
+    </head>
+
+    <body class="nav-md guestBody">
+        <div class="container body">
+            <div class="main_container">
+                <div class="col-md-3 left_col">
+                    <tiles:insertAttribute  name="sidebar" />   
+                </div>
+
+                <!-- page content -->
+                <div class="right_col" role="main">
+                    <div class="loginBody">
+                        <tiles:insertAttribute  name="body" />   
+                    </div>
+                </div>
+                <!-- /page content -->
+
+                <!-- footer content -->
+                <footer>
+                    <div class="pull-right">
+                        AcademicManager v0.0.1
+                    </div>
+                    <div class="clearfix"></div>
+                </footer>
+                <!-- /footer content -->
             </div>
-            <div id="content" >
-                <tiles:insertAttribute  name="body" />        
-            </div>
-            <div id="footer">
-                <tiles:insertAttribute  name="footer" />
-            </div>  
         </div>
 
-    </body>  
-</html> 
+        <!-- jQuery -->        
+        <script src="<c:url value="/resources/vendors/jquery/dist/jquery.min.js"/>"></script>
+        <!-- Bootstrap -->        
+        <script src="<c:url value="/resources/vendors/bootstrap/dist/js/bootstrap.min.js"/>"></script>
+        <!-- FastClick -->        
+        <script src="<c:url value="/resources/vendors/fastclick/lib/fastclick.js"/>"></script>
+        <!-- NProgress -->
+        <script src="<c:url value="/resources/vendors/nprogress/nprogress.js"/>"></script>               
+        <!-- Custom Theme Scripts -->        
+        <script src="<c:url value="/resources/js/custom.min.js"/>"></script>        
+    </body>
+</html>

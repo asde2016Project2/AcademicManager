@@ -28,7 +28,7 @@
         <script type="text/javascript" src="<c:url value="/resources/script/webcam.js" />"></script>
     </head>
 
-    <body class="nav-md footer_fixed">
+    <body class="nav-md">
         <div class="container body">
             <div class="main_container">
                 <div class="col-md-3 left_col">

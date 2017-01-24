@@ -12,12 +12,12 @@
         <div class="animate form login_form">
             <section class="login_content">
                 <div>
-                    <h1><i class="fa fa-paw"></i> AcademicManager</h1>                    
+                    <h1 class="normalTitle"><i class="fa fa-paw"></i> AcademicManager</h1>                    
                 </div>
 
                 <form:form method="post" action="" modelAttribute="loginForm">
 
-                    <h1>Login</h1>
+                    <h2>Login</h2>
                     <div>     
                         <div>
                             <form:input path="username" id="username" cssClass="form-control" required="true"></form:input>                            
@@ -53,19 +53,6 @@
 
 
                         <div class="separator">
-
-                            <p class="change_link">
-                                <a href="<c:url value="/student/register" />" class="to_register"> Register as Student </a>
-                            </p>
-
-
-                            <p class="change_link">
-                                <a href="<c:url value="/professor/register" />" class="to_register"> Register as Professor </a>
-                            </p>
-
-                            <p class="change_link">
-                                <a href="<c:url value="/admin/register" />" class="to_register"> Register as Admin </a>
-                            </p>
 
                             <div class="clearfix"></div>
                             <br />
