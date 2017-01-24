@@ -122,7 +122,9 @@ public class ProfessorController extends BaseController {
     	
     	StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
     	ArrayList<Student> students = studentDAO.getStudentForStraordinaryExamSession(studentDAO.getAllStudents());
-    	model.addAttribute("listaStudenti", students);
+    	if(students.size() == 0)
+    		model.addAttribute("error", "There are no students that can partecipate to extra exam session");
+    	else model.addAttribute("listaStudenti", students);
     	return "professor/listStudent";
     }
     
@@ -227,20 +229,27 @@ public class ProfessorController extends BaseController {
     	
     	ExamSessionDAO examSessionDAO = (ExamSessionDAO) context.getBean("examSessionDAO");
     	ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
-    	
+    	AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
+
+    	String[] examSessionIdStr = examSession.split("---");
+    	int examSessionId = Integer.parseInt(examSessionIdStr[0]);
+
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date startingDate = sdf.parse(startingDateString);
 		Date endingDate = sdf.parse(endingDateString);
 		Date examDate = sdf.parse(examDateString);
-
-		String[] examSessionIdStr = examSession.split("---");
-		int examSessionId = Integer.parseInt(examSessionIdStr[0]);
-    	
-		AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
-    	Attempt a = new Attempt(examDate, classRoom, startingDate, endingDate,
-    			SessionHelper.getUserProfessorLogged(request.getSession()), examDAO.getExamByName(exam), examSessionDAO.getExamSessionById(examSessionId));
-    	attemptDAO.create(a);
-    	
+		Date examSessionStart = examSessionDAO.getExamSessionById(examSessionId).getStartingDate();
+		Date examSessionEnd = examSessionDAO.getExamSessionById(examSessionId).getEndingDate();
+		
+		if(attemptDAO.checkAttempt(startingDate, endingDate, examDate, examSessionStart, examSessionEnd)) {
+			Attempt a = new Attempt(examDate, classRoom, startingDate, endingDate,
+					SessionHelper.getUserProfessorLogged(request.getSession()), examDAO.getExamByName(exam), examSessionDAO.getExamSessionById(examSessionId));
+    		attemptDAO.create(a);
+		}
+		else {
+    		model.addAttribute("error", "The dates or academic year are not ok");
+    		return "professor/createAttempt";
+    	}
         return "professor/createAttempt";
     }
     
