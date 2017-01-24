@@ -15,6 +15,12 @@ body.nav-md.loginBody a
     color: white;
 }
 
+.guestBody input, 
+.guestBody select, 
+.guestBody button{
+   color: black;
+}
+
 .form-error.error{
     color: #E9EDEF;
     background-color: rgba(231, 76, 60, 0.88);
@@ -27,17 +33,19 @@ body.nav-md.loginBody a
 }
 
 .inline {
-	display: inline-block;
+    display: inline-block;
 }
 
-table.table-centered th, table.table-centered td{
-	vertical-align: middle;
+table.table-centered th, 
+table.table-centered td,
+table.table-centered tbody td{
+    vertical-align: middle;
 }
 
 h1,h2,h3,h4,h5 {
-	padding-bottom: 10px;
-	border-bottom: 1px solid #cccccc;
-	margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #cccccc;
+    margin-bottom: 15px;
 }
 
 .normalTitle{

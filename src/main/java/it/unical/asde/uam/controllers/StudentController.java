@@ -498,33 +498,6 @@ public class StudentController extends BaseController {
         return "student/visualizeStatistics";
     }
 
-    //details for the student in registration phase
-    @RequestMapping(value = "showStudyPlans", method = RequestMethod.GET)
-    public String showStudyPlans(Model model, HttpServletRequest request) throws NullPointerException {
-
-        StudyPlanDAO spDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
-
-        model.addAttribute("pageTitle", "Available Study Plans");
-        model.addAttribute("studyPlans", spDAO.getAllPlans());
-
-        return "student/showStudyPlans";
-    }
-
-    //details for the student in registration phase
-    @RequestMapping(value = "details/studyplan/{id}", method = RequestMethod.GET)
-    public String showDetailStudyPlan(@PathVariable("id") int id, Model model) {
-
-        StudyPlanDAO spDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
-
-        StudyPlan studyPlan = spDAO.retrieve(id);
-        model.addAttribute("studyPlanName", studyPlan.getName());
-
-        StudyPlanExamDAO spexamDAO = (StudyPlanExamDAO) context.getBean("studyPlanExamDAO");
-        List<StudyPlanExam> spexams = spexamDAO.getAllExamsOfAstudyPlan(studyPlan);
-
-        model.addAttribute("listStudyPlanExams", spexams);
-
-        return "student/showStudyPlanExams";
-    }
+  
 
 }

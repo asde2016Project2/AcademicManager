@@ -35,7 +35,7 @@
         <div class="menu_section">
             <h3><i class="fa fa-institution"></i> Explore The University</h3>
             <ul class="nav side-menu">                
-                <li><a href="<c:url value="/student/showStudyPlans"/>"><i class="fa fa-language"></i> Show Study Plans</a></li>                                                                                                                                                 
+                <li><a href="<c:url value="/listStudyPlan"/>"><i class="fa fa-language"></i> Show Study Plans</a></li>                                                                                                                                                 
             </ul>
         </div>
 

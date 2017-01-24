@@ -7,14 +7,19 @@
     <definition name="base.definition"  template="/WEB-INF/views/layout/loginLayout.jsp">          
         <put-attribute name="body" value="" />                 
     </definition>  
+        
     
-    
-    <definition name="home/login" extends="base.definition" template="/WEB-INF/views/layout/guestLayout.jsp">      
+    <definition name="home/login" extends="base.definition" template="/WEB-INF/views/layout/guestLayout_dark.jsp">      
         <put-attribute name="sidebar" value="/WEB-INF/views/commons/sidebar/guestSideBar.jsp" />                                        
         <put-attribute name="body" value="/WEB-INF/views/home/login.jsp" />              
     </definition>
     
-    <definition name="*/register" extends="base.definition" template="/WEB-INF/views/layout/guestLayout.jsp">    
+     <definition name="home/*" extends="base.definition" template="/WEB-INF/views/layout/guestLayout_light.jsp">      
+        <put-attribute name="sidebar" value="/WEB-INF/views/commons/sidebar/guestSideBar.jsp" />                                        
+        <put-attribute name="body" value="/WEB-INF/views/home/{1}.jsp" />              
+    </definition>
+    
+    <definition name="*/register" extends="base.definition" template="/WEB-INF/views/layout/guestLayout_dark.jsp">    
         <put-attribute name="sidebar" value="/WEB-INF/views/commons/sidebar/guestSideBar.jsp" />                          
         <put-attribute name="body" value="/WEB-INF/views/{1}/register.jsp" />              
     </definition>

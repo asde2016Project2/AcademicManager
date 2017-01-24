@@ -17,9 +17,15 @@ import it.unical.asde.uam.dto.LoginFormDTO;
 import it.unical.asde.uam.model.Administrator;
 import it.unical.asde.uam.model.Professor;
 import it.unical.asde.uam.model.Student;
+import it.unical.asde.uam.model.StudyPlan;
+import it.unical.asde.uam.model.StudyPlanExam;
 import it.unical.asde.uam.persistence.AdministratorDAO;
 import it.unical.asde.uam.persistence.ProfessorDAO;
 import it.unical.asde.uam.persistence.StudentDAO;
+import it.unical.asde.uam.persistence.StudyPlanDAO;
+import it.unical.asde.uam.persistence.StudyPlanExamDAO;
+import java.util.List;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 @RequestMapping("/")
@@ -87,6 +93,36 @@ public class HomeController extends BaseController{
         return "redirect:/";
     }
     
+    
+    
+      //details for the student in registration phase
+    @RequestMapping(value = "listStudyPlan", method = RequestMethod.GET)
+    public String showStudyPlans(Model model, HttpServletRequest request) throws NullPointerException {
+
+        StudyPlanDAO spDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
+
+        model.addAttribute("pageTitle", "Available Study Plans");
+        model.addAttribute("studyPlans", spDAO.getAllPlans());
+
+        return "home/listStudyPlan";
+    }
+
+    //details for the student in registration phase
+    @RequestMapping(value = "details/studyplan/{id}", method = RequestMethod.GET)
+    public String showDetailStudyPlan(@PathVariable("id") int id, Model model) {
+
+        StudyPlanDAO spDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
+
+        StudyPlan studyPlan = spDAO.retrieve(id);
+        model.addAttribute("studyPlanName", studyPlan.getName());
+
+        StudyPlanExamDAO spexamDAO = (StudyPlanExamDAO) context.getBean("studyPlanExamDAO");
+        List<StudyPlanExam> spexams = spexamDAO.getAllExamsOfAstudyPlan(studyPlan);
+
+        model.addAttribute("listStudyPlanExams", spexams);
+
+        return "home/detailStudyPlan";
+    }
     
     
     
