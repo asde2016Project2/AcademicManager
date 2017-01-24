@@ -36,7 +36,9 @@ public class UserDAOImp implements UserDAO {
 
         Query query = dBHandler.getSession().createQuery(hql);
         query.setParameter("username", username);
+        dBHandler.begin();
         User user = (User) query.uniqueResult();
+        dBHandler.commit();
         return user;
     }
 

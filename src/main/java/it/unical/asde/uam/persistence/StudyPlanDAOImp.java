@@ -49,8 +49,9 @@ public class StudyPlanDAOImp implements StudyPlanDAO {
 	    	
 	        String queryString = "from StudyPlan c order by c.name";
 	        Query query = dbHandler.getSession().createQuery(queryString);
+	        dbHandler.begin();
 	        List<StudyPlan> dgs = (List<StudyPlan>) query.list();
-	        //dbHandler.close();
+	        dbHandler.commit();
 	        return dgs;
 	    }
 	    
@@ -60,8 +61,9 @@ public class StudyPlanDAOImp implements StudyPlanDAO {
 	        String queryString = "from StudyPlan where id = :id";
 	        Query query = session.createQuery(queryString);
 	        query.setParameter("id",id);
+	        dbHandler.begin();
 	        StudyPlan studyPlan = (StudyPlan) query.uniqueResult();
-	        //dbHandler.close();
+	        dbHandler.commit();
 	        return studyPlan;
 	    }
 }
