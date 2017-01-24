@@ -41,10 +41,10 @@
 
     <!-- sidebar menu -->
     <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-        <div class="menu_section active">
+        <div class="menu_section">
             <h3>Main Menu</h3>
             <ul class="nav side-menu">
-                <li class="active"><a href="<c:url value="/professor/dashboard"/>"><i class="fa fa-home"></i> Dashboard</a></li>                           
+                <li><a href="<c:url value="/professor/dashboard"/>"><i class="fa fa-home"></i> Dashboard</a></li>                           
             </ul>
         </div>
 
@@ -55,7 +55,8 @@
                 <li>
                     <a><i class="fa fa-certificate"></i> Exams <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                        <li><a href="<c:url value="/professor/registerExam" />"> Register Exam to Student</a></li>                                                                                                                    
+                        <li><a href="<c:url value="/professor/registerExam" />"> Register Exam to Student</a></li>   
+                        <li><a href="<c:url value="/professor/viewStudentExamSignup" />"> Approve Attempt Registration</a></li>  
                     </ul>
                 </li>  
                  <li>
@@ -76,8 +77,7 @@
                     <a><i class="fa fa-graduation-cap"></i> Students <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="<c:url value="/professor/studentExtraExamSession" />">Student Extra Exam Session</a></li>
-                        <li><a href="<c:url value="/professor/informationStudent" />">Information Student</a></li>    
-                        <li><a href="<c:url value="/professor/viewStudentExamSignup" />">Sudent Sign-up for Exam</a></li>  
+                        <li><a href="<c:url value="/professor/informationStudent" />">Information Student</a></li>                            
                     </ul>
                 </li>                                
             </ul>
