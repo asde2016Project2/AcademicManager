@@ -70,9 +70,11 @@ public class AttemptDAOImp implements AttemptDAO {
         Query query = dbHandler.getSession().createQuery(hql);
         query.setParameter("status", attempt.getStatus());
         query.setParameter("attemptId", attempt.getAttemptId());
+        dbHandler.begin();
         // Persists to HSQLDB
         int result = query.executeUpdate();
         logger.info("Attempt updated successfully, Attempt Details=" + attempt);
+        dbHandler.commit();
     }
 
     @Override
@@ -82,9 +84,11 @@ public class AttemptDAOImp implements AttemptDAO {
         Query query = dbHandler.getSession()
                 .createQuery("SELECT professor FROM Attempt s WHERE s.attemptId = :attemptId");
         query.setParameter("attemptId", attemptId);
-
+        
+        dbHandler.begin();        
         List<Professor> getProfessorToAttempt = query.list();
-
+        dbHandler.commit();
+        
         return getProfessorToAttempt;
     }
 
@@ -126,8 +130,11 @@ public class AttemptDAOImp implements AttemptDAO {
         Query query = dbHandler.getSession().createQuery(hql);
         query.setParameter("profID", profId);
         query.setParameter("examID", examId);
+        
+        dbHandler.begin();
         Attempt a = (Attempt) query.uniqueResult();
         System.out.println("nella query valore di attempt id: " + a.getAttemptId());
+        dbHandler.commit();
         return a.getAttemptId();
     }
 
@@ -136,7 +143,9 @@ public class AttemptDAOImp implements AttemptDAO {
 
         String hql = "from Attempt";
         Query query = dbHandler.getSession().createQuery(hql);
+        dbHandler.begin();
         List<Attempt> attempts = query.list();
+        dbHandler.commit();
         return attempts;
     }
 
@@ -187,7 +196,9 @@ public class AttemptDAOImp implements AttemptDAO {
 		String hql = "from Attempt where user_id=:profID";
 		Query query = dbHandler.getSession().createQuery(hql);
 		query.setParameter("profID", profId);
+		dbHandler.begin();
 		ArrayList<Attempt> a = (ArrayList<Attempt>) query.list();
+		dbHandler.commit();
 		return a;
 	}
 

@@ -207,7 +207,9 @@ public class UserAttemptRegistrationDAOImp implements UserAttemptRegistrationDAO
         String hql = "from UserAttemptRegistration where attempt_id=:attemptID";
         Query query = dbHandler.getSession().createQuery(hql);
         query.setParameter("attemptID", attemptId);
+        dbHandler.begin();
         List<UserAttemptRegistration> uAr = query.list();
+        dbHandler.commit();
         return uAr;
         
     }
@@ -219,7 +221,9 @@ public class UserAttemptRegistrationDAOImp implements UserAttemptRegistrationDAO
         Query query = dbHandler.getSession().createQuery(hql);
         query.setParameter("studUsername", student.getUsername());
         query.setParameter("attemptId", attempt.getAttemptId());
+        dbHandler.begin();
         UserAttemptRegistration uar = (UserAttemptRegistration) query.uniqueResult();
+        dbHandler.commit();
         return uar;
     }
     

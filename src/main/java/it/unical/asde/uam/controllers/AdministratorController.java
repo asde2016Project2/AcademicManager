@@ -69,9 +69,10 @@ public class AdministratorController extends BaseController {
     @RequestMapping(value = "dashboard", method = RequestMethod.GET)
     public String showDashboad(HttpServletRequest request, Model model) {
 
-        if (!SessionHelper.isAdmin(request.getSession())) {
-            return "redirect:/";
-        }
+    	 if (!SessionHelper.isAdmin(request.getSession())) {
+	            return "redirect:/logout";
+	        }
+
 
         StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
         ProfessorDAO professorDAO = (ProfessorDAO) context.getBean("professorDAO");
@@ -125,14 +126,24 @@ public class AdministratorController extends BaseController {
  
 
     @RequestMapping(value = "list/studyplan", method = RequestMethod.GET)
-    public String showListStudyPlan(Model model) {
+    public String showListStudyPlan(Model model, HttpServletRequest request) {
+    	
+   	 if (!SessionHelper.isAdmin(request.getSession())) {
+         return "redirect:/logout";
+     }
+   	 
         model.addAttribute("pageTitle", "List all Study Plan");
         model.addAttribute("studyPlans", ((StudyPlanDAO) context.getBean("studyPlanDAO")).getAllPlans());
         return "admin/list_studyplans";
     }
 
     @RequestMapping(value = "detail/studyplan/{id}", method = RequestMethod.GET)
-    public String showDetailStudyPlan(@PathVariable("id") int id, Model model) {
+    public String showDetailStudyPlan(@PathVariable("id") int id, Model model, HttpServletRequest request) {
+   	 
+    	if (!SessionHelper.isAdmin(request.getSession())) {
+         return "redirect:/logout";
+     }
+    	
         model.addAttribute("pageTitle", "Study Plan Detail");
         StudyPlanDAO studyPlanDAO = (StudyPlanDAO) context.getBean("studyPlanDAO");
         StudyPlan studyPlan;
@@ -158,7 +169,12 @@ public class AdministratorController extends BaseController {
     }
 
     @RequestMapping(value = "create/studyplan", method = RequestMethod.GET)
-    public String showCreateStudyPlan(Model model) {
+    public String showCreateStudyPlan(Model model, HttpServletRequest request) {
+    	
+   	 if (!SessionHelper.isAdmin(request.getSession())) {
+         return "redirect:/logout";
+     }
+    	
         model.addAttribute("pageTitle", "Create Study Plan");
         model.addAttribute("studyPlanForm", new StudyPlanFormDTO());
         model.addAttribute("degreeCourseList", ((DegreeCourseDAO) context.getBean("degreeCourseDAO")).getAllDegrees());
@@ -169,6 +185,10 @@ public class AdministratorController extends BaseController {
     @RequestMapping(value = "create/studyplan", method = RequestMethod.POST)
     public String doCreateStudyPlan(@Valid @ModelAttribute("studyPlanForm") StudyPlanFormDTO studyPlanFormDTO, BindingResult result, HttpServletRequest request, Model model) {
 
+   	 if (!SessionHelper.isAdmin(request.getSession())) {
+         return "redirect:/logout";
+     }
+    	
         if (result.hasErrors()) {
             model.addAttribute("pageTitle", "Create Study Plan");
             model.addAttribute("degreeCourseList", ((DegreeCourseDAO) context.getBean("degreeCourseDAO")).getAllDegrees());
@@ -203,7 +223,12 @@ public class AdministratorController extends BaseController {
     }
 
     @RequestMapping(value = "registrationStudent", method = RequestMethod.GET)
-    public String registationStudent(Model model) {
+    public String registationStudent(Model model, HttpServletRequest request) {
+    	
+   	 if (!SessionHelper.isAdmin(request.getSession())) {
+         return "redirect:/logout";
+     }
+    	
         StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
         List<Student> listStudents = studentDAO.getAllStudentsToAcceptRefuse();
         model.addAttribute("listStudents", listStudents);
@@ -211,7 +236,12 @@ public class AdministratorController extends BaseController {
     }
 
     @RequestMapping(value = "registrationProfessor", method = RequestMethod.GET)
-    public String registationProfessor(Model model) {
+    public String registationProfessor(Model model, HttpServletRequest request) {
+    	
+   	 if (!SessionHelper.isAdmin(request.getSession())) {
+         return "redirect:/logout";
+     }
+    	
         ProfessorDAO professorDAO = (ProfessorDAO) context.getBean("professorDAO");
         List<Professor> listProfessors = professorDAO.geAllProfessorsToAcceptRefuse();
         model.addAttribute("listProfessors", listProfessors);
@@ -219,7 +249,12 @@ public class AdministratorController extends BaseController {
     }
 
     @RequestMapping(value = "registrationAdmin", method = RequestMethod.GET)
-    public String registationAdmin(Model model) {
+    public String registationAdmin(Model model, HttpServletRequest request) {
+    	
+   	 if (!SessionHelper.isAdmin(request.getSession())) {
+         return "redirect:/logout";
+     }
+    	
         AdministratorDAO administratorDAO = (AdministratorDAO) context.getBean("administratorDAO");
         List<Administrator> listAdministrators = administratorDAO.getAllAdminsToAcceptRefuse();
         model.addAttribute("listAdministrators", listAdministrators);
@@ -227,14 +262,24 @@ public class AdministratorController extends BaseController {
     }
 
     @RequestMapping(value = "registrationStudent", method = RequestMethod.POST, params = "accept")
-    public String acceptStudent(@RequestParam(value = "accept") String username, Model model) {
+    public String acceptStudent(@RequestParam(value = "accept") String username, Model model, HttpServletRequest request) {
+    	
+   	 if (!SessionHelper.isAdmin(request.getSession())) {
+         return "redirect:/logout";
+     }
+    	
         model.addAttribute("username", username);
         model.addAttribute("acceptingStudentForm", new AcceptingStudentFormDTO());
         return "admin/accepting";
     }
 
     @RequestMapping(value = "registrationProfessor", method = RequestMethod.POST, params = "accept")
-    public String acceptProfessor(@RequestParam(value = "accept") String username, Model model) {
+    public String acceptProfessor(@RequestParam(value = "accept") String username, Model model, HttpServletRequest request) {
+    	
+   	 if (!SessionHelper.isAdmin(request.getSession())) {
+         return "redirect:/logout";
+     }
+    	
         ProfessorDAO professorDAO = (ProfessorDAO) context.getBean("professorDAO");
         Professor professor = professorDAO.retrieve(username);
         professor.setAccepted(Accepted.ACCEPTED);
@@ -248,7 +293,12 @@ public class AdministratorController extends BaseController {
     }
 
     @RequestMapping(value = "registrationAdmin", method = RequestMethod.POST, params = "accept")
-    public String acceptAdmin(@RequestParam(value = "accept") String username, Model model) {
+    public String acceptAdmin(@RequestParam(value = "accept") String username, Model model, HttpServletRequest request) {
+    	
+   	 if (!SessionHelper.isAdmin(request.getSession())) {
+         return "redirect:/logout";
+     }
+    	
         AdministratorDAO administratorDAO = (AdministratorDAO) context.getBean("administratorDAO");
         Administrator administrator = administratorDAO.retrieve(username);
     	administrator.setAccepted(Accepted.ACCEPTED);
@@ -260,12 +310,22 @@ public class AdministratorController extends BaseController {
     }
 
     @RequestMapping(value = "accepting", method = RequestMethod.GET) 
-    public String getAcc() {
+    public String getAcc(HttpServletRequest request) {
+    	
+   	 if (!SessionHelper.isAdmin(request.getSession())) {
+         return "redirect:/logout";
+     }
+    	
     	return "redirect:/admin/registrationStudent";
     }
     
     @RequestMapping(value = "accepting", method = RequestMethod.POST)
-    public String acceptingStudent(@Valid @ModelAttribute("acceptingStudentForm") AcceptingStudentFormDTO acceptingStudentFormDTO, Model model) {
+    public String acceptingStudent(@Valid @ModelAttribute("acceptingStudentForm") AcceptingStudentFormDTO acceptingStudentFormDTO, Model model, HttpServletRequest request) {
+    	
+   	 if (!SessionHelper.isAdmin(request.getSession())) {
+         return "redirect:/logout";
+     }
+    	
         StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
         Student student = studentDAO.retrieve(acceptingStudentFormDTO.getUsername());
 
@@ -292,7 +352,12 @@ public class AdministratorController extends BaseController {
     }
 
     @RequestMapping(value = "registrationStudent", method = RequestMethod.POST, params = "refuse")
-    public String refuseStudent(@RequestParam(value = "refuse") String username, Model model) {
+    public String refuseStudent(@RequestParam(value = "refuse") String username, Model model, HttpServletRequest request) {
+    	
+   	 if (!SessionHelper.isAdmin(request.getSession())) {
+         return "redirect:/logout";
+     }
+    	
         StudentDAO studentDAO = (StudentDAO) context.getBean("studentDAO");
         Student student = studentDAO.retrieve(username);
 
@@ -304,7 +369,12 @@ public class AdministratorController extends BaseController {
     }
 
     @RequestMapping(value = "registrationProfessor", method = RequestMethod.POST, params = "refuse")
-    public String refuseProfessor(@RequestParam(value = "refuse") String username, Model model) {
+    public String refuseProfessor(@RequestParam(value = "refuse") String username, Model model, HttpServletRequest request) {
+    	
+   	 if (!SessionHelper.isAdmin(request.getSession())) {
+         return "redirect:/logout";
+     }
+    	
         ProfessorDAO professorDAO = (ProfessorDAO) context.getBean("professorDAO");
         Professor professor = professorDAO.retrieve(username);
 
@@ -315,7 +385,12 @@ public class AdministratorController extends BaseController {
     }
 
     @RequestMapping(value = "registrationAdmin", method = RequestMethod.POST, params = "refuse")
-    public String refuseAdmin(@RequestParam(value = "refuse") String username, Model model) {
+    public String refuseAdmin(@RequestParam(value = "refuse") String username, Model model, HttpServletRequest request) {
+    	
+   	 if (!SessionHelper.isAdmin(request.getSession())) {
+         return "redirect:/logout";
+     }
+    	
         AdministratorDAO administratorDAO = (AdministratorDAO) context.getBean("administratorDAO");
         Administrator administrator = administratorDAO.retrieve(username);
 
@@ -326,19 +401,34 @@ public class AdministratorController extends BaseController {
     }
 
     @RequestMapping(value = "createExam", method = RequestMethod.GET)
-    public String createExam() {
+    public String createExam( HttpServletRequest request) {
+    	
+   	 if (!SessionHelper.isAdmin(request.getSession())) {
+         return "redirect:/logout";
+     }
+    	
         return "admin/createExam";
     }
 
     @RequestMapping(value = "examForm", method = RequestMethod.GET)
-    public String addExams(Model model, Exam exam) {
+    public String addExams(Model model, Exam exam, HttpServletRequest request) {
+    	
+   	 if (!SessionHelper.isAdmin(request.getSession())) {
+         return "redirect:/logout";
+     }
+    	
         model.addAttribute("exam", exam);
         System.out.println("FirstCome==");
         return "admin/examForm";
     }
 
     @RequestMapping(value = "examForm", method = RequestMethod.POST)
-    public ModelAndView addExams(@ModelAttribute("exam") Exam exam) {
+    public ModelAndView addExams(@ModelAttribute("exam") Exam exam, HttpServletRequest request) {
+    	
+   	 if (!SessionHelper.isAdmin(request.getSession())) {
+         return new ModelAndView("redirect:/logout");
+     }
+    	
         ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
         if (exam.getId() == 0) {
             examDAO.create(exam);
@@ -349,7 +439,12 @@ public class AdministratorController extends BaseController {
     }
 
     @RequestMapping(value = "exams", method = RequestMethod.GET)
-    public String listExams(Model model) throws NullPointerException {
+    public String listExams(Model model, HttpServletRequest request)  throws NullPointerException {
+    	
+   	 if (!SessionHelper.isAdmin(request.getSession())) {
+         return "redirect:/logout";
+     }
+    	
         ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
         model.addAttribute("listExams", examDAO.getAllExams());
 
@@ -357,14 +452,24 @@ public class AdministratorController extends BaseController {
     }
 
     @RequestMapping("exams/delete/{examId}")
-    public String removeExam(@PathVariable("examId") Integer examId) {
+    public String removeExam(@PathVariable("examId") Integer examId, HttpServletRequest request) {
+    	
+   	 if (!SessionHelper.isAdmin(request.getSession())) {
+         return "redirect:/logout";
+     }
+    	
         ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
         examDAO.removeExam(examId);
         return "redirect:/admin/exams";
     }
 
     @RequestMapping(value = "exams/edit/{id}")
-    public String editExam(@PathVariable("id") int id, Model model) {
+    public String editExam(@PathVariable("id") int id, Model model, HttpServletRequest request) {
+    	
+   	 if (!SessionHelper.isAdmin(request.getSession())) {
+         return "redirect:/logout";
+     }
+    	
         ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
         model.addAttribute("exam", examDAO.getExamById(id));
         model.addAttribute("listExams", examDAO.getAllExams());
@@ -375,8 +480,12 @@ public class AdministratorController extends BaseController {
     // ----------------------------CareerExam Registration ---------------//
     // ----------------------------Create Session ---------------//
     @RequestMapping(value = "createSession", method = RequestMethod.GET)
-    public String openCreateNewSession(Model model) {
+    public String openCreateNewSession(Model model, HttpServletRequest request) {
 
+   	 if (!SessionHelper.isAdmin(request.getSession())) {
+         return "redirect:/logout";
+     }
+    	
         DegreeCourseDAO degreeCourseDao = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
         ArrayList<DegreeCourse> allDegrees = (ArrayList<DegreeCourse>) degreeCourseDao.getAllDegrees();
         model.addAttribute("degreeCourses", allDegrees);
@@ -388,6 +497,11 @@ public class AdministratorController extends BaseController {
     public String createNewSession(Model model, @RequestParam("startingDate") String startingDateString, @RequestParam("endingDate") String endingDateString,
             @RequestParam("degreeCourse") String degreeCourseName, @RequestParam("academicYear") String academicYear,
             HttpServletRequest request) throws ParseException {
+    	
+    	
+   	 if (!SessionHelper.isAdmin(request.getSession())) {
+         return "redirect:/logout";
+     }
 
         ExamSessionDAO examSessionDao = (ExamSessionDAO) context.getBean("examSessionDAO");
         if (examSessionDao.checkExamSession(request.getParameter("startingDate"), request.getParameter("endingDate"), request.getParameter("academicYear"))) {
@@ -413,7 +527,12 @@ public class AdministratorController extends BaseController {
     }
 
     @RequestMapping(value = "viewAllSession", method = RequestMethod.GET)
-    public String viewAllSession(Model model) {
+    public String viewAllSession(Model model, HttpServletRequest request) {
+    	
+   	 if (!SessionHelper.isAdmin(request.getSession())) {
+         return "redirect:/logout";
+     }
+    	
         ExamSessionDAO examSessionDao = (ExamSessionDAO) context.getBean("examSessionDAO");
         AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
         ArrayList<ExamSession> allExamSessions = (ArrayList<ExamSession>) examSessionDao.getAllExamSession();//.listAllSession();

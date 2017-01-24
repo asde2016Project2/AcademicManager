@@ -46,7 +46,9 @@ public class ProfessorDAOImp implements ProfessorDAO {
 
         Query query = dbHandler.getSession().createQuery(hql);
         query.setParameter("username", username);
+        dbHandler.begin();
         Professor professor = (Professor) query.uniqueResult();
+        dbHandler.commit();
         return professor;
     }
 
@@ -57,7 +59,9 @@ public class ProfessorDAOImp implements ProfessorDAO {
         Query query = dbHandler.getSession().createQuery(hql);
         query.setParameter("username", username);
         query.setParameter("password", password);
+        dbHandler.begin();
         Professor professor = (Professor) query.uniqueResult();
+        dbHandler.commit();
         return professor;
     }
 
@@ -106,7 +110,9 @@ public class ProfessorDAOImp implements ProfessorDAO {
 
         Query query = dbHandler.getSession().createQuery(hql);
         query.setParameter("email", email);
+        dbHandler.begin();
         Professor professor = (Professor) query.uniqueResult();
+        dbHandler.commit();
         return professor;
     }
 
@@ -115,7 +121,9 @@ public class ProfessorDAOImp implements ProfessorDAO {
 
         String hql = "from ExamSession";
         Query query = dbHandler.getSession().createQuery(hql);
+        dbHandler.begin();
         ArrayList<ExamSession> examSessions = (ArrayList<ExamSession>) query.list();
+        dbHandler.commit();
         return examSessions;
     }
 
@@ -123,7 +131,9 @@ public class ProfessorDAOImp implements ProfessorDAO {
     public ArrayList<Professor> getAllProfessor() {
         String hql = "from Professor";
         Query query = dbHandler.getSession().createQuery(hql);
+        dbHandler.begin();
         ArrayList<Professor> professors = (ArrayList<Professor>) query.list();
+        dbHandler.commit();
         return professors;
     }
 
@@ -133,7 +143,9 @@ public class ProfessorDAOImp implements ProfessorDAO {
         String hql = "from Professor where accepted =:value";
         Query query = dbHandler.getSession().createQuery(hql);
         query.setParameter("value", Accepted.NOT_ACCEPTED);
+        dbHandler.begin();        
         List<Professor> professors = (List<Professor>) query.list();
+        dbHandler.commit();
         return professors;
     }
 
