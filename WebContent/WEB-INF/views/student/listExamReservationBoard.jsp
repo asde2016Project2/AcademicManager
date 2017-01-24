@@ -2,23 +2,26 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
+
 <h1>${pageTitle}</h1>
 
 <div class="panel panel-default">
 	<div class="bs-docs-section">
 		<div class="row">
-			<div class="col-lg-8">
+			<div class="col-lg-12">
 				<c:if test="${!empty listOfExamReservation }">
 					<table class="table table-striped table-hover ">
 						<thead>
 							<tr>
 								<th width="80">ID</th>
-								<th width="120">Exam Name</th>
+								<th width="220">Exam Name</th>
 								<th width="120">Date Hour</th>
 								<th width="120">Building Class Room</th>
 								<th width="120">Registration Starting Date</th>
 								<th width="120">Registration Ending Date</th>
-								<th width="120">Professor</th>
+								<th width="220">Professor</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -41,12 +44,11 @@
 
 							</c:forEach>
 						</tbody>
-
 					</table>
 				</c:if>
+				
 			</div>
 		</div>
 	</div>
-
 </div>
 

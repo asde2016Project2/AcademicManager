@@ -7,18 +7,18 @@
 <div class="panel panel-default">
 	<div class="bs-docs-section">
 		<div class="row">
-			<div class="col-lg-8">
+			<div class="col-lg-12">
 				<c:if test="${!empty listStudentBooked }">
 					<table class="table table-hover ">
 						<thead>
 							<tr>
 								<th width="80">ID</th>
-								<th width="120">Exam Name</th>
+								<th width="220">Exam Name</th>
 								<th width="120">Date Hour</th>
 								<th width="120">Building Class Room</th>
 								<th width="120">Registration Starting Date</th>
 								<th width="120">Registration Ending Date</th>
-								<th width="120">Professor</th>
+								<th width="220">Professor</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -50,14 +50,10 @@
 											<button class="btn btn-primary" id="btnSignup" type="submit" disabled="disabled"
 												name="signup" value="${userAttemptRegistration.status}">Signup</button>
 										</form>
-
 									</td>
-
 								</tr>
-
 							</c:forEach>
 						</tbody>
-
 					</table>
 				</c:if>
 			</div>
