@@ -1,6 +1,9 @@
 package it.unical.asde.uam.persistence;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -188,5 +191,16 @@ public class AttemptDAOImp implements AttemptDAO {
 		return a;
 	}
 
+    @Override
+   	public boolean checkAttempt(Date startingDate, Date endingDate, Date examDate,
+				Date examSessionStarting, Date examSessionEnding) {
+
+    	if(startingDate.before(endingDate) && examDate.after(endingDate) && examDate.after(startingDate)
+    			&& (startingDate.after(examSessionStarting) || startingDate.equals(examSessionStarting))
+    			&& startingDate.before(examSessionEnding) && endingDate.after(examSessionStarting)
+    			&& (endingDate.before(examSessionEnding) || endingDate.equals(examSessionEnding)))
+    		return true;
+    	else return false;
+	}
 
 }

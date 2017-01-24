@@ -1,6 +1,7 @@
 package it.unical.asde.uam.persistence;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import it.unical.asde.uam.model.Attempt;
@@ -34,6 +35,9 @@ public interface AttemptDAO {
 	ArrayList<Attempt> getNewExamSessionAttempt(int attemptId);
 
 	ArrayList<Attempt> getAttemptByProfessor(Professor p);
+
+	boolean checkAttempt(Date startingDate, Date endingDate, Date examDate, Date examSessionStarting,
+			Date examSessionEnding);
 	
 
 }

@@ -333,7 +333,7 @@ public class DummyDataController extends BaseController {
 
         CareerExam cE21 = new CareerExam(true, 25, true, students.get(2), exams.get(0));
         CareerExam cE22 = new CareerExam(true, 25, true, students.get(2), exams.get(1));
-        CareerExam cE23 = new CareerExam(true, 25, true, students.get(2), exams.get(2));
+        CareerExam cE23 = new CareerExam(false, 25, true, students.get(2), exams.get(2));
         CareerExam cE24 = new CareerExam(true, 25, true, students.get(2), exams.get(3));
         CareerExam cE25 = new CareerExam(false, 25, true, students.get(2), exams.get(4));
         CareerExam cE26 = new CareerExam(false, 25, true, students.get(2), exams.get(5));
@@ -486,7 +486,7 @@ public class DummyDataController extends BaseController {
     	
     	String startingD = "23-01-2017";
     	String endingD = "04-03-2017";
-        String dateOfBirthFormat = "dd-mm-yyyy";
+        String dateOfBirthFormat = "dd-MM-yyyy";
         DateFormat format = new SimpleDateFormat(dateOfBirthFormat, Locale.ENGLISH);
         Date startingDate = format.parse(startingD);
         Date endingDate = format.parse(endingD);

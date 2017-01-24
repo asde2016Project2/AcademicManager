@@ -3,7 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<h1>Session: </h1>
+<h1>Student </h1>
 
  <table class="tg">
             <tr>
@@ -23,3 +23,6 @@
             
        </c:forEach>
 </table>
+ <c:if test="${not empty error}">
+   			Error: ${error}
+	   </c:if>
