@@ -13,11 +13,18 @@
         </label>
         <div class="col-md-6 col-sm-6 col-xs-12">
             <form:input path="name" id="name" required="required"
-                        cssClass="form-control col-md-7 col-xs-12"></form:input>
+             cssClass="form-control col-md-7 col-xs-12"></form:input>
             </div>
         </div>
-        <br />
-        <br />
+        <c:if test="${!empty error }">
+            <div class="row">
+                <div class="alert alert-danger">
+                    ${error}
+                </div>
+            </div>
+        </c:if>         
+        <br/>
+        <br/>
 
         <div class="form-group">
             <label for="degreeCourseId" class="control-label col-md-3 col-sm-3 col-xs-12">Degree
