@@ -41,7 +41,7 @@ public class HomeController extends BaseController{
      */
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String showLogin(@ModelAttribute("loginForm") LoginFormDTO loginForm, Model model, HttpServletRequest request) {
-        model.addAttribute("pageTitle","Login");     
+        model.addAttribute("pageTitle","Academic Manager - Login");     
         model.addAttribute("loginForm",new LoginFormDTO());          
         return "home/login";
     }

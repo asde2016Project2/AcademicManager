@@ -12,6 +12,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <link rel="shortcut icon" href="<c:url value="/resources/images/favicon.ico" />" />
+
         <title>${pageTitle}</title>
 
         <!-- Bootstrap -->
@@ -22,14 +24,14 @@
         <link href="<c:url value="/resources/vendors/nprogress/nprogress.css"/>" rel="stylesheet">                
 
         <link href="<c:url value="/resources/vendors/bootstrap-daterangepicker/daterangepicker.css"/>" rel="stylesheet">
-        
+
         <!-- Datatables -->
         <link href="<c:url value="/resources/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css"/>" rel="stylesheet">
         <link href="<c:url value="/resources/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css"/>" rel="stylesheet">
         <link href="<c:url value="/resources/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css"/>" rel="stylesheet">
         <link href="<c:url value="/resources/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css"/>" rel="stylesheet">
         <link href="<c:url value="/resources/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css"/>" rel="stylesheet">
-        
+
         <!-- Custom Theme Style -->        
         <link href="<c:url value="/resources/css/custom.min.css"/>" rel="stylesheet">
         <link href="<c:url value="/resources/css/customization.css"/>" rel="stylesheet">
@@ -83,7 +85,7 @@
 
         <script src="<c:url value="/resources/vendors/moment/min/moment.min.js"/>"></script>    
         <script src="<c:url value="/resources/vendors/bootstrap-daterangepicker/daterangepicker.js"/>"></script>               
-        
+
         <script src="<c:url value="/resources/vendors/datatables.net/js/jquery.dataTables.min.js"/>"></script>
         <script src="<c:url value="/resources/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"/>"></script>
         <script src="<c:url value="/resources/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"/>"></script>
