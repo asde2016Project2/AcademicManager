@@ -19,7 +19,7 @@
         <put-attribute name="body" value="/WEB-INF/views/home/{1}.jsp" />              
     </definition>
     
-    <definition name="*/register" extends="base.definition" template="/WEB-INF/views/layout/guestLayout_dark.jsp">    
+    <definition name="*/register" extends="base.definition" template="/WEB-INF/views/layout/guestLayout_light.jsp">    
         <put-attribute name="sidebar" value="/WEB-INF/views/commons/sidebar/guestSideBar.jsp" />                          
         <put-attribute name="body" value="/WEB-INF/views/{1}/register.jsp" />              
     </definition>

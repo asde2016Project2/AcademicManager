@@ -28,7 +28,8 @@
         <link href="<c:url value="/resources/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css"/>" rel="stylesheet">
         <link href="<c:url value="/resources/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css"/>" rel="stylesheet">
         <link href="<c:url value="/resources/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css"/>" rel="stylesheet">
-        
+                
+        <link href="<c:url value="/resources/vendors/bootstrap-daterangepicker/daterangepicker.css"/>" rel="stylesheet">
         
         <!-- Custom Theme Style -->        
         <link href="<c:url value="/resources/css/custom.min.css"/>" rel="stylesheet">
@@ -36,7 +37,7 @@
 
     </head>
 
-    <body class="nav-md guestBody">
+    <body class="nav-md darkBody">
         <div class="container body">
             <div class="main_container">
                 <div class="col-md-3 left_col">
@@ -45,7 +46,7 @@
 
                 <!-- page content -->
                 <div class="right_col" role="main">
-                    <div class="loginBody">
+                    <div>
                         <tiles:insertAttribute  name="body" />   
                     </div>
                 </div>
@@ -70,6 +71,9 @@
         <script src="<c:url value="/resources/vendors/fastclick/lib/fastclick.js"/>"></script>
         <!-- NProgress -->
         <script src="<c:url value="/resources/vendors/nprogress/nprogress.js"/>"></script>               
+        
+        <script src="<c:url value="/resources/vendors/moment/min/moment.min.js"/>"></script>    
+        <script src="<c:url value="/resources/vendors/bootstrap-daterangepicker/daterangepicker.js"/>"></script>               
 
         <script src="<c:url value="/resources/vendors/datatables.net/js/jquery.dataTables.min.js"/>"></script>
         <script src="<c:url value="/resources/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"/>"></script>
@@ -82,7 +86,7 @@
         <script src="<c:url value="/resources/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"/>"></script>
         <script src="<c:url value="/resources/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"/>"></script>
         <script src="<c:url value="/resources/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"/>"></script>
-        <script src="<c:url value="/resources/vendors/datatables.net-scroller/js/datatables.scroller.min.js"/>"></script>
+        <script src="<c:url value="/resources/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"/>"></script>
 
 
         <!-- Custom Theme Scripts -->        
