@@ -4,14 +4,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
+
 <div class="row">
 
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
                 <h1>${pageTitle}</h1>                                
+
             </div>
+
             <div class="x_content">
+
 
 
                 <form:form method="post" modelAttribute="studyPlanForm" id="studyPlanForm">

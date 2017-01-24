@@ -188,6 +188,7 @@ public class AdministratorController extends BaseController {
         }
 
         if (result.hasErrors()) {
+        	model.addAttribute("error","you must enter a name for the study plan");
             model.addAttribute("pageTitle", "Create Study Plan");
             model.addAttribute("degreeCourseList", ((DegreeCourseDAO) context.getBean("degreeCourseDAO")).getAllDegrees());
             model.addAttribute("examList", ((ExamDAO) context.getBean("examDAO")).getAllExams());
@@ -324,7 +325,7 @@ public class AdministratorController extends BaseController {
         Student student = studentDAO.retrieve(acceptingStudentFormDTO.getUsername());
 
         student.setPhoto(acceptingStudentFormDTO.decodeBase64());
-        student.setAccepted(acceptingStudentFormDTO.getAccepted());
+        student.setAccepted(Accepted.ACCEPTED);
         studentDAO.update(student);
 
         //now we can create , for this student,  an instance of CareerExam for each StudPlanExam         	

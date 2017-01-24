@@ -16,4 +16,10 @@ $(document).ready(function () {
           calender_style: "picker_3"          
         }, function(start, end, label) {          
      });
+     
+     
+     $("#loading-accept").click(function(){
+    	 $('#myModal').modal('show');
+     });
+     
 });
