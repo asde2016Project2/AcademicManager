@@ -180,9 +180,16 @@ public class ProfessorController extends BaseController {
         if (!SessionHelper.isProfessor(request.getSession())) {
             return "redirect:/logout";
         }
-
-        model.addAttribute("examName", examName);
+        AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
+        Professor p = SessionHelper.getUserProfessorLogged(request.getSession());
+        ArrayList<Attempt> attemptId = attemptDAO.getAttemptByProfessor(p);
+        
+        ArrayList<Exam> exams = new ArrayList<>();
+        for(int  i = 0; i < attemptId.size(); i++) {
+        	exams.add(attemptId.get(i).getExam());
+        }
         model.addAttribute("userar", uar);
+        model.addAttribute("exams", exams);
         if (!(examName.equals(""))) {
             doRegisterExam(model, examName, request);
         }
@@ -196,6 +203,27 @@ public class ProfessorController extends BaseController {
         if (!SessionHelper.isProfessor(request.getSession())) {
             return "redirect:/logout";
         }
+        if (examname.equals("Select an Exam") || examname.equals(null)) {
+        	 return "redirect:/professor/registerExam";
+        }
+        AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
+        ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
+        Exam e = examDAO.getExamById(Integer.parseInt(examname));
+        examName = e.getName();
+
+        Professor p = SessionHelper.getUserProfessorLogged(request.getSession());
+        int attemptId = attemptDAO.getAttemptByProfessorByExam(p, e);
+
+        UserAttemptRegistrationDAO userAttemptRegistrationDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
+        uar = userAttemptRegistrationDAO.getUserAttemptRegistrationByAttempId(attemptId);
+        model.addAttribute("examName", examname);
+        model.addAttribute("userar", uar);
+
+        return "professor/registerExam";
+    }
+
+    private String doRegisterExamForGet(Model model, @ModelAttribute("examName")String examname,
+            HttpServletRequest request) {
 
         examName = examname;
 

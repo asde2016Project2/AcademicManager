@@ -1,6 +1,7 @@
 package it.unical.asde.uam.persistence;
 
 
+import java.util.Date;
 import java.util.List;
 
 import it.unical.asde.uam.model.DegreeCourse;
@@ -26,7 +27,9 @@ public interface ExamSessionDAO {
 
 	List<ExamSession> getAllExamSession();
 
-	boolean checkExamSession(String startingDate, String endingDate, String academicYear);
+//	boolean checkExamSession(String startingDate, String endingDate, String academicYear);
+
+	boolean checkExamSession(Date startingDate, Date endingDate, String academicYear);
 
 }
 
