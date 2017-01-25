@@ -305,6 +305,7 @@ public class ProfessorController extends BaseController {
         if (attemptDAO.checkAttempt(startingDate, endingDate, examDate, examSessionStart, examSessionEnd)) {
             Attempt a = new Attempt(examDate, classRoom, startingDate, endingDate,
                     SessionHelper.getUserProfessorLogged(request.getSession()), examDAO.getExamByName(exam), examSessionDAO.getExamSessionById(examSessionId));
+            a.setStatus("active");
             attemptDAO.create(a);
         }
         else {            
