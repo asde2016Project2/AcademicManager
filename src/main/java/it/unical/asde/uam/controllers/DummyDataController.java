@@ -589,6 +589,10 @@ public class DummyDataController extends BaseController {
         Attempt a3 = new Attempt(format.parse("23-02-2017"), "mt1", format.parse("05-02-2017"), format.parse("22-02-2017"), profs.get(3), exams.get(3), es1);
         attemptDAO.create(a3);
         attemtps2.add(a3);
+        
+        Attempt a4 = new Attempt(format.parse("23-02-2017"), "mt1", format.parse("05-02-2017"), format.parse("22-02-2017"), profs.get(1), exams.get(4), es1);
+        attemptDAO.create(a4);
+        attemtps2.add(a4);
 
 //     	for(int i = 0; i < 20; i++) {
 //     		//da ricontrollare...non è fatto benissimo

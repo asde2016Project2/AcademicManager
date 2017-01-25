@@ -513,7 +513,7 @@ public class AdministratorController extends BaseController {
             String startingDateString = sdf.format(startingDate);            
             String endingDateString = sdf.format(endingDate);            
                         
-            if (examSessionDao.checkExamSession(startingDateString, endingDateString, examSessionForm.getAcademicYear())) {
+            if (examSessionDao.checkExamSession(startingDate, endingDate, examSessionForm.getAcademicYear())) {
                 DegreeCourseDAO degreeCourseDAO = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
                 DegreeCourse degreeCourse = degreeCourseDAO.retrieveById(Integer.parseInt(examSessionForm.getDegreeCourse()));                
                 ExamSession examSession = new ExamSession(startingDate, endingDate, examSessionForm.getAcademicYear(), degreeCourse);

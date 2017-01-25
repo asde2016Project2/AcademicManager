@@ -185,10 +185,18 @@ public class ProfessorController extends BaseController {
         if (!SessionHelper.isProfessor(request.getSession())) {
             return "redirect:/logout";
         }
-
-        model.addAttribute("examName", examName);
+        AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
+        Professor p = SessionHelper.getUserProfessorLogged(request.getSession());
+        ArrayList<Attempt> attemptId = attemptDAO.getAttemptByProfessor(p);
+        
+        ArrayList<Exam> exams = new ArrayList<>();
+        for(int  i = 0; i < attemptId.size(); i++) {
+        	exams.add(attemptId.get(i).getExam());
+        }
         model.addAttribute("userar", uar);
+        model.addAttribute("exams", exams);
         if (!(examName.equals(""))) {
+        	System.out.println("percheeeeeeeeeeee");
             doRegisterExam(model, examName, request);
         }
         return "professor/registerExam";
@@ -198,15 +206,19 @@ public class ProfessorController extends BaseController {
     public String doRegisterExam(Model model, @ModelAttribute("examname") String examname,
             HttpServletRequest request) {
 
+    	examName = "";
         if (!SessionHelper.isProfessor(request.getSession())) {
             return "redirect:/logout";
         }
-
-        examName = examname;
-
+        if (examname.equals("Select an Exam") || examname.equals(null)) {
+        	examName = "";
+        	return "redirect:/professor/registerExam";
+        }
         AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
         ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
-        Exam e = examDAO.getExamByName(examName);
+        Exam e = examDAO.getExamByName((examname));
+        examName = examname;//.getName();
+
         Professor p = SessionHelper.getUserProfessorLogged(request.getSession());
         int attemptId = attemptDAO.getAttemptByProfessorByExam(p, e);
 
@@ -215,8 +227,9 @@ public class ProfessorController extends BaseController {
         model.addAttribute("examName", examname);
         model.addAttribute("userar", uar);
 
-        return "professor/registerExam";
+        return "redirect:/professor/registerExam";
     }
+
 
     @RequestMapping(value = "addCareerExam", method = RequestMethod.POST)
     public String addCareerExam(Model model, @ModelAttribute("grade") int grade,

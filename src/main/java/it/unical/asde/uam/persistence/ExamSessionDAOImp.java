@@ -3,6 +3,7 @@ package it.unical.asde.uam.persistence;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -133,43 +134,38 @@ public class ExamSessionDAOImp implements ExamSessionDAO {
 
   
 	@Override
-	public boolean checkExamSession(String startingDate, String endingDate, String academicYear) {
+	public boolean checkExamSession(Date startingDate, Date endingDate, String academicYear) {
 		
-		String[] strsStart = startingDate.split("-");
-		String[] strsEnd = endingDate.split("-");
-		String[] years = academicYear.split("/");
-		
-		int dayStart = Integer.parseInt(strsStart[2]);
-		int monthStart = Integer.parseInt(strsStart[1]);
-		int yearStart = Integer.parseInt(strsStart[0]);
-		
-		int dayEnd = Integer.parseInt(strsEnd[2]);
-		int monthEnd = Integer.parseInt(strsEnd[1]);
-		int yearEnd = Integer.parseInt(strsEnd[0]);
-		
-		if(yearStart == yearEnd) {
-			if(monthStart == monthEnd) {
-				if(dayStart>=dayEnd)
-					return false;
-			}
-			else if(monthStart > monthEnd)
-				return false;
-		}
-		
-		
-		System.out.println("strs[0]: "+strsStart[0]+"....years[1]: "+years[1]);
-		if(!(strsStart[0].equals(years[1]))){
-			System.out.println("strs[0]: "+strsStart[0]+"....years[1]: "+years[1]);
+		if(endingDate.before(startingDate))
 			return false;
-		}
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		try {
-			Date endDate = sdf.parse(endingDate);
-			Date startDate = sdf.parse(startingDate);
-		} catch (ParseException e) {
-			System.out.println("ERRORE inserimento data");
-			return false;
-		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String startingDateString = sdf.format(startingDate);            
+        String endingDateString = sdf.format(endingDate);
+		
+        String[] academicYs = academicYear.split("/");
+        String[] startD = startingDateString.split("-");
+        String[] endD = endingDateString.split("-");
+        
+        int academicY1 = Integer.parseInt(academicYs[0]);
+        int academicY2 = Integer.parseInt(academicYs[1]);
+        
+        int yearStart = Integer.parseInt(startD[2]);
+        int yearEnd = Integer.parseInt(endD[2]);
+
+        int monthStart = Integer.parseInt(startD[1]);
+        int monthEnd = Integer.parseInt(endD[1]);
+        
+        if(yearStart != academicY1 && yearStart != academicY2)
+        	return false;
+        if(yearEnd != academicY1 && yearEnd != academicY2)
+        	return false;
+        if(monthStart< 9)
+        	if(yearStart == academicY1)
+        		return false;
+        if(monthEnd< 9 & monthStart>=9)
+           	if(yearEnd != academicY2)
+           		return false;
 		return true;
 	}
 
