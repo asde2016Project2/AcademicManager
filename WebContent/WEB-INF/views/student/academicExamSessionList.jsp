@@ -2,59 +2,66 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-<h1>${pageTitle}</h1>
-<div class="panel panel-default">
-	<div class="bs-docs-section">
-		<div class="row">
-			<div class="col-lg-10">
-				<div class="bs-component">
-					<div class="divTable">
-						<c:if test="${!empty listExamSession }">
-							<table class="table table-striped table-hover ">
-								<thead>
-									<tr>
-										<th width="80">ID</th>
-										<th width="220">Degree Course</th>
-										<th width="120">Appeal</th>
-										<th width="120">Entry</th>
-										<th width="120">Academic Year</th>
-										<th width="60">Edit</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach var="examSession" items="${listExamSession}"
-										varStatus="status">
+<div class="page-title">
+    <div class="title_left">
+        <h3>${pageTitle}</h3>
+    </div>
 
-										<tr>
-											<td>${status.index+1 }</td>
-											<td>${examSession.degreeCourse.name}</td>
-											<td>${examSession.startingDate}</td>
-											<td>${examSession.endingDate}</td>
-											<td>${examSession.academicYear}</td>
-											<td><a class = "btn btn-default"
-												href="<c:url  value='/student/academicExamSessionList/examSession/${examSession.examSessionId}'/>">View</a></td>
-										</tr>
-
-									</c:forEach>
-								</tbody>
-
-								<!-- <tbody>
-									 div class="pagination-container">
-                                            <c:forEach var="page" begin="1" end="${numberOfPages}">
-                                                <c:url var="url" value="registrationAppeals/${page}" />
-                                                <span id="page-number"> <a href="${url}"> ${page}
-                                                    </a>
-                                                </span>
-                                            </c:forEach>
-                                        </div>
-                                        </tbody -->
-							</table>
-						</c:if>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="title_right">      
+    </div>
 </div>
+
+<div class="row">
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Academic ExamSession List</h2>           
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <p class="text-muted font-13 m-b-30">
+                   
+                </p>
+	<table class="table datatable table-hover table-centered table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+	
+		<thead>
+			<tr>
+				<th width="80">ID</th>
+				<th width="220">Degree Course</th>
+				<th width="120">Appeal</th>
+				<th width="120">Entry</th>
+				<th width="120">Academic Year</th>
+				<th width="60">Edit</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="examSession" items="${listExamSession}"
+				varStatus="status">
+
+				<tr>
+					<td>${status.index+1 }</td>
+					<td>${examSession.degreeCourse.name}</td>
+					<td>${examSession.startingDate}</td>
+					<td>${examSession.endingDate}</td>
+					<td>${examSession.academicYear}</td>
+					<td><a class="btn btn-default"
+						href="<c:url  value='/student/academicExamSessionList/examSession/${examSession.examSessionId}'/>">View</a></td>
+				</tr>
+
+			</c:forEach>
+		</tbody>
+
+	</table>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+</div>
+
 

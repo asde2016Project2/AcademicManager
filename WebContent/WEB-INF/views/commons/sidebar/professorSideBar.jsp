@@ -77,7 +77,8 @@
                     <a><i class="fa fa-graduation-cap"></i> Students <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="<c:url value="/professor/studentExtraExamSession" />">Student Extra Exam Session</a></li>
-                        <li><a href="<c:url value="/professor/informationStudent" />">Information Student</a></li>                            
+                        <li><a href="<c:url value="/professor/informationStudent" />">Information Student</a></li>    
+                        <li><a href="<c:url value="/professor/viewBookedStudent" />">List of Student Attempt</a></li>                         
                     </ul>
                 </li>                                
             </ul>

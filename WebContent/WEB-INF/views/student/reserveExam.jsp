@@ -4,57 +4,68 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <h1>${pageTitle}</h1>
-<div class="panel panel-default">
-	<div class="bs-docs-section">
-		<div class="row">
-			<div class="col-lg-12">
-				<c:if test="${!empty attempts }">
-					<table class="table table-hover ">
-						<thead>
-							<tr>
-								<th width="80">ID</th>
-								<th width="220">Exam Name</th>
-								<th width="120">Date Hour</th>
-								<th width="120">Building Class Room</th>
-								<th width="120">Registration Starting Date</th>
-								<th width="120">Registration Ending Date</th>
-								<th width="200">Professor</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="attempt" items="${attempts}" varStatus="status">
-								<tr>
-									<td>${status.index+1 }</td>
-									<td>${attempt.exam.name}</td>
-									<td>${attempt.examDate}</td>
-									<td>${attempt.classroom}</td>
-									<td>${attempt.startRegistrationDate}</td>
-									<td>${attempt.endRegistrationDate}</td>
-									<td><c:out value="${attempt.professor.firstName}" /> <c:out
-											value="${attempt.professor.lastName}" /></td>
+<div class="row">
+<div class="x_content">     
+	   <c:if test="${!empty message }">
+                    <div class="row">
+                        <div class="alert alert-success">
+                            ${message}
+                        </div>
+                    </div>
+                </c:if>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Exam Name</th>
+					<th>Date Hour</th>
+					<th>Building Class Room</th>
+					<th>Registration Starting Date</th>
+					<th>Registration Ending Date</th>
+					<th>Professor</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="attempt" items="${attempts}" varStatus="status">
+					<tr>
+						<td>${status.index+1 }</td>
+						<td>${attempt.exam.name}</td>
+						<td>${attempt.examDate}</td>
+						<td>${attempt.classroom}</td>
+						<td>${attempt.startRegistrationDate}</td>
+						<td>${attempt.endRegistrationDate}</td>
+						<td><c:out value="${attempt.professor.firstName}" /> <c:out
+								value="${attempt.professor.lastName}" /></td>
+								<td>
+						<form method="post">
 
-									<td>
-										<form method="post">
-											<input type="hidden" name="attemptId"
-												value="${attempt.attemptId}" />
-											<button  class="btn btn-danger" type="submit"
-												disabled="disabled" name="cancel" value="${attempt.status}">Cancel</button>
-										</form>
-									</td>
-									<td>
-										<form method="post">
-											<input type="hidden" name="attemptId"
-												value="${attempt.attemptId}" />
-											<button class="btn btn-primary" type="submit" name="signup"
-												value="${attempt.status}">Signup</button>
-										</form>
-									</td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-				</c:if>
-			</div>
-		</div>
-	</div>
+							<button disabled="disabled" class="btn btn-danger" id="btnCancel" type="submit">Cancel</button>
+							<input id="userAtId" type="hidden" name="attemptId"
+								value="${attempt.attemptId}" />
+							<button class="btn btn-default" id="btnSignup" type="submit"
+								>Signup</button>
+								 <c:if test="${!empty message }">
+                    <div class="row">
+                        <div class="alert alert-success">
+                            ${message}
+                        </div>
+                    </div>
+                </c:if>
+						</form>
+					</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+		     <c:if test="${!empty error }">
+                    <div class="row">
+                        <div class="alert alert-danger">
+                            ${error}
+                        </div>
+                    </div>
+                </c:if>         
+
+            </div>
+		
+	
 </div>
