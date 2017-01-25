@@ -135,7 +135,7 @@
                                 <div class="col-sm-12">
                                     <h4 class="brief"><i>Team Member</i></h4>
                                     <div class="left col-xs-7">
-                                        <h2>Nello (Norris????)</h2>
+                                        <h2>Antonello Teocoli</h2>
                                         <p><strong>About: </strong></p>                                       
                                     </div>
                                     <div class="right col-xs-5 text-center">
