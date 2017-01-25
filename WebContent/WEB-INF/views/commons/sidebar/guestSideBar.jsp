@@ -37,6 +37,13 @@
                 <li><a href="<c:url value="/listStudyPlan"/>"><i class="fa fa-language"></i> Show Study Plans</a></li>                                                                                                                                                 
             </ul>
         </div>
+            
+            <div class="menu_section">
+            <h3><i class="fa fa-cogs"></i> About Us</h3>
+            <ul class="nav side-menu">                
+                <li><a href="<c:url value="/authors"/>"><i class="fa fa-question"></i> Who we are</a></li>                                                                                                                                                 
+            </ul>
+        </div>
 
     </div>
     <!-- /sidebar menu -->
