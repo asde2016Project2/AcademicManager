@@ -65,8 +65,15 @@
                         <li><a href="<c:url value="/admin/examForm" />">Create Exam</a></li>
                         <li><a href="<c:url value="/admin/exams/" />">List Exam</a></li>                                               
                     </ul>
-                </li>                
-                <li><a><i class="fa fa-database"></i> Study Plan <span class="fa fa-chevron-down"></span></a>
+                </li>  
+                 <li>
+                    <a><i class="fa fa-map-signs"></i> Degree Course <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="<c:url value="/admin/create/degreeCourse" />">Create Degree Course</a></li>
+                        <li><a href="<c:url value="/admin/list/degreeCourse" />">List DegreeCourse</a></li>                                               
+                    </ul>
+                </li>  
+                <li><a><i class="fa fa-language"></i> Study Plan <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="<c:url value="/admin/create/studyplan" />">Create Study Plan</a></li>
                         <li><a href="<c:url value="/admin/list/studyplan"/>">List Study Plan</a></li>                                                                                                                                                

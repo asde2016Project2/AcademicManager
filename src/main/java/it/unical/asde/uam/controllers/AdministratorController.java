@@ -188,7 +188,7 @@ public class AdministratorController extends BaseController {
         }
 
         if (result.hasErrors()) {
-        	model.addAttribute("error","you must enter a name for the study plan");
+            model.addAttribute("error", "you must enter a name for the study plan");
             model.addAttribute("pageTitle", "Create Study Plan");
             model.addAttribute("degreeCourseList", ((DegreeCourseDAO) context.getBean("degreeCourseDAO")).getAllDegrees());
             model.addAttribute("examList", ((ExamDAO) context.getBean("examDAO")).getAllExams());
@@ -403,11 +403,57 @@ public class AdministratorController extends BaseController {
         return "admin/createExam";
     }
 
+    @RequestMapping(value = "create/degreeCourse", method = RequestMethod.GET)
+    public String createDegreeCourse(HttpServletRequest request, Model model) {
+
+        if (!SessionHelper.isAdmin(request.getSession())) {
+            return "redirect:/logout";
+        }
+
+        model.addAttribute("pageTitle", "Create New Degree Course");
+        model.addAttribute("degreeCourseModel", new DegreeCourse());
+
+        return "admin/create_degreeCourse";
+    }
+
+    @RequestMapping(value = "create/degreeCourse", method = RequestMethod.POST)
+    public String doCreateDegreeCourse(@Valid @ModelAttribute("degreeCourseModel") DegreeCourse dc, BindingResult result, HttpServletRequest request, Model model) {
+
+        model.addAttribute("pageTitle", "Create New Exam");
+
+        if (!SessionHelper.isAdmin(request.getSession())) {
+            return "redirect:/logout";            
+        }
+
+        if (!result.hasErrors()) {
+            DegreeCourseDAO dcDao = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
+            dcDao.create(dc);
+            return "redirect:/admin/list/degreeCourse";
+        }
+
+        return "admin/create_degreeCourse";
+
+    }
+    
+    
+    @RequestMapping(value = "list/degreeCourse", method = RequestMethod.GET)
+    public String listDegreeCourse(Model model, HttpServletRequest request) throws NullPointerException {
+
+        if (!SessionHelper.isAdmin(request.getSession())) {
+            return "redirect:/logout";
+        }
+
+        DegreeCourseDAO dcDao = (DegreeCourseDAO) context.getBean("degreeCourseDAO");                       
+        model.addAttribute("degreeCourseList",dcDao.getAllDegrees());
+
+        return "admin/list_degreeCourse";
+    }
+
     @RequestMapping(value = "examForm", method = RequestMethod.GET)
     public String addExams(Model model, Exam exam, HttpServletRequest request) {
 
-        model.addAttribute("pageTitle","Create New Exam");
-        
+        model.addAttribute("pageTitle", "Create New Exam");
+
         if (!SessionHelper.isAdmin(request.getSession())) {
             return "redirect:/logout";
         }
@@ -420,8 +466,8 @@ public class AdministratorController extends BaseController {
     @RequestMapping(value = "examForm", method = RequestMethod.POST)
     public ModelAndView addExams(@ModelAttribute("exam") Exam exam, HttpServletRequest request, Model model) {
 
-        model.addAttribute("pageTitle","Create New Exam");
-        
+        model.addAttribute("pageTitle", "Create New Exam");
+
         if (!SessionHelper.isAdmin(request.getSession())) {
             return new ModelAndView("redirect:/logout");
         }
@@ -479,8 +525,8 @@ public class AdministratorController extends BaseController {
     @RequestMapping(value = "createSession", method = RequestMethod.GET)
     public String openCreateNewSession(Model model, HttpServletRequest request) {
 
-        model.addAttribute("pageTitle","Create New Session");
-        
+        model.addAttribute("pageTitle", "Create New Session");
+
         if (!SessionHelper.isAdmin(request.getSession())) {
             return "redirect:/logout";
         }
@@ -488,7 +534,7 @@ public class AdministratorController extends BaseController {
         DegreeCourseDAO degreeCourseDao = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
         ArrayList<DegreeCourse> allDegrees = (ArrayList<DegreeCourse>) degreeCourseDao.getAllDegrees();
         model.addAttribute("degreeCourses", allDegrees);
-        model.addAttribute("examSessionForm",new SessionFormDTO());
+        model.addAttribute("examSessionForm", new SessionFormDTO());
 
         return "admin/createSession";
     }
@@ -496,32 +542,32 @@ public class AdministratorController extends BaseController {
     @RequestMapping(value = "createSession", method = RequestMethod.POST)
     public String createNewSession(@ModelAttribute("examSessionForm") @Valid SessionFormDTO examSessionForm, BindingResult result, Model model, HttpServletRequest request) throws ParseException {
 
-        model.addAttribute("pageTitle","Create New Session");
-        
+        model.addAttribute("pageTitle", "Create New Session");
+
         if (!SessionHelper.isAdmin(request.getSession())) {
             return "redirect:/logout";
         }
 
         ExamSessionDAO examSessionDao = (ExamSessionDAO) context.getBean("examSessionDAO");
-        if(!result.hasErrors()){
+        if (!result.hasErrors()) {
             String inputFormat = "dd-MM-yyyy";
             String outputFormat = "yyyy-MM-dd";
             SimpleDateFormat sdf = new SimpleDateFormat(inputFormat);
             Date startingDate = sdf.parse(examSessionForm.getStartingDate());
             Date endingDate = sdf.parse(examSessionForm.getEndingDate());
             sdf.applyPattern(outputFormat);
-            String startingDateString = sdf.format(startingDate);            
-            String endingDateString = sdf.format(endingDate);            
-                        
+            String startingDateString = sdf.format(startingDate);
+            String endingDateString = sdf.format(endingDate);
+
             if (examSessionDao.checkExamSession(startingDate, endingDate, examSessionForm.getAcademicYear())) {
                 DegreeCourseDAO degreeCourseDAO = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
-                DegreeCourse degreeCourse = degreeCourseDAO.retrieveById(Integer.parseInt(examSessionForm.getDegreeCourse()));                
+                DegreeCourse degreeCourse = degreeCourseDAO.retrieveById(Integer.parseInt(examSessionForm.getDegreeCourse()));
                 ExamSession examSession = new ExamSession(startingDate, endingDate, examSessionForm.getAcademicYear(), degreeCourse);
 
-                examSessionDao.create(examSession);                
+                examSessionDao.create(examSession);
                 return "redirect:/admin/viewAllSession";
             }
-            else{
+            else {
                 DegreeCourseDAO degreeCourseDao = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
                 ArrayList<DegreeCourse> allDegrees = (ArrayList<DegreeCourse>) degreeCourseDao.getAllDegrees();
                 model.addAttribute("degreeCourses", allDegrees);
@@ -532,7 +578,7 @@ public class AdministratorController extends BaseController {
         else {
             DegreeCourseDAO degreeCourseDao = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
             ArrayList<DegreeCourse> allDegrees = (ArrayList<DegreeCourse>) degreeCourseDao.getAllDegrees();
-            model.addAttribute("degreeCourses", allDegrees);            
+            model.addAttribute("degreeCourses", allDegrees);
             return "admin/createSession";
         }
     }
