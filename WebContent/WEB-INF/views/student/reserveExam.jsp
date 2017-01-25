@@ -5,7 +5,14 @@
 
 <h1>${pageTitle}</h1>
 <div class="row">
-	
+<div class="x_content">     
+	   <c:if test="${!empty message }">
+                    <div class="row">
+                        <div class="alert alert-success">
+                            ${message}
+                        </div>
+                    </div>
+                </c:if>
 		<table class="table table-bordered">
 			<thead>
 				<tr>
@@ -37,13 +44,28 @@
 								value="${attempt.attemptId}" />
 							<button class="btn btn-default" id="btnSignup" type="submit"
 								>Signup</button>
+								 <c:if test="${!empty message }">
+                    <div class="row">
+                        <div class="alert alert-success">
+                            ${message}
+                        </div>
+                    </div>
+                </c:if>
 						</form>
 					</td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
-		
+		     <c:if test="${!empty error }">
+                    <div class="row">
+                        <div class="alert alert-danger">
+                            ${error}
+                        </div>
+                    </div>
+                </c:if>         
+
+            </div>
 		
 	
 </div>

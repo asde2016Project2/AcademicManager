@@ -43,6 +43,10 @@ public interface UserAttemptRegistrationDAO {
 	UserAttemptRegistration getUserAttemptByStudentById(Student student);
 
 	ArrayList<UserAttemptRegistration> getUserAttemptByStudentUserNames(Student student);
+	
+	boolean register(UserAttemptRegistration u);
+	
+	ArrayList<UserAttemptRegistration> getUserAttemptByProfessor(Professor professor);
 
 	
 }

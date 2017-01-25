@@ -58,7 +58,12 @@ public class ProfessorController extends BaseController {
         }
 
         model.addAttribute("pageTitle", "Professor Area");
-
+        Professor loggedProfessor = SessionHelper.getUserProfessorLogged(request.getSession());
+        UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
+        ArrayList<UserAttemptRegistration> listStudentExamSignup = userAttRegDAO.getStudentSignupProfExamSession(loggedProfessor);
+        if(listStudentExamSignup.size() > -1){
+        	model.addAttribute("numberStudents", listStudentExamSignup.size());
+        }
         return "professor/dashboard";
     }
 
@@ -310,7 +315,7 @@ public class ProfessorController extends BaseController {
      * otherwise it will rejected from the exam sessions
      */
     @RequestMapping(value = "viewStudentExamSignup", method = RequestMethod.GET)
-    public String getStudentSignupForExamSession(Model model, HttpServletRequest request) {
+    public String acceptStudentSignupForExamSession(Model model, HttpServletRequest request) {
 
         if (!SessionHelper.isProfessor(request.getSession())) {
             return "redirect:/logout";
@@ -331,70 +336,11 @@ public class ProfessorController extends BaseController {
     }
 
 
-//    /**
-//     * View students sign-up for exam session if the student meets the basic
-//     * requirement of professors list it will accepted to take the exam
-//     * otherwise it will rejected from the exam sessions
-//     */
-//    @RequestMapping(value = "viewStudentExamSignup/{userAtRegId}", method = RequestMethod.GET)
-//    public String getStudentSignupForExamSession(@PathVariable("userAtRegId") int userAtRegId, Model model, HttpServletRequest request) {
-//
-//        if (!SessionHelper.isProfessor(request.getSession())) {
-//            return "redirect:/logout";
-//        }
-//
-//        Professor loggedProfessor = SessionHelper.getUserProfessorLogged(request.getSession());
-//        UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
-//        ArrayList<UserAttemptRegistration> listStudentExamSignup = null;
-//        if (loggedProfessor != null) {
-//            listStudentExamSignup = userAttRegDAO.getStudentSignupProfExamSession(loggedProfessor);
-//            model.addAttribute("listStudentExamSignup", listStudentExamSignup);
-//        }
-//        else {
-//            model.addAttribute("listStudentExamSignup", listStudentExamSignup);
-//        }
-//
-//        return "professor/viewStudentExamSignup";
-//    }
+   
 
     @RequestMapping(value = "viewStudentExamSignup", method = RequestMethod.POST)
-    public String acceptStudentSignupForExamSession(
-            Model model, HttpServletRequest request) {
-
-        if (!SessionHelper.isProfessor(request.getSession())) {
-            return "redirect:/logout";
-        }
-
-        Professor loggedProfessor = SessionHelper.getUserProfessorLogged(request.getSession());
-        UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
-        AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
-        UserAttemptRegistration userAttReg = userAttRegDAO.getUserAttemptByProfessorUserName(loggedProfessor);
-        System.out.println("prof user name===" + loggedProfessor.getUsername());
-
-        if (userAttReg.getUserAtRegId() > -1) {
-            userAttReg.setBooking(Booking.SIGNUP);
-            userAttRegDAO.update(userAttReg);
-            Attempt attempt =userAttReg.getAttempt();
-            attempt.setStatus("signup");
-            attemptDAO.update(attempt);
-            sendEmail.sendEmailRegistration(userAttReg.getStudent().getEmail(), userAttReg.getStudent().getFirstName(), userAttReg.getStudent().getLastName(),
-                    SendEmail.SUBJECT_EXAM_BOOKING, SendEmail.EXAM_SESSION_ATTEMPT_SIGNUP);
-
-        }
-        List<UserAttemptRegistration> listStudentExamSignup = userAttRegDAO.getStudentSignupProfExamSession(loggedProfessor);
-        if(!listStudentExamSignup.isEmpty()){
-        model.addAttribute("listStudentExamSignup", listStudentExamSignup);
-        }else{
-        	model.addAttribute("noRecordFound", "no record found");
-        }
-        return "professor/viewStudentSignupExam";
-    }
-//
-//
-//
-
-    @RequestMapping(value = "viewStudentExamSignup/{userAtRegId}", method = RequestMethod.POST)
-    public String rejectStudentSignupforExam(@RequestParam("userAtRegId") int userAtRegId, Model model, HttpServletRequest request) {
+    public String acceptStudentSignupForExamSession(@RequestParam(value="userAtRegId") int userAtRegId,
+    		Model model, HttpServletRequest request) {
 
         if (!SessionHelper.isProfessor(request.getSession())) {
             return "redirect:/logout";
@@ -405,20 +351,89 @@ public class ProfessorController extends BaseController {
         UserAttemptRegistration userAttReg = userAttRegDAO.getUserAttemptByProfessorUserName(loggedProfessor);
         AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
         UserAttemptRegistration attemptRegsitration = userAttRegDAO.getUserAttemptRegById(userAtRegId);
-        if (userAttReg.getUserAtRegId() == attemptRegsitration.getUserAtRegId()) {
-            userAttRegDAO.delete(userAttReg);
-           Attempt attempt =attemptRegsitration.getAttempt();
-           attempt.setStatus("active");
-           attemptDAO.update(attempt);
+        System.out.println("user id cheking in refuse"+attemptRegsitration.getUserAtRegId());
+        if (userAttReg !=null) {
+        	userAttReg.setBooking(Booking.SIGNUP);
+            userAttRegDAO.update(userAttReg);
+//           Attempt attempt =attemptRegsitration.getAttempt();
+//           attempt.setStatus("active");
+//           attemptDAO.update(attempt);
 
             sendEmail.sendEmailRegistration(userAttReg.getStudent().getEmail(), userAttReg.getStudent().getFirstName(), userAttReg.getStudent().getLastName(),
                     SendEmail.SUBJECT_EXAM_BOOKING, SendEmail.EXAM_SESSION_ATTEMPT_CANCELED);
 
         }
         ArrayList<UserAttemptRegistration> listStudentExamSignup = userAttRegDAO.getStudentSignupProfExamSession(loggedProfessor);
-        model.addAttribute("listStudentExamSignup", listStudentExamSignup);
-
+        if(listStudentExamSignup.size() > -1){
+        	model.addAttribute("listStudentExamSignup", listStudentExamSignup);
+        }else{
+        	model.addAttribute("norecord","there is no record found");
+        }
         return "professor/viewStudentExamSignup";
+    }
+
+
+  
+    
+    @RequestMapping(value = "viewStudentExamSignup", method = RequestMethod.POST, params="refuse")
+    public String rejectSignupExam(@RequestParam(value="refuse") int userAtRegId, Model model, HttpServletRequest request) {
+
+        if (!SessionHelper.isProfessor(request.getSession())) {
+            return "redirect:/logout";
+        }
+
+        Professor loggedProfessor = SessionHelper.getUserProfessorLogged(request.getSession());
+        UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
+        UserAttemptRegistration userAttReg = userAttRegDAO.getUserAttemptByProfessorUserName(loggedProfessor);
+        AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
+        UserAttemptRegistration attemptRegsitration = userAttRegDAO.getUserAttemptRegById(userAtRegId);
+        System.out.println("user id cheking in refuse"+attemptRegsitration.getUserAtRegId());
+        if (userAttReg !=null) {
+           
+           userAttRegDAO.delete(userAttReg);
+//           Attempt attempt =attemptRegsitration.getAttempt();
+//           attempt.setStatus("active");
+//           attemptDAO.update(attempt);
+
+            sendEmail.sendEmailRegistration(userAttReg.getStudent().getEmail(), userAttReg.getStudent().getFirstName(), userAttReg.getStudent().getLastName(),
+                    SendEmail.SUBJECT_EXAM_BOOKING, SendEmail.EXAM_SESSION_ATTEMPT_CANCELED);
+
+        }
+        ArrayList<UserAttemptRegistration> listStudentExamSignup = userAttRegDAO.getStudentSignupProfExamSession(loggedProfessor);
+        if(listStudentExamSignup.size() > -1){
+        	model.addAttribute("listStudentExamSignup", listStudentExamSignup);
+        }else{
+        	model.addAttribute("norecord","there is no record found");
+        }
+        return "professor/viewStudentExamSignup";
+    }
+    
+    
+    
+    /**
+     * View students sign-up for exam session if the student meets the basic
+     * requirement of professors list it will accepted to take the exam
+     * otherwise it will rejected from the exam sessions
+     */
+    @RequestMapping(value = "viewBookedStudent", method = RequestMethod.GET)
+    public String rejectSignupExam(Model model, HttpServletRequest request) {
+
+        if (!SessionHelper.isProfessor(request.getSession())) {
+            return "redirect:/logout";
+        }
+
+        Professor loggedProfessor = SessionHelper.getUserProfessorLogged(request.getSession());
+        UserAttemptRegistrationDAO userAttRegDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
+        ArrayList<UserAttemptRegistration> listStudentExamSignup = null;
+        if (loggedProfessor != null) {
+            listStudentExamSignup = userAttRegDAO.getUserAttemptByProfessor(loggedProfessor);
+            model.addAttribute("listStudentExamSignup", listStudentExamSignup);
+        }
+//        else {
+//            model.addAttribute("listStudentExamSignup", listStudentExamSignup);
+//        }
+
+        return "professor/viewBookedStudent";
     }
 
 }

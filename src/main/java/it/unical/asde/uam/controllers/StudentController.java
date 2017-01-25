@@ -288,31 +288,32 @@ public class StudentController extends BaseController {
         if (attempt != null && loggedStudent != null) {
 
             UserAttemptRegistration attemptRegistration2 = new UserAttemptRegistration(attempt, loggedStudent);
-            attemptRegistration2.setBooking(Booking.CANCEL);
-            attemptRegistration2.setStatus("SIGNUP");
+           
 
-            model.addAttribute("examName", attempt.getExam().getName());
-            model.addAttribute("startDate", attempt.getStartRegistrationDate());
-            model.addAttribute("accademicSession", attempt.getExamSession().getAcademicYear());
-            String studFullName = loggedStudent.getFirstName() + " " + loggedStudent.getLastName();
-            model.addAttribute("studFullName", studFullName);
-
-             userAttRegDAO.create(attemptRegistration2);
-             attempt.setStatus("signed");
-             attemptDAO.update(attempt);
-			sendEmail.sendEmailRegistration(loggedStudent.getEmail(), loggedStudent.getFirstName(),
-					loggedStudent.getLastName(), SendEmail.SUBJECT_REQUEST_REGISTATION,
-					SendEmail.TEXT_ACCEPTED_REGISTRATION);
+           
+            boolean saved = userAttRegDAO.register(attemptRegistration2);
+            if (!saved) {
+                model.addAttribute("error", "you already sign-up for this course");
+                
+            }
+            else {
+            	  model.addAttribute("message", messageSource.getMessage("registration.ok", null, localeResolver.resolveLocale(request)));
+            	  attemptRegistration2.setBooking(Booking.CANCEL);
+                  attemptRegistration2.setStatus("SIGNUP");
+//                attempt.setStatus("signed");
+//                attemptDAO.update(attempt);
+//                  userAttRegDAO.create(attemptRegistration2);
+   			       sendEmail.sendEmailRegistration(loggedStudent.getEmail(), loggedStudent.getFirstName(),
+   					loggedStudent.getLastName(), SendEmail.SUBJECT_REQUEST_REGISTATION,
+   					SendEmail.TEXT_ACCEPTED_REGISTRATION);
+          
+            }
             
-            
-        }
-        else {
-            model.addAttribute("norecord", "no record found");
-        }
+        
 //        AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
         ArrayList<Attempt> attempts=attemptDAO.getAttemptByAttempt(attemptId);
         model.addAttribute("attempts",attempts);
-
+        }
         return "student/cancelExamBook";
     }
 
@@ -390,9 +391,10 @@ public class StudentController extends BaseController {
         }
         ArrayList<UserAttemptRegistration> listStudentBooked = userAttRegDAO
                 .getUserAttemptByStudentUserNames(loggedStudent);
+        if(!listStudentBooked.isEmpty()){
         model.addAttribute("listStudentBooked", listStudentBooked);
         System.out.println("user booked----" + listStudentBooked.size());
-
+        }
         return "student/cancelExamBook";
     }
 
@@ -419,9 +421,9 @@ public class StudentController extends BaseController {
                     attemptRegistration.getAttempt().getExamSession().getAcademicYear());
 
             userAttRegDAO.delete(attemptRegistration);
-            Attempt attempt = attemptRegistration.getAttempt();
-            attempt.setStatus("active");
-            attemptDAO.update(attempt);
+//            Attempt attempt = attemptRegistration.getAttempt();
+//            attempt.setStatus("active");
+//            attemptDAO.update(attempt);
 
 			sendEmail.sendEmailRegistration(loggedStudent.getEmail(), loggedStudent.getFirstName(),
 					loggedStudent.getLastName(), SendEmail.SUBJECT_EXAM_BOOKING,
@@ -431,7 +433,12 @@ public class StudentController extends BaseController {
 
         ArrayList<UserAttemptRegistration> listStudentBooked = userAttRegDAO
                 .getUserAttemptByStudentUserNames(loggedStudent);
-        model.addAttribute("listStudentBooked", listStudentBooked);
+       
+        
+        if(listStudentBooked.size() > -1){
+        	 model.addAttribute("listStudentBooked", listStudentBooked);
+            System.out.println("user booked----" + listStudentBooked.size());
+            }
 
         return "student/listExamReservationBoard";
     }
