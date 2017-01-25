@@ -15,7 +15,7 @@
                 <form:form method="POST" modelAttribute="exam">
                     <%--Exam name--%>
                     <div class="form-group row">
-                        <label for="degreeCourseId" class="control-label col-md-3 col-sm-3 col-xs-12">Exam Name</label>
+                        <label for="examName" class="control-label col-md-3 col-sm-3 col-xs-12">Exam Name</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <form:input id="examName" name="examName" class="form-control" type="text" path="name"
                                         placeholder="Exam Name" />
