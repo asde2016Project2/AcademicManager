@@ -59,13 +59,12 @@ public class DummyDataController extends BaseController {
     public String createAdmin() throws ParseException {
         registerAdmin();
         addOnlyDegreeCourse();
-
         return "redirect:/";
     }
 
     @RequestMapping(value = "addEverything", method = RequestMethod.GET)
     public String addEverything() throws ParseException {
-        registerAdmin();
+//        registerAdmin();
 
         registerProfessor();
 
@@ -116,7 +115,7 @@ public class DummyDataController extends BaseController {
         for (int i = 0; i < 50; i++) {
             Student p = new Student("stud" + i, "123456", "Pierino" + i, "Stecchino" + i, true, scientific);
             if (i == 0) {
-                p.setEmail("effe.sessa" + "@gmail.com");
+                p.setEmail("gezut38" + "@gmail.com");
             }
             else {
                 p.setEmail("stud" + i + "@mat.unical.it");
@@ -485,11 +484,12 @@ public class DummyDataController extends BaseController {
             studyPlanDAO.create(businessStudyPlan);
 
             student = new Student("GavinKing" + i, "123456", "Gavin", "King", true, businessStudyPlan);
-            student.setEmail("gezu_tse" + "@yahoo.com");
+            student.setEmail("gezu_tse"+ i + "@yahoo.com");
             student.setAge(23);
             student.setDateOfBirth(dateValue());
             studentDAO.create(student);
-
+            
+          
 //			UserAttemptRegistrationDAO attemptRegistrationDAO = (UserAttemptRegistrationDAO) context
 //					.getBean("userAttemptRegistrationDAO");
 //			UserAttemptRegistration userAttemptRegistration = new UserAttemptRegistration();

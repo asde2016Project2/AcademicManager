@@ -7,18 +7,18 @@
     <!-- Root Context: defines shared resources visible to all other web components -->	
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
-		<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
+		<!--<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
 		<property name="url" value="jdbc:hsqldb:mem:MyDB" />
 		<property name="username" value="sa" />
 		<property name="password" value="" />
+		 -->
 		
 		
-		<!-- <property name="url" value="jdbc:hsqldb:MyDB"/>
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/uam" />
 		<property name="username" value="root" />
 		<property name="password" value="root" />
-		 -->
+		
 	</bean>
 	 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -26,9 +26,9 @@
         <property name="packagesToScan" value="it.unical.asde.uam.model" />
         <property name="hibernateProperties">
             <props>
-                 <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
-				<!-- prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop -->
-                <prop key="hibernate.hbm2ddl.auto">create</prop>
+                 <!--prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop-->
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.format_sql">true</prop>
                 <prop key="hibernate.generate_statistics">true</prop>                              

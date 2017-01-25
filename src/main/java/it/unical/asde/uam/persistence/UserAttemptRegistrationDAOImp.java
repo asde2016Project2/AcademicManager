@@ -100,6 +100,8 @@ public class UserAttemptRegistrationDAOImp implements UserAttemptRegistrationDAO
         dbHandler.create(userAttemptRegistration);
         
     }
+   
+    
     
     @Override
     public void delete(UserAttemptRegistration userAttemptRegistration) {
@@ -248,7 +250,7 @@ public class UserAttemptRegistrationDAOImp implements UserAttemptRegistrationDAO
     
     @Override
     public void update(UserAttemptRegistration userAttemptRegistration) {
-        dbHandler.create(userAttemptRegistration);
+        dbHandler.update(userAttemptRegistration);
         
     }
     

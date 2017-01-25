@@ -4,51 +4,44 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <h1>${pageTitle}</h1>
-<div class="panel panel-default">
-	<div class="bs-docs-section">
-		<div class="row">
-			<div class="col-lg-12">
-		<c:if test="${!empty listStudentBooked }">
-			<table class="table table-hover ">
-				<thead>
-					<tr>
-						<th width="80">ID</th>
-						<th width="220">Exam Name</th>
-						<th width="120">Date Hour</th>
-						<th width="120">Building Class Room</th>
-						<th width="220">Student Full Name</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="userAttemptRegistration"
-						items="${listStudentBooked}" varStatus="status">
+<div class="row">
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Exam Name</th>
+				<th>Date Hour</th>
+				<th>Building Class Room</th>
+				<th>Student Full Name</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="userAttemptRegistration" items="${listStudentBooked}"
+				varStatus="status">
 
-						<tr>
-							<td>${status.index+1 }</td>
-							<td>${userAttemptRegistration.attempt.exam.name}</td>
-							<td>${userAttemptRegistration.attempt.examDate}</td>
-							<td>${userAttemptRegistration.attempt.classroom}</td>
-							<td><c:out
-									value="${userAttemptRegistration.attempt.professor.firstName}" />
-								<c:out
-									value="${userAttemptRegistration.attempt.professor.lastName}" />
-							</td>
-							<td>
-								<form method="post">
-									<input id="userAtId" type="hidden" name="userAtRegId"
-										value="${userAttemptRegistration.userAtRegId}" />
-										
-									<button class="btn btn-danger" id="btnCancel" type="submit">Cancel</button>
-									
-									<button class="btn btn-default" id="btnSignup" type="submit" disabled="disabled">Signup</button>
-								</form>
-							</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</c:if>
-	</div>
-</div>
-</div>
+				<tr>
+					<td>${status.index+1 }</td>
+					<td>${userAttemptRegistration.attempt.exam.name}</td>
+					<td>${userAttemptRegistration.attempt.examDate}</td>
+					<td>${userAttemptRegistration.attempt.classroom}</td>
+					<td><c:out
+							value="${userAttemptRegistration.attempt.professor.firstName}" />
+						<c:out
+							value="${userAttemptRegistration.attempt.professor.lastName}" />
+					</td>
+					<td>
+						<form method="post">
+							<input id="userAtId" type="hidden" name="userAtRegId"
+								value="${userAttemptRegistration.userAtRegId}" />
+
+							<button class="btn btn-danger" id="btnCancel" type="submit">Cancel</button>
+
+							<button class="btn btn-default" id="btnSignup" type="submit"
+								disabled="disabled">Signup</button>
+						</form>
+					</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
 </div>
