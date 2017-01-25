@@ -12,12 +12,12 @@
         <div class="animate form login_form">
             <section class="login_content">
                 <div>
-                    <h1 class="normalTitle"><i class="fa fa-paw"></i> AcademicManager</h1>                    
+                    <h1><i class="fa fa-paw"></i> AcademicManager</h1>                    
                 </div>
 
                 <form:form method="post" action="" modelAttribute="loginForm">
 
-                    <h2>Login</h2>
+                    <h1>Login</h1>
                     <div>     
                         <div>
                             <form:input path="username" id="username" cssClass="form-control" required="true"></form:input>                            

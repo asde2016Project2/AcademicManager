@@ -16,10 +16,16 @@ public class StudyPlanFormDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @NotNull
+    @NotEmpty
     private String name;
 
+    @NotNull
+    @NotEmpty
     private String degreeCourseId;
-
+    
+    @NotNull
+    @NotEmpty
     private List<String> examList;
 
     public StudyPlanFormDTO() {

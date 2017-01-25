@@ -3,25 +3,52 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<h1>Session: </h1>
+<div class="page-title">
+    <div class="title_left">
+        <h3>${pageTitle}</h3>
+    </div>
 
- <table class="tg">
-            <tr>
-                <th width="80">ID</th>
-                <th width="120">DEGREE COURSE</th>
-                <th width="120">ACADEMIC YEAR</th>
-                <th width="120">STARTING DATE</th>
-                <th width="120">ENDING DATE</th>
-                
-            </tr>
-       <c:forEach items="${lista}" var="examSession">
-            <tr>
-            	<td><c:out value="${examSession.examSessionId}"/></td>
-                <td><c:out value="${examSession.degreeCourse.name}" /></td>
-                <td><c:out value="${examSession.academicYear}" /></td>
-                <td><c:out value="${examSession.startingDataString}"/></td>
-                <td><c:out value="${examSession.endingDataString}"/></td>
-            </tr>
-            
-       </c:forEach>
-</table>
+    <div class="title_right">      
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Session List</h2>           
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <p class="text-muted font-13 m-b-30">
+                    Lorem ipsum
+                </p>
+                <table class="table datatable table-hover table-centered table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Degree Course</th>
+                            <th>Academic Year</th>
+                            <th>Start</th>
+                            <th>End</th>
+                        </tr>
+                    </thead>
+                    <tbody>               
+                        <c:forEach items="${lista}" var="examSession">
+                            <tr>                        
+                                <td>${examSession.examSessionId}</td>
+                                <td>${examSession.degreeCourse.name}</td>
+                                <td>${examSession.academicYear}</td>
+                                <td>${examSession.startingDataString}</td>
+                                <td>${examSession.endingDataString}</td>
+                            </tr>                    
+                        </c:forEach>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div> 
+
+</div>
