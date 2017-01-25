@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import it.unical.asde.uam.dao.DBHandler;
+import it.unical.asde.uam.helper.Accepted;
+import it.unical.asde.uam.helper.Booking;
 import it.unical.asde.uam.model.UserAttemptRegistration;
 import it.unical.asde.uam.model.Attempt;
 import it.unical.asde.uam.model.Professor;
@@ -69,7 +71,7 @@ public class UserAttemptRegistrationDAOImp implements UserAttemptRegistrationDAO
         Query query = dbHandler.getSession().createQuery(hql);
         query.setParameter("attemptId", attemptId);
         dbHandler.begin();
-        UserAttemptRegistration attemptRegistration = (UserAttemptRegistration) query.list().get(0);
+        UserAttemptRegistration attemptRegistration = (UserAttemptRegistration) query.uniqueResult();
         dbHandler.commit();
         
         return attemptRegistration;
@@ -101,6 +103,8 @@ public class UserAttemptRegistrationDAOImp implements UserAttemptRegistrationDAO
         
     }
     
+    
+    
     @Override
     public void delete(UserAttemptRegistration userAttemptRegistration) {
         dbHandler.delete(userAttemptRegistration);
@@ -129,8 +133,9 @@ public class UserAttemptRegistrationDAOImp implements UserAttemptRegistrationDAO
         
         Query query = dbHandler.getSession()
                 .createQuery("SELECT userAttemptRegistration FROM UserAttemptRegistration AS userAttemptRegistration"
-                        + "  WHERE userAttemptRegistration.student.userId = :userId");
+                        + "  WHERE userAttemptRegistration.student.userId = :userId AND userAttemptRegistration.booking=:value");
         query.setParameter("userId", student.getUserId());
+        query.setParameter("value", Booking.SIGNUP);
         try {
             dbHandler.begin();
             ArrayList<UserAttemptRegistration> attemptRegistrations = new ArrayList<UserAttemptRegistration>(query.list());
@@ -167,11 +172,12 @@ public class UserAttemptRegistrationDAOImp implements UserAttemptRegistrationDAO
         Query query = dbHandler.getSession()
                 .createQuery("SELECT userAttemptRegistration FROM UserAttemptRegistration AS userAttemptRegistration"
                         + "  WHERE userAttemptRegistration.attempt.professor.userId = :userId AND "
-                        + " userAttemptRegistration.booking ='CANCEL'");
+                        + " userAttemptRegistration.booking =:value");
         query.setParameter("userId", professor.getUserId());
+        query.setParameter("value", Booking.CANCEL);
         try {
             dbHandler.begin();
-            ArrayList<UserAttemptRegistration> attemptRegistrations = new ArrayList<>(query.list());
+            ArrayList<UserAttemptRegistration> attemptRegistrations = new ArrayList<UserAttemptRegistration>(query.list());
             dbHandler.commit();
             return attemptRegistrations;
         } catch (Exception ex) {
@@ -248,8 +254,51 @@ public class UserAttemptRegistrationDAOImp implements UserAttemptRegistrationDAO
     
     @Override
     public void update(UserAttemptRegistration userAttemptRegistration) {
-        dbHandler.create(userAttemptRegistration);
+        dbHandler.update(userAttemptRegistration);
         
     }
+    
+    
+    @Override
+    public boolean register(UserAttemptRegistration u) {
+
+        //if already exist attemptId
+        if (getUserAttemptRegByAttemptId(u.getAttempt().getAttemptId()) != null &&
+        		getUserAttemptByStudentById(u.getStudent())  != null) {
+            return false;
+        }
+
+        //create
+        create(u);
+
+        //check created
+        if (getUserAttemptRegByAttemptId(u.getAttempt().getAttemptId()) == null && getUserAttemptByStudentById(u.getStudent())  != null ) {
+            return false;
+        }
+
+        return true;
+    }
+    
+    
+    
+    @Override
+    public ArrayList<UserAttemptRegistration> getUserAttemptByProfessor(Professor professor) {
+        
+        Query query = dbHandler.getSession()
+                .createQuery("SELECT userAttemptRegistration FROM UserAttemptRegistration AS userAttemptRegistration"
+                        + "  WHERE userAttemptRegistration.attempt.professor.userId = :userId AND userAttemptRegistration.booking=:value");
+        query.setParameter("userId", professor.getUserId());
+        query.setParameter("value", Booking.SIGNUP);
+        try {
+            dbHandler.begin();
+            ArrayList<UserAttemptRegistration> attemptRegistrations = new ArrayList<UserAttemptRegistration>(query.list());
+            dbHandler.commit();
+            return attemptRegistrations;
+        } catch (Exception ex) {
+            logger.debug("List of UserAttemptRegistrationt" + ex);
+            return null;
+        }
+    }
+
     
 }

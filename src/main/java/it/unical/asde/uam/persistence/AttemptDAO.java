@@ -7,6 +7,7 @@ import java.util.List;
 import it.unical.asde.uam.model.Attempt;
 import it.unical.asde.uam.model.Exam;
 import it.unical.asde.uam.model.Professor;
+import it.unical.asde.uam.model.Student;
 
 public interface AttemptDAO {
 
@@ -18,7 +19,7 @@ public interface AttemptDAO {
 	
 	List<Professor> getProfessorToAttempt(Integer attemptId);
 
-	ArrayList<Attempt> getExamSessionToAttempt(Integer sessionId);
+	ArrayList<Attempt> getExamSessionToAttempt(Integer sessionId,Exam exam);
 
 	Attempt getAttemptById(int attemptId);
 
@@ -30,14 +31,20 @@ public interface AttemptDAO {
 
 	List<Attempt> getAllAttempts();
         
-	ArrayList<Attempt> listActiveExamforAttempt();
+	ArrayList<Attempt> listActiveExamforAttempt(Exam exam);
 
-	ArrayList<Attempt> getNewExamSessionAttempt(int attemptId);
+//	ArrayList<Attempt> getNewExamSessionAttempt(int attemptId);
 
 	ArrayList<Attempt> getAttemptByProfessor(Professor p);
 
 	boolean checkAttempt(Date startingDate, Date endingDate, Date examDate, Date examSessionStarting,
 			Date examSessionEnding);
+
+	ArrayList<Attempt> getNewExamSessionAttempt(Exam exam);
+
+	ArrayList<Exam> getExamToAttempt(Integer examSessionId, Exam exam);
+
+	ArrayList<Attempt> getAttemptByAttempt(int attemptId);
 	
 
 }
