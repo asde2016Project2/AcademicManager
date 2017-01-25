@@ -191,6 +191,7 @@ public class ProfessorController extends BaseController {
         model.addAttribute("userar", uar);
         model.addAttribute("exams", exams);
         if (!(examName.equals(""))) {
+        	System.out.println("percheeeeeeeeeeee");
             doRegisterExam(model, examName, request);
         }
         return "professor/registerExam";
@@ -200,16 +201,18 @@ public class ProfessorController extends BaseController {
     public String doRegisterExam(Model model, @ModelAttribute("examname") String examname,
             HttpServletRequest request) {
 
+    	examName = "";
         if (!SessionHelper.isProfessor(request.getSession())) {
             return "redirect:/logout";
         }
         if (examname.equals("Select an Exam") || examname.equals(null)) {
-        	 return "redirect:/professor/registerExam";
+        	examName = "";
+        	return "redirect:/professor/registerExam";
         }
         AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
         ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
-        Exam e = examDAO.getExamById(Integer.parseInt(examname));
-        examName = e.getName();
+        Exam e = examDAO.getExamByName((examname));
+        examName = examname;//.getName();
 
         Professor p = SessionHelper.getUserProfessorLogged(request.getSession());
         int attemptId = attemptDAO.getAttemptByProfessorByExam(p, e);
@@ -219,27 +222,9 @@ public class ProfessorController extends BaseController {
         model.addAttribute("examName", examname);
         model.addAttribute("userar", uar);
 
-        return "professor/registerExam";
+        return "redirect:/professor/registerExam";
     }
 
-    private String doRegisterExamForGet(Model model, @ModelAttribute("examName")String examname,
-            HttpServletRequest request) {
-
-        examName = examname;
-
-        AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
-        ExamDAO examDAO = (ExamDAO) context.getBean("examDAO");
-        Exam e = examDAO.getExamByName(examName);
-        Professor p = SessionHelper.getUserProfessorLogged(request.getSession());
-        int attemptId = attemptDAO.getAttemptByProfessorByExam(p, e);
-
-        UserAttemptRegistrationDAO userAttemptRegistrationDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
-        uar = userAttemptRegistrationDAO.getUserAttemptRegistrationByAttempId(attemptId);
-        model.addAttribute("examName", examname);
-        model.addAttribute("userar", uar);
-
-        return "professor/registerExam";
-    }
 
     @RequestMapping(value = "addCareerExam", method = RequestMethod.POST)
     public String addCareerExam(Model model, @ModelAttribute("grade") int grade,

@@ -12,7 +12,7 @@
 	 	<option value="Select an Exam" label="Select an Exam"></option>
 	 	
      	<c:forEach items="${exams}" var="exam">
-        <option value="${exam.id}" label="${exam.name}" ></option>
+        <option value="${exam.name}" label="${exam.name}" ></option>
         </c:forEach>        
 	
 	</select>
