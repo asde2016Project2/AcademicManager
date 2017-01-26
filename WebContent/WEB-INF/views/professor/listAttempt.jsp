@@ -16,8 +16,8 @@
             </tr>
        <c:forEach items="${attemptList}" var="attempt">
             <tr>
-                <td><c:out value="${attempt.examSession.startingDataString}" /></td>
-                <td><c:out value="${attempt.examSession.endingDataString}" /></td>
+                <td><c:out value="${attempt.startingDataString}" /></td>
+                <td><c:out value="${attempt.endingDataString}" /></td>
                 <td><c:out value="${attempt.examDate}"/></td>
                 <td><c:out value="${attempt.exam.name}"/></td>
                 <td><c:out value="${attempt.classroom}"/></td>
