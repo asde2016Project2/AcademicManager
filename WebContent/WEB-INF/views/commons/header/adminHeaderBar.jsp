@@ -1,3 +1,4 @@
+<%@page import="it.unical.asde.uam.helper.SessionHelper"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="nav_menu">
     <nav>
@@ -8,7 +9,9 @@
         <ul class="nav navbar-nav navbar-right">
             <li class="">
                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="<c:url value="/resources/images/img.jpg"/>" />John Doe
+          <!--      <img src="<c:url value="/resources/images/img.jpg"/>" /> -->
+                    <%=SessionHelper.getUserAdministratorLogged(session).getFirstName() %>
+                    <%=SessionHelper.getUserAdministratorLogged(session).getLastName() %>
                     <span class=" fa fa-angle-down"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-usermenu pull-right">
