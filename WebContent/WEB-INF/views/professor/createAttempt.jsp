@@ -31,7 +31,8 @@
 <select name="examSession" class="form-control">
 	<option>Choose</option>
 	<c:forEach items="${examSessions}" var="examSes">
-    	<option><c:out value="${examSes.examSessionId}"></c:out>---<c:out value="${examSes.startingDataString}"/>/<c:out value="${examSes.endingDataString}"/></option>
+ <!--  	<option><c:out value="${examSes.examSessionId}"></c:out>---<c:out value="${examSes.startingDataString}"/>/<c:out value="${examSes.endingDataString}"/></option>
+ -->   	<option value="${examSes.examSessionId}" label="${examSes.startingDataString} --- ${examSes.endingDataString}"></option>
   	</c:forEach>
   	</select>
 

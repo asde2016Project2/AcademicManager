@@ -1,6 +1,7 @@
 package it.unical.asde.uam.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -71,6 +72,11 @@ public class Attempt implements Serializable {
 	@JoinColumn(name = "attempt_id")
 	private List<UserAttemptRegistration> userAttemptRegistrations = new ArrayList<>();
 
+	
+	private String startingDataString;
+    private String endingDataString;
+	
+    
 	public Attempt() {
 	}
 
@@ -87,6 +93,9 @@ public class Attempt implements Serializable {
 		// this.careerExam = careerExam;
 		this.exam = exam;
 		this.examSession = examSession;
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    	this.setStartingDataString(sdf.format(this.startRegistrationDate));
+    	this.setEndingDataString(sdf.format(this.endRegistrationDate));
 	}
 
 	public int getAttemptId() {
@@ -177,6 +186,21 @@ public class Attempt implements Serializable {
 		this.userAttemptRegistrations = userAttemptRegistrations;
 	}
 
+	public String getStartingDataString() {
+		return startingDataString;
+	}
+
+	public void setStartingDataString(String startingDataString) {
+		this.startingDataString = startingDataString;
+	}
+	
+	public String getEndingDataString() {
+		return endingDataString;
+	}
+
+	public void setEndingDataString(String endingDataString) {
+		this.endingDataString = endingDataString;
+	}
 
 	
 
