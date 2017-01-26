@@ -33,7 +33,9 @@
         </div>
         <div class="profile_info">
             <span>Student,</span>
-            <h2>John Doe</h2>
+            <h2><%=SessionHelper.getUserStudentLogged(session).getFirstName() %>
+                <%=SessionHelper.getUserStudentLogged(session).getLastName() %>
+			</h2>
         </div>
         <div class="clearfix"></div>
     </div>

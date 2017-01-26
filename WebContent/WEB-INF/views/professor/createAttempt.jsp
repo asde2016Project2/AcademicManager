@@ -20,8 +20,6 @@
                     </div>
                 </c:if>
 
-
-
                 <form:form method="post" action="createAttempt" cssClass="horizontalForm">    
                     <div class="row">
 
@@ -75,8 +73,8 @@
                             </div>
                         </div>     
                     </div>
-                    
-                    
+
+
 
                     <br/>
 
