@@ -193,12 +193,18 @@ public class ProfessorController extends BaseController {
         for(int  i = 0; i < attemptId.size(); i++) {
         	exams.add(attemptId.get(i).getExam());
         }
+        
+        
         model.addAttribute("userar", uar);
         model.addAttribute("exams", exams);
+        model.addAttribute("pageTitle","Register Exam to students");
+        
         if (!(examName.equals(""))) {
         	System.out.println("percheeeeeeeeeeee");
             doRegisterExam(model, examName, request);
         }
+        
+        
         return "professor/registerExam";
     }
 
@@ -206,6 +212,8 @@ public class ProfessorController extends BaseController {
     public String doRegisterExam(Model model, @ModelAttribute("examname") String examname,
             HttpServletRequest request) {
 
+        
+        
     	examName = "";
         if (!SessionHelper.isProfessor(request.getSession())) {
             return "redirect:/logout";
@@ -226,7 +234,7 @@ public class ProfessorController extends BaseController {
         uar = userAttemptRegistrationDAO.getUserAttemptRegistrationByAttempId(attemptId);
         model.addAttribute("examName", examname);
         model.addAttribute("userar", uar);
-
+        model.addAttribute("pageTitle","Register Exam to students");
         return "redirect:/professor/registerExam";
     }
 
