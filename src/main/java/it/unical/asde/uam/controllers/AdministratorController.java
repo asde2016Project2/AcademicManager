@@ -563,7 +563,7 @@ public class AdministratorController extends BaseController {
                 DegreeCourseDAO degreeCourseDAO = (DegreeCourseDAO) context.getBean("degreeCourseDAO");
                 DegreeCourse degreeCourse = degreeCourseDAO.retrieveById(Integer.parseInt(examSessionForm.getDegreeCourse()));
                 ExamSession examSession = new ExamSession(startingDate, endingDate, examSessionForm.getAcademicYear(), degreeCourse);
-
+                examSession.setStatus("active");
                 examSessionDao.create(examSession);
                 return "redirect:/admin/viewAllSession";
             }
