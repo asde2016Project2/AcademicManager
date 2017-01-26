@@ -126,7 +126,20 @@ public class ExamSessionDAOImp implements ExamSessionDAO {
 	@SuppressWarnings("unchecked")
 	public List<ExamSession> getAllExamSession() {
 
+//		Date a = 
 		Query query = dbHandler.getSession().createQuery("from ExamSession");
+		dbHandler.begin();
+		List<ExamSession> allExamSessions =  query.list();
+		dbHandler.commit();
+		return allExamSessions;
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<ExamSession> getExamSessions() {
+
+//		Date a = 
+		Query query = dbHandler.getSession().createQuery("from ExamSession where endingDate>=CURDATE()");
 		dbHandler.begin();
 		List<ExamSession> allExamSessions =  query.list();
 		dbHandler.commit();

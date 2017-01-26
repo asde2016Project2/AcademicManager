@@ -32,7 +32,9 @@
         </div>
         <div class="profile_info">
             <span>Admin,</span>
-            <h2>John Doe</h2>
+            <h2> <%=SessionHelper.getUserAdministratorLogged(session).getFirstName() %>
+                    <%=SessionHelper.getUserAdministratorLogged(session).getLastName() %>
+</h2>
         </div>
         <div class="clearfix"></div>
     </div>
