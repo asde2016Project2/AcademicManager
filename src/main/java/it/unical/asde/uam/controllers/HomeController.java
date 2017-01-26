@@ -43,7 +43,7 @@ public class HomeController extends BaseController{
     @RequestMapping(value = "authors", method = RequestMethod.GET)
     public String showAuthors(Model model, HttpServletRequest request) {
     
-        model.addAttribute("pageTitle","Academic Manager - Login");                      
+        model.addAttribute("pageTitle","Academic Manager - Authors");                      
         return "home/authors";
     }
     
