@@ -28,7 +28,8 @@ public class SendEmail {
     public static final String SUBJECT_EXAM_BOOKING = "UAM - Requestion for Exam booking";
     public static final String EXAM_SESSION_ATTEMPT_SIGNUP = "You SIGNUP to the provided exam session be on the date you specified";
     public static final String EXAM_SESSION_ATTEMPT_CANCELED = "Your exam booking canceled";
-
+    public static final String EXAM_SESSION_ATTEMPT_ACCEPTED = "Your exam attempt has been accepted to the provided exam session be on the date you specified";
+    
     public SendEmail() {
     }
 

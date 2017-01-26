@@ -382,7 +382,7 @@ public class ProfessorController extends BaseController {
 //           attemptDAO.update(attempt);
 
             sendEmail.sendEmailRegistration(userAttReg.getStudent().getEmail(), userAttReg.getStudent().getFirstName(), userAttReg.getStudent().getLastName(),
-                    SendEmail.SUBJECT_EXAM_BOOKING, SendEmail.EXAM_SESSION_ATTEMPT_CANCELED);
+                    SendEmail.SUBJECT_EXAM_BOOKING, SendEmail.EXAM_SESSION_ATTEMPT_ACCEPTED);
 
         }
         ArrayList<UserAttemptRegistration> listStudentExamSignup = userAttRegDAO.getStudentSignupProfExamSession(loggedProfessor);

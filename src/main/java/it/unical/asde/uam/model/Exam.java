@@ -27,7 +27,7 @@ public class Exam implements Serializable {
     @Column(name = "exam_id")
     private int id;
 
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "name", nullable = false, length = 50,unique=true)
     private String name; //, unique=true no
 
     @Column(name = "cfu",nullable = false)
