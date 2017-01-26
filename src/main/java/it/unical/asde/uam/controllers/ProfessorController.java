@@ -114,7 +114,7 @@ public class ProfessorController extends BaseController {
         }
 
         ExamSessionDAO examSessionDao = (ExamSessionDAO) context.getBean("examSessionDAO");
-        ArrayList<ExamSession> allExamSessions = (ArrayList<ExamSession>) examSessionDao.getAllExamSession();//.listAllSession();
+        ArrayList<ExamSession> allExamSessions = (ArrayList<ExamSession>) examSessionDao.getExamSessions();
         model.addAttribute("lista", allExamSessions);
         return "professor/listSession";
     }
