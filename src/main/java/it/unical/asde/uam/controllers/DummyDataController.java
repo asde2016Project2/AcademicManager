@@ -130,7 +130,7 @@ public class DummyDataController extends BaseController {
             Date dateOfBirthObject = format.parse(dateOfBirth);
 
             p.setDateOfBirth(dateOfBirthObject);
-
+            p.setAccepted(Accepted.ACCEPTED);
             studentDAO.create(p);
 
             //I'm creating a career only for the 1st student!!!!!!!!!!!
