@@ -3,49 +3,120 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<h1>Create Attempt</h1>
+<div class="row">
 
-<form method="post" action="createAttempt">
-<label for="dates" class="control-label col-md-3 col-sm-3 col-xs-12">Exam Date </label>
-<input class="form-control" id="examDate" name="examDate" type="date" value="01-01-2017"/>
-<br>
-<label for="dates" class="control-label col-md-3 col-sm-3 col-xs-12">Open Registration </label>
-<input class="form-control" id="startingDate" name="startingDate" type="date" value="01-01-2017"/>
-<br>
-<label for="dates" class="control-label col-md-3 col-sm-3 col-xs-12">Close Registration </label>
-<input class="form-control" id="endingDate" name="endingDate" type="date" value="01-01-2017"/>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h1>${pageTitle}</h1>                                
+            </div>
+            <div class="x_content">  
 
-<br>
-<label class="control-label col-md-3 col-sm-3 col-xs-12">Class: </label>
-<select name="classRoom" class="form-control">
-	<option>mt1</option>
-	<option>mt2</option>
-	<option>mt3</option>
-	<option>mt4</option>
-	<option>mt5</option>
-	<option>mt6</option>
-	<option>mt8</option>
-  	</select>
-<br>
-<label class="control-label col-md-3 col-sm-3 col-xs-12">Exam Session </label>
-<select name="examSession" class="form-control">
-	<option>Choose</option>
-	<c:forEach items="${examSessions}" var="examSes">
-    	<option><c:out value="${examSes.examSessionId}"></c:out>---<c:out value="${examSes.startingDataString}"/>/<c:out value="${examSes.endingDataString}"/></option>
-  	</c:forEach>
-  	</select>
+                <c:if test="${!empty message }">
+                    <div class="row">
+                        <div class="alert alert-success">
+                            ${message}
+                        </div>
+                    </div>
+                </c:if>
 
-<br>
-<label class="control-label col-md-3 col-sm-3 col-xs-12">Exam: </label>
-<select name="exam" class="form-control">
-    <c:forEach items="${exams}" var="exam">
-    <option> <c:out value="${exam.name}"/></option>
-    </c:forEach>
-  </select>
-  <br>
-  <input class="btn btn-primary" type="submit" value="Submit">
-</form>
-<br><br>
-<c:if test="${not empty error}">
-    ${error}
-</c:if>
+
+
+                <form:form method="post" action="createAttempt" cssClass="horizontalForm">    
+                    <div class="row">
+
+                        <div class="col-lg-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="startingDate" class="control-label col-md-4 col-sm-4 col-xs-12">Open Registration </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input  id="startingDate" name="startingDate"  type="text" class="form-control date-picker col-md-7 col-xs-12" required="required"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="endingDate" class="control-label col-md-4 col-sm-4 col-xs-12">Close Registration </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input  id="endingDate" name="endingDate"  type="text" class="form-control date-picker col-md-7 col-xs-12" required="required"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="examDate" class="control-label col-md-4 col-sm-4 col-xs-12">Exam Date </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input id="examDate" name="examDate" type="text" class="form-control date-picker" required="required" />                    
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <br/>
+                    <br/>                    
+
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Class: </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select name="classRoom" class="form-control" required="required">
+                                    <option value="mt1">mt1</option>
+                                    <option value="mt2">mt2</option>
+                                    <option value="mt3">mt3</option>
+                                    <option value="mt4">mt4</option>
+                                    <option value="mt5">mt5</option>
+                                    <option value="mt6">mt6</option>
+                                    <option value="mt8">mt8</option>
+                                </select>
+                            </div>
+                        </div>     
+                    </div>
+                    
+                    
+
+                    <br/>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Exam Session </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select name="examSession" class="form-control" required="required">
+                                    <option value="">Choose</option>
+                                    <c:forEach items="${examSessions}" var="examSes">                                        
+                                        <option value="${examSes.examSessionId}"> ${examSes.startingDataString} --- ${examSes.endingDataString}"></option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="ln_solid"></div>
+                    <div class="form-group row">
+                        <div class="col-lg-12 text-center">                            
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </div>
+                </form:form>
+
+
+                <c:if test="${!empty error }">
+                    <div class="row">
+                        <div class="alert alert-danger">
+                            ${error}
+                        </div>
+                    </div>
+                </c:if>         
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
