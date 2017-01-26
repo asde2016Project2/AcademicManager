@@ -575,22 +575,27 @@ public class DummyDataController extends BaseController {
         ArrayList<Attempt> attemtps2 = new ArrayList<>();
 
         Attempt a = new Attempt(format.parse("30-01-2017"), "mt1", format.parse("23-01-2017"), format.parse("29-01-2017"), profs.get(0), exams.get(0), es1);
+        a.setStatus("active");
         attemptDAO.create(a);
         attemtps2.add(a);
 
         Attempt a1 = new Attempt(format.parse("06-02-2017"), "mt1", format.parse("23-01-2017"), format.parse("05-02-2017"), profs.get(1), exams.get(1), es1);
+        a1.setStatus("active");
         attemptDAO.create(a1);
         attemtps2.add(a1);
 
         Attempt a2 = new Attempt(format.parse("14-02-2017"), "mt1", format.parse("01-02-2017"), format.parse("13-02-2017"), profs.get(2), exams.get(2), es1);
+        a2.setStatus("active");
         attemptDAO.create(a2);
         attemtps2.add(a2);
 
         Attempt a3 = new Attempt(format.parse("23-02-2017"), "mt1", format.parse("05-02-2017"), format.parse("22-02-2017"), profs.get(3), exams.get(3), es1);
+        a3.setStatus("active");
         attemptDAO.create(a3);
         attemtps2.add(a3);
         
         Attempt a4 = new Attempt(format.parse("23-02-2017"), "mt1", format.parse("05-02-2017"), format.parse("22-02-2017"), profs.get(1), exams.get(4), es1);
+        a4.setStatus("active");
         attemptDAO.create(a4);
         attemtps2.add(a4);
 
@@ -601,16 +606,16 @@ public class DummyDataController extends BaseController {
 //     		attemtps2.add(a);
 //     		System.out.println("nome prof: "+profs.get(i/5)+"...nome esame: "+exams.get(i/3).getName());
 //     	}
-        UserAttemptRegistrationDAO userAttemptRegistrationDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
-
-        for (int i = 0; i < attemtps2.size(); i++) {
-            System.out.println("coppie");
-            for (int j = 0; j < studs.size(); j++) {
-                System.out.println("att: " + attemtps2.get(i).getClassroom() + "...stud: " + studs.get(j).getFirstName());
-                UserAttemptRegistration userAR = new UserAttemptRegistration(attemtps2.get(i), studs.get(j));
-                userAttemptRegistrationDAO.create(userAR);
-            }
-        }
+//        UserAttemptRegistrationDAO userAttemptRegistrationDAO = (UserAttemptRegistrationDAO) context.getBean("userAttemptRegistrationDAO");
+//
+//        for (int i = 0; i < attemtps2.size(); i++) {
+//            System.out.println("coppie");
+//            for (int j = 0; j < studs.size(); j++) {
+//                System.out.println("att: " + attemtps2.get(i).getClassroom() + "...stud: " + studs.get(j).getFirstName());
+//                UserAttemptRegistration userAR = new UserAttemptRegistration(attemtps2.get(i), studs.get(j));
+//                userAttemptRegistrationDAO.create(userAR);
+//            }
+//        }
 
         return "redirect:/";
 
