@@ -31,5 +31,7 @@ public interface ExamSessionDAO {
 
 	boolean checkExamSession(Date startingDate, Date endingDate, String academicYear);
 
+	List<ExamSession> getExamSessions();
+
 }
 
