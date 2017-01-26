@@ -17,8 +17,7 @@
                     <div class="form-group row">
                         <label for="name" class="control-label col-md-2 col-sm-2 col-xs-12 text-right">Degree Course Name</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <form:input id="name" name="name" class="form-control" type="text" path="name"
-                                        placeholder="name" />
+                            <form:input id="name" name="name" class="form-control" type="text" path="name" placeholder="name" required="required" />
                         </div>
                     </div>
 
