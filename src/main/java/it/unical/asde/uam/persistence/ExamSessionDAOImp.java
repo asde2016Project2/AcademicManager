@@ -33,6 +33,7 @@ public class ExamSessionDAOImp implements ExamSessionDAO {
 
 	@Override
 	public void create(ExamSession examSession) {
+		
 		dbHandler.create(examSession);
 	}
 

@@ -291,23 +291,23 @@ public class StudentController extends BaseController {
            
 
            
-            boolean saved = userAttRegDAO.register(attemptRegistration2);
-            if (!saved) {
-                model.addAttribute("error", "you already sign-up for this course");
-                
-            }
-            else {
+//            boolean saved = userAttRegDAO.register(attemptRegistration2);
+//            if (!saved) {
+//                model.addAttribute("error", "you already sign-up for this course");
+//                
+//            }
+//            else {
             	  model.addAttribute("message", messageSource.getMessage("registration.ok", null, localeResolver.resolveLocale(request)));
             	  attemptRegistration2.setBooking(Booking.CANCEL);
                   attemptRegistration2.setStatus("SIGNUP");
 //                attempt.setStatus("signed");
 //                attemptDAO.update(attempt);
-//                  userAttRegDAO.create(attemptRegistration2);
+                  userAttRegDAO.create(attemptRegistration2);
    			       sendEmail.sendEmailRegistration(loggedStudent.getEmail(), loggedStudent.getFirstName(),
    					loggedStudent.getLastName(), SendEmail.SUBJECT_REQUEST_REGISTATION,
-   					SendEmail.TEXT_ACCEPTED_REGISTRATION);
+   				   SendEmail.TEXT_ACCEPTED_REGISTRATION);
           
-            }
+//            }
             
         
 //        AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
