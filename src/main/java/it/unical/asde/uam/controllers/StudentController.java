@@ -206,11 +206,9 @@ public class StudentController extends BaseController {
     	        if (!SessionHelper.isStudent(request.getSession())) {
     	            return "redirect:/logout";
     	        }
-    	//
     	        model.addAttribute("pageTitle", "Exam Board");
     	        AttemptDAO attemptDAO = (AttemptDAO) context.getBean("attemptDAO");
-//    	        
-//    	        ArrayList<Attempt> listOfExamReservation = attemptDAO.listActiveExamforAttempt();
+    	        ArrayList<Attempt> listOfExamReservation = new ArrayList<>() ;
 //    	        model.addAttribute("listOfExamReservation", listOfExamReservation);
     	        Student loggedStudent = SessionHelper.getUserStudentLogged(request.getSession());
     	        StudyPlanExamDAO spexamDAO = (StudyPlanExamDAO) context.getBean("studyPlanExamDAO");
@@ -218,20 +216,20 @@ public class StudentController extends BaseController {
     	        System.out.println("list of studyplan id pls===="+studyPlan.getStudyPlanId());
     	       if (studyPlan.getStudyPlanId() > -1) {
     	            ArrayList<Exam> exams = new ArrayList<>();
-    	            if(studyPlan.getStudyPlanId() > -1){
+//    	            if(studyPlan.getStudyPlanId() > -1){
+    	            
     	            List<StudyPlanExam> listStudentPlanExams = spexamDAO.getAllExamsOfAstudyPlan(studyPlan);
-    	            ArrayList<Attempt> listOfExamReservation =null;
+    	           
     	            for (StudyPlanExam sp : listStudentPlanExams) {
-    	                exams.add(sp.getExam());
+//    	                exams.add(sp.getExam());
     	                Exam exam = sp.getExam();
-    	                System.out.println("list of Exam ===="+exam.getId());
+    	                System.out.println("list of Exam ===="+ exam.getId());
     	                listOfExamReservation = attemptDAO.listActiveExamforAttempt(exam);
-    	            }
-    	              if(!listOfExamReservation.isEmpty()){
-    	            	System.out.println("list of Exam Reservation======pls===="+listOfExamReservation.size());
-    	            	model.addAttribute("listOfExamReservation", listOfExamReservation);
+    	                System.out.println("list of Exam Reservation======pls===="+listOfExamReservation.size());
     	             }
-    	           }
+    	            model.addAttribute("listOfExamReservation", listOfExamReservation);
+    	            	
+//    	           }
     	       }
     	     return  "student/listExamReservationBoard";
     
